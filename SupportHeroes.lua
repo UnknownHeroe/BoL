@@ -320,9 +320,9 @@ function HTTF_Viktor:Update()
   ToUpdate.VersionPath = "/UnknownHeroe/BoL/master//version/SupportHeroes.version"
   ToUpdate.ScriptPath =  "/UnknownHeroe/BoL/master/SupportHeroes.lua"
   ToUpdate.SavePath = SCRIPT_PATH .. GetCurrentEnv().FILE_NAME
-  ToUpdate.CallbackUpdate = function(NewVersion, OldVersion) print("<font color=\"#FF3300\"><b>[Support Heroes] </b></font> <font color=\"#FFFFFF\">Updated to "..NewVersion..". </b></font>") end
+  ToUpdate.CallbackUpdate = function(NewVersion, OldVersion) print("<font color=\"#FF3300\"><b>[Support Heroes] </b></font> <font color=\"#FFFFFF\">Updated to "2.00". </b></font>") end
   ToUpdate.CallbackNoUpdate = function(OldVersion) print("<font color=\"#FF3300\"><b>[Support Heroes] </b></font> <font color=\"#FFFFFF\">No Updates Found!</b></font>") end
-  ToUpdate.CallbackNewVersion = function(NewVersion) print("<font color=\"#FF3300\"><b>[Support Heroes] </b></font> <font color=\"#FFFFFF\">New Version found ("..NewVersion.."). Please wait until its downloaded!</b></font>") end
+  ToUpdate.CallbackNewVersion = function(NewVersion) print("<font color=\"#FF3300\"><b>[Support Heroes] </b></font> <font color=\"#FFFFFF\">New Version found ("2.00"). Please wait until its downloaded!</b></font>") end
   ToUpdate.CallbackError = function(NewVersion) print("<font color=\"#FF3300\"><b>[Support Heroes] </b></font> <font color=\"#FFFFFF\">Error while Downloading. Please try again.</b></font>") end
   ScriptUpdate(Version, true, ToUpdate.Host, ToUpdate.VersionPath, ToUpdate.ScriptPath, ToUpdate.SavePath, ToUpdate.CallbackUpdate,ToUpdate.CallbackNoUpdate, ToUpdate.CallbackNewVersion,ToUpdate.CallbackError)
 end
