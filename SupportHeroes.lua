@@ -1,4 +1,4 @@
-local Version = 2.01
+local Version = 2.00
 
 class 'ScriptUpdate'
 class 'HTTF_Viktor'
@@ -325,7 +325,6 @@ function HTTF_Viktor:Update()
   ToUpdate.CallbackNewVersion = function(NewVersion) print("<font color=\"#FF3300\"><b>[Support Heroes] </b></font> <font color=\"#FFFFFF\">New Version found ("..NewVersion.."). Please wait until its downloaded!</b></font>") end
   ToUpdate.CallbackError = function(NewVersion) print("<font color=\"#FF3300\"><b>[Support Heroes] </b></font> <font color=\"#FFFFFF\">Error while Downloading. Please try again.</b></font>") end
   ScriptUpdate(Version, true, ToUpdate.Host, ToUpdate.VersionPath, ToUpdate.ScriptPath, ToUpdate.SavePath, ToUpdate.CallbackUpdate,ToUpdate.CallbackNoUpdate, ToUpdate.CallbackNewVersion,ToUpdate.CallbackError)
-  Customprint("Sucessfully Loaded! Good Luck!")
 end
 ----------------------
 --    Requirements  --
@@ -935,6 +934,7 @@ function OnLoad()
 	Menu()
 	LoadSpells()
 	HTTF_Viktor = HTTF_Viktor()
+	Customprint("Sucessfully Loaded! Good Luck!")
 
 	ts = TargetSelector(TARGET_LESS_CAST_PRIORITY, BiggestRange(auto["combo"]), DAMAGE_MAGIC, true)
 	EnemyMinions = minionManager(MINION_ENEMY, BiggestRange(auto["clear"]), myHero, MINION_SORT_MAXHEALTH_DES)
