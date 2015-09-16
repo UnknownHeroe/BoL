@@ -1,9 +1,10 @@
+-------------
 local Version = 2.00
 
 class 'ScriptUpdate'
 class 'HTTF_Viktor'
 
-function Custom(msg) PrintChat("<font color=\"#daa520\"><b>[Support Heroes]</b></font> <font color=\"#FFFFFF\">"..msg.."</font>")
+function Customprint(msg) PrintChat("<font color=\"#daa520\"><b>[Support Heroes]</b></font> <font color=\"#FFFFFF\">"..msg.."</font>")
 end
 
 ---------------------------------------------------------------------------------
