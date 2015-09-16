@@ -1,4 +1,4 @@
-local Version = 1.50
+local Version = 2.10
 
 class 'ScriptUpdate'
 class 'HTTF_Viktor'
