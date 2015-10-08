@@ -417,7 +417,7 @@ function CustomCast(spell, target, from, chance)
 end
 
 function Menu()
-	settings = scriptConfig("Veigar", "Veigar, The Unknown Hero")
+	settings = scriptConfig("Veigar, The Unknown Hero", "Veigar")
 
 	settings:addSubMenu("[" .. myHero.charName.. "] - Keys", "key")
 		settings.key:addParam("comboKey", "Combo Key", SCRIPT_PARAM_ONKEYDOWN, false, 32)
