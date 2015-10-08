@@ -1,4 +1,4 @@
-local Version = 1.01
+local Version = 1.00
 
 class 'ScriptUpdate'
 class 'Veigar'
@@ -315,7 +315,7 @@ function Veigar:Update()
   local ToUpdate = {}
   
   ToUpdate.Host = "raw.githubusercontent.com"
-  ToUpdate.VersionPath = "/UnknownHeroe/BoL/master/version/Veigar.version"
+  ToUpdate.VersionPath = "/UnknownHeroe/BoL/master//version/Veigar.version"
   ToUpdate.ScriptPath =  "/UnknownHeroe/BoL/master/Veigar.lua"
   ToUpdate.SavePath = SCRIPT_PATH .. GetCurrentEnv().FILE_NAME
   ToUpdate.CallbackUpdate = function(NewVersion, OldVersion) print("<font color=\"#FF3300\"><b>[Veigar, The Unknown Hero] </b></font> <font color=\"#FFFFFF\">Updated to version ("..NewVersion.."). </b></font>") end
@@ -349,6 +349,7 @@ function OnLoad()
 	VP = VPrediction()
 	LoadSpells()
 	Menu()
+	Veigar = Veigar()
 	CustomPrint("Succsesufully Loaded Version "..Version.."!")
 end
 
@@ -411,7 +412,7 @@ function CustomCast(spell, target, from, chance)
 end
 
 function Menu()
-	settings = scriptConfig("Veigar", "Veigar")
+	settings = scriptConfig("Veigar", "Veigar, The Unknown Hero")
 
 	settings:addSubMenu("[" .. myHero.charName.. "] - Keys", "key")
 		settings.key:addParam("comboKey", "Combo Key", SCRIPT_PARAM_ONKEYDOWN, false, 32)
