@@ -1,4 +1,4 @@
-local Version = 1.01
+local Version = 1.02
 
 class 'ScriptUpdate'
 class 'Veigar'
@@ -361,6 +361,7 @@ end
 function OnTick()
 	Target = GetTarget()
 	KS()
+	autoFarm()
 	
 	if settings.key.comboKey then
 		if IsReady(_E) and settings.spell.E.ComboE == true and settings.spell.E.manaECombo <= 100*myHero.mana/myHero.maxMana then
@@ -432,10 +433,28 @@ function CustomCast(spell, target, from, chance)
 	end
 end
 
+function OnApplyBuff(unit, target, buff)
+	if IsReady(_W) or IsReady(_E) then
+		for i,v in ipairs(ccP) do
+			if ccP[i] == buff.type then
+				if target.team ~= myHero.team and target.type == myHero.type then
+					if GetDistance(target) < spells[_E].range + spells[_E].width and not target.dead then
+						UseStun(target)
+					end
+					
+					if GetDistance(target) < spells[_W].range and not target.dead then
+						CastSpell(_W, target.x, target.z)
+					end
+				end
+			end
+		end
+	end
+end
+
 function Menu()
 	settings = scriptConfig("Veigar, The Unknown Hero", "Veigar")
 
-	--Draws
+-- Draws --
 	settings:addSubMenu("[" .. myHero.charName.. "] - Draw Settings", "draw")
 		settings.draw:addParam("Q", "Draw Q", SCRIPT_PARAM_ONOFF, true)
     settings.draw:addParam("W", "Draw W", SCRIPT_PARAM_ONOFF, true)
@@ -444,13 +463,30 @@ function Menu()
     settings.draw:addParam("DMG", "Draw Damage", SCRIPT_PARAM_ONOFF, true)
 		settings.draw:addParam("target", "Draw Target", SCRIPT_PARAM_ONOFF, true)
 		settings.draw:addParam("permashow", "Draw PermaShow (Reload)", SCRIPT_PARAM_ONOFF, true)
+		
+-- Farming --	
+	settings:addSubMenu("[" .. myHero.charName.. "] - Farm Settings", "farm")
+		settings.farm:addParam("info", "            -- Lane Clear  --", SCRIPT_PARAM_INFO, "")
+			settings.farm:addParam("qlaneclear", "Use Q",SCRIPT_PARAM_ONOFF, false) 
+			settings.farm:addParam("qlaneclearmana", "Mana Q % - Lane Clear", SCRIPT_PARAM_SLICE, 30, 0, 100, 0)
 			
+				settings.farm:addParam("info3", "", SCRIPT_PARAM_INFO,"")
+				
+			settings.farm:addParam("wlaneclear", "Use W", SCRIPT_PARAM_ONOFF, false)
+			settings.farm:addParam("wlaneclearmana", "Mana W % - Lane Clear", SCRIPT_PARAM_SLICE, 30, 0, 100, 0)	
+			
+				settings.farm:addParam("info3", "", SCRIPT_PARAM_INFO,"")
+		
+		settings.farm:addParam("info", "            -- Last Hit --", SCRIPT_PARAM_INFO, "")
+				settings.farm:addParam("qlasthit", "Use Q", SCRIPT_PARAM_ONOFF, false)
+				settings.farm:addParam("qlasthitmana", "Mana Q % - Last Hit", SCRIPT_PARAM_SLICE, 30, 0, 100, 0)
+				
 -- Keys --
 	settings:addSubMenu("[" .. myHero.charName.. "] - Keys", "key")
-		settings.key:addParam("comboKey", "Combo Key", SCRIPT_PARAM_ONKEYDOWN, false, 32)
-		settings.key:addParam("laneClear", "Clear Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("V"))
-		settings.key:addParam("lastHit", "Last Hit Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("X"))
-		settings.key:addParam("harassKey", "Harass Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("C"))
+		settings.key:addParam("comboKey", "Combo", SCRIPT_PARAM_ONKEYDOWN, false, 32)
+		settings.key:addParam("laneClear", "Lane Clear", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("V"))
+		settings.key:addParam("lastHit", "Last Hit", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("X"))
+		settings.key:addParam("harassKey", "Harass", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("C"))
 		
 -- Spell Settings --
 	settings:addSubMenu("[" .. myHero.charName .. "] - Spell Settings", "spell")
@@ -493,24 +529,6 @@ function Menu()
 			settings.key:permaShow("comboKey")
 			settings.key:permaShow("harassKey")
 		end	
-end
-
-function OnApplyBuff(unit, target, buff)
-	if IsReady(_W) or IsReady(_E) then
-		for i,v in ipairs(ccP) do
-			if ccP[i] == buff.type then
-				if target.team ~= myHero.team and target.type == myHero.type then
-					if GetDistance(target) < spells[_E].range + spells[_E].width and not target.dead then
-						UseStun(target)
-					end
-					
-					if GetDistance(target) < spells[_W].range and not target.dead then
-						CastSpell(_W, target.x, target.z)
-					end
-				end
-			end
-		end
-	end
 end
 
 function OnProcessSpell(object, spell)
@@ -625,13 +643,66 @@ function Farm()
 			if VP:GetPredictedHealth2(minion, spells[_Q].delay / 1000 + (GetDistance(minion) / spells[_Q].speed)) > 0 and (lastAttack ~= minion.networkID or os.clock() * 1000 - lastAttackTime > 750) then
 				local mBool, mTable = GetMinionCollision(myHero, minion, spells[_Q].width)
 				if mBool and mTable ~= nil and #mTable > 1 then	return end
-				
 				CastSpell(_Q, minion.x, minion.z)
 			end
 		end
 	end
 	
 	lastFarmCheck = os.clock() * 1000
+end
+
+function autoFarm()
+	if settings.farm.qlaneclear and settings.farm.qlaneclearmana <= 100*myHero.mana/myHero.maxMana and settings.key.laneClear then
+		Max = 0
+		local MaxPos
+		EnemyMinions:update()
+		for i, minion in pairs(EnemyMinions.objects) do
+					Count = GetNMinionsHit(minion, qwidth)
+				if Count > Max then
+					Max = Count
+					MaxPos = Vector(minion.x, 0, minion.z)
+						CastSpell(_Q, MaxPos.x, MaxPos.z)
+					end
+				end
+			end
+			
+			if settings.farm.wlaneclear and settings.farm.wlaneclearmana <= 100*myHero.mana/myHero.maxMana and settings.key.laneClear then
+		local MaxPos
+		Max = 1
+		EnemyMinions:update()
+		for i, minion in pairs(EnemyMinions.objects) do
+					Count = GetNMinionsHit(minion, wwidth)
+				if Count > Max then
+					Max = Count
+					MaxPos = Vector(minion.x, 3, minion.z)
+						CastSpell(_W, MaxPos.x, MaxPos.z)
+					end
+				end
+			end
+			
+				if settings.farm.qlasthit and settings.farm.qlasthitmana <= 100*myHero.mana/myHero.maxMana and settings.key.lastHit then
+		Max = 0
+		local MaxPos
+		EnemyMinions:update()
+		for i, minion in pairs(EnemyMinions.objects) do
+					Count = GetNMinionsHit(minion, qwidth)
+				if Count > Max then
+					Max = Count
+					MaxPos = Vector(minion.x, 0, minion.z)
+						CastSpell(_Q, MaxPos.x, MaxPos.z)
+					end
+				end
+			end
+		end
+	
+	function GetNMinionsHit(Pos, width)
+	local count = 0
+	for i, minion in pairs(EnemyMinions.objects) do
+		if GetDistance(minion, Pos) < (spells[_Q].width + 50) then
+			count = count + 1
+		end
+	end
+	return count
 end
 
 function LoadSpells()
@@ -658,7 +729,7 @@ function Variables()
 	spells = {}
 	spells[_Q] = {range = 950, delay = 0.25, speed = 2000, width = 70, type = "linear", collision = false, aoe = false}
 	spells[_W] = {range = 900, delay = 1.5, speed = math.huge, width = 115, type = "circular", collision = false, aoe = true}
-	spells[_E] = {range = 700, delay = 0.8, speed = math.huge, width = 375, type = "circular", collision = false, aoe = true}
+	spells[_E] = {range = 700, delay = 0.25, speed = 20, width = 375, type = "circular", collision = false, aoe = true}
 	spells[_R] = {range = 650}
 	
 	ccTable = { 'Stun', 'Taunt', 'Root', 'Flee', 'Supress' }
@@ -923,4 +994,3 @@ function Round(number)
 		return math.ceil(number-.5) 
 	end
 end
-	
