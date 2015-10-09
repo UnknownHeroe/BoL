@@ -1,4 +1,4 @@
-local Version = 1.00
+local Version = 1.01
 
 class 'ScriptUpdate'
 class 'Veigar'
@@ -363,24 +363,39 @@ function OnTick()
 	KS()
 	
 	if settings.key.comboKey then
-		if IsReady(_E) then
+		if IsReady(_E) and settings.spell.E.ComboE == true and settings.spell.E.manaECombo <= 100*myHero.mana/myHero.maxMana then
 			UseStun(Target)
 		end
 		
-		if IsReady(_W) then
+		if IsReady(_W) and settings.spell.W.ComboW == true and settings.spell.W.manaWCombo <= 100*myHero.mana/myHero.maxMana then
 			CustomCast(_W, Target)
 		end
 		
-		if IsReady(_Q) then
+		if IsReady(_Q) and settings.spell.Q.ComboQ == true and settings.spell.Q.manaQCombo <= 100*myHero.mana/myHero.maxMana then
 			CustomCast(_Q, Target)
 		end
+		
+		 if IsReady(_R) and settings.spell.R.ComboR == true and Target.health < GetDmg(_R, myHero, Target) then
+      CastSpell(_R, Target)
 	end
+		end
 	
 	if settings.key.harassKey then
-		if IsReady(_Q) then
+			if IsReady(_E) and settings.spell.E.HarassE == true and settings.spell.E.manaEHarass <= 100*myHero.mana/myHero.maxMana then
+			UseStun(Target)
+		end
+		
+		if IsReady(_W) and settings.spell.W.HarassW == true and settings.spell.W.manaWHarass <= 100*myHero.mana/myHero.maxMana then
+			CustomCast(_W, Target)
+		end
+		
+		if IsReady(_Q) and settings.spell.Q.HarassQ == true and settings.spell.Q.manaQHarass <= 100*myHero.mana/myHero.maxMana then
 			CustomCast(_Q, Target)
 		end
-	end
+		
+		 if IsReady(_R) and settings.spell.R.HarassR == true and settings.spell.R.manaRHarass and Target.health < GetDmg(_R, myHero, Target) then
+      CastSpell(_R, Target)
+end
 	
 	if settings.key.lastHit or settings.key.laneClear then
 		Farm()
@@ -388,7 +403,8 @@ function OnTick()
 	
 	hitWInE()
 end
-
+	end
+	
 function CustomCast(spell, target, from, chance)
 	from = from or myHero
 	chance = chance or 2
@@ -419,16 +435,64 @@ end
 function Menu()
 	settings = scriptConfig("Veigar, The Unknown Hero", "Veigar")
 
+	--Draws
+	settings:addSubMenu("[" .. myHero.charName.. "] - Draw Settings", "draw")
+		settings.draw:addParam("Q", "Draw Q", SCRIPT_PARAM_ONOFF, true)
+    settings.draw:addParam("W", "Draw W", SCRIPT_PARAM_ONOFF, true)
+    settings.draw:addParam("E", "Draw E", SCRIPT_PARAM_ONOFF, true)
+    settings.draw:addParam("R", "Draw R", SCRIPT_PARAM_ONOFF, true)
+    settings.draw:addParam("DMG", "Draw Damage", SCRIPT_PARAM_ONOFF, true)
+		settings.draw:addParam("target", "Draw Target", SCRIPT_PARAM_ONOFF, true)
+		settings.draw:addParam("permashow", "Draw PermaShow (Reload)", SCRIPT_PARAM_ONOFF, true)
+			
+-- Keys --
 	settings:addSubMenu("[" .. myHero.charName.. "] - Keys", "key")
 		settings.key:addParam("comboKey", "Combo Key", SCRIPT_PARAM_ONKEYDOWN, false, 32)
 		settings.key:addParam("laneClear", "Clear Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("V"))
 		settings.key:addParam("lastHit", "Last Hit Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("X"))
 		settings.key:addParam("harassKey", "Harass Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("C"))
 		
+-- Spell Settings --
+	settings:addSubMenu("[" .. myHero.charName .. "] - Spell Settings", "spell")
+	
+	settings.spell:addSubMenu("[" .. myHero.charName.. "] - Baleful Strike (Q)", "Q")
+		settings.spell.Q:addParam("ComboQ", "Combo", SCRIPT_PARAM_ONOFF, true)
+			settings.spell.Q:addParam("manaQCombo", "Mana Q % - Combo", SCRIPT_PARAM_SLICE, 30, 0, 100, 0)
+		settings.spell.Q:addParam("HarassQ", "Harass", SCRIPT_PARAM_ONOFF, true)
+			settings.spell.Q:addParam("manaQHarass", "Mana Q % - Harass", SCRIPT_PARAM_SLICE, 30, 0, 100, 0)
+			
+			settings.spell:addSubMenu("[" .. myHero.charName.. "] - Dark Matter (W)", "W")
+		settings.spell.W:addParam("ComboW", "Combo", SCRIPT_PARAM_ONOFF, true)
+			settings.spell.W:addParam("manaWCombo", "Mana W % - Combo", SCRIPT_PARAM_SLICE, 30, 0, 100, 0)
+		settings.spell.W:addParam("HarassW", "Harass", SCRIPT_PARAM_ONOFF, true)
+			settings.spell.W:addParam("manaWHarass", "Mana W % - Harass", SCRIPT_PARAM_SLICE, 30, 0, 100, 0)
+			
+			settings.spell:addSubMenu("[" .. myHero.charName.. "] - Event Horizion (E)", "E")
+		settings.spell.E:addParam("ComboE", "Combo", SCRIPT_PARAM_ONOFF, true)
+			settings.spell.E:addParam("manaECombo", "Mana E % - Combo", SCRIPT_PARAM_SLICE, 30, 0, 100, 0)
+		settings.spell.E:addParam("HarassE", "Harass", SCRIPT_PARAM_ONOFF, true)
+			settings.spell.E:addParam("manaEHarass", "Mana E % - Harass", SCRIPT_PARAM_SLICE, 30, 0, 100, 0)
+			
+			settings.spell:addSubMenu("[" .. myHero.charName.. "] - Primordial Burst (R)", "R")
+		settings.spell.R:addParam("ComboR", "Combo", SCRIPT_PARAM_ONOFF, true)
+			settings.spell.R:addParam("manaRCombo", "Mana R % - Combo", SCRIPT_PARAM_SLICE, 30, 0, 100, 0)
+		settings.spell.R:addParam("HarassR", "Harass", SCRIPT_PARAM_ONOFF, true)
+			settings.spell.R:addParam("manaRHarass", "Mana R % - Harass", SCRIPT_PARAM_SLICE, 30, 0, 100, 0)
+		
 	settings:addSubMenu("Orbwalk Settings", "orb")
 	
 	SetupOrbwalk(settings.orb)
     UPL:AddToMenu(settings) 
+		
+			settings:addParam("info3", "", SCRIPT_PARAM_INFO,"")
+		 settings:addParam("infobox", "         Veigar, The Unknown Hero", SCRIPT_PARAM_INFO, "") 
+		 settings:addParam("infobox2", "                      Version:  "..Version.. "         ", SCRIPT_PARAM_INFO,"")
+		 
+		 	if settings.draw.permashow then
+		  settings:permaShow("infobox")
+			settings.key:permaShow("comboKey")
+			settings.key:permaShow("harassKey")
+		end	
 end
 
 function OnApplyBuff(unit, target, buff)
@@ -501,10 +565,10 @@ function OnDraw()
 		DrawCircle(Target.x, Target.y, Target.z, 150, 0xffffff00)
 	end
 	
-	if IsReady(_Q) then DrawCircle(myHero.x, myHero.y, myHero.z, spells[_Q].range, 0xFFFF0000) end
-	if IsReady(_W) then DrawCircle(myHero.x, myHero.y, myHero.z, spells[_W].range, 0xFFFF0000) end
-	if IsReady(_E) then DrawCircle(myHero.x, myHero.y, myHero.z, spells[_E].range + spells[_E].width, 0xFFFF0000) end
-	if IsReady(_R) then DrawCircle(myHero.x, myHero.y, myHero.z, spells[_R].range, 0xFFFF0000) end
+	if IsReady(_Q) and settings.draw.Q == true then DrawCircle(myHero.x, myHero.y, myHero.z, spells[_Q].range, 0xFFFF0000) end
+	if IsReady(_W) and settings.draw.W == true then DrawCircle(myHero.x, myHero.y, myHero.z, spells[_W].range, 0xFFFF0000) end
+	if IsReady(_E) and settings.draw.E == true then DrawCircle(myHero.x, myHero.y, myHero.z, spells[_E].range + spells[_E].width, 0xFFFF0000) end
+	if IsReady(_R) and settings.draw.R == true then DrawCircle(myHero.x, myHero.y, myHero.z, spells[_R].range, 0xFFFF0000) end
 end
 
 function SetupOrbwalk(menu)
@@ -822,7 +886,6 @@ function IsReady(spell)
 	if CanUseSpell(spell) == READY then return true end
 	return false
 end
-
 
 ----------------------
 --       Draw       --
