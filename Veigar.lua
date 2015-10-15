@@ -1,4 +1,4 @@
-local Version = 1.02
+local Version = 1.03
 
 class 'ScriptUpdate'
 class 'Veigar'
@@ -466,7 +466,7 @@ function Menu()
 		
 -- Farming --	
 	settings:addSubMenu("[" .. myHero.charName.. "] - Farm Settings", "farm")
-		settings.farm:addParam("info", "            -- Lane Clear  --", SCRIPT_PARAM_INFO, "")
+		settings.farm:addParam("info", "                  -- Lane Clear  --", SCRIPT_PARAM_INFO, "")
 			settings.farm:addParam("qlaneclear", "Use Q",SCRIPT_PARAM_ONOFF, false) 
 			settings.farm:addParam("qlaneclearmana", "Mana Q % - Lane Clear", SCRIPT_PARAM_SLICE, 30, 0, 100, 0)
 			
@@ -477,7 +477,7 @@ function Menu()
 			
 				settings.farm:addParam("info3", "", SCRIPT_PARAM_INFO,"")
 		
-		settings.farm:addParam("info", "            -- Last Hit --", SCRIPT_PARAM_INFO, "")
+		settings.farm:addParam("info", "                  -- Last Hit --", SCRIPT_PARAM_INFO, "")
 				settings.farm:addParam("qlasthit", "Use Q", SCRIPT_PARAM_ONOFF, false)
 				settings.farm:addParam("qlasthitmana", "Mana Q % - Last Hit", SCRIPT_PARAM_SLICE, 30, 0, 100, 0)
 				
@@ -661,10 +661,13 @@ function autoFarm()
 				if Count > Max then
 					Max = Count
 					MaxPos = Vector(minion.x, 0, minion.z)
+						local qDamage = getDmg("Q",minion,myHero)
+							if qDamage == minion.health or qDamage <= minion.health then
 						CastSpell(_Q, MaxPos.x, MaxPos.z)
 					end
 				end
 			end
+		end
 			
 			if settings.farm.wlaneclear and settings.farm.wlaneclearmana <= 100*myHero.mana/myHero.maxMana and settings.key.laneClear then
 		local MaxPos
@@ -675,12 +678,15 @@ function autoFarm()
 				if Count > Max then
 					Max = Count
 					MaxPos = Vector(minion.x, 3, minion.z)
+					local wDamage = getDmg("W",minion,myHero)
+						if wDamage == minion.health or wDamage <= minion.health then
 						CastSpell(_W, MaxPos.x, MaxPos.z)
 					end
 				end
 			end
+		end
 			
-				if settings.farm.qlasthit and settings.farm.qlasthitmana <= 100*myHero.mana/myHero.maxMana and settings.key.lastHit then
+			if settings.farm.qlasthit and settings.farm.qlasthitmana <= 100*myHero.mana/myHero.maxMana and settings.key.lastHit then
 		Max = 0
 		local MaxPos
 		EnemyMinions:update()
@@ -689,11 +695,14 @@ function autoFarm()
 				if Count > Max then
 					Max = Count
 					MaxPos = Vector(minion.x, 0, minion.z)
+	          local qDamage = getDmg("Q",minion,myHero)
+					  if qDamage >= minion.health then
 						CastSpell(_Q, MaxPos.x, MaxPos.z)
 					end
 				end
 			end
 		end
+	end
 	
 	function GetNMinionsHit(Pos, width)
 	local count = 0
@@ -886,7 +895,7 @@ function CalcSingleStun()
 		local predicted, hitchance1
 		predicted, hitchance1 = VP:GetPredictedPos(GetTarget(), spells[_E].delay)
 
-		if predicted and (hitchance1 >=2) then
+		if predicted and (hitchance1 >=3) then
 			local CircX, CircZ
 			local dis = math.sqrt((myHero.x - predicted.x) ^ 2 + (myHero.z - predicted.z) ^ 2)
 			
