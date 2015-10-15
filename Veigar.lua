@@ -318,7 +318,7 @@ function Veigar:Update()
   ToUpdate.VersionPath = "/UnknownHeroe/BoL/master//version/Veigar.version"
   ToUpdate.ScriptPath =  "/UnknownHeroe/BoL/master/Veigar.lua"
   ToUpdate.SavePath = SCRIPT_PATH .. GetCurrentEnv().FILE_NAME
-  ToUpdate.CallbackUpdate = function(NewVersion, OldVersion) print("<font color=\"#FF3300\"><b>[Veigar, The Unknown Hero] </b></font> <font color=\"#FFFFFF\">Updated to version ("..NewVersion.."). </b></font>") end
+  ToUpdate.CallbackUpdate = function(NewVersion, OldVersion) print("<font color=\"#FF3300\"><b>[Veigar, The Unknown Hero] </b></font> <font color=\"#FFFFFF\">Updated to version ("..NewVersion..") Please F9 Twice! </b></font>") end
   ToUpdate.CallbackNoUpdate = function(OldVersion) print("<font color=\"#FF3300\"><b>[Veigar, The Unknown Hero] </b></font> <font color=\"#FFFFFF\">No Updates Found!</b></font>") end
   ToUpdate.CallbackNewVersion = function(NewVersion) print("<font color=\"#FF3300\"><b>[Veigar, The Unknown Hero] </b></font> <font color=\"#FFFFFF\">New Version found ("..NewVersion.."). Please wait until its downloaded!</b></font>") end
   ToUpdate.CallbackError = function(NewVersion) print("<font color=\"#FF3300\"><b>[Veigar, The Unknown Hero] </b></font> <font color=\"#FFFFFF\">Error while Downloading. Please try again.</b></font>") end
