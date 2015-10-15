@@ -895,7 +895,7 @@ function CalcSingleStun()
 		local predicted, hitchance1
 		predicted, hitchance1 = VP:GetPredictedPos(GetTarget(), spells[_E].delay)
 
-		if predicted and (hitchance1 >=3) then
+		if predicted and (hitchance1 >=2) then
 			local CircX, CircZ
 			local dis = math.sqrt((myHero.x - predicted.x) ^ 2 + (myHero.z - predicted.z) ^ 2)
 			
