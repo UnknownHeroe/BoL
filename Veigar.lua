@@ -1,4 +1,4 @@
-local Version = 1.03
+local Version = 1.04
 
 class 'ScriptUpdate'
 class 'Veigar'
@@ -738,7 +738,7 @@ function Variables()
 	spells = {}
 	spells[_Q] = {range = 950, delay = 0.25, speed = 2000, width = 70, type = "linear", collision = false, aoe = false}
 	spells[_W] = {range = 900, delay = 1.5, speed = math.huge, width = 115, type = "circular", collision = false, aoe = true}
-	spells[_E] = {range = 700, delay = 0.25, speed = 20, width = 375, type = "circular", collision = false, aoe = true}
+	spells[_E] = {range = 700, delay = 0.50, speed = 20, width = 375, type = "circular", collision = false, aoe = true}
 	spells[_R] = {range = 650}
 	
 	ccTable = { 'Stun', 'Taunt', 'Root', 'Flee', 'Supress' }
