@@ -1,4 +1,4 @@
-local Version = 1.04
+local Version = 1.05
 
 class 'ScriptUpdate'
 class 'Veigar'
@@ -531,7 +531,7 @@ function Menu()
 		end	
 end
 
-function OnProcessSpell(object, spell)
+function OnProcessAttack(object, spell)
 	if object.type == myHero.type and object.team ~= myHero.team and GetDistance(object) < 2000 then
 		if spell.name == "summonerflash" then
 			CastEOnDash(Vector(object) + 500 * (Vector(spell.endPos) - Vector(object)):normalized())
