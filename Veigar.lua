@@ -1,4 +1,4 @@
-local Version = 1.05
+local Version = 1.05 
 
 class 'ScriptUpdate'
 class 'Veigar'
