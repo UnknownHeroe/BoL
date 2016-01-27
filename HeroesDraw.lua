@@ -1,773 +1,773 @@
 local champions = {  
-    ["Aatrox"] = {charName = "Aatrox", skillshots = {
+    ["Aatrox"] = {charName = "Aatrox", skills = {
         ["0"] = {range = 600},
         ["1"] = {range = 0},
         ["2"] = {range = 1000},
         ["3"] = {range = 550},
         }},
-    ["Ahri"] = {charName = "Ahri", skillshots = {
+    ["Ahri"] = {charName = "Ahri", skills = {
         ["0"] = {range = 880},
         ["1"] = {range = 700},
         ["2"] = {range = 975},
         ["3"] = {range = 450},
         }},
-    ["Akali"] = {charName = "Akali", skillshots = {
+    ["Akali"] = {charName = "Akali", skills = {
         ["0"] = {range = 600},
         ["1"] = {range = 700},
         ["2"] = {range = 325},
         ["3"] = {range = 700},
         }},    
-    ["Alistar"] = {charName = "Alistar", skillshots = {
+    ["Alistar"] = {charName = "Alistar", skills = {
         ["0"] = {range = 365},
         ["1"] = {range = 650},
         ["2"] = {range = 575},
         ["3"] = {range = 10},
         }},
-    ["Aatrox"] = {charName = "Aatrox", skillshots = {
+    ["Aatrox"] = {charName = "Aatrox", skills = {
         ["0"] = {range = 600},
         ["1"] = {range = 0},
         ["2"] = {range = 1000},
         ["3"] = {range = 550},
         }},    
-    ["Amumu"] = {charName = "Amumu", skillshots = {
+    ["Amumu"] = {charName = "Amumu", skills = {
         ["0"] = {range = 1100},
         ["1"] = {range = 300},
         ["2"] = {range = 350},
         ["3"] = {range = 550},
         }},
-    ["Anivia"] = {charName = "Anivia", skillshots = {
+    ["Anivia"] = {charName = "Anivia", skills = {
         ["0"] = {range = 1075},
         ["1"] = {range = 1000},
         ["2"] = {range = 650},
         ["3"] = {range = 625},
         }},
-    ["Annie"] = {charName = "Annie", skillshots = {
+    ["Annie"] = {charName = "Annie", skills = {
         ["0"] = {range = 625},
         ["1"] = {range = 560},
         ["2"] = {range = 0},
         ["3"] = {range = 600},
         }},
-    ["Ashe"] = {charName = "Ashe", skillshots = {
+    ["Ashe"] = {charName = "Ashe", skills = {
         ["0"] = {range = 0},
         ["1"] = {range = 1200},
         ["2"] = {range = 25000},
         ["3"] = {range = 20000},
         }},
-    ["Azir"] = {charName = "Azir", skillshots = {
+    ["Azir"] = {charName = "Azir", skills = {
         ["0"] = {range = 875},
         ["1"] = {range = 450},
         ["2"] = {range = 1100},
         ["3"] = {range = 250},
         }},
-    ["Bard"] = {charName = "Bard", skillshots = {
+    ["Bard"] = {charName = "Bard", skills = {
         ["0"] = {range = 600}, --TODO
         ["1"] = {range = 800},
         ["2"] = {range = 900},
         ["3"] = {range = 3400},
         }},
-    ["Blitzcrank"] = {charName = "Blitzcrank", skillshots = {
+    ["Blitzcrank"] = {charName = "Blitzcrank", skills = {
         ["0"] = {range = 925}, 
         ["1"] = {range = 0},
         ["2"] = {range = 0},
         ["3"] = {range = 600},
         }},
-    ["Brand"] = {charName = "Brand", skillshots = {
+    ["Brand"] = {charName = "Brand", skills = {
         ["0"] = {range = 1050},
         ["1"] = {range = 900},
         ["2"] = {range = 625},
         ["3"] = {range = 750},
         }},
-    ["Braum"] = {charName = "Braum", skillshots = {
+    ["Braum"] = {charName = "Braum", skills = {
         ["0"] = {range = 1000},
         ["1"] = {range = 650},
         ["2"] = {range = 150},--TODO
         ["3"] = {range = 1250},
         }},
-    ["Caitlyn"] = {charName = "Caitlyn", skillshots = {
+    ["Caitlyn"] = {charName = "Caitlyn", skills = {
         ["0"] = {range = 1250},
         ["1"] = {range = 800},
         ["2"] = {range = 750},
         ["3"] = {range = 3000},
         }},
-    ["Cassiopeia"] = {charName = "Cassiopeia", skillshots = {
+    ["Cassiopeia"] = {charName = "Cassiopeia", skills = {
         ["0"] = {range = 850},
         ["1"] = {range = 850},
         ["2"] = {range = 700},
         ["3"] = {range = 825},
         }},
-    ["Chogath"] = {charName = "Chogath", skillshots = {
+    ["Chogath"] = {charName = "Chogath", skills = {
         ["0"] = {range = 950},
         ["1"] = {range = 300},
         ["2"] = {range = 0},
         ["3"] = {range = 175},
         }},
-    ["Corki"] = {charName = "Corki", skillshots = {
+    ["Corki"] = {charName = "Corki", skills = {
         ["0"] = {range = 825},
         ["1"] = {range = 600},
         ["2"] = {range = 600},
         ["3"] = {range = 1225},
         }},
-    ["Darius"] = {charName = "Darius", skillshots = {
+    ["Darius"] = {charName = "Darius", skills = {
         ["0"] = {range = 360}, --TODO
         ["1"] = {range = 0},
         ["2"] = {range = 535},
         ["3"] = {range = 460},
         }},
-    ["Diana"] = {charName = "Diana", skillshots = {
+    ["Diana"] = {charName = "Diana", skills = {
         ["0"] = {range = 830},
         ["1"] = {range = 0},
         ["2"] = {range = 450},
         ["3"] = {range = 825},
         }},
-    ["Mundo"] = {charName = "DrMundo", skillshots = {
+    ["Mundo"] = {charName = "DrMundo", skills = {
         ["0"] = {range = 975},
         ["1"] = {range = 325},
         ["2"] = {range = 0},
         ["3"] = {range = 0},
         }},
-    ["Draven"] = {charName = "Draven", skillshots = {
+    ["Draven"] = {charName = "Draven", skills = {
         ["0"] = {range = 0},
         ["1"] = {range = 0},
         ["2"] = {range = 1050},
         ["3"] = {range = 20000},
         }},
-    ["Ekko"] = {charName = "Ekko", skillshots = {
+    ["Ekko"] = {charName = "Ekko", skills = {
         ["0"] = {range = 1075},
         ["1"] = {range = 1600},
         ["2"] = {range = 325},
         ["3"] = {range = 0},
         }},
-    ["Elise"] = {charName = "Elise", skillshots = {
+    ["Elise"] = {charName = "Elise", skills = {
         ["0"] = {range = 625},
         ["1"] = {range = 950},
         ["2"] = {range = 1075},
         ["3"] = {range = 0},
         }},
-    ["Evelynn"] = {charName = "Evelynn", skillshots = {
+    ["Evelynn"] = {charName = "Evelynn", skills = {
         ["0"] = {range = 500},
         ["1"] = {range = 0},
         ["2"] = {range = 225},
         ["3"] = {range = 650},
         }},
-    ["Diana"] = {charName = "Diana", skillshots = {
+    ["Diana"] = {charName = "Diana", skills = {
         ["0"] = {range = 830},
         ["1"] = {range = 0},
         ["2"] = {range = 450},
         ["3"] = {range = 825},
         }},
-    ["Ezreal"] = {charName = "Ezreal", skillshots = {
+    ["Ezreal"] = {charName = "Ezreal", skills = {
         ["0"] = {range = 1150},
         ["1"] = {range = 1000},
         ["2"] = {range = 475},
         ["3"] = {range = 20000},
         }},  
-    ["Fiddlesticks"] = {charName = "Fiddlesticks", skillshots = {
+    ["Fiddlesticks"] = {charName = "Fiddlesticks", skills = {
         ["0"] = {range = 575},
         ["1"] = {range = 575},
         ["2"] = {range = 750},
         ["3"] = {range = 800},
         }},
-    ["Fiora"] = {charName = "Fiora", skillshots = {
+    ["Fiora"] = {charName = "Fiora", skills = {
         ["0"] = {range = 400},
         ["1"] = {range = 500},
         ["2"] = {range = 0},
         ["3"] = {range = 500},
         }},
-    ["Fizz"] = {charName = "Fizz", skillshots = {
+    ["Fizz"] = {charName = "Fizz", skills = {
         ["0"] = {range = 550},
         ["1"] = {range = 0},
         ["2"] = {range = 400},
         ["3"] = {range = 1275},
         }},
-    ["Galio"] = {charName = "Galio", skillshots = {
+    ["Galio"] = {charName = "Galio", skills = {
         ["0"] = {range = 940},
         ["1"] = {range = 800},
         ["2"] = {range = 1180},
         ["3"] = {range = 560},
         }},
-    ["Gangplank"] = {charName = "Ganglank", skillshots = {
+    ["Gangplank"] = {charName = "Ganglank", skills = {
         ["0"] = {range = 625},
         ["1"] = {range = 0},
         ["2"] = {range = 1000},
         ["3"] = {range = 30000},
         }},
-    ["Garen"] = {charName = "Garen", skillshots = {
+    ["Garen"] = {charName = "Garen", skills = {
         ["0"] = {range = 0},
         ["1"] = {range = 0},
         ["2"] = {range = 325},
         ["3"] = {range = 400},
         }},
-    ["Gnar"] = {charName = "Gnar", skillshots = {
+    ["Gnar"] = {charName = "Gnar", skills = {
         ["0"] = {range = 1100},
         ["1"] = {range = 0},
         ["2"] = {range = 475},
         ["3"] = {range = 800},
         }},
-    ["Gragas"] = {charName = "Gragas", skillshots = {
+    ["Gragas"] = {charName = "Gragas", skills = {
         ["0"] = {range = 850},
         ["1"] = {range = 0},
         ["2"] = {range = 600},
         ["3"] = {range = 1150},
         }},
-    ["Graves"] = {charName = "Graves", skillshots = {
+    ["Graves"] = {charName = "Graves", skills = {
         ["0"] = {range = 925},
         ["1"] = {range = 950},
         ["2"] = {range = 425},
         ["3"] = {range = 1000},
         }},
-    ["Hecarim"] = {charName = "Hecarim", skillshots = {
+    ["Hecarim"] = {charName = "Hecarim", skills = {
         ["0"] = {range = 350},
         ["1"] = {range = 525},
         ["2"] = {range = 0},
         ["3"] = {range = 1000},
         }}, 
-    ["Heimerdinger"] = {charName = "Heimerdinger", skillshots = {
+    ["Heimerdinger"] = {charName = "Heimerdinger", skills = {
         ["0"] = {range = 350},
         ["1"] = {range = 1325},
         ["2"] = {range = 970},
         ["3"] = {range = 0},
         }},
-    ["Illaoi"] = {charName = "Illaoi", skillshots = {
+    ["Illaoi"] = {charName = "Illaoi", skills = {
         ["0"] = {range = 850},
         ["1"] = {range = 0},
         ["2"] = {range = 900},
         ["3"] = {range = 500},
         }},
-    ["Irelia"] = {charName = "Irelia", skillshots = {
+    ["Irelia"] = {charName = "Irelia", skills = {
         ["0"] = {range = 650},
         ["1"] = {range = 0},
         ["2"] = {range = 325},
         ["3"] = {range = 1000},
         }},
-    ["Janna"] = {charName = "Janna", skillshots = {
+    ["Janna"] = {charName = "Janna", skills = {
         ["0"] = {range = 1700},
         ["1"] = {range = 600},
         ["2"] = {range = 800},
         ["3"] = {range = 725},
         }},
-    ["Jarvan"] = {charName = "Jarvan", skillshots = {
+    ["Jarvan"] = {charName = "Jarvan", skills = {
         ["0"] = {range = 770},
         ["1"] = {range = 525},
         ["2"] = {range = 800},
         ["3"] = {range = 650},
         }},
-    ["Jax"] = {charName = "Jax", skillshots = {
+    ["Jax"] = {charName = "Jax", skills = {
         ["0"] = {range = 700},
         ["1"] = {range = 0},
         ["2"] = {range = 0},
         ["3"] = {range = 0},
         }},
-    ["Jayce"] = {charName = "Jayce", skillshots = {
+    ["Jayce"] = {charName = "Jayce", skills = {
         ["0"] = {range = 600},
         ["1"] = {range = 285},
         ["2"] = {range = 240},
         ["3"] = {range = 0},
         }},
-    ["Jinx"] = {charName = "Jinx", skillshots = {
+    ["Jinx"] = {charName = "Jinx", skills = {
         ["0"] = {range = 0},
         ["1"] = {range = 1450},
         ["2"] = {range = 900},
         ["3"] = {range = 25000},
         }},        
-    ["Kalista"] = {charName = "Kalista", skillshots = {
+    ["Kalista"] = {charName = "Kalista", skills = {
         ["0"] = {range = 1150},
         ["1"] = {range = 5000},
         ["2"] = {range = 1000},
         ["3"] = {range = 0},
         }},
-    ["Karma"] = {charName = "Karma", skillshots = {
+    ["Karma"] = {charName = "Karma", skills = {
         ["0"] = {range = 950},
         ["1"] = {range = 675},
         ["2"] = {range = 800},
         ["3"] = {range = 0},
         }},
-    ["Karthus"] = {charName = "Karthus", skillshots = {
+    ["Karthus"] = {charName = "Karthus", skills = {
         ["0"] = {range = 875},
         ["1"] = {range = 1000},
         ["2"] = {range = 550},
         ["3"] = {range = 0},
         }},
-    ["Kassadin"] = {charName = "Kassadin", skillshots = {
+    ["Kassadin"] = {charName = "Kassadin", skills = {
         ["0"] = {range = 650},
         ["1"] = {range = 0},
         ["2"] = {range = 400},
         ["3"] = {range = 500},
         }},
-    ["Katarina"] = {charName = "Katarina", skillshots = {
+    ["Katarina"] = {charName = "Katarina", skills = {
         ["0"] = {range = 675},
         ["1"] = {range = 400},
         ["2"] = {range = 700},
         ["3"] = {range = 550},
         }},
-    ["Kayle"] = {charName = "Kayle", skillshots = {
+    ["Kayle"] = {charName = "Kayle", skills = {
         ["0"] = {range = 650},
         ["1"] = {range = 900},
         ["2"] = {range = 0},
         ["3"] = {range = 900},
         }},
-    ["Kennen"] = {charName = "Kennen", skillshots = {
+    ["Kennen"] = {charName = "Kennen", skills = {
         ["0"] = {range = 950},
         ["1"] = {range = 900},
         ["2"] = {range = 0},
         ["3"] = {range = 550},
         }},
-    ["Khazix"] = {charName = "Khazix", skillshots = {
+    ["Khazix"] = {charName = "Khazix", skills = {
         ["0"] = {range = 326},
         ["1"] = {range = 1000},
         ["2"] = {range = 600},
         ["3"] = {range = 0},
         }},
-    ["Kindred"] = {charName = "Kindred", skillshots = {
+    ["Kindred"] = {charName = "Kindred", skills = {
         ["0"] = {range = 340},
         ["1"] = {range = 0},
         ["2"] = {range = 500},
         ["3"] = {range = 500},
         }},
-    ["KogMaw"] = {charName = "KogMaw", skillshots = {
+    ["KogMaw"] = {charName = "KogMaw", skills = {
         ["0"] = {range = 1175},
         ["1"] = {range = 0},
         ["2"] = {range = 1200},
         ["3"] = {range = 1800},
         }}, 
-    ["Leblanc"] = {charName = "Leblanc", skillshots = {
+    ["Leblanc"] = {charName = "Leblanc", skills = {
         ["0"] = {range = 700},
         ["1"] = {range = 600},
         ["2"] = {range = 925},
         ["3"] = {range = 0},
         }},
-   ["Lee Sin"] = {charName = "LeeSin", skillshots = {
+   ["Lee Sin"] = {charName = "LeeSin", skills = {
         ["0"] = {range = 1000},
         ["1"] = {range = 700},
         ["2"] = {range = 425},
         ["3"] = {range = 375},
         }},
-    ["Leona"] = {charName = "Leona", skillshots = {
+    ["Leona"] = {charName = "Leona", skills = {
         ["0"] = {range = 0},
         ["1"] = {range = 450},
         ["2"] = {range = 875},
         ["3"] = {range = 1200},
         }},
-    ["Lissandra"] = {charName = "Lissandra", skillshots = {
+    ["Lissandra"] = {charName = "Lissandra", skills = {
         ["0"] = {range = 725},
         ["1"] = {range = 450},
         ["2"] = {range = 1050},
         ["3"] = {range = 550},
         }},
-    ["Lucian"] = {charName = "Lucian", skillshots = {
+    ["Lucian"] = {charName = "Lucian", skills = {
         ["0"] = {range = 500},
         ["1"] = {range = 1000},
         ["2"] = {range = 445},
         ["3"] = {range = 1400},
         }}, 
-    ["Lulu"] = {charName = "Lulu", skillshots = {
+    ["Lulu"] = {charName = "Lulu", skills = {
         ["0"] = {range = 925},
         ["1"] = {range = 650},
         ["2"] = {range = 650},
         ["3"] = {range = 900},
         }},
-    ["Lux"] = {charName = "Lux", skillshots = {
+    ["Lux"] = {charName = "Lux", skills = {
         ["0"] = {range = 1175},
         ["1"] = {range = 1075},
         ["2"] = {range = 1100},
         ["3"] = {range = 3340},
         }},
-    ["Malphite"] = {charName = "Malphite", skillshots = {
+    ["Malphite"] = {charName = "Malphite", skills = {
         ["0"] = {range = 625},
         ["1"] = {range = 0},
         ["2"] = {range = 400},
         ["3"] = {range = 1000},
         }},       
-    ["Malzahar"] = {charName = "Malzahar", skillshots = {
+    ["Malzahar"] = {charName = "Malzahar", skills = {
         ["0"] = {range = 900},
         ["1"] = {range = 800},
         ["2"] = {range = 650},
         ["3"] = {range = 700},
         }},
-    ["Maokai"] = {charName = "Maokai", skillshots = {
+    ["Maokai"] = {charName = "Maokai", skills = {
         ["0"] = {range = 600},
         ["1"] = {range = 525},
         ["2"] = {range = 1100},
         ["3"] = {range = 500},
         }},
-    ["Master Yi"] = {charName = "MasterYi", skillshots = {
+    ["Master Yi"] = {charName = "MasterYi", skills = {
         ["0"] = {range = 600},
         ["1"] = {range = 0},
         ["2"] = {range = 0},
         ["3"] = {range = 0},
         }},
-    ["MissFortune"] = {charName = "MissFortune", skillshots = {
+    ["MissFortune"] = {charName = "MissFortune", skills = {
         ["0"] = {range = 650},
         ["1"] = {range = 0},
         ["2"] = {range = 1000},
         ["3"] = {range = 400},
         }},
-    ["Mordekaiser"] = {charName = "Mordekaiser", skillshots = {
+    ["Mordekaiser"] = {charName = "Mordekaiser", skills = {
         ["0"] = {range = 0},
         ["1"] = {range = 1000},
         ["2"] = {range = 700},
         ["3"] = {range = 650},
         }},
-    ["Morgana"] = {charName = "Morgana", skillshots = {
+    ["Morgana"] = {charName = "Morgana", skills = {
         ["0"] = {range = 1175},
         ["1"] = {range = 900},
         ["2"] = {range = 750},
         ["3"] = {range = 625},
         }},
-    ["Nami"] = {charName = "Nami", skillshots = {
+    ["Nami"] = {charName = "Nami", skills = {
         ["0"] = {range = 875},
         ["1"] = {range = 725},
         ["2"] = {range = 800},
         ["3"] = {range = 2750},
         }},
-    ["Nasus"] = {charName = "Nasus", skillshots = {
+    ["Nasus"] = {charName = "Nasus", skills = {
         ["0"] = {range = 0},
         ["1"] = {range = 600},
         ["2"] = {range = 650},
         ["3"] = {range = 0},
         }},
-    ["Nautilus"] = {charName = "Nautilus", skillshots = {
+    ["Nautilus"] = {charName = "Nautilus", skills = {
         ["0"] = {range = 950},
         ["1"] = {range = 0},
         ["2"] = {range = 600},
         ["3"] = {range = 825},
         }},
-     ["Zyra"] = {charName = "Zyra", skillshots = {
+     ["Zyra"] = {charName = "Zyra", skills = {
         ["0"] = {range = 800},
         ["1"] = {range = 850},
         ["2"] = {range = 1100},
         ["3"] = {range = 700},
         }},
-    ["Zilean"] = {charName = "Zilean", skillshots = {
+    ["Zilean"] = {charName = "Zilean", skills = {
         ["0"] = {range = 900},
         ["1"] = {range = 0},
         ["2"] = {range = 700},
         ["3"] = {range = 900},
         }},
-    ["Ziggs"] = {charName = "Ziggs", skillshots = {
+    ["Ziggs"] = {charName = "Ziggs", skills = {
         ["0"] = {range = 850},
         ["1"] = {range = 1000},
         ["2"] = {range = 900},
         ["3"] = {range = 5300},
         }},
-    ["Zed"] = {charName = "Zed", skillshots = {
+    ["Zed"] = {charName = "Zed", skills = {
         ["0"] = {range = 900},
         ["1"] = {range = 650},
         ["2"] = {range = 290},
         ["3"] = {range = 625},
         }},
-    ["Zac"] = {charName = "Zac", skillshots = {
+    ["Zac"] = {charName = "Zac", skills = {
         ["0"] = {range = 550},
         ["1"] = {range = 350},
         ["2"] = {range = 300},
         ["3"] = {range = 300},
         }},
-    ["Yorick"] = {charName = "Yorick", skillshots = {
+    ["Yorick"] = {charName = "Yorick", skills = {
         ["0"] = {range = 0},
         ["1"] = {range = 600},
         ["2"] = {range = 550},
         ["3"] = {range = 850},
         }},
-    ["Yasuo"] = {charName = "Yasuo", skillshots = {
+    ["Yasuo"] = {charName = "Yasuo", skills = {
         ["0"] = {range = 475},
         ["1"] = {range = 400},
         ["2"] = {range = 475},
         ["3"] = {range = 1200},
         }},
-    ["XinZhao"] = {charName = "XinZhao", skillshots = {
+    ["XinZhao"] = {charName = "XinZhao", skills = {
         ["0"] = {range = 0},
         ["1"] = {range = 0},
         ["2"] = {range = 650},
         ["3"] = {range = 500},
         }},
-    ["Xerath"] = {charName = "Xerath", skillshots = {
+    ["Xerath"] = {charName = "Xerath", skills = {
         ["0"] = {range = 750},
         ["1"] = {range = 1100},
         ["2"] = {range = 1050},
         ["3"] = {range = 3200},
         }},
-    ["MonkeyKing"] = {charName = "MonkeyKing", skillshots = {
+    ["MonkeyKing"] = {charName = "MonkeyKing", skills = {
         ["0"] = {range = 0},
         ["1"] = {range = 0},
         ["2"] = {range = 650},
         ["3"] = {range = 315},
         }},
-    ["Warwick"] = {charName = "Warwick", skillshots = {
+    ["Warwick"] = {charName = "Warwick", skills = {
         ["0"] = {range = 400},
         ["1"] = {range = 1250},
         ["2"] = {range = 1600},
         ["3"] = {range = 700},
         }},
-    ["Volibear"] = {charName = "Volibear", skillshots = {
+    ["Volibear"] = {charName = "Volibear", skills = {
         ["0"] = {range = 0},
         ["1"] = {range = 350},
         ["2"] = {range = 425},
         ["3"] = {range = 500},
         }},
-    ["Vladimir"] = {charName = "Vladimir", skillshots = {
+    ["Vladimir"] = {charName = "Vladimir", skills = {
         ["0"] = {range = 600},
         ["1"] = {range = 350},
         ["2"] = {range = 610},
         ["3"] = {range = 625},
         }},
-    ["Viktor"] = {charName = "Viktor", skillshots = {
+    ["Viktor"] = {charName = "Viktor", skills = {
         ["0"] = {range = 600},
         ["1"] = {range = 700},
         ["2"] = {range = 525},
         ["3"] = {range = 700},
         }},
-    ["Vi"] = {charName = "Vi", skillshots = {
+    ["Vi"] = {charName = "Vi", skills = {
         ["0"] = {range = 250},
         ["1"] = {range = 0},
         ["2"] = {range = 0},
         ["3"] = {range = 800},
         }},
-    ["VelKoz"] = {charName = "VelKoz", skillshots = {
+    ["VelKoz"] = {charName = "VelKoz", skills = {
         ["0"] = {range = 1050},
         ["1"] = {range = 1050},
         ["2"] = {range = 850},
         ["3"] = {range = 1575},
         }},
-    ["Veigar"] = {charName = "Veigar", skillshots = {
+    ["Veigar"] = {charName = "Veigar", skills = {
         ["0"] = {range = 900},
         ["1"] = {range = 900},
         ["2"] = {range = 725},
         ["3"] = {range = 650},
         }},
-    ["Vayne"] = {charName = "Vayne", skillshots = {
+    ["Vayne"] = {charName = "Vayne", skills = {
         ["0"] = {range = 300},
         ["1"] = {range = 0},
         ["2"] = {range = 710},
         ["3"] = {range = 0},
         }},
-    ["Varus"] = {charName = "Varus", skillshots = {
+    ["Varus"] = {charName = "Varus", skills = {
         ["0"] = {range = 925},
         ["1"] = {range = 0},
         ["2"] = {range = 925},
         ["3"] = {range = 1100},
         }},
-    ["Urgot"] = {charName = "Urgot", skillshots = {
+    ["Urgot"] = {charName = "Urgot", skills = {
         ["0"] = {range = 1000},
         ["1"] = {range = 0},
         ["2"] = {range = 900},
         ["3"] = {range = 550},
         }},
-    ["Udyr"] = {charName = "Udyr", skillshots = {
+    ["Udyr"] = {charName = "Udyr", skills = {
         ["0"] = {range = 0},
         ["1"] = {range = 0},
         ["2"] = {range = 0},
         ["3"] = {range = 325},
         }},
-    ["Twitch"] = {charName = "Twitch", skillshots = {
+    ["Twitch"] = {charName = "Twitch", skills = {
         ["0"] = {range = 0},
         ["1"] = {range = 950},
         ["2"] = {range = 1200},
         ["3"] = {range = 0},
         }},
-    ["TwistedFate"] = {charName = "TwistedFate", skillshots = {
+    ["TwistedFate"] = {charName = "TwistedFate", skills = {
         ["0"] = {range = 10000},
         ["1"] = {range = 0},
         ["2"] = {range = 0},
         ["3"] = {range = 5500},
         }},
-    ["Tryndamere"] = {charName = "Tryndamere", skillshots = {
+    ["Tryndamere"] = {charName = "Tryndamere", skills = {
         ["0"] = {range = 0},
         ["1"] = {range = 850},
         ["2"] = {range = 650},
         ["3"] = {range = 0},
         }},
-    ["Trundle"] = {charName = "Trundle", skillshots = {
+    ["Trundle"] = {charName = "Trundle", skills = {
         ["0"] = {range = 0},
         ["1"] = {range = 750},
         ["2"] = {range = 1000},
         ["3"] = {range = 650},
         }},
-    ["Tristana"] = {charName = "Tristana", skillshots = {
+    ["Tristana"] = {charName = "Tristana", skills = {
         ["0"] = {range = 0},
         ["1"] = {range = 900},
         ["2"] = {range = 550},
         ["3"] = {range = 550},
         }},
-    ["Thresh"] = {charName = "Thresh", skillshots = {
+    ["Thresh"] = {charName = "Thresh", skills = {
         ["0"] = {range = 1075},
         ["1"] = {range = 950},
         ["2"] = {range = 800},
         ["3"] = {range = 450},
         }},
-    ["Teemo"] = {charName = "Teemo", skillshots = {
+    ["Teemo"] = {charName = "Teemo", skills = {
         ["0"] = {range = 680},
         ["1"] = {range = 0},
         ["2"] = {range = 0},
         ["3"] = {range = 300},
         }},
-    ["Taric"] = {charName = "Taric", skillshots = {
+    ["Taric"] = {charName = "Taric", skills = {
         ["0"] = {range = 750},
         ["1"] = {range = 400},
         ["2"] = {range = 625},
         ["3"] = {range = 400},
         }},
-    ["TahmKench"] = {charName = "TahmKench", skillshots = {
+    ["TahmKench"] = {charName = "TahmKench", skills = {
         ["0"] = {range = 800},
         ["1"] = {range = 250},
         ["2"] = {range = 0},
         ["3"] = {range = 4500},
         }},
-    ["Syndra"] = {charName = "Syndra", skillshots = {
+    ["Syndra"] = {charName = "Syndra", skills = {
         ["0"] = {range = 800},
         ["1"] = {range = 925},
         ["2"] = {range = 650},
         ["3"] = {range = 675},
         }},
-    ["Swain"] = {charName = "Swain", skillshots = {
+    ["Swain"] = {charName = "Swain", skills = {
         ["0"] = {range = 625},
         ["1"] = {range = 900},
         ["2"] = {range = 625},
         ["3"] = {range = 0},
         }},
-    ["Soraka"] = {charName = "Soraka", skillshots = {
+    ["Soraka"] = {charName = "Soraka", skills = {
         ["0"] = {range = 810},
         ["1"] = {range = 550},
         ["2"] = {range = 925},
         ["3"] = {range = math.huge},
         }},
-    ["Sona"] = {charName = "Sona", skillshots = {
+    ["Sona"] = {charName = "Sona", skills = {
         ["0"] = {range = 825},
         ["1"] = {range = 1000},
         ["2"] = {range = 360},
         ["3"] = {range = 900},
         }},
-    ["Skarner"] = {charName = "Skarner", skillshots = {
+    ["Skarner"] = {charName = "Skarner", skills = {
         ["0"] = {range = 350},
         ["1"] = {range = 0},
         ["2"] = {range = 980},
         ["3"] = {range = 350},
         }},
-    ["Sivir"] = {charName = "Sivir", skillshots = {
+    ["Sivir"] = {charName = "Sivir", skills = {
         ["0"] = {range = 1200},
         ["1"] = {range = 0},
         ["2"] = {range = 0},
         ["3"] = {range = 1000},
         }},
-    ["Sion"] = {charName = "Sion", skillshots = {
+    ["Sion"] = {charName = "Sion", skills = {
         ["0"] = {range = 10000},
         ["1"] = {range = 0},
         ["2"] = {range = 800},
         ["3"] = {range = 7500},
         }},
-    ["Singed"] = {charName = "Singed", skillshots = {
+    ["Singed"] = {charName = "Singed", skills = {
         ["0"] = {range = 0},
         ["1"] = {range = 1000},
         ["2"] = {range = 125},
         ["3"] = {range = 0},
         }},
-    ["Shyvana"] = {charName = "Shyvana", skillshots = {
+    ["Shyvana"] = {charName = "Shyvana", skills = {
         ["0"] = {range = 0},
         ["1"] = {range = 325},
         ["2"] = {range = 925},
         ["3"] = {range = 1000},
         }},
-    ["Shen"] = {charName = "Shen", skillshots = {
+    ["Shen"] = {charName = "Shen", skills = {
         ["0"] = {range = 475},
         ["1"] = {range = 0},
         ["2"] = {range = 600},
         ["3"] = {range = math.huge},
         }},
-    ["Shaco"] = {charName = "Shaco", skillshots = {
+    ["Shaco"] = {charName = "Shaco", skills = {
         ["0"] = {range = 400},
         ["1"] = {range = 425},
         ["2"] = {range = 625},
         ["3"] = {range = 0},
         }},
-    ["Sejuani"] = {charName = "Sejuani", skillshots = {
+    ["Sejuani"] = {charName = "Sejuani", skills = {
         ["0"] = {range = 650},
         ["1"] = {range = 350},
         ["2"] = {range = 1000},
         ["3"] = {range = 1175},
         }},
-    ["Ryze"] = {charName = "Ryze", skillshots = {
+    ["Ryze"] = {charName = "Ryze", skills = {
         ["0"] = {range = 900},
         ["1"] = {range = 600},
         ["2"] = {range = 600},
         ["3"] = {range = 0},
         }},
-    ["Rumble"] = {charName = "Rumble", skillshots = {
+    ["Rumble"] = {charName = "Rumble", skills = {
         ["0"] = {range = 600},
         ["1"] = {range = 0},
         ["2"] = {range = 850},
         ["3"] = {range = 1750},
         }},
-    ["Riven"] = {charName = "Riven", skillshots = {
+    ["Riven"] = {charName = "Riven", skills = {
         ["0"] = {range = 275},
         ["1"] = {range = 260},
         ["2"] = {range = 250},
         ["3"] = {range = 0},
         }},
-    ["Rengar"] = {charName = "Rengar", skillshots = {
+    ["Rengar"] = {charName = "Rengar", skills = {
         ["0"] = {range = 0},
         ["1"] = {range = 500},
         ["2"] = {range = 1000},
         ["3"] = {range = 2000},
         }},
-    ["Renekton"] = {charName = "Renekton", skillshots = {
+    ["Renekton"] = {charName = "Renekton", skills = {
         ["0"] = {range = 325},
         ["1"] = {range = 0},
         ["2"] = {range = 450},
         ["3"] = {range = 0},
         }},
-    ["RekSai"] = {charName = "RekSai", skillshots = {
+    ["RekSai"] = {charName = "RekSai", skills = {
         ["0"] = {range = 325},
         ["1"] = {range = 1650},
         ["2"] = {range = 250},
         ["3"] = {range = math.huge},
         }},
-    ["Rammus"] = {charName = "Rammus", skillshots = {
+    ["Rammus"] = {charName = "Rammus", skills = {
         ["0"] = {range = 0},
         ["1"] = {range = 0},
         ["2"] = {range = 325},
         ["3"] = {range = 0},
         }},
-    ["Quinn"] = {charName = "Quinn", skillshots = {
+    ["Quinn"] = {charName = "Quinn", skills = {
         ["0"] = {range = 1025},
         ["1"] = {range = 2100},
         ["2"] = {range = 675},
         ["3"] = {range = 0},
         }},
-    ["Poppy"] = {charName = "Poppy", skillshots = {
+    ["Poppy"] = {charName = "Poppy", skills = {
         ["0"] = {range = 430},
         ["1"] = {range = 400},
         ["2"] = {range = 475},
         ["3"] = {range = 500},
         }},
-    ["Pantheon"] = {charName = "Pantheon", skillshots = {
+    ["Pantheon"] = {charName = "Pantheon", skills = {
         ["0"] = {range = 600},
         ["1"] = {range = 600},
         ["2"] = {range = 400},
         ["3"] = {range = 5500},
         }},
-    ["Orianna"] = {charName = "Orianna", skillshots = {
+    ["Orianna"] = {charName = "Orianna", skills = {
         ["0"] = {range = 815},
         ["1"] = {range = 0},
         ["2"] = {range = 1095},
         ["3"] = {range = 0},
         }},
-    ["Olaf"] = {charName = "Olaf", skillshots = {
+    ["Olaf"] = {charName = "Olaf", skills = {
         ["0"] = {range = 1000},
         ["1"] = {range = 0},
         ["2"] = {range = 325},
         ["3"] = {range = 0},
         }},
-    ["Nunu"] = {charName = "Nunu", skillshots = {
+    ["Nunu"] = {charName = "Nunu", skills = {
         ["0"] = {range = 125},
         ["1"] = {range = 700},
         ["2"] = {range = 550},
         ["3"] = {range = 650},
         }},
-    ["Nocturne"] = {charName = "Nocturne", skillshots = {
+    ["Nocturne"] = {charName = "Nocturne", skills = {
         ["0"] = {range = 1125},
         ["1"] = {range = 0},
         ["2"] = {range = 425},
         ["3"] = {range = 2500},
         }},
-    ["Nidalee"] = {charName = "Nidalee", skillshots = {
+    ["Nidalee"] = {charName = "Nidalee", skills = {
         ["0"] = {range = 1500},
         ["1"] = {range = 900},
         ["2"] = {range = 600},
@@ -780,7 +780,7 @@ local allyHeroes, enemyHeroes = GetAllyHeroes(), GetEnemyHeroes()
 local allyCount, enemyCount = #allyHeroes, #enemyHeroes       
  
 function Print(msg)
-    print("<font color=\"#FF3300\"><b>[Heroes Can Draw Too]</b></font> <font color=\"#FFFFFF\">" .. msg .. "</font>")
+    print("<font color=\"#FF3300\"><b>[Heroes Can Draw Too!]</b></font> <font color=\"#FFFFFF\">" .. msg .. "</font>")
 end
          
 function OnLoad()
@@ -851,20 +851,20 @@ function OnDraw()
         for i = 1, allyCount do
         local allyhero = allyHeroes[i]	
             if champions[allyhero.charName] ~= nil then
-                for index, skillshot in pairs(champions[allyhero.charName].skillshots) do
+                for index, skillshot in pairs(champions[allyhero.charName].skills) do
                     if not menu.drawtoggle then
                         if allyhero.visible == true and not allyhero.dead then
                             if menu.ally["allyonoffq"..allyhero.charName] then
-                    DrawCircle(allyhero.x, allyhero.y, allyhero.z, champions[allyhero.charName].skillshots["0"].range, ARGB(table.unpack(menu.color.allycolorq)))
+                    DrawCircle(allyhero.x, allyhero.y, allyhero.z, champions[allyhero.charName].skills["0"].range, ARGB(table.unpack(menu.color.allycolorq)))
                             end
                             if menu.ally["allyonoffw"..allyhero.charName] then
-                    DrawCircle(allyhero.x, allyhero.y, allyhero.z, champions[allyhero.charName].skillshots["1"].range, ARGB(table.unpack(menu.color.allycolorw)))
+                    DrawCircle(allyhero.x, allyhero.y, allyhero.z, champions[allyhero.charName].skills["1"].range, ARGB(table.unpack(menu.color.allycolorw)))
                             end
                             if menu.ally["allyonoffe"..allyhero.charName] then
-                    DrawCircle(allyhero.x, allyhero.y, allyhero.z, champions[allyhero.charName].skillshots["2"].range, ARGB(table.unpack(menu.color.allycolore)))
+                    DrawCircle(allyhero.x, allyhero.y, allyhero.z, champions[allyhero.charName].skills["2"].range, ARGB(table.unpack(menu.color.allycolore)))
                             end
                             if menu.ally["allyonoffr"..allyhero.charName] then
-                    DrawCircle(allyhero.x, allyhero.y, allyhero.z, champions[allyhero.charName].skillshots["3"].range, ARGB(table.unpack(menu.color.allycolorr)))
+                    DrawCircle(allyhero.x, allyhero.y, allyhero.z, champions[allyhero.charName].skills["3"].range, ARGB(table.unpack(menu.color.allycolorr)))
                             end
                         end
                     end
@@ -876,20 +876,20 @@ function OnDraw()
         for i = 1, enemyCount do
         local hero = enemyHeroes[i]	
             if champions[hero.charName] ~= nil then
-                for index, skillshot in pairs(champions[hero.charName].skillshots) do
+                for index, skillshot in pairs(champions[hero.charName].skills) do
                     if not menu.drawtoggle then
                         if hero.visible == true and not hero.dead then
                             if menu.enemy["enemyonoffq"..hero.charName] then
-                    DrawCircle(hero.x, hero.y, hero.z, champions[hero.charName].skillshots["0"].range, ARGB(table.unpack(menu.color.enemycolorq)))
+                    DrawCircle(hero.x, hero.y, hero.z, champions[hero.charName].skills["0"].range, ARGB(table.unpack(menu.color.enemycolorq)))
                             end
                             if menu.enemy["enemyonoffw"..hero.charName] then
-                    DrawCircle(hero.x, hero.y, hero.z, champions[hero.charName].skillshots["1"].range, ARGB(table.unpack(menu.color.enemycolorw)))
+                    DrawCircle(hero.x, hero.y, hero.z, champions[hero.charName].skills["1"].range, ARGB(table.unpack(menu.color.enemycolorw)))
                             end
                             if menu.enemy["enemyonoffe"..hero.charName] then
-                    DrawCircle(hero.x, hero.y, hero.z, champions[hero.charName].skillshots["2"].range, ARGB(table.unpack(menu.color.enemycolore)))
+                    DrawCircle(hero.x, hero.y, hero.z, champions[hero.charName].skills["2"].range, ARGB(table.unpack(menu.color.enemycolore)))
                             end
                             if menu.enemy["enemyonoffr"..hero.charName] then
-                    DrawCircle(hero.x, hero.y, hero.z, champions[hero.charName].skillshots["3"].range, ARGB(table.unpack(menu.color.enemycolorr)))
+                    DrawCircle(hero.x, hero.y, hero.z, champions[hero.charName].skills["3"].range, ARGB(table.unpack(menu.color.enemycolorr)))
                             end
                         end
                     end
@@ -940,10 +940,10 @@ function Update()
 	ToUpdate.VersionPath = "/UnknownHeroe/BoL/master//version/HeroesDraw.version"
 	ToUpdate.ScriptPath =  "/UnknownHeroe/BoL/master/HeroesDraw.lua"
 	ToUpdate.SavePath = SCRIPT_PATH .. "/" .. _ENV.FILE_NAME
-	ToUpdate.CallbackUpdate = function(NewVersion, OldVersion) self:Print("Script Updated To Version " .. NewVersion .. "! Double Tap F9!") end
-	ToUpdate.CallbackNoUpdate = function(OldVersion) self:Print("No Updates Found, Current Version " .. ToUpdate.Version .. "!") end
-	ToUpdate.CallbackNewVersion = function(NewVersion) self:Print("New Version Found (" .. NewVersion .. ")! Please Wait Until It's Downloaded!") end
-	ToUpdate.CallbackError = function(NewVersion) self:Print("Error While Downloading! Please Try Again.") end
+	ToUpdate.CallbackUpdate = function(NewVersion, OldVersion) Print("Script Updated To Version " .. NewVersion .. "! Double Tap F9!") end
+	ToUpdate.CallbackNoUpdate = function(OldVersion) Print("No Updates Found, Current Version " .. ToUpdate.Version .. "!") end
+	ToUpdate.CallbackNewVersion = function(NewVersion) Print("New Version Found (" .. NewVersion .. ")! Please Wait Until It's Downloaded!") end
+	ToUpdate.CallbackError = function(NewVersion) Print("Error While Downloading! Please Try Again.") end
 	ScriptUpdate(ToUpdate.Version, ToUpdate.UseHttps, ToUpdate.Host, ToUpdate.VersionPath, ToUpdate.ScriptPath, ToUpdate.SavePath, function() end, function() end, function() end, function() end)
 	ScriptUpdate(ToUpdate.Version, ToUpdate.UseHttps, ToUpdate.Host, ToUpdate.VersionPath, ToUpdate.ScriptPath, LIB_PATH .. "/HeroesDraw.lua", ToUpdate.CallbackUpdate, ToUpdate.CallbackNoUpdate, ToUpdate.CallbackNewVersion, ToUpdate.CallbackError)
 end
@@ -1032,7 +1032,7 @@ function ScriptUpdate:GetOnlineVersion()
 			local ScriptEnd = self.File:find('</scr' .. 'ipt>')
 			if ScriptEnd then ScriptEnd = ScriptEnd - 1 end
 			local DownloadedSize = self.File:sub(ScriptFind + 1, ScriptEnd or -1):len()
-			self.DownloadStatus = 'Downloading VersionInfo (' .. round(100 / self.Size * DownloadedSize, 2) .. '%)'
+			self.DownloadStatus = 'Downloading VersionInfo (' .. Round(100 / self.Size * DownloadedSize, 2) .. '%)'
 		end
 	end
 	if self.File:find('</scr' .. 'ipt>') then
