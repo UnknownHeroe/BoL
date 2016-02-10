@@ -37,7 +37,7 @@ local Champions =
 	-- ["Nautilus"] = true,
 	-- ["Nunu"] = true,
 	-- ["Shen"] = true,
-    ["Sona"] = true,
+    	["Sona"] = true,
 	["Soraka"] = true,
 	-- ["TahmKench"] = true,
 	-- ["Taric"] = true,
@@ -47,7 +47,7 @@ local Champions =
 }
  
 local Interrupt = {
-    ["Katarina"] = {charName = "Katarina", stop = {name = "Death lotus", spellName = "KatarinaR", ult = true }},
+        ["Katarina"] = {charName = "Katarina", stop = {name = "Death lotus", spellName = "KatarinaR", ult = true }},
 	["Nunu"] = {charName = "Nunu", stop = {name = "Absolute Zero", spellName = "AbsoluteZero", ult = true }},
 	["Malzahar"] = {charName = "Malzahar", stop = {name = "Nether Grasp", spellName = "AlZaharNetherGrasp", ult = true}},
 	["Caitlyn"] = {charName = "Caitlyn", stop = {name = "Ace in the hole", spellName = "CaitlynAceintheHole", ult = true, projectileName = "caitlyn_ult_mis.troy"}},
