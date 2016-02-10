@@ -1,5 +1,5 @@
 --[[
- 6.02 Change Log: 
+1.1 Change Log: 
 
 1) Added Sona 
 2) Fixed Auto Interrupt
