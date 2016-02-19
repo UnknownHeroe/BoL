@@ -1,24 +1,25 @@
 --[[
-1.1 Change Log: 
 
-1) Added Sona 
-2) Fixed Auto Interrupt
-3) Fixed Soraka R
-4) Fixed Leona R Spam
-5) Added Welcome Message
-6) Thresh and Blitzcrank Errors
-7) Changed to Draw Triangle (S1mple)
-8) Added PeWalk Support
-9) Nami Cast E on AA
-10)Fixed Insec Flashes
-11) OPEN SOURCE!
+  ____                                           _     _   _
+ / ___|   _   _   _ __    _ __     ___    _ __  | |_  | | | |   ___   _ __    ___     ___   ___
+ \___ \  | | | | | '_ \  | '_ \   / _ \  | '__| | __| | |_| |  / _ \ | '__|  / _ \   / _ \ / __|
+  ___) | | |_| | | |_) | | |_) | | (_) | | |    | |_  |  _  | |  __/ | |    | (_) | |  __/ \__ \
+ |____/   \__,_| | .__/  | .__/   \___/  |_|     \__| |_| |_|  \___| |_|     \___/   \___| |___/
+                 |_|     |_|
+
+1.2 Change Log:
+
+1) Janna left click cancel ult
+2) Fixed Thresh and Blitz errors
+3) Fixed Sona error
+4)Improve Alistar logic
 ]]
 
-local scriptVersion = 1.1
+local scriptVersion = 1.2
 
 -- Script Status --
 assert(load(Base64Decode("G0x1YVIAAQQEBAgAGZMNChoKAAAAAAAAAAAAAQIKAAAABgBAAEFAAAAdQAABBkBAAGUAAAAKQACBBkBAAGVAAAAKQICBHwCAAAQAAAAEBgAAAGNsYXNzAAQNAAAAU2NyaXB0U3RhdHVzAAQHAAAAX19pbml0AAQLAAAAU2VuZFVwZGF0ZQACAAAAAgAAAAgAAAACAAotAAAAhkBAAMaAQAAGwUAABwFBAkFBAQAdgQABRsFAAEcBwQKBgQEAXYEAAYbBQACHAUEDwcEBAJ2BAAHGwUAAxwHBAwECAgDdgQABBsJAAAcCQQRBQgIAHYIAARYBAgLdAAABnYAAAAqAAIAKQACFhgBDAMHAAgCdgAABCoCAhQqAw4aGAEQAx8BCAMfAwwHdAIAAnYAAAAqAgIeMQEQAAYEEAJ1AgAGGwEQA5QAAAJ1AAAEfAIAAFAAAAAQFAAAAaHdpZAAEDQAAAEJhc2U2NEVuY29kZQAECQAAAHRvc3RyaW5nAAQDAAAAb3MABAcAAABnZXRlbnYABBUAAABQUk9DRVNTT1JfSURFTlRJRklFUgAECQAAAFVTRVJOQU1FAAQNAAAAQ09NUFVURVJOQU1FAAQQAAAAUFJPQ0VTU09SX0xFVkVMAAQTAAAAUFJPQ0VTU09SX1JFVklTSU9OAAQEAAAAS2V5AAQHAAAAc29ja2V0AAQIAAAAcmVxdWlyZQAECgAAAGdhbWVTdGF0ZQAABAQAAAB0Y3AABAcAAABhc3NlcnQABAsAAABTZW5kVXBkYXRlAAMAAAAAAADwPwQUAAAAQWRkQnVnc3BsYXRDYWxsYmFjawABAAAACAAAAAgAAAAAAAMFAAAABQAAAAwAQACBQAAAHUCAAR8AgAACAAAABAsAAABTZW5kVXBkYXRlAAMAAAAAAAAAQAAAAAABAAAAAQAQAAAAQG9iZnVzY2F0ZWQubHVhAAUAAAAIAAAACAAAAAgAAAAIAAAACAAAAAAAAAABAAAABQAAAHNlbGYAAQAAAAAAEAAAAEBvYmZ1c2NhdGVkLmx1YQAtAAAAAwAAAAMAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABgAAAAYAAAAGAAAABgAAAAUAAAADAAAAAwAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAHAAAABwAAAAcAAAAHAAAABwAAAAcAAAAHAAAABwAAAAcAAAAIAAAACAAAAAgAAAAIAAAAAgAAAAUAAABzZWxmAAAAAAAtAAAAAgAAAGEAAAAAAC0AAAABAAAABQAAAF9FTlYACQAAAA4AAAACAA0XAAAAhwBAAIxAQAEBgQAAQcEAAJ1AAAKHAEAAjABBAQFBAQBHgUEAgcEBAMcBQgABwgEAQAKAAIHCAQDGQkIAx4LCBQHDAgAWAQMCnUCAAYcAQACMAEMBnUAAAR8AgAANAAAABAQAAAB0Y3AABAgAAABjb25uZWN0AAQRAAAAc2NyaXB0c3RhdHVzLm5ldAADAAAAAAAAVEAEBQAAAHNlbmQABAsAAABHRVQgL3N5bmMtAAQEAAAAS2V5AAQCAAAALQAEBQAAAGh3aWQABAcAAABteUhlcm8ABAkAAABjaGFyTmFtZQAEJgAAACBIVFRQLzEuMA0KSG9zdDogc2NyaXB0c3RhdHVzLm5ldA0KDQoABAYAAABjbG9zZQAAAAAAAQAAAAAAEAAAAEBvYmZ1c2NhdGVkLmx1YQAXAAAACgAAAAoAAAAKAAAACgAAAAoAAAALAAAACwAAAAsAAAALAAAADAAAAAwAAAANAAAADQAAAA0AAAAOAAAADgAAAA4AAAAOAAAACwAAAA4AAAAOAAAADgAAAA4AAAACAAAABQAAAHNlbGYAAAAAABcAAAACAAAAYQAAAAAAFwAAAAEAAAAFAAAAX0VOVgABAAAAAQAQAAAAQG9iZnVzY2F0ZWQubHVhAAoAAAABAAAAAQAAAAEAAAACAAAACAAAAAIAAAAJAAAADgAAAAkAAAAOAAAAAAAAAAEAAAAFAAAAX0VOVgA="), nil, "bt", _ENV))() ScriptStatus("TGJIIJIFJHN")
- 
+
 local Champions =
 {
 	["Alistar"] = true,
@@ -37,7 +38,7 @@ local Champions =
 	-- ["Nautilus"] = true,
 	-- ["Nunu"] = true,
 	-- ["Shen"] = true,
-    	["Sona"] = true,
+    ["Sona"] = true,
 	["Soraka"] = true,
 	-- ["TahmKench"] = true,
 	-- ["Taric"] = true,
@@ -45,9 +46,9 @@ local Champions =
 	-- ["Zilean"] = true,
 	-- ["Zyra"] = true
 }
- 
+
 local Interrupt = {
-        ["Katarina"] = {charName = "Katarina", stop = {name = "Death lotus", spellName = "KatarinaR", ult = true }},
+    ["Katarina"] = {charName = "Katarina", stop = {name = "Death lotus", spellName = "KatarinaR", ult = true }},
 	["Nunu"] = {charName = "Nunu", stop = {name = "Absolute Zero", spellName = "AbsoluteZero", ult = true }},
 	["Malzahar"] = {charName = "Malzahar", stop = {name = "Nether Grasp", spellName = "AlZaharNetherGrasp", ult = true}},
 	["Caitlyn"] = {charName = "Caitlyn", stop = {name = "Ace in the hole", spellName = "CaitlynAceintheHole", ult = true, projectileName = "caitlyn_ult_mis.troy"}},
@@ -61,7 +62,7 @@ local Interrupt = {
 	["Urgot"] = {charName = "Urgot", stop = {name = "Position Reverser", spellName = "UrgotSwap2", ult = true}},
 	["Warwick"] = {charName = "Warwick", stop = {name = "Infinite Duress", spellName = "InfiniteDuress", ult = true}},
 }
- 
+
 local dashSpells = {}
 local DashSpells = {
 	['Ahri'] = { true, spell = _R, range = 450, projSpeed = 2200, stop = { name = "Spirit Rush" } },
@@ -97,7 +98,7 @@ local DashSpells = {
 	['Yasuo'] = { true, spell = _E, range = 475, projSpeed = 1000, },
 	['Vayne'] = { true, spell = _Q, range = 300, projSpeed = 1000, }
 }
- 
+
 local DangerousSpells = {
 	["Akali"] = { true, spell = _R },
 	["Alistar"] = { true, spell = _W },
@@ -158,100 +159,85 @@ local DangerousSpells = {
 }
 
 ItemNames = {
-    	[3303]				= "ArchAngelsDummySpell",
-    	[3007]				= "ArchAngelsDummySpell",
-    	[3144]				= "BilgewaterCutlass",
-    	[3188]				= "ItemBlackfireTorch",
-    	[3153]				= "ItemSwordOfFeastAndFamine",
-	[3405]				= "TrinketSweeperLvl1",
-    	[3411]				= "TrinketOrbLvl1",
-    	[3166]				= "TrinketTotemLvl1",
-    	[3450]				= "OdinTrinketRevive",
-    	[2041]				= "ItemCrystalFlask",
-    	[2054]				= "ItemKingPoroSnack",
-    	[2138]				= "ElixirOfIron",
-    	[2137]				= "ElixirOfRuin",
-    	[2139]				= "ElixirOfSorcery",
-    	[2140]				= "ElixirOfWrath",
-    	[3184]				= "OdinEntropicClaymore",
-    	[2050]				= "ItemMiniWard",
-    	[3401]				= "HealthBomb",
-    	[3363]				= "TrinketOrbLvl3",
-    	[3092]				= "ItemGlacialSpikeCast",
-    	[3460]				= "AscWarp",
-    	[3361]				= "TrinketTotemLvl3",
-    	[3362]				= "TrinketTotemLvl4",
-    	[3159]				= "HextechSweeper",
-    	[2051]				= "ItemHorn",
-    	--[2003]			= "RegenerationPotion",
-    	[3146]				= "HextechGunblade",
-    	[3187]				= "HextechSweeper",
-    	[3190]				= "IronStylus",
-    	[2004]				= "FlaskOfCrystalWater",
-    	[3139]				= "ItemMercurial",
-    	[3222]				= "ItemMorellosBane",
-    	[3042]				= "Muramana",
-    	[3043]				= "Muramana",
-    	[3180]				= "OdynsVeil",
-    	[3056]				= "ItemFaithShaker",
-    	[2047]				= "OracleExtractSight",
-    	[3364]				= "TrinketSweeperLvl3",
-    	[2052]				= "ItemPoroSnack",
-    	[3140]				= "QuicksilverSash",
-    	[3143]				= "RanduinsOmen",
-    	[3074]				= "ItemTiamatCleave",
-    	[3800]				= "ItemRighteousGlory",
-    	[2045]				= "ItemGhostWard",
-    	[3342]				= "TrinketOrbLvl1",
-    	[3040]				= "ItemSeraphsEmbrace",
-    	[3048]				= "ItemSeraphsEmbrace",
-    	[2049]				= "ItemGhostWard",
-    	[3345]				= "OdinTrinketRevive",
-    	[2044]				= "SightWard",
-    	[3341]				= "TrinketSweeperLvl1",
-    	[3069]				= "shurelyascrest",
-    	[3599]				= "KalistaPSpellCast",
-    	[3185]				= "HextechSweeper",
-    	[3077]				= "ItemTiamatCleave",
-    	[2009]				= "ItemMiniRegenPotion",
-    	[2010]				= "ItemMiniRegenPotion",
-    	[3023]				= "ItemWraithCollar",
-    	[3290]				= "ItemWraithCollar",
-    	[2043]				= "VisionWard",
-    	[3340]				= "TrinketTotemLvl1",
-    	[3090]				= "ZhonyasHourglass",
-    	[3154]				= "wrigglelantern",
-    	[3142]				= "YoumusBlade",
-    	[3157]				= "ZhonyasHourglass",
-    	[3512]				= "ItemVoidGate",
-    	[3131]				= "ItemSoTD",
-    	[3137]				= "ItemDervishBlade",
-    	[3352]				= "RelicSpotter",
-    	[3350]				= "TrinketTotemLvl2",
-}
- 
-local ImmuneEffects = {
-	{ 'zhonyas_ring_activate.troy', 2.55, 'zhonyashourglass' },
-	{ 'Aatrox_Passive_Death_Activate.troy', 3 },
-	{ 'LifeAura.troy', 4 },
-	{ 'nickoftime_tar.troy', 7 },
-	{ 'eyeforaneye_self.troy', 2 },
-	{ 'UndyingRage_buf.troy', 5 },
-	{ 'EggTimer.troy', 6 },
-	{ 'LOC_Suppress.troy', 1.75, 'infiniteduresschannel' },
-	{ 'OrianaVacuumIndicator.troy', 0.50 },
-	{ 'NocturneUnspeakableHorror_beam.troy', 2 },
-	{ 'GateMarker_green.troy', 1.5 },
-	{ '_stasis_skin_ful', 2.6 }
+    [3303]				= "ArchAngelsDummySpell",
+    [3007]				= "ArchAngelsDummySpell",
+    [3144]				= "BilgewaterCutlass",
+    [3188]				= "ItemBlackfireTorch",
+    [3153]				= "ItemSwordOfFeastAndFamine",
+    [3405]				= "TrinketSweeperLvl1",
+    [3411]				= "TrinketOrbLvl1",
+    [3166]				= "TrinketTotemLvl1",
+    [3450]				= "OdinTrinketRevive",
+    [2041]				= "ItemCrystalFlask",
+    [2054]				= "ItemKingPoroSnack",
+    [2138]				= "ElixirOfIron",
+    [2137]				= "ElixirOfRuin",
+    [2139]				= "ElixirOfSorcery",
+    [2140]				= "ElixirOfWrath",
+    [3184]				= "OdinEntropicClaymore",
+    [2050]				= "ItemMiniWard",
+    [3401]				= "HealthBomb",
+    [3363]				= "TrinketOrbLvl3",
+    [3092]				= "ItemGlacialSpikeCast",
+    [3460]				= "AscWarp",
+    [3361]				= "TrinketTotemLvl3",
+    [3362]				= "TrinketTotemLvl4",
+    [3159]				= "HextechSweeper",
+    [2051]				= "ItemHorn",
+    --[2003]			= "RegenerationPotion",
+    [3146]				= "HextechGunblade",
+    [3187]				= "HextechSweeper",
+    [3190]				= "IronStylus",
+    [2004]				= "FlaskOfCrystalWater",
+    [3139]				= "ItemMercurial",
+    [3222]				= "ItemMorellosBane",
+    [3042]				= "Muramana",
+    [3043]				= "Muramana",
+    [3180]				= "OdynsVeil",
+    [3056]				= "ItemFaithShaker",
+    [2047]				= "OracleExtractSight",
+    [3364]				= "TrinketSweeperLvl3",
+    [2052]				= "ItemPoroSnack",
+    [3140]				= "QuicksilverSash",
+    [3143]				= "RanduinsOmen",
+    [3074]				= "ItemTiamatCleave",
+    [3800]				= "ItemRighteousGlory",
+    [2045]				= "ItemGhostWard",
+    [3342]				= "TrinketOrbLvl1",
+    [3040]				= "ItemSeraphsEmbrace",
+    [3048]				= "ItemSeraphsEmbrace",
+    [2049]				= "ItemGhostWard",
+    [3345]				= "OdinTrinketRevive",
+    [2044]				= "SightWard",
+    [3341]				= "TrinketSweeperLvl1",
+    [3069]				= "shurelyascrest",
+    [3599]				= "KalistaPSpellCast",
+    [3185]				= "HextechSweeper",
+    [3077]				= "ItemTiamatCleave",
+    [2009]				= "ItemMiniRegenPotion",
+    [2010]				= "ItemMiniRegenPotion",
+    [3023]				= "ItemWraithCollar",
+    [3290]				= "ItemWraithCollar",
+    [2043]				= "VisionWard",
+    [3340]				= "TrinketTotemLvl1",
+    [3090]				= "ZhonyasHourglass",
+    [3154]				= "wrigglelantern",
+    [3142]				= "YoumusBlade",
+    [3157]				= "ZhonyasHourglass",
+    [3512]				= "ItemVoidGate",
+    [3131]				= "ItemSoTD",
+    [3137]				= "ItemDervishBlade",
+    [3352]				= "RelicSpotter",
+    [3350]				= "TrinketTotemLvl2",
 }
 
 local ccTable = { 'Stun', 'Silence', 'Taunt', 'Slow', 'Root', 'Blind', 'Supress' }
-local ccP = {5, 7, 8, 10, 11, 25, 24}  
+local ccP = {5, 7, 8, 10, 11, 25, 24}
 local updated = false
 local buffs = {}
 local ts = nil
 local sflash = nil
-local flashPos = nil 
+local flashPos = nil
 local towerCount
 local towers = { }
 local Target = GetTarget()
@@ -260,28 +246,13 @@ local allyCount, enemyCount = #allyHeroes, #enemyHeroes
 local ceil, floor, round, max, huge, pow = math.ceil, math.floor, math.round, math.max, math.huge, math.pow
 
 buffs["recall"] = false
- 
--- Made by Nebelwolfi. Makes Classes Local, Not Global -- 
+
+-- Made by Nebelwolfi. Makes Classes Local, Not Global --
 function Class(name)
 	_ENV[name] = { }
 	_ENV[name].__index = _ENV[name]
 	local mt = { __call = function(self, ...) local b = { } setmetatable(b, _ENV[name]) b:__init(...) return b end }
 	setmetatable(_ENV[name], mt)
-end
-
--- Keydown Fix --
-local originalKD = _G.IsKeyDown;
-_G.IsKeyDown = function(theKey)
-	if (type(theKey) ~= 'number') then
-		local tn = tonumber(theKey);
-		if (tn ~= nil) then
-			return originalKD(tn);
-		else
-			return originalKD(GetKey(theKey));
-		end;
-	else
-		return originalKD(theKey);
-	end
 end
 
 -- MAIN CLASS --
@@ -295,23 +266,23 @@ end
 -- On Load --
 function _Bundle:__init()
 	self:Print("Keep a cool head and maintain a low profile. Never take the lead - but aim to do something big. -Deng Xiaoping")
-	
+
     self:Update()
 	self:LoadUPL()
 	self:CheckChampion()
     self:LoadSprite()
-    
+
     _MovementBlock:__init()
-	
+
     welcome = GetSprite("SupportHeroes/WelcomeMessage.png")
 	PR = _PentagonRot(myHero, ARGB(255,255,255,255),1,200)
 	VPred = VPrediction()
 	ts = TargetSelector(TARGET_LESS_CAST_PRIORITY, 2000, DAMAGE_MAGIC, true)
-	
+
 	AddTickCallback(function() self:OnTick() end)
     AddDrawCallback(function() self:OnDraw() end)
     AddMsgCallback(function(msg, key) self:OnWndMsg(msg,key) end)
-    	
+
 	if myHero:GetSpellData(SUMMONER_1).name:find("summonerdot") then signite = SUMMONER_1
 	elseif myHero:GetSpellData(SUMMONER_2).name:find("summonerdot") then signite = SUMMONER_2 end
 	if myHero:GetSpellData(SUMMONER_1).name:find("summonerheal") then sheal = SUMMONER_1
@@ -320,7 +291,7 @@ function _Bundle:__init()
 	elseif myHero:GetSpellData(SUMMONER_2).name:find("summonerflash") then sflash = SUMMONER_2 end
 	if myHero:GetSpellData(SUMMONER_1).name:find("summonerexhaust") then sexhaust = SUMMONER_1
 	elseif myHero:GetSpellData(SUMMONER_2).name:find("summonerexhaust") then sexhaust = SUMMONER_2 end
-end 
+end
 
 function _Bundle:LoadSprite()
     if not DirectoryExist(SPRITE_PATH .. "SupportHeroes//") then
@@ -357,14 +328,14 @@ function _Bundle:Update()
 	ScriptUpdate(ToUpdate.Version, ToUpdate.UseHttps, ToUpdate.Host, ToUpdate.VersionPath, ToUpdate.ScriptPath, ToUpdate.SavePath, function() end, function() end, function() end, function() end)
 	ScriptUpdate(ToUpdate.Version, ToUpdate.UseHttps, ToUpdate.Host, ToUpdate.VersionPath, ToUpdate.ScriptPath, LIB_PATH .. "/SupportHeroesRemastered.lua", ToUpdate.CallbackUpdate, ToUpdate.CallbackNoUpdate, ToUpdate.CallbackNewVersion, ToUpdate.CallbackError)
 end
- 
+
 -- Target Select --
 function _Bundle:OnTick()
 	if enemyMinions then enemyMinions:update() end
-	Target = _Tech:GetTarget()  
+	Target = _Tech:GetTarget()
 end
 
--- Check Champion -- 
+-- Check Champion --
 function _Bundle:CheckChampion()
 	if (Champions[myHero.charName] and _ENV["_" .. myHero.charName]) then
 		Champion = _ENV["_" .. myHero.charName]()
@@ -373,7 +344,7 @@ function _Bundle:CheckChampion()
 		return
 	end
 end
- 
+
  -- Load UPL --
 function _Bundle:LoadUPL()
 	if not _G.UPLloaded then
@@ -388,8 +359,15 @@ function _Bundle:LoadUPL()
 	end
 end
 
+if FileExist(LIB_PATH .. "/VPrediction.lua") then
+	require("VPrediction")
+else
+	Customprint("VPrediction is required, please download it and reload")
+	return
+end
+
 -- Load Orb Walk --
-function _Bundle:SetupOrbwalk()   
+function _Bundle:SetupOrbwalk()
 	if _G.Reborn_Loaded then
 	   SAC=true
 	   _Bundle:Print("Found SAC: Reborn!")
@@ -409,21 +387,21 @@ function _Bundle:SetupOrbwalk()
 	   _Bundle:Print("No Valid Orbwalker Found")
 	end
 end
- 
+
  Class ("_Activator")
 function _Activator:__init()
-	
+
 	AddTickCallback(function() self:OnTick() end)
 	AddApplyBuffCallback(function(unit, target, buff) self:OnApplyBuff(unit, target, buff) end)
 end
 
 function _Activator:OnTick()
 	if menu == nil then return end
-	
+
 	self:Exhaust()
 	self:HealTeammate()
 	self:Ignite()
-	
+
 	-- self:FrostQueens()
 	self:FaceOfTheMountain()
 	self:LocketOfIronSolari()
@@ -432,47 +410,47 @@ end
 
 function _Activator:Menu()
 	menu:addSubMenu("[" .. myHero.charName .. "] - Activator", "activator")
-	
+
 	menu.activator:addSubMenu("             -- Item Settings --", "Item")
 
 	menu.activator:addSubMenu("Face of the Mountain", "fotm")
 		for i = 1, heroManager.iCount do
 		local unit = heroManager:GetHero(i)
-			if unit.team == myHero.team then 
-			menu.activator.fotm:addParam("shield" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_ONOFF, true) 
-			menu.activator.fotm:addParam("shieldhppercent"..i, "Shield If < X%", SCRIPT_PARAM_SLICE, 20, 0, 100, 0) 
+			if unit.team == myHero.team then
+			menu.activator.fotm:addParam("shield" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_ONOFF, true)
+			menu.activator.fotm:addParam("shieldhppercent"..i, "Shield If < X%", SCRIPT_PARAM_SLICE, 20, 0, 100, 0)
 			menu.activator.fotm:addParam("empty", "", SCRIPT_PARAM_INFO,"")
 			end
 	   end
-	   
+
 	--[[menu.activator:addSubMenu("Frost Queens", "fqs")
-		menu.activator.fqs:addParam("fqs", "Use Frost Queens In Combo", SCRIPT_PARAM_ONOFF, true)  ]] 
-	   
-	menu.activator:addSubMenu("Locket of the Iron Solari", "lois")
+		menu.activator.fqs:addParam("fqs", "Use Frost Queens In Combo", SCRIPT_PARAM_ONOFF, true)  ]]
+
+    menu.activator:addSubMenu("Locket of the Iron Solari", "lois")
+    	for i = 1, heroManager.iCount do
+    	local unit = heroManager:GetHero(i)
+    		if unit.team == myHero.team then
+    		menu.activator.lois:addParam("shield" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_ONOFF, true)
+    		menu.activator.lois:addParam("shieldhppercent"..i, "Shield If < X%", SCRIPT_PARAM_SLICE, 20, 0, 100, 0)
+    		menu.activator.lois:addParam("empty", "", SCRIPT_PARAM_INFO,"")
+    		end
+       end
+
+    menu.activator:addSubMenu("Mikaels Crucible", "mikaels")
+		menu.activator.mikaels:addParam("info", "                -- Use on Allies --", SCRIPT_PARAM_INFO, "")
 		for i = 1, heroManager.iCount do
 		local unit = heroManager:GetHero(i)
-			if unit.team == myHero.team then  
-			menu.activator.lois:addParam("shield" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_ONOFF, true) 
-			menu.activator.lois:addParam("shieldhppercent"..i, "Shield If < X%", SCRIPT_PARAM_SLICE, 20, 0, 100, 0) 
-			menu.activator.lois:addParam("empty", "", SCRIPT_PARAM_INFO,"")
+			if unit.team == myHero.team then
+			menu.activator.mikaels:addParam(unit.charName, unit.charName, SCRIPT_PARAM_ONOFF, true)
 			end
-	   end
-	   
-	   menu.activator:addSubMenu("Mikaels Crucible", "mikaels")
-			menu.activator.mikaels:addParam("info", "                -- Use on Allies --", SCRIPT_PARAM_INFO, "")	
-			for i = 1, heroManager.iCount do
-			local unit = heroManager:GetHero(i)
-				if unit.team == myHero.team then 
-				menu.activator.mikaels:addParam(unit.charName, unit.charName, SCRIPT_PARAM_ONOFF, true)
-				end			
+		end
+		menu.activator.mikaels:addParam("info", "                -- Use to remove --", SCRIPT_PARAM_INFO, "")
+		for i,v in ipairs(ccTable) do
+			if ccP[i] == 10 or ccP[i] == 11 or ccP[i] == 25 then menu.activator.mikaels:addParam('ccType'..i, v, SCRIPT_PARAM_ONOFF, false)
+			else menu.activator.mikaels:addParam('ccType'..i, v, SCRIPT_PARAM_ONOFF, true)
 			end
-			menu.activator.mikaels:addParam("info", "                -- Use to remove --", SCRIPT_PARAM_INFO, "")
-			for i,v in ipairs(ccTable) do
-				if ccP[i] == 10 or ccP[i] == 11 or ccP[i] == 25 then menu.activator.mikaels:addParam('ccType'..i, v, SCRIPT_PARAM_ONOFF, false)
-				else menu.activator.mikaels:addParam('ccType'..i, v, SCRIPT_PARAM_ONOFF, true) 
-				end
-			end
-			
+		end
+
 	menu.activator:addSubMenu("Zhonya's Hourglass", "zhonyas")
 		menu.activator.zhonyas:addParam("usezhonyas", "Use Zhonyas Hourglass", SCRIPT_PARAM_ONOFF, true )
 		menu.activator.zhonyas:addParam("zhonyahshp", "Use If < X% HP", SCRIPT_PARAM_SLICE, 20, 0, 100, 0)
@@ -481,37 +459,37 @@ function _Activator:Menu()
 		menu.activator.zhonyas:addParam("zhonyasfizz", "Use Zhonya's On Fizz's R", SCRIPT_PARAM_ONOFF, true)
 		menu.activator.zhonyas:addParam("zhonyasmord", "Use Zhonya's On Mordakiser's R", SCRIPT_PARAM_ONOFF, true)
 		menu.activator.zhonyas:addParam("zhonyasvlad", "Use Zhonya's On Vladimir's R", SCRIPT_PARAM_ONOFF, true)
-	
+
 	menu.activator:addSubMenu("         -- Summoner Settings --", "Summs")
-	
+
 	menu.activator:addSubMenu("Exhaust", "exhaust")
 		if enemyCount > 0 then
 			for i = 1, enemyCount do
-			local unit = enemyHeroes[i]		
+			local unit = enemyHeroes[i]
 			menu.activator.exhaust:addParam("exhausttarget" .. unit.charName, "Use On ".. unit.charName, SCRIPT_PARAM_ONOFF, true)
 			menu.activator.exhaust:addParam("exhausthp" .. unit.charName, "Exhaust If <X% HP", SCRIPT_PARAM_SLICE, 40, 0, 100, 0)
 			menu.activator.exhaust:addParam("empty", "", SCRIPT_PARAM_INFO,"")
 			end
 		end
-	
+
 	menu.activator:addSubMenu("Heal", "heal")
 		for i = 1, heroManager.iCount do
 		local unit = heroManager:GetHero(i)
-			if unit.team == myHero.team then  
-			menu.activator.heal:addParam("sheal" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_ONOFF, true) 
-			menu.activator.heal:addParam("smaxhppercent"..i, "Use If < X% HP", SCRIPT_PARAM_SLICE, 10, 0, 100, 0) 
+			if unit.team == myHero.team then
+			menu.activator.heal:addParam("sheal" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_ONOFF, true)
+			menu.activator.heal:addParam("smaxhppercent"..i, "Use If < X% HP", SCRIPT_PARAM_SLICE, 10, 0, 100, 0)
 			menu.activator.heal:addParam("empty", "", SCRIPT_PARAM_INFO,"")
 			end
 	   end
 	   menu.activator.heal:addParam("enum", "Enemy Range", SCRIPT_PARAM_SLICE, 650, 0, 1500,0 )
-	
+
 	menu.activator:addSubMenu("Ignite", "ignite")
 	   menu.activator.ignite:addParam("ign", "Use Ignite", SCRIPT_PARAM_ONOFF, true)
 end
 
--- Summoners --   
+-- Summoners --
 function _Activator:Exhaust()
-	if Target == nil then return end 
+	if Target == nil then return end
 	if sexhaust == nil then return end
 	if allyCount > 0 then
 		for i = 1, allyCount do
@@ -525,24 +503,24 @@ function _Activator:Exhaust()
 			end
 		end
 	end
-end    
+end
 
 function _Activator:HealTeammate()
 	if sheal == nil then return end
 	for i = 1, heroManager.iCount do
 	local unit = heroManager:GetHero(i)
 		if unit.team == myHero.team then
-			if not InFountain() and not buffs["recall"] then 
+			if not InFountain() and not buffs["recall"] then
 				if unit.type == myHero.type and menu.activator.heal["sheal" ..unit.charName] and (100*unit.health/unit.maxHealth) < menu.activator.heal["smaxhppercent"..i] then
-					if IsReady(sheal) and (GetDistance(unit) < 850) and (GetDistance(Target) <= menu.activator.heal.enum) then 
-						CastSpell(sheal)         
+					if IsReady(sheal) and (GetDistance(unit) < 850) and (GetDistance(Target) <= menu.activator.heal.enum) then
+						CastSpell(sheal)
 					end
-				end    
+				end
 			end
 		end
 	end
-end 
- 
+end
+
 function _Activator:Ignite()
    if signite == nil then return end
    if Target == nil then return end
@@ -557,52 +535,52 @@ end
 -- Items --
 --[[function _Activator:FrostQueens()
 	if menu.key.comboKey and menu.activator.fqs then
-	local slot = _Tech:CustomGetInventorySlotItem("ItemGlacialSpikeCast", myHero)	
+	local slot = _Tech:CustomGetInventorySlotItem("ItemGlacialSpikeCast", myHero)
 		if slot ~= nil and IsReady(slot) then
 			if (GetDistance(unit) < 850) then
 				CastSpell(slot, unit)
 			end
 		end
-	end 
+	end
 end]]
 
-function _Activator:FaceOfTheMountain()    
+function _Activator:FaceOfTheMountain()
 	if Target == nil then return end
 	local slot = _Tech:CustomGetInventorySlotItem("HealthBomb", myHero)
 	for i = 1, heroManager.iCount do
 	local unit = heroManager:GetHero(i)
-		if unit.team == myHero.team then  
-			if slot ~= nil and IsReady(slot) then 
+		if unit.team == myHero.team then
+			if slot ~= nil and IsReady(slot) then
 				if menu.activator.fotm["shield".. unit.charName] and (100*unit.health/unit.maxHealth) <= menu.activator.fotm["shieldhppercent"..i] then
-					if (GetDistance(unit) < 750) and (GetDistance(Target) <= 700) then 
+					if (GetDistance(unit) < 750) and (GetDistance(Target) <= 700) then
 						DelayAction(function() CastSpell(slot, unit) end, menu.humanizer.shieldDelay / 1000)
 					end
-				end       
-			end          
-		end             
+				end
+			end
+		end
 	end
-end          
- 
+end
+
 function _Activator:LocketOfIronSolari()
 	if Target == nil then return end
 	local slot = _Tech:CustomGetInventorySlotItem("IronStylus", myHero)
 	for i = 1, heroManager.iCount do
 	local unit = heroManager:GetHero(i)
-		if unit.team == myHero.team then  
-			if slot ~= nil and IsReady(slot) then 
+		if unit.team == myHero.team then
+			if slot ~= nil and IsReady(slot) then
 				if menu.activator.lois["shield".. unit.charName] and (100*unit.health/unit.maxHealth) <= menu.activator.lois["shieldhppercent"..i] then
-					if (GetDistance(unit) < 750) and (GetDistance(Target) <= 700) then 
+					if (GetDistance(unit) < 750) and (GetDistance(Target) <= 700) then
 						DelayAction(function() CastSpell(slot, unit) end, menu.humanizer.shieldDelay / 1000)
 					end
-				end       
-			end          
-		end             
+				end
+			end
+		end
 	end
-end          
+end
 
 function _Activator:OnApplyBuff(unit, target, buff)
 	if Target == nil then return end
-	local slot = _Tech:CustomGetInventorySlotItem("ItemMorellosBane", myHero)	
+	local slot = _Tech:CustomGetInventorySlotItem("ItemMorellosBane", myHero)
 	if slot ~= nil and IsReady(slot) then
 		for i,v in ipairs(ccTable) do
 			if ccP[i] == buff.type and menu.activator.mikaels['ccType'..i] then
@@ -615,7 +593,7 @@ function _Activator:OnApplyBuff(unit, target, buff)
 		end
 	end
 end
- 
+
 function _Activator:Zhonyas()
 	local slot = _Tech:CustomGetInventorySlotItem("ZhonyasHourglass", myHero)
 	if slot ~= nil and menu.activator.zhonyas and IsReady(slot) then
@@ -639,29 +617,29 @@ function _Activator:Zhonyas()
 			CastSpell(slot)
 		end
 	end
-end 
+end
 
 -- CHAMPIONS --
 Class("_Alistar")
 function _Alistar:__init()
 	self:LoadVariables()
 	self:Menu()
-	
+
 	_Bundle:SetupOrbwalk()
-	
+
 	_Activator:__init()
-	
+
 	_Tech:AddTurrets()
 	towerCount = #towers
-	
+
 	AddTickCallback(function() self:OnTick() end)
 	AddDrawCallback(function() self:OnDraw() end)
 	AddRemoveBuffCallback(function(unit, buff) self:RemoveBuff(unit, buff) end)
 	AddApplyBuffCallback(function(unit, target, buff) self:ApplyBuff(unit, target, buff) end)
 	AddProcessSpellCallback(function(object, spell) self:ProcessSpell(object, spell) end)
-	
+
 	enemyMinions = minionManager(MINION_ENEMY, 365, myHero, MINION_SORT_HEALTH_DES)
-	
+
 	_Bundle:Print(myHero.charName .. " Loaded, Good Luck!")
 end
 
@@ -673,56 +651,56 @@ function _Alistar:LoadVariables()
 	self.SpellE = { speed = nil, delay = 0.5, range = 575, width = nil, collision = false, aoe = true, type = "circular" }
 
 	self.SpellR = { speed = nil, delay = 0.25, range = nil, width = nil, collision = false, aoe = false, type = "linear" }
-	
+
 	UPL:AddSpell(_Q, self.SpellQ)
 end
 
 function _Alistar:OnTick()
    if menu == nil then return end
-   
+
 	self:AutoHeal()
 	self:AutoUlt()
 	self:Combo()
 	self:FlashCombo()
-	self:Harass() 
+	self:Harass()
 	self:LaneClear()
 	self:TowerCC()
 end
 
 function _Alistar:Menu()
 	menu = scriptConfig("Support Heroes", "SupportHeroesMenuAlistar")
-	
+
 	_Activator:Menu()
- 
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-Heal", "ah")
 		for i = 1, heroManager.iCount do
 		local unit = heroManager:GetHero(i)
-			if unit.team == myHero.team then  
-			menu.ah:addParam("heal" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_ONOFF, true) 
-			menu.ah:addParam("maxhppercent"..i, "Heal Until HP = X%", SCRIPT_PARAM_SLICE, 75, 0, 100, 0) 
+			if unit.team == myHero.team then
+			menu.ah:addParam("heal" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_ONOFF, true)
+			menu.ah:addParam("maxhppercent"..i, "Heal Until HP = X%", SCRIPT_PARAM_SLICE, 75, 0, 100, 0)
 			menu.ah:addParam("empty", "", SCRIPT_PARAM_INFO,"")
 			end
 		end
 		menu.ah:addParam("healmana", "Heal If Mana >X%", SCRIPT_PARAM_SLICE, 45, 0, 100, 0)
-				 
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-CC Under Tower", "snare")
 		menu.snare:addParam("info", "           -- Auto-CC Enemies --", SCRIPT_PARAM_INFO, "")
 		if enemyCount > 0 then
 			for i = 1, enemyCount do
-			local unit = enemyHeroes[i]			
+			local unit = enemyHeroes[i]
 				menu.snare:addParam("" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_ONOFF, true)
 			end
 		end
 		menu.snare:addParam("settings", "                    -- Settings --", SCRIPT_PARAM_INFO, "")
 		menu.snare:addParam("qsnare", "Use Q", SCRIPT_PARAM_ONOFF, true)
-		
-	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-Interrupt", "interrupt")   
+
+	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-Interrupt", "interrupt")
         menu.interrupt:addParam("spells", "           -- Auto Interrupt Spells --", SCRIPT_PARAM_INFO, "")
         if enemyCount > 0 then
         	for i = 1, enemyCount do
             	local unit = enemyHeroes[i]
                 if Interrupt[unit.charName] ~= nil then
-                    menu.interrupt:addParam("" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_INFO, "") 
+                    menu.interrupt:addParam("" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_INFO, "")
                     menu.interrupt:addParam("spell".. Interrupt[unit.charName].stop.spellName,"".. Interrupt[unit.charName].stop.name, SCRIPT_PARAM_ONOFF, true)
                     menu.interrupt:addParam("empty", "", SCRIPT_PARAM_INFO,"")
                 end
@@ -731,7 +709,7 @@ function _Alistar:Menu()
 		menu.interrupt:addParam("settings", "                    -- Settings --", SCRIPT_PARAM_INFO, "")
 		menu.interrupt:addParam("qinterrupt", "Use Q", SCRIPT_PARAM_ONOFF, false)
 		menu.interrupt:addParam("winterrupt", "Use W", SCRIPT_PARAM_ONOFF, true)
-		
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Draw Settings", "draw")
 		menu.draw:addParam("spelldraws", "                -- Spell Draws --", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawq", "Draw Q", SCRIPT_PARAM_ONOFF, true)
@@ -745,16 +723,16 @@ function _Alistar:Menu()
 		menu.draw:addParam("drawqflash", "Draw Flash - Q", SCRIPT_PARAM_ONOFF, false)
 		menu.draw:addParam("colorqflash", "Color Flash - Q", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("drawwqflash", "Draw Flash - W - Q", SCRIPT_PARAM_ONOFF, true)
-		menu.draw:addParam("colorwqflash", "Color Flash - W - Q", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 }) 
+		menu.draw:addParam("colorwqflash", "Color Flash - W - Q", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("drawinsecflash", "Draw Insec Flash", SCRIPT_PARAM_ONOFF, true)
-		menu.draw:addParam("empty", "", SCRIPT_PARAM_INFO, "")	
+		menu.draw:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawitem", "                -- Item Draws --", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawfotm", "Draw Face of the Mountain", SCRIPT_PARAM_ONOFF, false)
 		menu.draw:addParam("colorfotm", "Color Face of the Mountain", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("drawlois", "Draw Locket of the Iron Solari", SCRIPT_PARAM_ONOFF, false)
 		menu.draw:addParam("colorlois", "Color Locket of the Iron Solari", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("drawmikaels", "Draw Mikaels Crucible", SCRIPT_PARAM_ONOFF, false)
-		menu.draw:addParam("colormikaels", "Color Mikaels Crucible", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 }) 
+		menu.draw:addParam("colormikaels", "Color Mikaels Crucible", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawsumm", "                -- Summoner Draws --", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawexhaust", "Draw Exhaust", SCRIPT_PARAM_ONOFF, false)
@@ -762,27 +740,27 @@ function _Alistar:Menu()
 		menu.draw:addParam("drawheal", "Draw Heal", SCRIPT_PARAM_ONOFF, false)
 		menu.draw:addParam("colorheal", "Color Heal", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("drawignite", "Draw Ignite", SCRIPT_PARAM_ONOFF, false)
-		menu.draw:addParam("colorignite", "Color Ignite", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 }) 
-		menu.draw:addParam("empty", "", SCRIPT_PARAM_INFO, "")  
+		menu.draw:addParam("colorignite", "Color Ignite", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
+		menu.draw:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("miscellaneousdraws", "            -- Miscellaneous Draws --", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawtarget", "Draw Target", SCRIPT_PARAM_ONOFF, true)
 		menu.draw:addParam("drawpermashow", "Draw Permashow (Reload)", SCRIPT_PARAM_ONOFF, true)
-			
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Farm Settings", "farm")
 		menu.farm:addParam("laneclear", "                    -- Lane Clear --", SCRIPT_PARAM_INFO, "")
 		menu.farm:addParam("qlaneclear", "Use Q", SCRIPT_PARAM_ONOFF, true)
 		menu.farm:addParam("clearmana", "Minimum Mana", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
-		
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Flash Settings", "flash")
 		menu.flash:addParam("insecflash", "Use Insec Flash", SCRIPT_PARAM_ONOFF, true)
 		menu.flash:addParam("qflash", "Use Flash - Q", SCRIPT_PARAM_ONOFF, false)
 		menu.flash:addParam("wqflash", "Use Flash - W - Q", SCRIPT_PARAM_ONOFF, true)
-	
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Humanizer", "humanizer")
 		menu.humanizer:addParam("interruptDelay", "Auto-Interrupt Delay (ms)", SCRIPT_PARAM_SLICE, 200, 0, 500, 0)
 		menu.humanizer:addParam("snareDelay", "Auto-CC Delay (ms)", SCRIPT_PARAM_SLICE, 0, 0, 500, 0)
 		menu.humanizer:addParam("shieldDelay", "Auto Shield Delay (ms)", SCRIPT_PARAM_SLICE, 50, 0, 500, 0)
-			
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Key Settings", "key")
 		menu.key:addParam("combatkeys", "               -- Combat Keys --", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("comboKey", "Combo Key", SCRIPT_PARAM_ONKEYDOWN, false, 32)
@@ -792,7 +770,7 @@ function _Alistar:Menu()
 		menu.key:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("miscellaneouskeys", "           -- Miscellaneous Keys --", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("flashKey", "Flash Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("H"))
-	
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Spell Settings", "spell")
 		menu.spell:addSubMenu("[" .. myHero.charName .. "] - Q", "q")
 		menu.spell.q:addParam("qcombo", "Combo", SCRIPT_PARAM_ONOFF, true)
@@ -812,23 +790,23 @@ function _Alistar:Menu()
 		menu.spell.r:addParam("ult", "Use Ultimate", SCRIPT_PARAM_ONOFF, true)
 		menu.spell.r:addParam("ulthp", "Ult If <X% Of HP", SCRIPT_PARAM_SLICE, 15, 0, 100, 0)
 		menu.spell.r:addParam("empty", "", SCRIPT_PARAM_INFO, "")
-		menu.spell.r:addParam("ultcc", "Use Ultimate If CC'd", SCRIPT_PARAM_ONOFF, true) 
+		menu.spell.r:addParam("ultcc", "Use Ultimate If CC'd", SCRIPT_PARAM_ONOFF, true)
 		menu.spell.r:addParam("ultcchp", "Ult If CC'd <X% Of HP", SCRIPT_PARAM_SLICE, 15, 0, 100, 0)
-		
+
    menu:addSubMenu("[" .. myHero.charName .. "] - Target Selector", "target")
 		menu.target:addParam("targetinfo", "Default Target Select Is LeastCast", SCRIPT_PARAM_INFO, "")
 		menu.target:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.target:addParam("focus", "Focus Selected Target", SCRIPT_PARAM_ONOFF, true)
 		menu.target:addParam("sac", "Use SAC:R Target Instead", SCRIPT_PARAM_ONOFF, false)
-		
-   menu:addSubMenu("Orbwalk Settings", "orb")  
-   
+
+   menu:addSubMenu("Orbwalk Settings", "orb")
+
    UPL:AddToMenu(menu)
- 
+
    menu:addParam("empty", "", SCRIPT_PARAM_INFO, "")
    menu:addParam("infobox", "            Support Heroes: " .. myHero.charName .. "           ", SCRIPT_PARAM_INFO, "")
    menu:addParam("infobox2", "                      Version:  " .. scriptVersion .. "         ", SCRIPT_PARAM_INFO, "")
-   
+
    if menu.draw.drawpermashow then
 	 menu:permaShow("infobox")
 	 menu.key:permaShow("comboKey")
@@ -845,74 +823,109 @@ end
 function _Alistar:AutoHeal()
 	for i = 1, heroManager.iCount do
 		local unit = heroManager:GetHero(i)
-		if unit.team == myHero.team then 
-			if not InFountain() and not buffs["recall"] then 
-				if unit.team == myHero.team and unit.type == myHero.type and menu.ah["heal" ..unit.charName] and (100*unit.health/unit.maxHealth) < menu.ah["maxhppercent"..i] and (100 * myHero.mana / myHero.maxMana)>= menu.ah.healmana then
-					if IsReady(_E) and (GetDistance(unit) < self.SpellE.range) then 
-						CastSpell(_E)         
+		if unit.team == myHero.team then
+			if not InFountain() and not buffs["recall"] then
+				if unit.team == myHero.team and unit.type == myHero.type and not unit.dead and menu.ah["heal" ..unit.charName] and (100*unit.health/unit.maxHealth) < menu.ah["maxhppercent"..i] and (100 * myHero.mana / myHero.maxMana)>= menu.ah.healmana then
+					if IsReady(_E) and (GetDistance(unit) < self.SpellE.range) then
+						CastSpell(_E)
 					end
-				end    
+				end
 			end
 		end
 	end
-end         
+end
 
 function _Alistar:AutoUlt()
 	if IsReady(_R) and menu.spell.r.ult and (100 * myHero.health / myHero.maxHealth) <= menu.spell.r.ulthp then
 		CastSpell(_R)
 	end
-	if IsReady(_R) and menu.spell.r.ultcc and (100 * myHero.health / myHero.maxHealth) <= menu.spell.r.ultcchp then 
+	if IsReady(_R) and menu.spell.r.ultcc and (100 * myHero.health / myHero.maxHealth) <= menu.spell.r.ultcchp then
 		if myHero.canMove then
 			CastSpell(_R)
 		end
 	end
 end
 
-function _Alistar:Combo() 
+function _Alistar:Combo()
 	if Target == nil then return end
-	if menu.key.comboKey then 
-		if IsReady(_Q) and menu.spell.q.qcombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qcombomana and (GetDistance(Target) < self.SpellQ.range) then
-			if ValidTarget(Target) then
-				CastSpell(_Q)
-			end
-		end
-		if IsReady(_Q) and (GetDistance(Target) > self.SpellQ.range) then 
-			if IsReady(_W) and menu.spell.w.wcombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.w.wcombomana and (GetDistance(Target) < self.SpellW.range) then
-				if ValidTarget(Target) then
-					CastSpell(_W, Target)
-				end
-			end
-		end
-		if menu.spell.q.qcombo and menu.spell.w.wcombo then
-			if IsReady(_Q) and IsReady(_W) and myHero.mana >(60 + 5 * myHero:GetSpellData(_Q).level) +(60 + 5 * myHero:GetSpellData(_W).level) and (GetDistance(Target) > 365) and (GetDistance(Target) < self.SpellW.range) then
-				if ValidTarget(Target) then
-					local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)		
-					if HitChance >= 2 then 
-					CastSpell(_W, Target)                 
-					DelayAction(function() CastSpell(_Q, CastPosition.x, CastPosition.y) end, (max(0 , GetDistance(Target) - 500 ) * 0.5 + 25) / 1000)
-					end
-				end
-			end 
-		end
-	end       
+	if menu.key.comboKey then
+        if menu.spell.q.qcombo and not menu.spell.w.wcombo then
+            if IsReady(_Q) and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qcombomana and GetDistance(Target) <= self.SpellQ.range then
+                if ValidTarget(Target) then
+                    CastSpell(_Q)
+                end
+            end
+        end
+        if menu.spell.w.wcombo and not menu.spell.q.qcombo then
+            if IsReady(_W) and (100 * myHero.mana / myHero.maxMana)>= menu.spell.w.wcombomana and GetDistance(Target) <= self.SpellW.range then
+                if ValidTarget(Target) then
+                    CastSpell(_W, Target)
+                end
+            end
+        end
+        if menu.spell.q.qcombo and menu.spell.w.wcombo then
+            if IsReady(_Q) and GetDistance(Target) < self.SpellQ.range then
+                CastSpell(_Q)
+            end
+            if GetDistance(Target) <= self.SpellQ.range then
+                if IsReady(_Q) and IsReady(_W) then
+                    CastSpell(_Q)
+                    for i = 1, allyCount do
+                    local ally = allyHeroes[i]
+                    local wPos = (Vector(Target) - Vector(ally)):normalized() * (self.SpellW.range +500)
+                    local angle = Vector(myHero):angleBetween(Vector(Target), Vector(ally))
+                        if wPos and angle <= 60 and not ally.isMe and GetDistance(ally) <= self.SpellW.range + 500 and GetDistance(Target) >= 400 then
+                            CastSpell(_W, Target)
+                        end
+                    end
+                end
+            elseif GetDistance(Target) > self.SpellQ.range and GetDistance(Target) <= self.SpellW.range then
+                if IsReady(_W) then
+                    for i = 1, allyCount do
+                    local ally = allyHeroes[i]
+                    local wPos = (Vector(Target) - Vector(ally)):normalized() * (self.SpellW.range +500)
+                    local angle = Vector(myHero):angleBetween(Vector(Target), Vector(ally))
+                        if wPos and angle <= 60 and not ally.isMe and GetDistance(ally) <= self.SpellW.range + 500 and GetDistance(Target) >= 400 then
+                            CastSpell(_W, Target)
+                        end
+                    end
+                end
+            end
+            if IsReady(_Q) and IsReady(_W) and myHero.mana >(60 + 5 * myHero:GetSpellData(_Q).level) +(60 + 5 * myHero:GetSpellData(_W).level) and GetDistance(Target) > self.SpellQ.range and GetDistance(Target) < self.SpellW.range then
+                local rangeCheck = ceil((self.SpellW.range - 50) / 65)
+                local checkDistance = (self.SpellW.range) / ceil((self.SpellW.range - 50) / 65)
+                for k=1, rangeCheck, 1 do
+                Position = Target + (Vector(Target) - myHero):normalized() * (checkDistance * k)
+                wallStun = IsWall(D3DXVECTOR3(Position.x, Position.y, Position.z))
+                    if wallStun and GetDistance(Target, Position) <= self.SpellQ.range then
+                        CastSpell(_W, Target)
+                        DelayAction(function() CastSpell(_Q) end, 1.0)
+                    elseif not wallStun then
+                        CastSpell(_W, Target)
+                        CastSpell(_Q)
+                    end
+                end
+            end
+        end
+    end
 end
- 
+
 function _Alistar:FlashCombo()
 	if Target == nil then return end
-	if menu.key.flashKey and menu.flash.qflash then 
+	if menu.key.flashKey and menu.flash.qflash then
 		if ValidTarget(Target) and (GetDistance(Target) <= 425 + self.SpellQ.range) then
 		   if IsReady(sflash) and IsReady(_Q) then
-			   CastSpell(sflash, Target.x, Target.z)      
+			   CastSpell(sflash, Target.x, Target.z)
 			   CastSpell(_Q)
-		   end	       
+		   end
 		end
 	end
 	if menu.key.flashKey and menu.flash.wqflash then
 		if ValidTarget(Target) and (GetDistance(Target) <= self.SpellW.range + 425) then
-			if IsReady(sflash) and IsReady(_W) then 
+			if IsReady(sflash) and IsReady(_W) then
 				CastSpell(sflash, Target.x, Target.z)
 				CastSpell(_W, Target)
-				DelayAction(function() CastSpell(_Q, Target) end, (max(0 , GetDistance(Target) - 500 ) * 0.2 + 25) / 1000)          
+				DelayAction(function() CastSpell(_Q, Target) end, (max(0 , GetDistance(Target) - 500 ) * 0.2 + 25) / 1000)
 			end
 		end
 	end
@@ -921,18 +934,18 @@ function _Alistar:FlashCombo()
 	   if tower and tower.team == myHero.team and GetDistance(tower) < 1200 and IsReady(sflash) and ValidTarget(Target) then
 	   local Position = VPred:GetPredictedPos(Target, 0.1)
 	   local flashPos = Position + 100 * (Vector(Position) - Vector(tower)):normalized()
-					
+
 		   if GetDistance(flashPos) > 425 then
 			   flashPos = nil
 		   end
-					
+
 		   if GetDistance(Position, flashPos) > 100 then
 			  flashPos = nil
 		   end
-					
+
 		   hasTower = true
-					
-		   if flashPos ~= nil and menu.key.flashKey and menu.flash.insecflash then					
+
+		   if flashPos ~= nil and menu.key.flashKey and menu.flash.insecflash then
 			   if IsReady(_Q) and IsReady(_W) and myHero.mana > myHero:GetSpellData(_W).mana + myHero:GetSpellData(_Q).mana then
 				 CastSpell(sflash, flashPos.x, flashPos.z)
 				 CastSpell(_Q, Target)
@@ -940,7 +953,7 @@ function _Alistar:FlashCombo()
 			  end
 		   end
 	   end
-	end 
+	end
 	local useAlly = nil
 	local damage = 0
 	for i = 1, allyCount do
@@ -954,16 +967,16 @@ function _Alistar:FlashCombo()
 	end
 	local Position = VPred:GetPredictedPos(Target, 0.1)
 	local flashPos = Position + 100 * (Vector(Position) - Vector(useAlly)):normalized()
-				
+
 	if GetDistance(flashPos) > 425 then
 		flashPos = nil
 	end
-				
+
 	if GetDistance(Position, flashPos) > 100 then
 		flashPos = nil
 	end
-				
-	if flashPos ~= nil and menu.key.flashKey and menu.flash.insecflash then					
+
+	if flashPos ~= nil and menu.key.flashKey and menu.flash.insecflash then
 		if IsReady(_W) and IsReady(sflash) and myHero.mana > myHero:GetSpellData(_W).mana + myHero:GetSpellData(_Q).mana then
 			_MovementBlock:enable()
             CastSpell(sflash, flashPos.x, flashPos.z)
@@ -975,10 +988,10 @@ function _Alistar:FlashCombo()
 		myHero:MoveTo(mousePos.x, mousePos.z)
 	end
 end
- 
+
 function _Alistar:Harass()
 	if Target == nil then return end
-	if menu.key.harassKey or menu.key.harassToggle then 
+	if menu.key.harassKey or menu.key.harassToggle then
 		if IsReady(_Q) and menu.spell.q.qharass and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qharassmana and (GetDistance(Target) < self.SpellQ.range) then
 			if ValidTarget(Target) then
 				CastSpell(_Q)
@@ -992,10 +1005,10 @@ function _Alistar:Harass()
 		if menu.spell.q.qharass and menu.spell.w.wharass then
 			if IsReady(_Q) and IsReady(_W) and myHero.mana >(60 + 5 * myHero:GetSpellData(_Q).level) +(60 + 5 * myHero:GetSpellData(_W).level) and (GetDistance(Target) > 365) and (GetDistance(Target) < self.SpellW.range) then
 				if ValidTarget(Target) then
-					local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)		
-					if HitChance >= 2 then 
-						CastSpell(_W, Target)                 
-						DelayAction(function() CastSpell(_Q, CastPosition.x, CastPosition.y) end, (max(0 , GetDistance(Target) - 500 ) * 0.5 + 25) / 1000)
+					local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
+					if HitChance >= 2 then
+						CastSpell(_W, Target)
+						CastSpell(_Q)
 					end
 				end
 			end
@@ -1004,25 +1017,25 @@ function _Alistar:Harass()
 end
 
 function _Alistar:LaneClear()
-	if enemyMinions == nil then return end 
+	if enemyMinions == nil then return end
 	for i, Minion in pairs(enemyMinions.objects) do
 		if (Minion ~= nil) then
-			if menu.key.clearKey then 
+			if menu.key.clearKey then
 				if IsReady(_Q) and menu.farm.qlaneclear and (100 * myHero.mana / myHero.maxMana)>= menu.farm.clearmana then
 					CastSpell(_Q, Minion)
 				end
 			end
 		end
-	end                
-end 
+	end
+end
 
 function _Alistar:OnDraw()
-	if menu == nil then return end 
+	if menu == nil then return end
 	if Target == nil then return end
 	if menu.draw.drawtarget and ValidTarget(Target) and Target.type == myHero.type then
 		_PentagonRot:DrawTriangle(Target, ARGB(255, 255, 0, 0), 2, 50, 5, 0, 0)
 	end
-	if menu.draw.drawqflash and menu.flash.qflash and IsReady(sflash) and IsReady(_Q) then 
+	if menu.draw.drawqflash and menu.flash.qflash and IsReady(sflash) and IsReady(_Q) then
 		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, (self.SpellQ.range + 425), ARGB(table.unpack(menu.draw.colorqflash)))
 	end
 	if menu.draw.drawwqflash and menu.flash.wqflash and IsReady(sflash) and IsReady(_Q) and IsReady(_W) then
@@ -1030,37 +1043,37 @@ function _Alistar:OnDraw()
 	end
 	local Position = VPred:GetPredictedPos(Target, 0.1)
 	local flashPos = Position + 100 * (Vector(myHero) - Vector(flashPos)):normalized()
-	if IsReady(_W) and IsReady(sflash) and ValidTarget(Target) then	
+	if IsReady(_W) and IsReady(sflash) and ValidTarget(Target) then
 	   if flashPos ~= nil and menu.draw.drawinsecflash then
 			if GetDistance(Target) < 425 and GetDistance(Target) > 50 then
 			  _Tech:DrawCircle(flashPos.x, flashPos.y, flashPos.z, 50, ARGB(255, 255, 0, 0))
 			  _Tech:DrawCircle(flashPos.x, flashPos.y, flashPos.z, 60, ARGB(255, 255, 255, 255))
-			
+
 			  local endPos = Target + 650 * (Vector(myHero) - Vector(Target)):normalized()
-			  DrawLine3D(Target.x, Target.y, Target.z, endPos.x, endPos.y, endPos.z, 5, ARGB(255, 255, 255, 255))	     
+			  DrawLine3D(Target.x, Target.y, Target.z, endPos.x, endPos.y, endPos.z, 5, ARGB(255, 255, 255, 255))
 		   end
 		end
 	end
 	local slot = _Tech:CustomGetInventorySlotItem("HealthBomb", myHero)
-	if menu.draw.drawfotm and slot ~= nil and IsReady(slot) then 
-		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorfotm))) 
+	if menu.draw.drawfotm and slot ~= nil and IsReady(slot) then
+		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorfotm)))
 	end
 	local slot = _Tech:CustomGetInventorySlotItem("IronStylus", myHero)
-	if menu.draw.drawlois and slot ~= nil and IsReady(slot) then 
-		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorlois))) 
+	if menu.draw.drawlois and slot ~= nil and IsReady(slot) then
+		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorlois)))
 	end
 	local slot = _Tech:CustomGetInventorySlotItem("ItemMorellosBane", myHero)
-	if menu.draw.drawmikaels and slot ~= nil and IsReady(slot) then 
-		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colormikaels))) 
+	if menu.draw.drawmikaels and slot ~= nil and IsReady(slot) then
+		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colormikaels)))
 	end
-	if menu.draw.drawexhaust and sexhaust ~= nil and IsReady(sexhaust) then 
-	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 650, ARGB(table.unpack(menu.draw.colorexhaust))) 
+	if menu.draw.drawexhaust and sexhaust ~= nil and IsReady(sexhaust) then
+	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 650, ARGB(table.unpack(menu.draw.colorexhaust)))
 	end
-	if menu.draw.drawheal and sheal ~= nil and IsReady(sheal) then 
-	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 850, ARGB(table.unpack(menu.draw.colorheal))) 
+	if menu.draw.drawheal and sheal ~= nil and IsReady(sheal) then
+	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 850, ARGB(table.unpack(menu.draw.colorheal)))
 	end
-	if menu.draw.drawignite and signite ~= nil and IsReady(signite) then 
-	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 600, ARGB(table.unpack(menu.draw.colorignite))) 
+	if menu.draw.drawignite and signite ~= nil and IsReady(signite) then
+	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 600, ARGB(table.unpack(menu.draw.colorignite)))
 	end
 	if menu.draw.drawq and IsReady(_Q) then
 		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 365, ARGB(table.unpack(menu.draw.colorq)))
@@ -1072,7 +1085,7 @@ function _Alistar:OnDraw()
 		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, self.SpellE.range, ARGB(table.unpack(menu.draw.colore)))
 	end
 end
- 
+
 function _Alistar:ProcessSpell(object, spell)
     if enemyCount > 0 then
         for i = 1, enemyCount do
@@ -1080,9 +1093,9 @@ function _Alistar:ProcessSpell(object, spell)
             if Interrupt[unit.charName] ~= nil then
                 if menu.interrupt["spell".. Interrupt[unit.charName].stop.spellName] and spell.name == Interrupt[unit.charName].stop.spellName then
                     if IsReady(_Q) and menu.interrupt.qinterrupt and GetDistance(object) <= self.SpellQ.range then
-                        DelayAction(function() CastSpell(_Q) end, menu.humanizer.interruptDelay / 1000)                 
+                        DelayAction(function() CastSpell(_Q) end, menu.humanizer.interruptDelay / 1000)
                     elseif IsReady(_W) and menu.interrupt.winterrupt and GetDistance(object) <= self.SpellW.range then
-                        DelayAction(function() CastSpell(_W, object) end, menu.humanizer.interruptDelay / 1000)	   
+                        DelayAction(function() CastSpell(_W, object) end, menu.humanizer.interruptDelay / 1000)
                     end
                 end
             end
@@ -1092,11 +1105,11 @@ end
 
 function _Alistar:RemoveBuff(unit, buff)
 	if unit ~= nil and buff and unit.isMe and buff.name:lower() == "recall" or buff.name:lower() == "summonerteleport" or buff.name:lower() == "recallimproved" then buffs["recall"] = false end
-end 
+end
 
-function _Alistar:TowerCC() 
+function _Alistar:TowerCC()
 	for i = 1, enemyCount do
-	local unit = enemyHeroes[i]	
+	local unit = enemyHeroes[i]
 		for i = 1, towerCount do
 			local tower = towers[i]
 			if tower and tower.team == myHero.team and (GetDistance(tower, unit) < 775) then
@@ -1112,15 +1125,15 @@ Class("_Annie")
 function _Annie:__init()
 	self:LoadVariables()
 	self:Menu()
-	
-	
+
+
 	_Bundle:SetupOrbwalk()
-	
+
 	_Activator:__init()
-	
+
 	_Tech:AddTurrets()
 	towerCount = #towers
-	
+
 	AddTickCallback(function() self:OnTick() end)
 	AddDrawCallback(function() self:OnDraw() end)
 	AddRemoveBuffCallback(function(unit, buff) self:RemoveBuff(unit, buff) end)
@@ -1128,25 +1141,25 @@ function _Annie:__init()
 	AddUpdateBuffCallback(function(unit, buff, stacks) self:UpdateBuff(unit, buff, stacks) end)
 	AddProcessAttackCallback(function(object, spell) self:ProcessAttack(object, spell) end)
     AddProcessSpellCallback(function(object, spell) self:ProcessSpell(object, spell) end)
-	
+
 	enemyMinions = minionManager(MINION_ENEMY, self.SpellQ.range, myHero, MINION_SORT_HEALTH_DES)
-	
+
 	 _Bundle:Print(myHero.charName .. " Loaded, Good Luck!")
 end
 
 function _Annie:LoadVariables()
-	self.SpellQ = { speed = 1400, delay = 0.5, range = 625, width = nil, collision = false, aoe = false, type = "linear" } 
+	self.SpellQ = { speed = 1400, delay = 0.5, range = 625, width = nil, collision = false, aoe = false, type = "linear" }
 
-	self.SpellW = { speed = math.huge, delay = 0.25, range = 625, width = 200, collision = false, aoe = true, type = "linear" } 
+	self.SpellW = { speed = math.huge, delay = 0.25, range = 625, width = 200, collision = false, aoe = true, type = "linear" }
 
 	self.SpellE = { speed = 20, delay = 0.25, range = nil, width = nil, collision = false, aoe = true, type = "circular" }
 
-	self.SpellR = { speed = math.huge, delay = 0.25, range = 600, width = 200, collision = false, aoe = true, type = "circular" } 
+	self.SpellR = { speed = math.huge, delay = 0.25, range = 600, width = 200, collision = false, aoe = true, type = "circular" }
 end
 
 function _Annie:OnTick()
-	if menu == nil then return end 
-	
+	if menu == nil then return end
+
 	self:Combo()
 	self:FlashCombo()
 	self:Harass()
@@ -1158,28 +1171,28 @@ end
 
 function _Annie:Menu()
 	menu = scriptConfig("Support Heroes", "SupportHeroesMenuAnnie")
-	
+
 	_Activator:Menu()
-		
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-CC Under Tower", "snare")
 		menu.snare:addParam("info", "           -- Auto-CC Enemies --", SCRIPT_PARAM_INFO, "")
 		if enemyCount > 0 then
 			for i = 1, enemyCount do
-			local unit = enemyHeroes[i]			
+			local unit = enemyHeroes[i]
 				menu.snare:addParam("" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_ONOFF, true)
 			end
 		end
 		menu.snare:addParam("settings", "                    -- Settings --", SCRIPT_PARAM_INFO, "")
 		menu.snare:addParam("qsnare", "Use Q If Stun Is Ready", SCRIPT_PARAM_ONOFF, true)
 		menu.snare:addParam("wsnare", "Use W If Stun Is Ready", SCRIPT_PARAM_ONOFF, true)
-		
-	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-Interrupt", "interrupt")   
+
+	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-Interrupt", "interrupt")
         menu.interrupt:addParam("spells", "           -- Auto Interrupt Spells --", SCRIPT_PARAM_INFO, "")
         if enemyCount > 0 then
         	for i = 1, enemyCount do
             	local unit = enemyHeroes[i]
                 if Interrupt[unit.charName] ~= nil then
-                    menu.interrupt:addParam("" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_INFO, "") 
+                    menu.interrupt:addParam("" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_INFO, "")
                     menu.interrupt:addParam("spell".. Interrupt[unit.charName].stop.spellName,"".. Interrupt[unit.charName].stop.name, SCRIPT_PARAM_ONOFF, true)
                     menu.interrupt:addParam("empty", "", SCRIPT_PARAM_INFO,"")
                 end
@@ -1188,7 +1201,7 @@ function _Annie:Menu()
 		menu.interrupt:addParam("settings", "                -- Settings --", SCRIPT_PARAM_INFO, "")
 		menu.interrupt:addParam("qinterrupt", "Use Q", SCRIPT_PARAM_ONOFF, true)
 		menu.interrupt:addParam("winterrupt", "Use W", SCRIPT_PARAM_ONOFF, false)
-		
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Draw Settings", "draw")
 		menu.draw:addParam("spelldraws", "                -- Spell Draws --", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawq", "Draw Q", SCRIPT_PARAM_ONOFF, true)
@@ -1210,7 +1223,7 @@ function _Annie:Menu()
 		menu.draw:addParam("drawlois", "Draw Locket of the Iron Solari", SCRIPT_PARAM_ONOFF, false)
 		menu.draw:addParam("colorlois", "Color Locket of the Iron Solari", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("drawmikaels", "Draw Mikaels Crucible", SCRIPT_PARAM_ONOFF, false)
-		menu.draw:addParam("colorqmikaels", "Color Mikaels Crucible", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 }) 
+		menu.draw:addParam("colorqmikaels", "Color Mikaels Crucible", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawsumm", "                -- Summoner Draws --", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawexhaust", "Draw Exhaust", SCRIPT_PARAM_ONOFF, false)
@@ -1218,12 +1231,12 @@ function _Annie:Menu()
 		menu.draw:addParam("drawheal", "Draw Heal", SCRIPT_PARAM_ONOFF, false)
 		menu.draw:addParam("colorheal", "Color Heal", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("drawignite", "Draw Ignite", SCRIPT_PARAM_ONOFF, false)
-		menu.draw:addParam("colorignite", "Color Ignite", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })  
+		menu.draw:addParam("colorignite", "Color Ignite", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("miscellaneousdraws", "            -- Miscellaneous Draws --", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawtarget", "Draw Target", SCRIPT_PARAM_ONOFF, true)
 		menu.draw:addParam("drawpermashow", "Draw Permashow (Reload)", SCRIPT_PARAM_ONOFF, true)
-			
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Farm Settings", "farm")
 		menu.farm:addParam("laneclear", "                    -- Lane Clear --", SCRIPT_PARAM_INFO, "")
 		menu.farm:addParam("qlaneclear", "Use Q", SCRIPT_PARAM_ONOFF, true)
@@ -1233,16 +1246,16 @@ function _Annie:Menu()
 		menu.farm:addParam("lasthit", "                    -- Last Hit --", SCRIPT_PARAM_INFO, "")
 		menu.farm:addParam("qlasthit", "Use Q", SCRIPT_PARAM_ONOFF, true)
 		menu.farm:addParam("qlasthitmana", "Minimum Mana", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
-		
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Flash Settings", "flash")
 		menu.flash:addParam("qflash", "Use Flash - Q W/ Stun", SCRIPT_PARAM_ONOFF, false)
 		menu.flash:addParam("rflash", "Use Flash - R W/ Stun", SCRIPT_PARAM_ONOFF, true)
-	
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Humanizer", "humanizer")
 		menu.humanizer:addParam("interruptDelay", "Auto-Interrupt Delay (ms)", SCRIPT_PARAM_SLICE, 200, 0, 500, 0)
 		menu.humanizer:addParam("snareDelay", "Auto-CC Delay (ms)", SCRIPT_PARAM_SLICE, 0, 0, 500, 0)
 		menu.humanizer:addParam("shieldDelay", "Auto Shield Delay (ms)", SCRIPT_PARAM_SLICE, 50, 0, 500, 0)
-			
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Key Settings", "key")
 		menu.key:addParam("combatkeys", "               -- Combat Keys --", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("comboKey", "Combo Key", SCRIPT_PARAM_ONKEYDOWN, false, 32)
@@ -1253,7 +1266,7 @@ function _Annie:Menu()
 		menu.key:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("miscellaneouskeys", "           -- Miscellaneous Keys --", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("flashKey", "Flash Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("H"))
-	
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Spell Settings", "spell")
 		menu.spell:addSubMenu("[" .. myHero.charName .. "] - Q", "q")
 		menu.spell.q:addParam("qcombo", "Combo", SCRIPT_PARAM_ONOFF, true)
@@ -1278,21 +1291,21 @@ function _Annie:Menu()
 		menu.spell:addSubMenu("[" .. myHero.charName .. "] - R", "r")
 		menu.spell.r:addParam("ult", "Use Ultimate", SCRIPT_PARAM_ONOFF, true)
 		menu.spell.r:addParam("ultifstun", "Use Ultimate Only If Stun Is Ready", SCRIPT_PARAM_ONOFF, true)
-		
+
    menu:addSubMenu("[" .. myHero.charName .. "] - Target Selector", "target")
 		menu.target:addParam("targetinfo", "Default Target Select Is LeastCast", SCRIPT_PARAM_INFO, "")
 		menu.target:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.target:addParam("focus", "Focus Selected Target", SCRIPT_PARAM_ONOFF, true)
 		menu.target:addParam("sac", "Use SAC:R Target Instead", SCRIPT_PARAM_ONOFF, false)
-		
-   menu:addSubMenu("Orbwalk Settings", "orb")  
-   
+
+   menu:addSubMenu("Orbwalk Settings", "orb")
+
    UPL:AddToMenu(menu)
- 
+
    menu:addParam("empty", "", SCRIPT_PARAM_INFO, "")
    menu:addParam("infobox", "            Support Heroes: " .. myHero.charName .. "           ", SCRIPT_PARAM_INFO, "")
    menu:addParam("infobox2", "                      Version:  " .. scriptVersion .. "         ", SCRIPT_PARAM_INFO, "")
-   
+
    if menu.draw.drawpermashow then
 	 menu:permaShow("infobox")
 	 menu.key:permaShow("comboKey")
@@ -1312,7 +1325,7 @@ end
 
 function _Annie:Combo()
 	if Target == nil then return end
-	if menu.key.comboKey then 
+	if menu.key.comboKey then
 		if IsReady(_Q) and menu.spell.q.qcombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qcombomana and (GetDistance(Target) < self.SpellQ.range) then
 			if ValidTarget(Target) then
 			   CastSpell(_Q, Target)
@@ -1326,30 +1339,30 @@ function _Annie:Combo()
 		if IsReady(_R) and menu.spell.r.ult and not menu.spell.r.ultifstun and (GetDistance(Target) < self.SpellR.range) then
 		   if ValidTarget(Target) then
 			   CastSpell(_R, Target)
-		   end            
+		   end
 		elseif IsReady(_R) and menu.spell.r.ult and menu.spell.r.ultifstun and buffs["canStun"] and (GetDistance(Target) < self.SpellR.range) then
 			if ValidTarget(Target) then
 				CastSpell(_R, Target)
 			end
-		end    
+		end
 	end
 end
 
 function _Annie:FlashCombo()
 	if Target == nil then return end
-	if menu.key.flashKey and menu.flash.qflash and buffs["canStun"] then 
+	if menu.key.flashKey and menu.flash.qflash and buffs["canStun"] then
 		if ValidTarget(Target) and (GetDistance(Target) <= self.SpellQ.range + 425) then
 		   if IsReady(sflash) and IsReady(_Q) then
-			   CastSpell(sflash, Target.x, Target.z)      
+			   CastSpell(sflash, Target.x, Target.z)
 			   CastSpell(_Q, Target)
-		   end	       
+		   end
 		end
 	end
 	if menu.key.flashKey and menu.flash.rflash and buffs["canStun"] then
 		if ValidTarget(Target) and (GetDistance(Target) <= self.SpellR.range + 425) then
-			if IsReady(sflash) and IsReady(_R) then 
+			if IsReady(sflash) and IsReady(_R) then
 				CastSpell(sflash, Target.x, Target.z)
-				CastSpell(_R, Target)        
+				CastSpell(_R, Target)
 			end
 		end
 	end
@@ -1360,7 +1373,7 @@ end
 
 function _Annie:Harass()
 	if Target == nil then return end
-	if menu.key.harassKey or menu.key.harassToggle then 
+	if menu.key.harassKey or menu.key.harassToggle then
 		if IsReady(_Q) and menu.spell.q.qharass and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qharassmana and (GetDistance(Target) < self.SpellQ.range) then
 			if ValidTarget(Target) then
 				CastSpell(_Q, Target)
@@ -1381,32 +1394,32 @@ function _Annie:ProcessSpell(object, spell)
             if Interrupt[unit.charName] ~= nil then
                 if menu.interrupt["spell".. Interrupt[unit.charName].stop.spellName] and spell.name == Interrupt[unit.charName].stop.spellName then
                     if IsReady(_Q) and menu.interrupt.qinterrupt and GetDistance(object) <= self.SpellQ.range and buffs["canStun"] then
-                        DelayAction(function() CastSpell(_Q, object) end, menu.humanizer.interruptDelay / 1000)                 
+                        DelayAction(function() CastSpell(_Q, object) end, menu.humanizer.interruptDelay / 1000)
                     elseif IsReady(_W) and menu.interrupt.winterrupt and GetDistance(object) <= self.SpellW.range and buffs["canStun"] then
-                        DelayAction(function() CastSpell(_W, object) end, menu.humanizer.interruptDelay / 1000)	   
+                        DelayAction(function() CastSpell(_W, object) end, menu.humanizer.interruptDelay / 1000)
                     end
                 end
             end
 	    end
 	end
 end
- 
+
 function _Annie:LaneClear()
 	local qdmg = 35 * myHero:GetSpellData(_Q).level + 45 + .8 * myHero.ap
 	local wdmg = 45 * myHero:GetSpellData(_W).level + 25 + .85 * myHero.ap
 	if enemyMinions == nil then return end
 	for i, Minion in pairs(enemyMinions.objects) do
-		if (Minion ~= nil) then 
-			if menu.key.clearKey then 
+		if (Minion ~= nil) then
+			if menu.key.clearKey then
 				if IsReady(_Q) and menu.farm.qlaneclear and Minion.health <= qdmg and (100 * myHero.mana / myHero.maxMana)>= menu.farm.qclearmana then
 					CastSpell(_Q, Minion)
-				end   
+				end
 				if IsReady(_W) and menu.farm.wlaneclear and Minion.health <= wdmg and (100 * myHero.mana / myHero.maxMana)>= menu.farm.wclearmana then
 					CastSpell(_W, Minion)
 				end
-			end   
+			end
 		end
-	end                
+	end
 end
 
 function _Annie:LastHit()
@@ -1418,10 +1431,10 @@ function _Annie:LastHit()
 				if IsReady(_Q) and menu.farm.qlasthit and (100 * myHero.mana / myHero.maxMana)>= menu.farm.qlasthitmana then
 					CastSpell(_Q, Minion)
 				end
-			end    
-		end       
-	end              
-end                      
+			end
+		end
+	end
+end
 
 function _Annie:OnDraw()
 	if menu == nil then return end
@@ -1429,32 +1442,32 @@ function _Annie:OnDraw()
 	if menu.draw.drawtarget and ValidTarget(Target) and Target.type == myHero.type then
 		_PentagonRot:DrawTriangle(Target, ARGB(255, 255, 0, 0), 2, 50, 5, 0, 0)
 	end
-	if menu.draw.drawqflash and menu.flash.qflash and IsReady(sflash) and IsReady(_Q) and buffs["canStun"] then 
+	if menu.draw.drawqflash and menu.flash.qflash and IsReady(sflash) and IsReady(_Q) and buffs["canStun"] then
 		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, (self.SpellQ.range + 425), ARGB(table.unpack(menu.draw.colorqflash)))
 	end
-	if menu.draw.drawrflash and menu.flash.rflash and IsReady(sflash) and IsReady(_R) and buffs["canStun"] then 
+	if menu.draw.drawrflash and menu.flash.rflash and IsReady(sflash) and IsReady(_R) and buffs["canStun"] then
 		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, (self.SpellR.range + 425), ARGB(table.unpack(menu.draw.colorrflash)))
 	end
 	local slot = _Tech:CustomGetInventorySlotItem("HealthBomb", myHero)
-	if menu.draw.drawfotm and slot ~= nil and IsReady(slot) then 
-		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorfotm))) 
+	if menu.draw.drawfotm and slot ~= nil and IsReady(slot) then
+		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorfotm)))
 	end
 	local slot = _Tech:CustomGetInventorySlotItem("IronStylus", myHero)
-	if menu.draw.drawlois and slot ~= nil and IsReady(slot) then 
-		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorlois))) 
+	if menu.draw.drawlois and slot ~= nil and IsReady(slot) then
+		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorlois)))
 	end
 	local slot = _Tech:CustomGetInventorySlotItem("ItemMorellosBane", myHero)
-	if menu.draw.drawmikaels and slot ~= nil and IsReady(slot) then 
-		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colormikaels))) 
+	if menu.draw.drawmikaels and slot ~= nil and IsReady(slot) then
+		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colormikaels)))
 	end
-	if menu.draw.drawexhaust and sexhaust ~= nil and IsReady(sexhaust) then 
-	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 650, ARGB(table.unpack(menu.draw.colorexhaust))) 
+	if menu.draw.drawexhaust and sexhaust ~= nil and IsReady(sexhaust) then
+	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 650, ARGB(table.unpack(menu.draw.colorexhaust)))
 	end
-	if menu.draw.drawheal and sheal ~= nil and IsReady(sheal) then 
-	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 850, ARGB(table.unpack(menu.draw.colorheal))) 
+	if menu.draw.drawheal and sheal ~= nil and IsReady(sheal) then
+	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 850, ARGB(table.unpack(menu.draw.colorheal)))
 	end
-	if menu.draw.drawignite and signite ~= nil and IsReady(signite) then 
-	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 600, ARGB(table.unpack(menu.draw.colorignite))) 
+	if menu.draw.drawignite and signite ~= nil and IsReady(signite) then
+	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 600, ARGB(table.unpack(menu.draw.colorignite)))
 	end
 	if menu.draw.drawq and IsReady(_Q) then
 		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, self.SpellQ.range, ARGB(table.unpack(menu.draw.colorq)))
@@ -1498,7 +1511,7 @@ end
 
 function _Annie:TowerCC()
 	for i = 1, enemyCount do
-	local unit = enemyHeroes[i]	
+	local unit = enemyHeroes[i]
 		for i = 1, towerCount do
 			local tower = towers[i]
 			if tower and tower.team == myHero.team and (GetDistance(tower) < 775) and buffs["canStun"] then
@@ -1515,41 +1528,41 @@ end
 function _Annie:UpdateBuff(unit, buff, stacks)
 	if unit and unit.isMe and buff then
 		if (buff.name == "pyromania") then buffs["passive"] = stacks end
-	end 
+	end
 end
 
 Class("_Blitzcrank")
 function _Blitzcrank:__init()
 	self:LoadVariables()
 	self:Menu()
-	
+
 	_Bundle:SetupOrbwalk()
-	
+
 	_Activator:__init()
-	
+
 	_Tech:AddTurrets()
 	towerCount = #towers
-	
+
 	AddTickCallback(function() self:OnTick() end)
 	AddDrawCallback(function() self:OnDraw() end)
 	AddRemoveBuffCallback(function(unit, buff) self:RemoveBuff(unit, buff) end)
 	AddApplyBuffCallback(function(unit, target, buff) self:ApplyBuff(unit, target, buff) end)
     AddProcessSpellCallback(function(object, spell) self:ProcessSpell(object, spell) end)
-	
+
 	enemyMinions = minionManager(MINION_ENEMY, 625, myHero, MINION_SORT_HEALTH_DES)
-	
+
 	_Bundle:Print(myHero.charName .. " Loaded, Good Luck!")
 end
 
 function _Blitzcrank:LoadVariables()
 	self.SpellQ = { speed = 1800, delay = 0.25, range = 975, width = 70, collision = true, aoe = false, type = "linear"}
 
-	self.SpellW = { speed = nil, delay = 0.25, range = nil, width = nil, collision = false, aoe = false, type = "linear" } 
+	self.SpellW = { speed = nil, delay = 0.25, range = nil, width = nil, collision = false, aoe = false, type = "linear" }
 
 	self.SpellE = { speed = nil, delay = 0.25, range = 300, width = nil, collision = false, aoe = false, type = "circular" }
 
-	self.SpellR = { speed = nil, delay = 0.25, range = 600, width = 200, collision = false, aoe = true, type = "circular" } 
-	
+	self.SpellR = { speed = nil, delay = 0.25, range = 600, width = 200, collision = false, aoe = true, type = "circular" }
+
 	UPL:AddSpell(_Q, self.SpellQ)
 end
 
@@ -1564,27 +1577,27 @@ end
 
 function _Blitzcrank:Menu()
 	menu = scriptConfig("Support Heroes", "SupportHeroesMenuBlitzcrank")
-	
+
 	_Activator:Menu()
-	
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-CC Under Tower", "snare")
 		menu.snare:addParam("info", "           -- Auto-CC Enemies --", SCRIPT_PARAM_INFO, "")
 		if enemyCount > 0 then
 			for i = 1, enemyCount do
-			local unit = enemyHeroes[i]			
+			local unit = enemyHeroes[i]
 				menu.snare:addParam("" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_ONOFF, true)
 			end
 		end
 		menu.snare:addParam("settings", "                    -- Settings --", SCRIPT_PARAM_INFO, "")
 		menu.snare:addParam("esnare", "Use E", SCRIPT_PARAM_ONOFF, true)
-		
-	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-Interrupt", "interrupt")   
+
+	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-Interrupt", "interrupt")
         menu.interrupt:addParam("spells", "           -- Auto Interrupt Spells --", SCRIPT_PARAM_INFO, "")
         if enemyCount > 0 then
         	for i = 1, enemyCount do
             	local unit = enemyHeroes[i]
                 if Interrupt[unit.charName] ~= nil then
-                    menu.interrupt:addParam("" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_INFO, "") 
+                    menu.interrupt:addParam("" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_INFO, "")
                     menu.interrupt:addParam("spell".. Interrupt[unit.charName].stop.spellName,"".. Interrupt[unit.charName].stop.name, SCRIPT_PARAM_ONOFF, true)
                     menu.interrupt:addParam("empty", "", SCRIPT_PARAM_INFO,"")
                 end
@@ -1594,7 +1607,7 @@ function _Blitzcrank:Menu()
 		menu.interrupt:addParam("qinterrupt", "Use Q", SCRIPT_PARAM_ONOFF, true)
 		menu.interrupt:addParam("einterrupt", "Use E", SCRIPT_PARAM_ONOFF, true)
 		menu.interrupt:addParam("rinterrupt", "Use R", SCRIPT_PARAM_ONOFF, true)
-		
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Draw Settings", "draw")
 		menu.draw:addParam("spelldraws", "                -- Spell Draws --", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawq", "Draw Q", SCRIPT_PARAM_ONOFF, true)
@@ -1614,7 +1627,7 @@ function _Blitzcrank:Menu()
 		menu.draw:addParam("drawlois", "Draw Locket of the Iron Solari", SCRIPT_PARAM_ONOFF, false)
 		menu.draw:addParam("colorlois", "Color Locket of the Iron Solari", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("drawmikaels", "Draw Mikaels Crucible", SCRIPT_PARAM_ONOFF, false)
-		menu.draw:addParam("colorqmikaels", "Color Mikaels Crucible", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 }) 
+		menu.draw:addParam("colorqmikaels", "Color Mikaels Crucible", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawsumm", "                -- Summoner Draws --", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawexhaust", "Draw Exhaust", SCRIPT_PARAM_ONOFF, false)
@@ -1622,26 +1635,26 @@ function _Blitzcrank:Menu()
 		menu.draw:addParam("drawheal", "Draw Heal", SCRIPT_PARAM_ONOFF, false)
 		menu.draw:addParam("colorheal", "Color Heal", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("drawignite", "Draw Ignite", SCRIPT_PARAM_ONOFF, false)
-		menu.draw:addParam("colorignite", "Color Ignite", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })  
+		menu.draw:addParam("colorignite", "Color Ignite", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("miscellaneousdraws", "            -- Miscellaneous Draws --", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawtarget", "Draw Target", SCRIPT_PARAM_ONOFF, true)
 		menu.draw:addParam("drawpermashow", "Draw Permashow (Reload)", SCRIPT_PARAM_ONOFF, true)
 		menu.draw:addParam("drawcollision", "Draw Collision", SCRIPT_PARAM_ONOFF, true)
-			
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Farm Settings", "farm")
 		menu.farm:addParam("laneclear", "                    -- Lane Clear --", SCRIPT_PARAM_INFO, "")
 		menu.farm:addParam("rlaneclear", "Use R", SCRIPT_PARAM_ONOFF, true)
 		menu.farm:addParam("rclearmana", "Minimum Mana", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
-		
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Flash Settings", "flash")
 		menu.flash:addParam("qflash", "Use Flash - Q", SCRIPT_PARAM_ONOFF, true)
-	
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Humanizer", "humanizer")
 		menu.humanizer:addParam("interruptDelay", "Auto-Interrupt Delay (ms)", SCRIPT_PARAM_SLICE, 200, 0, 500, 0)
 		menu.humanizer:addParam("snareDelay", "Auto-CC Delay (ms)", SCRIPT_PARAM_SLICE, 0, 0, 500, 0)
 		menu.humanizer:addParam("shieldDelay", "Auto Shield Delay (ms)", SCRIPT_PARAM_SLICE, 50, 0, 500, 0)
-			
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Key Settings", "key")
 		menu.key:addParam("combatkeys", "               -- Combat Keys --", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("comboKey", "Combo Key", SCRIPT_PARAM_ONKEYDOWN, false, 32)
@@ -1652,7 +1665,7 @@ function _Blitzcrank:Menu()
 		menu.key:addParam("miscellaneouskeys", "           -- Miscellaneous Keys --", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("flashKey", "Flash Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("H"))
 		menu.key:addParam("marathonKey", "Marathon Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("Y"))
-	
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Spell Settings", "spell")
 		menu.spell:addSubMenu("[" .. myHero.charName .. "] - Q", "q")
 		menu.spell.q:addParam("qcombo", "Combo", SCRIPT_PARAM_ONOFF, true)
@@ -1667,37 +1680,37 @@ function _Blitzcrank:Menu()
         end
         menu.spell.q:addParam("empty", "", SCRIPT_PARAM_INFO, "")
         menu.spell.q:addParam("blacklisthp", "Unless <X% HP", SCRIPT_PARAM_SLICE, 10, 0, 100, 0)
-        
+
 		menu.spell:addSubMenu("[" .. myHero.charName .. "] - E", "e")
 		menu.spell.e:addParam("ecombo", "Combo", SCRIPT_PARAM_ONOFF, true)
 		menu.spell.e:addParam("ecombomana", "[Combo] Mana > X%", SCRIPT_PARAM_SLICE, 0, 0, 100, 0)
 		menu.spell.e:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.spell.e:addParam("eharass", "Harass", SCRIPT_PARAM_ONOFF, true)
 		menu.spell.e:addParam("eharassmana", "[Harass] Mana > X%", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
-		
+
         menu.spell:addSubMenu("[" .. myHero.charName .. "] - R", "r")
 		menu.spell.r:addParam("rcombo", "Combo", SCRIPT_PARAM_ONOFF, true)
 		menu.spell.r:addParam("rcombomana", "[Combo] Mana > X%", SCRIPT_PARAM_SLICE, 0, 0, 100, 0)
 		menu.spell.r:addParam("rmpty", "", SCRIPT_PARAM_INFO, "")
 		menu.spell.r:addParam("rharass", "Harass", SCRIPT_PARAM_ONOFF, true)
 		menu.spell.r:addParam("rharassmana", "[Harass] Mana > X%", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
-		
+
    menu:addSubMenu("[" .. myHero.charName .. "] - Target Selector", "target")
 		menu.target:addParam("targetinfo", "Default Target Select Is LeastCast", SCRIPT_PARAM_INFO, "")
 		menu.target:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.target:addParam("focus", "Focus Selected Target", SCRIPT_PARAM_ONOFF, true)
 		menu.target:addParam("sac", "Use SAC:R Target Instead", SCRIPT_PARAM_ONOFF, false)
-		
-   menu:addSubMenu("Orbwalk Settings", "orb")  
-   
+
+   menu:addSubMenu("Orbwalk Settings", "orb")
+
    UPL:AddToMenu(menu)
-   
+
    menu:addParam("hc", "Prediction Hit Chance", SCRIPT_PARAM_SLICE, 2, 0, 5, 0)
- 
+
    menu:addParam("empty", "", SCRIPT_PARAM_INFO, "")
    menu:addParam("infobox", "            Support Heroes: " .. myHero.charName .. "           ", SCRIPT_PARAM_INFO, "")
    menu:addParam("infobox2", "                      Version:  " .. scriptVersion .. "         ", SCRIPT_PARAM_INFO, "")
-   
+
    if menu.draw.drawpermashow then
 	 menu:permaShow("infobox")
 	 menu.key:permaShow("comboKey")
@@ -1710,47 +1723,47 @@ end
 
 function _Blitzcrank:ApplyBuff(unit, Target, buff)
 	if Target == nil then return end
-	if unit and unit.isMe and buff then 
-	   if buff.name == "PowerFist" then 
+	if unit and unit.isMe and buff then
+	   if buff.name == "PowerFist" then
 			buffs["PowerFist"] = true
 			buffs["rocketgrab2"] = false
-		end 
+		end
 	end
 	if Target.type == myHero.type then
 	   if Target.team ~= myHero.team then
 		   if buff.name == "rocketgrab2" then buffs["rocketgrab2"] = true end
-	   end  
+	   end
 	end
-end       
+end
 
 function _Blitzcrank:Combo()
     if Target == nil then return end
-        if menu.key.comboKey then 
+        if menu.key.comboKey then
             if IsReady(_Q) and menu.spell.q.qcombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qcombomana and GetDistance(Target) < self.SpellQ.range then
-                if not menu.spell.q[unit.charName] and ValidTarget(Target) then
+                if not menu.spell.q[Target.charName] and ValidTarget(Target) then
                     local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
-                    if HitChance >= menu.hc then 
+                    if HitChance >= menu.hc then
                         CastSpell(_Q, CastPosition.x, CastPosition.z)
                     end
                 end
-                if menu.spell.q[unit.charName] and (100*unit.health/unit.maxHealth) <= menu.spell.q.blacklisthp then 
+                if menu.spell.q[Target.charName] and (100*Target.health/Target.maxHealth) <= menu.spell.q.blacklisthp then
                 local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
-                    if HitChance >= menu.hc then 
+                    if HitChance >= menu.hc then
                         CastSpell(_Q, CastPosition.x, CastPosition.z)
                     end
                 end
             end
-            if IsReady(_E) and menu.spell.e.ecombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.e.ecombomana and GetDistance(Target) <= self.SpellE.range and not buffs["rocketgrab2"] then 
-                CastSpell(_E, Target) 
-                Attack(Target)
-            elseif IsReady(_E) and menu.spell.e.ecombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.e.ecombomana and GetDistance(Target) <= self.SpellE.range and buffs["rocketgrab2"] then 
+            if IsReady(_E) and menu.spell.e.ecombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.e.ecombomana and GetDistance(Target) <= self.SpellE.range and not buffs["rocketgrab2"] then
                 CastSpell(_E, Target)
-                Attack(Target)     
+                Attack(Target)
+            elseif IsReady(_E) and menu.spell.e.ecombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.e.ecombomana and GetDistance(Target) <= self.SpellE.range and buffs["rocketgrab2"] then
+                CastSpell(_E, Target)
+                Attack(Target)
             end
             if IsReady(_R) and menu.spell.r.rcombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.r.rcombomana and  GetDistance(Target) <= self.SpellR.range then
-                CastSpell(_R)    
+                CastSpell(_R)
             end
-        end 
+        end
 end
 
 function _Blitzcrank:FlashCombo()
@@ -1762,7 +1775,7 @@ function _Blitzcrank:FlashCombo()
 			flashPos = myHero + 425 * (Vector(Target) - Vector(myHero)):normalized()
 		end
 		if menu.key.flashKey then
-			local CastPosition, HitChance = UPL:Predict(_Q, flashPos, Target)		
+			local CastPosition, HitChance = UPL:Predict(_Q, flashPos, Target)
 			if HitChance >= 2 and type(CastPosition.x) == "number" and type(CastPosition.z) == "number" then
 				flashPos = myHero + 425 * (Vector(CastPosition) - Vector(myHero)):normalized()
 				CastSpell(sflash, flashPos.x, flashPos.z)
@@ -1777,32 +1790,32 @@ end
 
 function _Blitzcrank:Harass()
 	if Target == nil then return end
-	if menu.key.harassKey or menu.key.harassToggle then 
+	if menu.key.harassKey or menu.key.harassToggle then
 		if IsReady(_Q) and menu.spell.q.qharass and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qharassmana and (GetDistance(Target) < 975) then
-			if not menu.spell.q[unit.charName] and ValidTarget(Target) then  
+			if not menu.spell.q[Target.charName] and ValidTarget(Target) then
 				local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
-				if HitChance >= menu.hc then 
+				if HitChance >= menu.hc then
 					CastSpell(_Q, CastPosition.x, CastPosition.z)
 				end
             end
-            if menu.spell.q[unit.charName] and (100*unit.health/unit.maxHealth) <= menu.spell.q.blacklisthp then 
+            if menu.spell.q[Target.charName] and (100*Target.health/Target.maxHealth) <= menu.spell.q.blacklisthp then
             local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
-                if HitChance >= menu.hc then 
+                if HitChance >= menu.hc then
                     CastSpell(_Q, CastPosition.x, CastPosition.z)
                 end
             end
 		end
-		if IsReady(_E) and menu.spell.e.eharass and (100 * myHero.mana / myHero.maxMana)>= menu.spell.e.eharassmana and GetDistance(Target) <= self.SpellE.range and not buffs["rocketgrab2"] then 
+		if IsReady(_E) and menu.spell.e.eharass and (100 * myHero.mana / myHero.maxMana)>= menu.spell.e.eharassmana and GetDistance(Target) <= self.SpellE.range and not buffs["rocketgrab2"] then
 			CastSpell(_E, Target)
 			Attack(Target)
-		elseif IsReady(_E) and menu.spell.e.eharass and (100 * myHero.mana / myHero.maxMana)>= menu.spell.e.eharassmana and GetDistance(Target) <= self.SpellE.range and buffs["rocketgrab2"] then 
+		elseif IsReady(_E) and menu.spell.e.eharass and (100 * myHero.mana / myHero.maxMana)>= menu.spell.e.eharassmana and GetDistance(Target) <= self.SpellE.range and buffs["rocketgrab2"] then
 			CastSpell(_E, Target)
-			Attack(Target)     
+			Attack(Target)
 		end
 		if IsReady(_R) and menu.spell.r.rharass and (100 * myHero.mana / myHero.maxMana)>= menu.spell.r.rharassmana and  GetDistance(Target) <= self.SpellR.range then
-			CastSpell(_R)    
+			CastSpell(_R)
 		end
-	end 
+	end
 end
 
 function _Blitzcrank:ProcessSpell(object, spell)
@@ -1811,16 +1824,16 @@ function _Blitzcrank:ProcessSpell(object, spell)
         local unit = enemyHeroes[i]
             if Interrupt[unit.charName] ~= nil then
                 if menu.interrupt["spell".. Interrupt[unit.charName].stop.spellName] and spell.name == Interrupt[unit.charName].stop.spellName then
-                    if IsReady(_Q) and menu.interrupt.qinterrupt and GetDistance(object) <= self.SpellQ.range then
-                        local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, object)	
+                    if IsReady(_Q) and menu.interrupt.qinterrupt and GetDistance(object) <= self.SpellQ.range and object and object.valid then
+                        local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, object)
                         if HitChance >= menu.hc then
                             DelayAction(function() CastSpell(_Q, CastPosition.x, CastPosition.z) end, menu.humanizer.interruptDelay / 1000)
                         end
-                    elseif IsReady(_E) and menu.interrupt.einterrupt and (GetDistance(object) < self.SpellE.range) then 
+                    elseif IsReady(_E) and menu.interrupt.einterrupt and (GetDistance(object) < self.SpellE.range) then
 						DelayAction(function() CastSpell(_E, object) end, menu.humanizer.interruptDelay / 1000)
-						Attack(Target)	 
-                    elseif IsReady(_R) and menu.interrupt.rinterrupt and (GetDistance(unit) < self.SpellR.range) then 
-						DelayAction(function() CastSpell(_R) end, menu.humanizer.interruptDelay / 1000) 
+						Attack(Target)
+                    elseif IsReady(_R) and menu.interrupt.rinterrupt and (GetDistance(unit) < self.SpellR.range) then
+						DelayAction(function() CastSpell(_R) end, menu.humanizer.interruptDelay / 1000)
                     end
                 end
             end
@@ -1836,18 +1849,18 @@ function _Blitzcrank:LaneClear()
 				if IsReady(_R) and menu.farm.rlaneclear and (100 * myHero.mana / myHero.maxMana)>= menu.farm.rclearmana then
 					CastSpell(_R)
 				end
-			end    
-		end       
-	end              
+			end
+		end
+	end
 end
 
 function _Blitzcrank:Marathon()
-	if menu.key.marathonKey then 
-		if IsReady(_W) then 
+	if menu.key.marathonKey then
+		if IsReady(_W) then
 			CastSpell(_W)
 		end
 	end
-end 
+end
 
 function _Blitzcrank:OnDraw()
 	if menu == nil then return end
@@ -1858,30 +1871,30 @@ function _Blitzcrank:OnDraw()
 	if ValidTarget(Target) and menu.draw.drawcollision and IsReady(_Q) and (GetDistance(Target) <= 975) then
 	   local IsCollision = VPred:CheckMinionCollision(Target, Target.pos, self.SpellQ.delay, self.SpellQ.width, self.SpellQ.range, self.SpellQ.speed, myHero.pos, nil, true)
 			DrawLine3D(myHero.x, myHero.y, myHero.z, Target.x, Target.y, Target.z, 5, IsCollision and ARGB(125, 255, 0,0) or ARGB(125, 0, 255,0))
-	end  
-	if menu.draw.drawqflash and menu.flash.qflash and IsReady(sflash) and IsReady(_Q) then 
+	end
+	if menu.draw.drawqflash and menu.flash.qflash and IsReady(sflash) and IsReady(_Q) then
 		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, (975 + 425), ARGB(table.unpack(menu.draw.colorqflash)))
 	end
 	local slot = _Tech:CustomGetInventorySlotItem("HealthBomb", myHero)
-	if menu.draw.drawfotm and slot ~= nil and IsReady(slot) then 
-		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorfotm))) 
+	if menu.draw.drawfotm and slot ~= nil and IsReady(slot) then
+		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorfotm)))
 	end
 	local slot = _Tech:CustomGetInventorySlotItem("IronStylus", myHero)
-	if menu.draw.drawlois and slot ~= nil and IsReady(slot) then 
-		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorlois))) 
+	if menu.draw.drawlois and slot ~= nil and IsReady(slot) then
+		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorlois)))
 	end
 	local slot = _Tech:CustomGetInventorySlotItem("ItemMorellosBane", myHero)
-	if menu.draw.drawmikaels and slot ~= nil and IsReady(slot) then 
-		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colormikaels))) 
+	if menu.draw.drawmikaels and slot ~= nil and IsReady(slot) then
+		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colormikaels)))
 	end
-	if menu.draw.drawexhaust and sexhaust ~= nil and IsReady(sexhaust) then 
-	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 650, ARGB(table.unpack(menu.draw.colorexhaust))) 
+	if menu.draw.drawexhaust and sexhaust ~= nil and IsReady(sexhaust) then
+	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 650, ARGB(table.unpack(menu.draw.colorexhaust)))
 	end
-	if menu.draw.drawheal and sheal ~= nil and IsReady(sheal) then 
-	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 850, ARGB(table.unpack(menu.draw.colorheal))) 
+	if menu.draw.drawheal and sheal ~= nil and IsReady(sheal) then
+	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 850, ARGB(table.unpack(menu.draw.colorheal)))
 	end
-	if menu.draw.drawignite and signite ~= nil and IsReady(signite) then 
-	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 600, ARGB(table.unpack(menu.draw.colorignite))) 
+	if menu.draw.drawignite and signite ~= nil and IsReady(signite) then
+	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 600, ARGB(table.unpack(menu.draw.colorignite)))
 	end
 	if menu.draw.drawq and IsReady(_Q) then
 		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 975, ARGB(table.unpack(menu.draw.colorq)))
@@ -1896,13 +1909,13 @@ end
 
 function _Blitzcrank:RemoveBuff(unit, buff)
 	if unit and unit.isMe and buff then
-		if buff.name == "PowerFist" then buffs["PowerFist"] = false end 
+		if buff.name == "PowerFist" then buffs["PowerFist"] = false end
 	end
 end
 
 function _Blitzcrank:TowerCC()
 	for i = 1, enemyCount do
-	local unit = enemyHeroes[i]	
+	local unit = enemyHeroes[i]
 		for i = 1, towerCount do
 			local tower = towers[i]
 			if tower and tower.team == myHero.team and (GetDistance(tower, unit) < 775) then
@@ -1918,20 +1931,22 @@ Class("_Janna")
 function _Janna:__init()
 	self:LoadVariables()
 	self:Menu()
-		
+
 	_Bundle:SetupOrbwalk()
-	
+
 	_Activator:__init()
-	
+
 	_Tech:AddTurrets()
 	towerCount = #towers
-	
+
 	AddTickCallback(function() self:OnTick() end)
 	AddDrawCallback(function() self:OnDraw() end)
 	AddProcessAttackCallback(function(object, spell) self:ProcessAttack(object, spell) end)
-	
+    AddProcessAttackCallback(function(object, spell) self:ProcessSpell(object, spell) end)
+    AddMsgCallback(function(msg, key) self:OnWndMsg(msg,key) end)
+
 	enemyMinions = minionManager(MINION_ENEMY, self.SpellW.range, myHero, MINION_SORT_HEALTH_DES)
-	
+
 	_Bundle:Print(myHero.charName .. " Loaded, have fun!")
 end
 
@@ -1940,7 +1955,7 @@ function _Janna:LoadVariables()
 	self.SpellW = { speed = 1000, delay = 0.55, range = 600, width = 50, collision = true, aoe = false, type = "linear" }
 	self.SpellE = { speed = 1975, delay = 0.25, range = 800, width = 50, collision = true, aoe = false, type = "linear" }
 	self.SpellR = { speed = 1975, delay = 0.25, range = 725, width = 50, collision = true, aoe = false, type = "linear" }
-	
+
 	UPL:AddSpell(_Q, self.SpellQ)
 end
 
@@ -1948,37 +1963,37 @@ function _Janna:OnTick()
 	self:Combo()
 	self:FlashCombo()
 	self:LaneClear()
-	self:TowerCC() 
+	self:TowerCC()
 end
 
 function _Janna:Menu()
 	menu = scriptConfig("Support Heroes", "SupportHeroesMenuJanna")
-	
+
 	_Activator:Menu()
-	
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-CC Under Tower", "snare")
 		menu.snare:addParam("info", "           -- Auto-CC Enemies --", SCRIPT_PARAM_INFO, "")
 		if enemyCount > 0 then
 			for i = 1, enemyCount do
-			local unit = enemyHeroes[i]			
+			local unit = enemyHeroes[i]
 				menu.snare:addParam("" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_ONOFF, true)
 			end
 		end
 		menu.snare:addParam("settings", "                    -- Settings --", SCRIPT_PARAM_INFO, "")
 		menu.snare:addParam("qsnare", "Use Q", SCRIPT_PARAM_ONOFF, true)
-		
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-Shield", "as")
 		for i = 1, heroManager.iCount do
 			local unit = heroManager:GetHero(i)
 			if unit.team == myHero.team then
 			menu.as:addParam("teammateshield"..i, "Shield "..unit.charName, SCRIPT_PARAM_ONOFF, true)
 			menu.as:addParam("maxhppercent"..i, "Shield If < X% HP", SCRIPT_PARAM_SLICE, 80, 0, 100, 0)
-			menu.as:addParam("teammateaashieldattack"..i, "Shield While AA'ing", SCRIPT_PARAM_ONOFF, false) 
+			menu.as:addParam("teammateaashieldattack"..i, "Shield While AA'ing", SCRIPT_PARAM_ONOFF, false)
 			menu.as:addParam("teammateaashield"..i, "Shield Enemy AA", SCRIPT_PARAM_ONOFF, true)
 			menu.as:addParam("teammateaashieldhp"..i, "Shield AA If Ally <X% HP", SCRIPT_PARAM_SLICE, 10, 0, 100, 0)
 			menu.as:addParam("empty", "", SCRIPT_PARAM_INFO,"")
-			end 
-		end	
+			end
+		end
 			menu.as:addParam("turretshield", "Shield Turrets", SCRIPT_PARAM_ONOFF, true)
 			menu.as:addParam("turretshieldhp", "Shield Turret < X% HP", SCRIPT_PARAM_SLICE, 40, 0, 100, 0)
 			menu.as:addParam("empty", "", SCRIPT_PARAM_INFO,"")
@@ -1986,14 +2001,14 @@ function _Janna:Menu()
 			menu.as:addParam("shieldcc", "Shield CC", SCRIPT_PARAM_ONOFF, true)
 			menu.as:addParam("shieldslow", "Shield Slows", SCRIPT_PARAM_ONOFF, true)
 			menu.as:addParam("skillshots", "Shield Skillshots", SCRIPT_PARAM_ONOFF, false)
-				 
-	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-Interrupt", "interrupt")   
+
+	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-Interrupt", "interrupt")
         menu.interrupt:addParam("spells", "           -- Auto Interrupt Spells --", SCRIPT_PARAM_INFO, "")
         if enemyCount > 0 then
         	for i = 1, enemyCount do
             	local unit = enemyHeroes[i]
                 if Interrupt[unit.charName] ~= nil then
-                    menu.interrupt:addParam("" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_INFO, "") 
+                    menu.interrupt:addParam("" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_INFO, "")
                     menu.interrupt:addParam("spell".. Interrupt[unit.charName].stop.spellName,"".. Interrupt[unit.charName].stop.name, SCRIPT_PARAM_ONOFF, true)
                     menu.interrupt:addParam("empty", "", SCRIPT_PARAM_INFO,"")
                 end
@@ -2002,7 +2017,7 @@ function _Janna:Menu()
 		menu.interrupt:addParam("settings", "                -- Settings --", SCRIPT_PARAM_INFO, "")
 		menu.interrupt:addParam("qinterrupt", "Use Q", SCRIPT_PARAM_ONOFF, true)
 		menu.interrupt:addParam("rinterrupt", "Use R", SCRIPT_PARAM_ONOFF, true)
-		
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Draw Settings", "draw")
 		menu.draw:addParam("spelldraws", "                -- Spell Draws --", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawq", "Draw Q", SCRIPT_PARAM_ONOFF, true)
@@ -2023,7 +2038,7 @@ function _Janna:Menu()
 		menu.draw:addParam("drawlois", "Draw Locket of the Iron Solari", SCRIPT_PARAM_ONOFF, false)
 		menu.draw:addParam("colorlois", "Color Locket of the Iron Solari", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("drawmikaels", "Draw Mikaels Crucible", SCRIPT_PARAM_ONOFF, false)
-		menu.draw:addParam("colorqmikaels", "Color Mikaels Crucible", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 }) 
+		menu.draw:addParam("colorqmikaels", "Color Mikaels Crucible", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawsumm", "                -- Summoner Draws --", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawexhaust", "Draw Exhaust", SCRIPT_PARAM_ONOFF, false)
@@ -2031,25 +2046,25 @@ function _Janna:Menu()
 		menu.draw:addParam("drawheal", "Draw Heal", SCRIPT_PARAM_ONOFF, false)
 		menu.draw:addParam("colorheal", "Color Heal", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("drawignite", "Draw Ignite", SCRIPT_PARAM_ONOFF, false)
-		menu.draw:addParam("colorignite", "Color Ignite", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })  
+		menu.draw:addParam("colorignite", "Color Ignite", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("miscellaneousdraws", "            -- Miscellaneous Draws --", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawtarget", "Draw Target", SCRIPT_PARAM_ONOFF, true)
 		menu.draw:addParam("drawpermashow", "Draw Permashow (Reload)", SCRIPT_PARAM_ONOFF, true)
-			
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Farm Settings", "farm")
 		menu.farm:addParam("laneclear", "                    -- Lane Clear --", SCRIPT_PARAM_INFO, "")
 		menu.farm:addParam("wlaneclear", "Use W", SCRIPT_PARAM_ONOFF, true)
 		menu.farm:addParam("wclearmana", "Minimum Mana", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
-		
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Flash Settings", "flash")
 		menu.flash:addParam("insecflash", "Use Insec Flash", SCRIPT_PARAM_ONOFF, true)
-	
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Humanizer", "humanizer")
 		menu.humanizer:addParam("interruptDelay", "Auto-Interrupt Delay (ms)", SCRIPT_PARAM_SLICE, 200, 0, 500, 0)
 		menu.humanizer:addParam("snareDelay", "Auto-CC Delay (ms)", SCRIPT_PARAM_SLICE, 0, 0, 500, 0)
 		menu.humanizer:addParam("shieldDelay", "Auto Shield Delay (ms)", SCRIPT_PARAM_SLICE, 50, 0, 500, 0)
-			
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Key Settings", "key")
 		menu.key:addParam("combatkeys", "               -- Combat Keys --", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("comboKey", "Combo Key", SCRIPT_PARAM_ONKEYDOWN, false, 32)
@@ -2059,14 +2074,14 @@ function _Janna:Menu()
 		menu.key:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("miscellaneouskeys", "           -- Miscellaneous Keys --", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("flashKey", "Flash Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("H"))
-	
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Spell Settings", "spell")
 		menu.spell:addSubMenu("[" .. myHero.charName .. "] - Q", "q")
 		menu.spell.q:addParam("qcombo", "Combo", SCRIPT_PARAM_ONOFF, true)
 		menu.spell.q:addParam("qcombomana", "[Combo] Mana > X%", SCRIPT_PARAM_SLICE, 0, 0, 100, 0)
 		menu.spell.q:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.spell.q:addParam("qharass", "Harass", SCRIPT_PARAM_ONOFF, true)
-		menu.spell.q:addParam("qharassmana", "[Harass] Mana > X%", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)   
+		menu.spell.q:addParam("qharassmana", "[Harass] Mana > X%", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
 		menu.spell:addSubMenu("[" .. myHero.charName .. "] - W", "w")
 		menu.spell.w:addParam("wcombo", "Combo", SCRIPT_PARAM_ONOFF, true)
 		menu.spell.w:addParam("wcombomana", "[Combo] Mana > X%", SCRIPT_PARAM_SLICE, 0, 0, 100, 0)
@@ -2078,30 +2093,30 @@ function _Janna:Menu()
 		menu.spell:addSubMenu("[" .. myHero.charName .. "] - R", "r")
 		for i = 1, heroManager.iCount do
 		local unit = heroManager:GetHero(i)
-			if unit.team == myHero.team then  
+			if unit.team == myHero.team then
 			menu.spell.r:addParam("teammateult"..i, "Ult "..unit.charName, SCRIPT_PARAM_ONOFF, true)
 			menu.spell.r:addParam("maxhppercent"..i, "Ult If < X% HP", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
 			menu.spell.r:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 			end
 		end
 		menu.spell.r:addParam("mindmgpercent", "Min Damage To Ult", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
-		
+
    menu:addSubMenu("[" .. myHero.charName .. "] - Target Selector", "target")
 		menu.target:addParam("targetinfo", "Default Target Select Is LeastCast", SCRIPT_PARAM_INFO, "")
 		menu.target:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.target:addParam("focus", "Focus Selected Target", SCRIPT_PARAM_ONOFF, true)
 		menu.target:addParam("sac", "Use SAC:R Target Instead", SCRIPT_PARAM_ONOFF, false)
-		
-   menu:addSubMenu("Orbwalk Settings", "orb")  
-   
+
+   menu:addSubMenu("Orbwalk Settings", "orb")
+
    UPL:AddToMenu(menu)
-   
+
    menu:addParam("hc", "Prediction Hit Chance", SCRIPT_PARAM_SLICE, 2, 0, 5, 0)
- 
+
    menu:addParam("empty", "", SCRIPT_PARAM_INFO, "")
    menu:addParam("infobox", "            Support Heroes: " .. myHero.charName .. "           ", SCRIPT_PARAM_INFO, "")
    menu:addParam("infobox2", "                      Version:  " .. scriptVersion .. "         ", SCRIPT_PARAM_INFO, "")
-   
+
    if menu.draw.drawpermashow then
 	 menu:permaShow("infobox")
 	 menu.key:permaShow("comboKey")
@@ -2110,16 +2125,16 @@ function _Janna:Menu()
 	 menu.key:permaShow("clearKey")
    end
 end
- 
-function _Janna:Combo() 
+
+function _Janna:Combo()
 	if Target == nil then return end
-	if menu.key.comboKey then 
+	if menu.key.comboKey then
 		if IsReady(_Q) and menu.spell.q.qcombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qcombomana and (GetDistance(Target) < self.SpellQ.range) then
 			if ValidTarget(Target) then
 				CastSpell(_Q)
-				DelayAction(function() self:JannaCastQ2(Target) end, 0)
+				DelayAction(function() self:JannaCastQ2(Target) end, 0.3)
 			end
-		end 
+		end
 		if IsReady(_W) and menu.spell.w.wcombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.w.wcombomana and (GetDistance(Target) < self.SpellW.range) then
 			if ValidTarget(Target) then
 				CastSpell(_W, Target)
@@ -2135,25 +2150,25 @@ function _Janna:FlashCombo()
 		if tower and tower.team == myHero.team and GetDistance(tower) < 1500 and IsReady(sflash) then
 		   local Position = VPred:GetPredictedPos(Target, 0.1)
 		   local flashPos = Position + 100 * (Vector(Position) - Vector(tower)):normalized()
-					
+
 		   if GetDistance(flashPos) > 425 then
 			   flashPos = nil
 		   end
-					
+
 		   if GetDistance(Position, flashPos) > 100 then
 			  flashPos = nil
 		   end
-					
+
 		   hasTower = true
-					
-		   if flashPos ~= nil and menu.key.flashKey and menu.flash.insecflash then					
+
+		   if flashPos ~= nil and menu.key.flashKey and menu.flash.insecflash then
 			   if IsReady(_R) and myHero.mana > myHero:GetSpellData(_R).mana then
 				 CastSpell(sflash, flashPos.x, flashPos.z)
 				 CastSpell(_R)
 			   end
 		   end
 		end
-	end 
+	end
 	local useAlly = nil
 	local damage = 0
 	for i = 1, allyCount do
@@ -2167,16 +2182,16 @@ function _Janna:FlashCombo()
 	end
 	local Position = VPred:GetPredictedPos(Target, 0.1)
 	local flashPos = Position + 100 * (Vector(Position) - Vector(useAlly)):normalized()
-				
+
 	if GetDistance(flashPos) > 425 then
 		flashPos = nil
 	end
-				
+
 	if GetDistance(Position, flashPos) > 100 then
 		flashPos = nil
 	end
-				
-	if flashPos ~= nil and menu.key.flashKey and menu.flash.insecflash then					
+
+	if flashPos ~= nil and menu.key.flashKey and menu.flash.insecflash then
 		if IsReady(_R) and IsReady(sflash) and myHero.mana > myHero:GetSpellData(_R).mana then
 			_MovementBlock:enable()
             CastSpell(sflash, flashPos.x, flashPos.z)
@@ -2190,11 +2205,11 @@ end
 
 function _Janna:Harass()
 	if Target == nil then return end
-	if menu.key.harassKey or menu.key.harassToggle then 
+	if menu.key.harassKey or menu.key.harassToggle then
 		if IsReady(_Q) and menu.spell.q.qharass and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qharassmana and (GetDistance(Target) < 850) then
 			if ValidTarget(Target) then
 				CastSpell(_Q)
-				DelayAction(function() self:JannaCastQ2(Target) end, 0)
+				DelayAction(function() self:JannaCastQ2(Target) end, 0.3)
 			end
 		end
 		if IsReady(_W) and menu.spell.w.wharass and (100 * myHero.mana / myHero.maxMana)>= menu.spell.w.wharassmana and (GetDistance(Target) < self.SpellW.range) then
@@ -2203,7 +2218,7 @@ function _Janna:Harass()
 			end
 		end
 	end
-end 
+end
 
 function _Janna:JannaCastQ2(Target)
 	if Target == nil then return end
@@ -2218,13 +2233,13 @@ end
 function _Janna:LaneClear()
 	for i, Minion in pairs(enemyMinions.objects) do
 		if (Minion ~= nil) then
-			if menu.key.clearKey then 
+			if menu.key.clearKey then
 				if IsReady(_W) and menu.farm.wlaneclear and (100 * myHero.mana / myHero.maxMana)>= menu.farm.wclearmana then
 					CastSpell(_W, Minion)
 				end
 			end
 		end
-	end                
+	end
 end
 
 function _Janna:OnDraw()
@@ -2234,7 +2249,7 @@ function _Janna:OnDraw()
 	end
 	local Position = VPred:GetPredictedPos(Target, 0.1)
 	local flashPos = Position + 100 * (Vector(myHero) - Vector(flashPos)):normalized()
-	if IsReady(_R) and IsReady(sflash) and ValidTarget(Target) then	
+	if IsReady(_R) and IsReady(sflash) and ValidTarget(Target) then
 		if flashPos ~= nil and menu.draw.drawinsecflash then
 			if GetDistance(Target) < 425 and GetDistance(Target) > 50 then
 			  _Tech:DrawCircle(flashPos.x, flashPos.y, flashPos.z, 50, ARGB(255, 255, 0, 0))
@@ -2250,25 +2265,25 @@ function _Janna:OnDraw()
 		end
 	end
 	local slot = _Tech:CustomGetInventorySlotItem("HealthBomb", myHero)
-	if menu.draw.drawfotm and slot ~= nil and IsReady(slot) then 
-		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorfotm))) 
+	if menu.draw.drawfotm and slot ~= nil and IsReady(slot) then
+		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorfotm)))
 	end
 	local slot = _Tech:CustomGetInventorySlotItem("IronStylus", myHero)
-	if menu.draw.drawlois and slot ~= nil and IsReady(slot) then 
-		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorlois))) 
+	if menu.draw.drawlois and slot ~= nil and IsReady(slot) then
+		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorlois)))
 	end
 	local slot = _Tech:CustomGetInventorySlotItem("ItemMorellosBane", myHero)
-	if menu.draw.drawmikaels and slot ~= nil and IsReady(slot) then 
-		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colormikaels))) 
+	if menu.draw.drawmikaels and slot ~= nil and IsReady(slot) then
+		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colormikaels)))
 	end
-	if menu.draw.drawexhaust and sexhaust ~= nil and IsReady(sexhaust) then 
-	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 650, ARGB(table.unpack(menu.draw.colorexhaust))) 
+	if menu.draw.drawexhaust and sexhaust ~= nil and IsReady(sexhaust) then
+	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 650, ARGB(table.unpack(menu.draw.colorexhaust)))
 	end
-	if menu.draw.drawheal and sheal ~= nil and IsReady(sheal) then 
-	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 850, ARGB(table.unpack(menu.draw.colorheal))) 
+	if menu.draw.drawheal and sheal ~= nil and IsReady(sheal) then
+	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 850, ARGB(table.unpack(menu.draw.colorheal)))
 	end
-	if menu.draw.drawignite and signite ~= nil and IsReady(signite) then 
-	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 600, ARGB(table.unpack(menu.draw.colorignite))) 
+	if menu.draw.drawignite and signite ~= nil and IsReady(signite) then
+	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 600, ARGB(table.unpack(menu.draw.colorignite)))
 	end
 	if menu.draw.drawq and IsReady(_Q) then
 		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 850, ARGB(table.unpack(menu.draw.colorq)))
@@ -2284,15 +2299,30 @@ function _Janna:OnDraw()
 	end
 end
 
-function _Janna:ProcessAttack(object,spell) 
-	if IsReady(_E) and spell.target and GetDistance(spell.target) < self.SpellE.range then	
+function _Janna:ProcessSpell(object, spell)
+    if object.isMe then
+        if spell.name == "ReapTheWhirlwind" then
+            _MovementBlock:enable()
+            DelayAction(function() _MovementBlock:disable() end,3)
+        end
+    end
+end
+
+function _Janna:OnWndMsg(msg,key)
+    if msg == WM_LBUTTONDOWN then
+        _MovementBlock:disable()
+    end
+end
+
+function _Janna:ProcessAttack(object,spell)
+	if IsReady(_E) and spell.target and GetDistance(spell.target) < self.SpellE.range then
 			if object.team == TEAM_ENEMY and spell.name:lower():find("attack") then
-				if spell.target.type == "obj_AI_Turret" then 
+				if spell.target.type == "obj_AI_Turret" then
 					if (100*spell.target.health/spell.target.maxHealth) <= menu.as.turretshieldhp and menu.as.turretshield then
-					CastSpell(_E, spell.target)	 
+					CastSpell(_E, spell.target)
 					end
 				end
-			end 
+			end
 		end
 	for i = 1, heroManager.iCount do
 		local allytarget = heroManager:GetHero(i)
@@ -2307,10 +2337,10 @@ function _Janna:ProcessAttack(object,spell)
 				end
 			end
 		end
-	end   
+	end
 	for i = 1, heroManager.iCount do
 		local allytarget = heroManager:GetHero(i)
-		if allytarget.team == myHero.team then  
+		if allytarget.team == myHero.team then
 			if allytarget.team == myHero.team and not allytarget.dead and allytarget.health > 0 then
 				if IsReady(_E) and spell.target and GetDistance(allytarget) < self.SpellE.range then
 					if object.team == TEAM_ENEMY and object.type == myHero.type and spell.name:lower():find("attack") then
@@ -2330,37 +2360,42 @@ function _Janna:ProcessAttack(object,spell)
                     if IsReady(_Q) and menu.interrupt.qinterrupt and GetDistance(object) <= self.SpellQ.range then
                         CastSpell(_Q)
                        -- DelayAction(function() self:JannaCastQ2(object) end, 0)
-                    elseif IsReady(_R) and menu.interrupt.rinterrupt and (GetDistance(unit) < self.SpellR.range) then 
-						DelayAction(function() CastSpell(_R) end, menu.humanizer.interruptDelay / 1000) 
+                    elseif IsReady(_R) and menu.interrupt.rinterrupt and (GetDistance(unit) < self.SpellR.range) then
+						DelayAction(function() CastSpell(_R) end, menu.humanizer.interruptDelay / 1000)
                     end
                 end
             end
 	    end
 	end
-    if object.isMe then
+    --[[if object.isMe then
 		if spell.name == "ReapTheWhirlwind" then
-			_MovementBlock:enable()
-			DelayAction(function() _MovementBlock:disable() end, 3)
+            rcast = os.clock()
+			if os.clock() < rcast + 3 then
+                 _MovementBlock:enable()
+            end
+
+            --_MovementBlock:enable()
+            --DelayAction(function() _MovementBlock:disable() end, 3)
 		end
-	end
+	end]]
 	if object.team ~= myHero.team and not myHero.dead and object.name ~= nil and not (object.name:find("Minion_") or object.name:find("Odin")) then
 		local shieldREADY = IsReady(_E)
 		local ultREADY = IsReady(_R)
 		local HitFirst = false
 		local shieldtarget,SLastDistance,SLastDmgPercent = nil,nil,nil
 		local ulttarget,ULastDistance,ULastDmgPercent = nil,nil,nil
-		
+
 		YWall, BShield, SShield, Shield, CC = false, false, false, false
 		shottype, radius, maxdistance = 0, 0, 0
-		
+
 		if object.type == "AIHeroClient" then
 			spelltype, casttype = getSpellType(object, spell.name)
 			if casttype == 4 or casttype == 5 or casttype == 6 then
 				return
 			end
-		   
+
 			Shield = true
-			
+
 				if spelltype == "Q" or spelltype == "W" or spelltype == "E" or spelltype == "R" or spelltype == "P" or spelltype == "QM" or spelltype == "WM" or spelltype == "EM" then
 					if skillShield[object.charName] == nil then return end
                     HitFirst = skillShield[object.charName][spelltype].HitFirst
@@ -2375,7 +2410,7 @@ function _Janna:ProcessAttack(object,spell)
 				else
 					Shield = true
 				end
-			
+
 				for i = 1, heroManager.iCount do
 				local allytarget = heroManager:GetHero(i)
 					if spell.target and spell.target.networkID == allytarget.networkID then
@@ -2397,7 +2432,7 @@ function _Janna:ProcessAttack(object,spell)
 							elseif shottype == 6 then
 							hitchampion = checkhitlinepass(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox) or checkhitlinepass(object, Vector(object) * 2 - spell.endPos, radius, maxdistance, allytarget, allyHitBox)
 							elseif shottype == 7 then
-							hitchampion = checkhitcone(spell.endPos, object, radius, maxdistance, allytarget, allyHitBox)              
+							hitchampion = checkhitcone(spell.endPos, object, radius, maxdistance, allytarget, allyHitBox)
 							end
 							if shieldREADY and menu.as["teammateshield" .. i] and GetDistance(allytarget) <= self.SpellE.range then
 								local shieldflag, dmgpercent = self:shieldCheck(object,spell,allytarget,"shields")
@@ -2421,14 +2456,14 @@ function _Janna:ProcessAttack(object,spell)
 								end
 							end
 						end
-						
+
 						end
 					if shieldtarget ~= nil then
 						DelayAction(function() CastSpell(_E, shieldtarget) end, menu.humanizer.shieldDelay / 1000)
 					end
 					if ulttarget ~= nil then
 						CastSpell(_R, ulttarget)
-                        
+
 				end
 			end
 		end
@@ -2436,8 +2471,8 @@ end
 
 function _Janna:shieldCheck(object,spell,target,typeused)
 	if Target == nil then return end
-	local configused 
-	
+	local configused
+
 	if typeused == "shields" then configused = menu.as
 	elseif typeused == "ult" then configused = menu.spell.r
 	end
@@ -2473,8 +2508,8 @@ function _Janna:shieldCheck(object,spell,target,typeused)
 		end
 			  for i = 1, heroManager.iCount do
 				local ally = heroManager:GetHero(i)
-				if ally.team == myHero.team then 
-			  
+				if ally.team == myHero.team then
+
 			  local dmgpercent = skilldamage * 100 / target.health
 			  local dmgneeded = dmgpercent >= configused.mindmgpercent
 			  local hpneeded =  configused["maxhppercent"..i] >= (target.health - skilldamage) * 100 / target.maxHealth
@@ -2508,36 +2543,36 @@ Class("_Leona")
 function _Leona:__init()
 	self:LoadVariables()
 	self:Menu()
-	
-	
+
+
 	_Bundle:SetupOrbwalk()
-	
+
 	_Activator:__init()
-	
+
 	_Tech:AddTurrets()
 	towerCount = #towers
-	
+
 	AddTickCallback(function() self:OnTick() end)
 	AddDrawCallback(function() self:OnDraw() end)
 	AddProcessAttackCallback(function(object, spell) self:ProcessAttack(object, spell) end)
     AddProcessSpellCallback(function(object, spell) self:ProcessSpell(object, spell) end)
 	AddRemoveBuffCallback(function(unit, buff) self:RemoveBuff(unit, buff) end)
 	AddApplyBuffCallback(function(unit, target, buff) self:ApplyBuff(unit, target, buff) end)
-	
+
 	enemyMinions = minionManager(MINION_ENEMY, 875, myHero, MINION_SORT_HEALTH_DES)
-	
+
 	_Bundle:Print(myHero.charName .. " Loaded, Good Luck!")
 end
 
 function _Leona:LoadVariables()
 	self.SpellQ = { speed = 1800, delay = 0.25, range = 175, width = 70, collision = false, aoe = false, type = "nil"}
 
-	self.SpellW = { speed = nil, delay = 0.25, range = 450, width = 150, collision = false, aoe = false, type = "Circular" } 
+	self.SpellW = { speed = nil, delay = 0.25, range = 450, width = 150, collision = false, aoe = false, type = "Circular" }
 
 	self.SpellE = { speed = 1200, delay = 0.25, range = 875, width = 200, collision = false, aoe = false, type = "linear" }
-	
+
 	self.SpellR = { speed = 2000, delay = 0.25, range = 1200, width = 200, collision = false, aoe = true, type = "linear" }
-	
+
 	UPL:AddSpell(_E, self.SpellE)
 end
 
@@ -2547,33 +2582,33 @@ function _Leona:OnTick()
 	self:FlashCombo()
 	self:Harass()
 	self:LaneClear()
-	self:TowerCC() 
+	self:TowerCC()
 end
 
 function _Leona:Menu()
 	menu = scriptConfig("Support Heroes", "SupportHeroesMenuLeona")
-	
+
 	_Activator:Menu()
-	
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-CC Under Tower", "snare")
 		menu.snare:addParam("info", "           -- Auto-CC Enemies --", SCRIPT_PARAM_INFO, "")
 		if enemyCount > 0 then
 			for i = 1, enemyCount do
-			local unit = enemyHeroes[i]			
+			local unit = enemyHeroes[i]
 				menu.snare:addParam("" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_ONOFF, true)
 			end
 		end
 		menu.snare:addParam("settings", "                    -- Settings --", SCRIPT_PARAM_INFO, "")
 		menu.snare:addParam("qsnare", "Use Q", SCRIPT_PARAM_ONOFF, false)
 		menu.snare:addParam("esnare", "Use E", SCRIPT_PARAM_ONOFF, true)
-		
-	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-Interrupt", "interrupt")   
+
+	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-Interrupt", "interrupt")
         menu.interrupt:addParam("spells", "           -- Auto Interrupt Spells --", SCRIPT_PARAM_INFO, "")
         if enemyCount > 0 then
         	for i = 1, enemyCount do
             	local unit = enemyHeroes[i]
                 if Interrupt[unit.charName] ~= nil then
-                    menu.interrupt:addParam("" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_INFO, "") 
+                    menu.interrupt:addParam("" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_INFO, "")
                     menu.interrupt:addParam("spell".. Interrupt[unit.charName].stop.spellName,"".. Interrupt[unit.charName].stop.name, SCRIPT_PARAM_ONOFF, true)
                     menu.interrupt:addParam("empty", "", SCRIPT_PARAM_INFO,"")
                 end
@@ -2583,13 +2618,13 @@ function _Leona:Menu()
 		menu.interrupt:addParam("qinterrupt", "Use Q", SCRIPT_PARAM_ONOFF, true)
 		menu.interrupt:addParam("einterrupt", "Use E", SCRIPT_PARAM_ONOFF, true)
 		menu.interrupt:addParam("rinterrupt", "Use R", SCRIPT_PARAM_ONOFF, true)
-		
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Draw Settings", "draw")
 		menu.draw:addParam("spelldraws", "                -- Spell Draws --", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawq", "Draw Q", SCRIPT_PARAM_ONOFF, true)
 		menu.draw:addParam("colorq", "Color Q", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("draww", "Draw W", SCRIPT_PARAM_ONOFF, true)
-		menu.draw:addParam("colorw", "Color W", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })      
+		menu.draw:addParam("colorw", "Color W", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("drawe", "Draw E", SCRIPT_PARAM_ONOFF, true)
 		menu.draw:addParam("colore", "Color E", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("drawr", "Draw R", SCRIPT_PARAM_ONOFF, true)
@@ -2605,7 +2640,7 @@ function _Leona:Menu()
 		menu.draw:addParam("drawlois", "Draw Locket of the Iron Solari", SCRIPT_PARAM_ONOFF, false)
 		menu.draw:addParam("colorlois", "Color Locket of the Iron Solari", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("drawmikaels", "Draw Mikaels Crucible", SCRIPT_PARAM_ONOFF, false)
-		menu.draw:addParam("colorqmikaels", "Color Mikaels Crucible", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 }) 
+		menu.draw:addParam("colorqmikaels", "Color Mikaels Crucible", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawsumm", "                -- Summoner Draws --", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawexhaust", "Draw Exhaust", SCRIPT_PARAM_ONOFF, false)
@@ -2613,25 +2648,25 @@ function _Leona:Menu()
 		menu.draw:addParam("drawheal", "Draw Heal", SCRIPT_PARAM_ONOFF, false)
 		menu.draw:addParam("colorheal", "Color Heal", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("drawignite", "Draw Ignite", SCRIPT_PARAM_ONOFF, false)
-		menu.draw:addParam("colorignite", "Color Ignite", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })  
+		menu.draw:addParam("colorignite", "Color Ignite", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("miscellaneousdraws", "            -- Miscellaneous Draws --", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawtarget", "Draw Target", SCRIPT_PARAM_ONOFF, true)
 		menu.draw:addParam("drawpermashow", "Draw Permashow (Reload)", SCRIPT_PARAM_ONOFF, true)
-			
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Farm Settings", "farm")
 		menu.farm:addParam("laneclear", "                    -- Lane Clear --", SCRIPT_PARAM_INFO, "")
 		menu.farm:addParam("qlaneclear", "Use Q", SCRIPT_PARAM_ONOFF, true)
 		menu.farm:addParam("qclearmana", "Minimum Mana", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
-		
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Flash Settings", "flash")
 		menu.flash:addParam("eflash", "Use Flash - E", SCRIPT_PARAM_ONOFF, true)
-	
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Humanizer", "humanizer")
 		menu.humanizer:addParam("interruptDelay", "Auto-Interrupt Delay (ms)", SCRIPT_PARAM_SLICE, 200, 0, 500, 0)
 		menu.humanizer:addParam("snareDelay", "Auto-CC Delay (ms)", SCRIPT_PARAM_SLICE, 0, 0, 500, 0)
 		menu.humanizer:addParam("shieldDelay", "Auto Shield Delay (ms)", SCRIPT_PARAM_SLICE, 50, 0, 500, 0)
-			
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Key Settings", "key")
 		menu.key:addParam("combatkeys", "               -- Combat Keys --", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("comboKey", "Combo Key", SCRIPT_PARAM_ONKEYDOWN, false, 32)
@@ -2641,7 +2676,7 @@ function _Leona:Menu()
 		menu.key:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("miscellaneouskeys", "           -- Miscellaneous Keys --", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("flashKey", "Flash Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("H"))
-	
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Spell Settings", "spell")
 		menu.spell:addSubMenu("[" .. myHero.charName .. "] - Q", "q")
 		menu.spell.q:addParam("qcombo", "Combo", SCRIPT_PARAM_ONOFF, true)
@@ -2651,7 +2686,7 @@ function _Leona:Menu()
 		menu.spell.q:addParam("qharassmana", "[Harass] Mana > X%", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
 		menu.spell.q:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.spell.q:addParam("qturret", "Use AA Reset On Towers", SCRIPT_PARAM_ONOFF, true)
-		menu.spell.q:addParam("qwardclear", "Use AA Reset To Clear Wards", SCRIPT_PARAM_ONOFF, true)  
+		menu.spell.q:addParam("qwardclear", "Use AA Reset To Clear Wards", SCRIPT_PARAM_ONOFF, true)
 		menu.spell:addSubMenu("[" .. myHero.charName .. "] - W", "w")
 		menu.spell.w:addParam("wcombo", "Combo", SCRIPT_PARAM_ONOFF, true)
 		menu.spell.w:addParam("wcombomana", "[Combo] Mana > X%", SCRIPT_PARAM_SLICE, 0, 0, 100, 0)
@@ -2677,23 +2712,23 @@ function _Leona:Menu()
 		menu.spell.r:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.spell.r:addParam("amountenemies", "Only Ult If X Enemies", SCRIPT_PARAM_SLICE, 2, 0, 5, 0)
 		menu.spell.r:addParam("mindistancer", "Min Enemy Distance", SCRIPT_PARAM_SLICE, 500, 0, 1200, 0)
-		
+
    menu:addSubMenu("[" .. myHero.charName .. "] - Target Selector", "target")
 		menu.target:addParam("targetinfo", "Default Target Select Is LeastCast", SCRIPT_PARAM_INFO, "")
 		menu.target:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.target:addParam("focus", "Focus Selected Target", SCRIPT_PARAM_ONOFF, true)
 		menu.target:addParam("sac", "Use SAC:R Target Instead", SCRIPT_PARAM_ONOFF, false)
-		
-   menu:addSubMenu("Orbwalk Settings", "orb")  
-   
+
+   menu:addSubMenu("Orbwalk Settings", "orb")
+
    UPL:AddToMenu(menu)
-   
+
    menu:addParam("hc", "Prediction Hit Chance", SCRIPT_PARAM_SLICE, 2, 0, 5, 0)
- 
+
    menu:addParam("empty", "", SCRIPT_PARAM_INFO, "")
    menu:addParam("infobox", "            Support Heroes: " .. myHero.charName .. "           ", SCRIPT_PARAM_INFO, "")
    menu:addParam("infobox2", "                      Version:  " .. scriptVersion .. "         ", SCRIPT_PARAM_INFO, "")
-   
+
    if menu.draw.drawpermashow then
 	 menu:permaShow("infobox")
 	 menu.key:permaShow("comboKey")
@@ -2711,22 +2746,22 @@ end
 
 function _Leona:AutoShield()
 	if Target == nil then return end
-	if IsReady(_W) and GetDistance(myHero) < self.SpellW.range then      
+	if IsReady(_W) and GetDistance(myHero) < self.SpellW.range then
 		if (100*myHero.health/myHero.maxHealth) <= menu.spell.w.whp and GetDistance(Target) <= 700 then
 				DelayAction(function() CastSpell(_W) end, menu.humanizer.shieldDelay / 1000)
 		end
 	end
 end
 
-function _Leona:Combo() 
+function _Leona:Combo()
 	if Target == nil then return end
-	if menu.key.comboKey then 
+	if menu.key.comboKey then
 		if IsReady(_Q) and menu.spell.q.qcombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qcombomana and (GetDistance(Target) < self.SpellQ.range) then
 			if ValidTarget(Target) then
 				CastSpell(_Q)
 				DelayAction(function() Attack(Target) end, 0)
 			end
-		end 
+		end
 		if IsReady(_W) and menu.spell.w.wcombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.w.wcombomana and (GetDistance(Target) < self.SpellW.range) then
 			if ValidTarget(Target) then
 				CastSpell(_W)
@@ -2734,9 +2769,9 @@ function _Leona:Combo()
 		end
 		if IsReady(_E) and menu.spell.e.ecombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.e.ecombomana and (GetDistance(Target) < 875) then
 			if ValidTarget(Target) and GetDistance(Target) >= menu.spell.e.mindistancee then
-				local CastPosition, HitChance = UPL:Predict(_E, myHero, Target)	
+				local CastPosition, HitChance = UPL:Predict(_E, myHero, Target)
 				if HitChance >= menu.hc then
-					CastSpell(_E, CastPosition.x, CastPosition.z) 
+					CastSpell(_E, CastPosition.x, CastPosition.z)
 				end
 			end
 		end
@@ -2744,17 +2779,17 @@ function _Leona:Combo()
 			for i = 1, enemyCount do
 			local unit = enemyHeroes[i]
 				if IsReady(_R) and menu.spell.r.rcombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.r.rcombomana and (GetDistance(unit) < 1200) then
-					if ValidTarget(unit) then 
+					if ValidTarget(unit) then
 						local Position = FindBestCircle(unit, 1200, 100, _R)
-						local AOECastPosition, MainTargetHitChance, nTargets = VPred:GetCircularAOECastPosition(unit, 0.25, 300, 1000, 1500, myHero) 
+						local AOECastPosition, MainTargetHitChance, nTargets = VPred:GetCircularAOECastPosition(unit, 0.25, 300, 1000, 1500, myHero)
 						if nTargets >= menu.spell.r.amountenemies and GetDistance(unit) >= menu.spell.r.mindistancer then
 							CastSpell(_R, Position.x, Position.z)
 						end
 					end
 				end
-			end  
+			end
 		end
-	end          
+	end
 end
 
 function _Leona:CreateObj(object)
@@ -2765,16 +2800,16 @@ end
 
 function _Leona:FlashCombo()
 	if Target == nil then return end
-	if menu.key.flashKey and menu.flash.eflash then 
+	if menu.key.flashKey and menu.flash.eflash then
 		if ValidTarget(Target) and (GetDistance(Target) >= 425) and (GetDistance(Target) <= self.SpellE.range) then
 		   if IsReady(sflash) and IsReady(_E) then
 			   local flashPos = myHero + 425 * (Vector(Target) - Vector(myHero)):normalized()
-			   local CastPosition, HitChance = UPL:Predict(_E, myHero, Target)	
-			   if HitChance >= 2 then               
-			   CastSpell(sflash, flashPos.x, flashPos.z)      
+			   local CastPosition, HitChance = UPL:Predict(_E, myHero, Target)
+			   if HitChance >= 2 then
+			   CastSpell(sflash, flashPos.x, flashPos.z)
 			   CastSpell(_E, CastPosition.x, CastPosition.z)
 			   end
-		   end	       
+		   end
 		end
 	end
 	if menu.key.flashKey and IsReady(sflash) and IsReady(_E) then
@@ -2782,15 +2817,15 @@ function _Leona:FlashCombo()
 	end
 end
 
-function _Leona:Harass() 
+function _Leona:Harass()
 	if Target == nil then return end
-	if menu.key.harassKey or menu.key.harassToggle then 
+	if menu.key.harassKey or menu.key.harassToggle then
 		if IsReady(_Q) and menu.spell.q.qharass and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qharassmana and (GetDistance(Target) < self.SpellQ.range) then
 			if ValidTarget(Target) then
 				CastSpell(_Q)
 				DelayAction(function() Attack(Target) end, 0)
 			end
-		end 
+		end
 		if IsReady(_W) and menu.spell.w.wharass and (100 * myHero.mana / myHero.maxMana)>= menu.spell.w.wharassmana and (GetDistance(Target) < self.SpellW.range) then
 			if ValidTarget(Target) then
 				CastSpell(_W)
@@ -2798,9 +2833,9 @@ function _Leona:Harass()
 		end
 		if IsReady(_E) and menu.spell.e.eharass and (100 * myHero.mana / myHero.maxMana)>= menu.spell.e.eharassmana and (GetDistance(Target) < 875) then
 			if ValidTarget(Target) and GetDistance(Target) >= menu.spell.e.mindistancee then
-				local CastPosition, HitChance = UPL:Predict(_E, myHero, unit)	
+				local CastPosition, HitChance = UPL:Predict(_E, myHero, unit)
 				if HitChance >= menu.hc then
-					CastSpell(_E, CastPosition.x, CastPosition.z) 
+					CastSpell(_E, CastPosition.x, CastPosition.z)
 				end
 			end
 		end
@@ -2808,30 +2843,30 @@ function _Leona:Harass()
 			for i = 1, enemyCount do
 			local unit = enemyHeroes[i]
 				if IsReady(_R) and menu.spell.r.rharass and (100 * myHero.mana / myHero.maxMana)>= menu.spell.r.rharassmana and (GetDistance(unit) < 1200) then
-					if ValidTarget(unit) then 
+					if ValidTarget(unit) then
 						local Position = FindBestCircle(unit, 1200, 100, _R)
-						local AOECastPosition, MainTargetHitChance, nTargets = VPred:GetCircularAOECastPosition(unit, 0.25, 300, 1000, 1500, myHero) 
+						local AOECastPosition, MainTargetHitChance, nTargets = VPred:GetCircularAOECastPosition(unit, 0.25, 300, 1000, 1500, myHero)
 						if nTargets >= menu.spell.r.amountenemies and GetDistance(unit) >= menu.spell.r.mindistancer then
 							CastSpell(_R, Position.x, Position.z)
 						end
 					end
 				end
-			end  
+			end
 		end
-	end          
+	end
 end
 
 function _Leona:LaneClear()
 	for i, Minion in pairs(enemyMinions.objects) do
 		if (Minion ~= nil) then
-			if menu.key.clearKey then 
+			if menu.key.clearKey then
 				if IsReady(_Q) and menu.farm.qlaneclear and (100 * myHero.mana / myHero.maxMana)>= menu.farm.qclearmana then
 					CastSpell(_Q)
 					Attack(Minion)
 				end
 			end
 		end
-	end                
+	end
 end
 
 function _Leona:ProcessAttack(object, spell)
@@ -2855,16 +2890,16 @@ function _Leona:ProcessSpell(object, spell)
             if Interrupt[unit.charName] ~= nil then
                 if menu.interrupt["spell".. Interrupt[unit.charName].stop.spellName] and spell.name == Interrupt[unit.charName].stop.spellName then
                     if IsReady(_Q) and menu.interrupt.qinterrupt and GetDistance(object) <= self.SpellQ.range then
-                        DelayAction(function() CastSpell(_Q) end, menu.humanizer.interruptDelay / 1000) 
-                        DelayAction(function() Attack(object) end, 0)                
+                        DelayAction(function() CastSpell(_Q) end, menu.humanizer.interruptDelay / 1000)
+                        DelayAction(function() Attack(object) end, 0)
                     elseif IsReady(_E) and menu.interrupt.einterrupt and GetDistance(object) <= self.SpellE.range then
-                        local CastPosition, HitChance = UPL:Predict(_E, myHero, object)	
-				        if HitChance >= menu.hc then 
+                        local CastPosition, HitChance = UPL:Predict(_E, myHero, object)
+				        if HitChance >= menu.hc then
                         DelayAction(function() CastSpell(_E, CastPosition.x, CastPosition.z) end, menu.humanizer.interruptDelay / 1000)
                         end
                     elseif IsReady(_R) and menu.interrupt.rinterrupt and GetDistance(object) <= self.SpellR.range then
-                        local Position = FindBestCircle(object, 1200, 100, _R)	
-                        DelayAction(function() CastSpell(_R, Position.x, Position.z) end, menu.humanizer.interruptDelay / 1000)   
+                        local Position = FindBestCircle(object, 1200, 100, _R)
+                        DelayAction(function() CastSpell(_R, Position.x, Position.z) end, menu.humanizer.interruptDelay / 1000)
                     end
                 end
             end
@@ -2877,29 +2912,29 @@ function _Leona:OnDraw()
 	if menu.draw.drawtarget and ValidTarget(Target) and Target.type == myHero.type then
 		_PentagonRot:DrawTriangle(Target, ARGB(255, 255, 0, 0), 2, 50, 5, 0, 0)
 	end
-	if menu.draw.draweflash and menu.flash.eflash and IsReady(sflash) and IsReady(_E) then 
+	if menu.draw.draweflash and menu.flash.eflash and IsReady(sflash) and IsReady(_E) then
 		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, (875 + 425), ARGB(table.unpack(menu.draw.coloreflash)))
-	end 
+	end
 	local slot = _Tech:CustomGetInventorySlotItem("HealthBomb", myHero)
-	if menu.draw.drawfotm and slot ~= nil and IsReady(slot) then 
-		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorfotm))) 
+	if menu.draw.drawfotm and slot ~= nil and IsReady(slot) then
+		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorfotm)))
 	end
 	local slot = _Tech:CustomGetInventorySlotItem("IronStylus", myHero)
-	if menu.draw.drawlois and slot ~= nil and IsReady(slot) then 
-		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorlois))) 
+	if menu.draw.drawlois and slot ~= nil and IsReady(slot) then
+		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorlois)))
 	end
 	local slot = _Tech:CustomGetInventorySlotItem("ItemMorellosBane", myHero)
-	if menu.draw.drawmikaels and slot ~= nil and IsReady(slot) then 
-		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colormikaels))) 
+	if menu.draw.drawmikaels and slot ~= nil and IsReady(slot) then
+		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colormikaels)))
 	end
-	if menu.draw.drawexhaust and sexhaust ~= nil and IsReady(sexhaust) then 
-	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 650, ARGB(table.unpack(menu.draw.colorexhaust))) 
+	if menu.draw.drawexhaust and sexhaust ~= nil and IsReady(sexhaust) then
+	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 650, ARGB(table.unpack(menu.draw.colorexhaust)))
 	end
-	if menu.draw.drawheal and sheal ~= nil and IsReady(sheal) then 
-	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 850, ARGB(table.unpack(menu.draw.colorheal))) 
+	if menu.draw.drawheal and sheal ~= nil and IsReady(sheal) then
+	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 850, ARGB(table.unpack(menu.draw.colorheal)))
 	end
-	if menu.draw.drawignite and signite ~= nil and IsReady(signite) then 
-	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 600, ARGB(table.unpack(menu.draw.colorignite))) 
+	if menu.draw.drawignite and signite ~= nil and IsReady(signite) then
+	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 600, ARGB(table.unpack(menu.draw.colorignite)))
 	end
 	if menu.draw.drawq and IsReady(_Q) then
 		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, self.SpellQ.range, ARGB(table.unpack(menu.draw.colorq)))
@@ -2914,7 +2949,7 @@ function _Leona:OnDraw()
 		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, self.SpellR.range, ARGB(table.unpack(menu.draw.colorr)))
 	end
 end
-	
+
 function _Leona:RemoveBuff(unit, buff)
 	if unit and unit.isMe and buff then
 		if buff.name == "LeonaShieldOfDaybreak" then buffs["LeonaShieldOfDaybreak"] = false end
@@ -2929,9 +2964,9 @@ function _Leona:TowerCC()
 			local tower = towers[i]
 			if tower and tower.team == myHero.team and (GetDistance(tower, unit) <= 775) then
 				if menu.snare.esnare and menu.snare["" ..unit.charName] then
-					local CastPosition, HitChance = UPL:Predict(_E, myHero, unit)	
+					local CastPosition, HitChance = UPL:Predict(_E, myHero, unit)
 					if HitChance >= menu.hc then
-						CastSpell(_E, CastPosition.x, CastPosition.z) 
+						CastSpell(_E, CastPosition.x, CastPosition.z)
 					end
 				elseif menu.snare.qsnare and menu.snare["" ..unit.charName] and (GetDistance(unit) < self.SpellQ.range) then
 					CastSpell(_Q)
@@ -2946,34 +2981,34 @@ Class("_Malphite")
 function _Malphite:__init()
 	self:LoadVariables()
 	self:Menu()
-	
-	
+
+
 	_Bundle:SetupOrbwalk()
-	
+
 	_Activator:__init()
-	
+
 	_Tech:AddTurrets()
 	towerCount = #towers
-	
+
 	AddTickCallback(function() self:OnTick() end)
 	AddDrawCallback(function() self:OnDraw() end)
 	AddProcessAttackCallback(function(object, spell) self:ProcessAttack(object, spell) end)
     AddProcessSpellCallback(function(object, spell) self:ProcessSpell(object, spell) end)
-	
+
 	enemyMinions = minionManager(MINION_ENEMY, self.SpellE.range, myHero, MINION_SORT_HEALTH_DES)
-	
+
 	_Bundle:Print(myHero.charName .. " Loaded, Good Luck!")
 end
 
 function _Malphite:LoadVariables()
 	self.SpellQ = { speed = 1800, delay = 0.25, range = 625, width = 70, collision = false, aoe = false, type = "linear"}
 
-	self.SpellW = { speed = nil, delay = 0.25, range = 225, width = 150, collision = false, aoe = false, type = "linear" } 
+	self.SpellW = { speed = nil, delay = 0.25, range = 225, width = 150, collision = false, aoe = false, type = "linear" }
 
 	self.SpellE = { speed = nil, delay = 0.25, range = 200, width = 200, collision = false, aoe = true, type = "circular" }
 
 	self.SpellR = { speed = 2000, delay = 0.25, range = 1000, width = 200, collision = false, aoe = true, type = "linear" }
-	
+
 	UPL:AddSpell(_R, self.SpellR)
 end
 
@@ -2982,32 +3017,32 @@ function _Malphite:OnTick()
 	self:FlashCombo()
 	self:Harass()
 	self:LaneClear()
-	self:TowerCC() 
+	self:TowerCC()
 end
 
 function _Malphite:Menu()
 	menu = scriptConfig("Support Heroes", "SupportHeroesMenuMalph")
-	
+
 	_Activator:Menu()
-	
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-CC Under Tower", "snare")
 		menu.snare:addParam("info", "           -- Auto-CC Enemies --", SCRIPT_PARAM_INFO, "")
 		if enemyCount > 0 then
 			for i = 1, enemyCount do
-			local unit = enemyHeroes[i]			
+			local unit = enemyHeroes[i]
 				menu.snare:addParam("" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_ONOFF, true)
 			end
 		end
 		menu.snare:addParam("settings", "                    -- Settings --", SCRIPT_PARAM_INFO, "")
 		menu.snare:addParam("qsnare", "Use Q", SCRIPT_PARAM_ONOFF, true)
-		
-	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-Interrupt", "interrupt")   
+
+	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-Interrupt", "interrupt")
         menu.interrupt:addParam("spells", "           -- Auto Interrupt Spells --", SCRIPT_PARAM_INFO, "")
         if enemyCount > 0 then
         	for i = 1, enemyCount do
             	local unit = enemyHeroes[i]
                 if Interrupt[unit.charName] ~= nil then
-                    menu.interrupt:addParam("" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_INFO, "") 
+                    menu.interrupt:addParam("" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_INFO, "")
                     menu.interrupt:addParam("spell".. Interrupt[unit.charName].stop.spellName,"".. Interrupt[unit.charName].stop.name, SCRIPT_PARAM_ONOFF, true)
                     menu.interrupt:addParam("empty", "", SCRIPT_PARAM_INFO,"")
                 end
@@ -3015,13 +3050,13 @@ function _Malphite:Menu()
         end
 		menu.interrupt:addParam("settings", "                -- Settings --", SCRIPT_PARAM_INFO, "")
 		menu.interrupt:addParam("rinterrupt", "Use R", SCRIPT_PARAM_ONOFF, true)
-		
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Draw Settings", "draw")
 		menu.draw:addParam("spelldraws", "                -- Spell Draws --", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawq", "Draw Q", SCRIPT_PARAM_ONOFF, true)
 		menu.draw:addParam("colorq", "Color Q", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("draww", "Draw W", SCRIPT_PARAM_ONOFF, true)
-		menu.draw:addParam("colorw", "Color W", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })      
+		menu.draw:addParam("colorw", "Color W", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("drawe", "Draw E", SCRIPT_PARAM_ONOFF, true)
 		menu.draw:addParam("colore", "Color E", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("drawr", "Draw R", SCRIPT_PARAM_ONOFF, true)
@@ -3037,7 +3072,7 @@ function _Malphite:Menu()
 		menu.draw:addParam("drawlois", "Draw Locket of the Iron Solari", SCRIPT_PARAM_ONOFF, false)
 		menu.draw:addParam("colorlois", "Color Locket of the Iron Solari", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("drawmikaels", "Draw Mikaels Crucible", SCRIPT_PARAM_ONOFF, false)
-		menu.draw:addParam("colorqmikaels", "Color Mikaels Crucible", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 }) 
+		menu.draw:addParam("colorqmikaels", "Color Mikaels Crucible", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawsumm", "                -- Summoner Draws --", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawexhaust", "Draw Exhaust", SCRIPT_PARAM_ONOFF, false)
@@ -3045,25 +3080,25 @@ function _Malphite:Menu()
 		menu.draw:addParam("drawheal", "Draw Heal", SCRIPT_PARAM_ONOFF, false)
 		menu.draw:addParam("colorheal", "Color Heal", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("drawignite", "Draw Ignite", SCRIPT_PARAM_ONOFF, false)
-		menu.draw:addParam("colorignite", "Color Ignite", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })  
+		menu.draw:addParam("colorignite", "Color Ignite", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("miscellaneousdraws", "            -- Miscellaneous Draws --", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawtarget", "Draw Target", SCRIPT_PARAM_ONOFF, true)
 		menu.draw:addParam("drawpermashow", "Draw Permashow (Reload)", SCRIPT_PARAM_ONOFF, true)
-			
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Farm Settings", "farm")
 		menu.farm:addParam("laneclear", "                    -- Lane Clear --", SCRIPT_PARAM_INFO, "")
 		menu.farm:addParam("elaneclear", "Use E", SCRIPT_PARAM_ONOFF, true)
 		menu.farm:addParam("eclearmana", "Minimum Mana", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
-		
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Flash Settings", "flash")
 		menu.flash:addParam("rflash", "Use Flash - R", SCRIPT_PARAM_ONOFF, true)
-	
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Humanizer", "humanizer")
 		menu.humanizer:addParam("interruptDelay", "Auto-Interrupt Delay (ms)", SCRIPT_PARAM_SLICE, 200, 0, 500, 0)
 		menu.humanizer:addParam("snareDelay", "Auto-CC Delay (ms)", SCRIPT_PARAM_SLICE, 0, 0, 500, 0)
 		menu.humanizer:addParam("shieldDelay", "Auto Shield Delay (ms)", SCRIPT_PARAM_SLICE, 50, 0, 500, 0)
-			
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Key Settings", "key")
 		menu.key:addParam("combatkeys", "               -- Combat Keys --", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("comboKey", "Combo Key", SCRIPT_PARAM_ONKEYDOWN, false, 32)
@@ -3073,14 +3108,14 @@ function _Malphite:Menu()
 		menu.key:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("miscellaneouskeys", "           -- Miscellaneous Keys --", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("flashKey", "Flash Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("H"))
-	
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Spell Settings", "spell")
 		menu.spell:addSubMenu("[" .. myHero.charName .. "] - Q", "q")
 		menu.spell.q:addParam("qcombo", "Combo", SCRIPT_PARAM_ONOFF, true)
 		menu.spell.q:addParam("qcombomana", "[Combo] Mana > X%", SCRIPT_PARAM_SLICE, 0, 0, 100, 0)
 		menu.spell.q:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.spell.q:addParam("qharass", "Harass", SCRIPT_PARAM_ONOFF, true)
-		menu.spell.q:addParam("qharassmana", "[Harass] Mana > X%", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)  
+		menu.spell.q:addParam("qharassmana", "[Harass] Mana > X%", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
 		menu.spell:addSubMenu("[" .. myHero.charName .. "] - W", "w")
 		menu.spell.w:addParam("wuse", "Use W On AA's", SCRIPT_PARAM_ONOFF, true)
 		menu.spell.w:addParam("wmana", "Mana > X%", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
@@ -3099,23 +3134,23 @@ function _Malphite:Menu()
 		menu.spell.r:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.spell.r:addParam("mindistance", "Min Enemy Distance", SCRIPT_PARAM_SLICE, 500, 0, 1000, 0)
 		menu.spell.r:addParam("amountenemies", "Only Ult If X Enemies", SCRIPT_PARAM_SLICE, 2, 0, 5, 0)
-		
+
    menu:addSubMenu("[" .. myHero.charName .. "] - Target Selector", "target")
 		menu.target:addParam("targetinfo", "Default Target Select Is LeastCast", SCRIPT_PARAM_INFO, "")
 		menu.target:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.target:addParam("focus", "Focus Selected Target", SCRIPT_PARAM_ONOFF, true)
 		menu.target:addParam("sac", "Use SAC:R Target Instead", SCRIPT_PARAM_ONOFF, false)
-		
-   menu:addSubMenu("Orbwalk Settings", "orb")  
-   
+
+   menu:addSubMenu("Orbwalk Settings", "orb")
+
    UPL:AddToMenu(menu)
-   
+
    menu:addParam("hc", "Prediction Hit Chance", SCRIPT_PARAM_SLICE, 2, 0, 5, 0)
- 
+
    menu:addParam("empty", "", SCRIPT_PARAM_INFO, "")
    menu:addParam("infobox", "            Support Heroes: " .. myHero.charName .. "           ", SCRIPT_PARAM_INFO, "")
    menu:addParam("infobox2", "                      Version:  " .. scriptVersion .. "         ", SCRIPT_PARAM_INFO, "")
-   
+
    if menu.draw.drawpermashow then
 	 menu:permaShow("infobox")
 	 menu.key:permaShow("comboKey")
@@ -3127,7 +3162,7 @@ end
 
 function _Malphite:Combo()
 	if Target == nil then return end
-	if menu.key.comboKey then 
+	if menu.key.comboKey then
 		if IsReady(_Q) and menu.spell.q.qcombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qcombomana and (GetDistance(Target) < self.SpellQ.range) then
 			if ValidTarget(Target) then
 				CastSpell(_Q, Target)
@@ -3143,12 +3178,12 @@ function _Malphite:Combo()
 			local unit = enemyHeroes[i]
 				if IsReady(_R) and menu.spell.r.rcombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.r.rcombomana and (GetDistance(Target) < 1000) then
 					if ValidTarget(Target) then
-						local CastPosition, HitChance = UPL:Predict(_R, myHero, unit)	
+						local CastPosition, HitChance = UPL:Predict(_R, myHero, unit)
 						if HitChance >= menu.hc then
-							local AOECastPosition, MainTargetHitChance, nTargets = VPred:GetCircularAOECastPosition(unit, 0.25, 300, 1000, 1500, myHero) 
+							local AOECastPosition, MainTargetHitChance, nTargets = VPred:GetCircularAOECastPosition(unit, 0.25, 300, 1000, 1500, myHero)
 							if nTargets >= menu.spell.r.amountenemies and GetDistance(unit) >= menu.spell.r.mindistance then
 							CastSpell(_R, CastPosition.x, CastPosition.z)
-							end                            
+							end
 						end
 					end
 				end
@@ -3166,7 +3201,7 @@ function _Malphite:FlashCombo()
 			flashPos = myHero + 425 * (Vector(Target) - Vector(myHero)):normalized()
 		end
 		if menu.key.flashKey then
-			local CastPosition, HitChance = UPL:Predict(_R, flashPos, Target)		
+			local CastPosition, HitChance = UPL:Predict(_R, flashPos, Target)
 			if HitChance >= 2 and type(CastPosition.x) == "number" and type(CastPosition.z) == "number" then
 				flashPos = myHero + 425 * (Vector(CastPosition) - Vector(myHero)):normalized()
 				CastSpell(sflash, flashPos.x, flashPos.z)
@@ -3181,7 +3216,7 @@ end
 
 function _Malphite:Harass()
 	if Target == nil then return end
-	if menu.key.harassKey or menu.key.harassToggle then 
+	if menu.key.harassKey or menu.key.harassToggle then
 		if IsReady(_Q) and menu.spell.q.qharass and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qharassmana and (GetDistance(Target) < self.SpellQ.range) then
 			if ValidTarget(Target) then
 				CastSpell(_Q, Target)
@@ -3197,12 +3232,12 @@ function _Malphite:Harass()
 			local unit = enemyHeroes[i]
 				if IsReady(_R) and menu.spell.r.rharass and (100 * myHero.mana / myHero.maxMana)>= menu.spell.r.rharassmana and (GetDistance(Target) < 1000) then
 					if ValidTarget(Target) then
-						local CastPosition, HitChance = UPL:Predict(_R, myHero, unit)	
+						local CastPosition, HitChance = UPL:Predict(_R, myHero, unit)
 						if HitChance >= menu.hc then
-							local AOECastPosition, MainTargetHitChance, nTargets = VPred:GetCircularAOECastPosition(unit, 0.25, 300, 1000, 1500, myHero) 
+							local AOECastPosition, MainTargetHitChance, nTargets = VPred:GetCircularAOECastPosition(unit, 0.25, 300, 1000, 1500, myHero)
 							if nTargets >= menu.spell.r.amountenemies and GetDistance(unit) >= menu.spell.r.mindistance then
 							CastSpell(_R, CastPosition.x, CastPosition.z)
-							end                            
+							end
 						end
 					end
 				end
@@ -3214,13 +3249,13 @@ end
 function _Malphite:LaneClear()
 	for i, Minion in pairs(enemyMinions.objects) do
 		if (Minion ~= nil) then
-			if menu.key.clearKey then 
+			if menu.key.clearKey then
 				if IsReady(_E) and menu.farm.elaneclear and (100 * myHero.mana / myHero.maxMana)>= menu.farm.eclearmana then
 					CastSpell(_E)
 				end
 			end
 		end
-	end                
+	end
 end
 
 function _Malphite:OnDraw()
@@ -3228,29 +3263,29 @@ function _Malphite:OnDraw()
 	if menu.draw.drawtarget and ValidTarget(Target) and Target.type == myHero.type then
 		_PentagonRot:DrawTriangle(Target, ARGB(255, 255, 0, 0), 2, 50, 5, 0, 0)
 	end
-	if menu.draw.drawrflash and menu.flash.rflash and IsReady(sflash) and IsReady(_R) then 
+	if menu.draw.drawrflash and menu.flash.rflash and IsReady(sflash) and IsReady(_R) then
 		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, (1000 + 425), ARGB(table.unpack(menu.draw.colorrflash)))
 	end
 	local slot = _Tech:CustomGetInventorySlotItem("HealthBomb", myHero)
-	if menu.draw.drawfotm and slot ~= nil and IsReady(slot) then 
-		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorfotm))) 
+	if menu.draw.drawfotm and slot ~= nil and IsReady(slot) then
+		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorfotm)))
 	end
 	local slot = _Tech:CustomGetInventorySlotItem("IronStylus", myHero)
-	if menu.draw.drawlois and slot ~= nil and IsReady(slot) then 
-		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorlois))) 
+	if menu.draw.drawlois and slot ~= nil and IsReady(slot) then
+		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorlois)))
 	end
 	local slot = _Tech:CustomGetInventorySlotItem("ItemMorellosBane", myHero)
-	if menu.draw.drawmikaels and slot ~= nil and IsReady(slot) then 
-		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colormikaels))) 
+	if menu.draw.drawmikaels and slot ~= nil and IsReady(slot) then
+		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colormikaels)))
 	end
-	if menu.draw.drawexhaust and sexhaust ~= nil and IsReady(sexhaust) then 
-	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 650, ARGB(table.unpack(menu.draw.colorexhaust))) 
+	if menu.draw.drawexhaust and sexhaust ~= nil and IsReady(sexhaust) then
+	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 650, ARGB(table.unpack(menu.draw.colorexhaust)))
 	end
-	if menu.draw.drawheal and sheal ~= nil and IsReady(sheal) then 
-	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 850, ARGB(table.unpack(menu.draw.colorheal))) 
+	if menu.draw.drawheal and sheal ~= nil and IsReady(sheal) then
+	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 850, ARGB(table.unpack(menu.draw.colorheal)))
 	end
-	if menu.draw.drawignite and signite ~= nil and IsReady(signite) then 
-	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 600, ARGB(table.unpack(menu.draw.colorignite))) 
+	if menu.draw.drawignite and signite ~= nil and IsReady(signite) then
+	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 600, ARGB(table.unpack(menu.draw.colorignite)))
 	end
 	if menu.draw.drawq and IsReady(_Q) then
 		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, self.SpellQ.range, ARGB(table.unpack(menu.draw.colorq)))
@@ -3264,20 +3299,20 @@ function _Malphite:OnDraw()
 	if menu.draw.drawr and IsReady(_R) then
 		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 1000, ARGB(table.unpack(menu.draw.colorr)))
 	end
-end 
+end
 
-function _Malphite:ProcessAttack(object,spell) 
+function _Malphite:ProcessAttack(object,spell)
 	if Target == nil then return end
-	if IsReady(_W) and spell.target and GetDistance(Target) <= self.SpellW.range then	
+	if IsReady(_W) and spell.target and GetDistance(Target) <= self.SpellW.range then
 		if object.team == TEAM_ENEMY and spell.name:lower():find("attack") then
-			if spell.target.type == myHero.type then 
+			if spell.target.type == myHero.type then
 				if (100 * myHero.mana / myHero.maxMana) >= menu.spell.w.wmana and menu.spell.w.wuse then
-				CastSpell(_W)	 
+				CastSpell(_W)
 				end
 			end
-		end 
+		end
 	end
-end 
+end
 
 function _Malphite:ProcessSpell(object, spell)
     if enemyCount > 0 then
@@ -3286,8 +3321,8 @@ function _Malphite:ProcessSpell(object, spell)
             if Interrupt[unit.charName] ~= nil then
                 if menu.interrupt["spell".. Interrupt[unit.charName].stop.spellName] and spell.name == Interrupt[unit.charName].stop.spellName then
                     if IsReady(_R) and menu.interrupt.rinterrupt and GetDistance(object) <= self.SpellR.range then
-                        local CastPosition, HitChance = UPL:Predict(_R, myHero, object)	
-				        if HitChance >= menu.hc then 
+                        local CastPosition, HitChance = UPL:Predict(_R, myHero, object)
+				        if HitChance >= menu.hc then
                         DelayAction(function() CastSpell(_R, CastPosition.x, CastPosition.z) end, menu.humanizer.interruptDelay / 1000)
                         end
                     end
@@ -3326,9 +3361,9 @@ function _Morgana:__init()
 	AddDrawCallback(function() self:OnDraw() end)
 	AddProcessAttackCallback(function(object, spell) self:ProcessAttack(object, spell) end)
     AddProcessSpellCallback(function(object, spell) self:ProcessSpell(object, spell) end)
-    
+
 	enemyMinions = minionManager(MINION_ENEMY, 625, myHero, MINION_SORT_HEALTH_DES)
-	
+
 	_Bundle:Print(myHero.charName .. " Loaded, Good Luck!")
 end
 
@@ -3351,7 +3386,7 @@ function _Morgana:OnTick()
 end
 
 function _Morgana:OnDraw()
-	if menu == nil then return end 
+	if menu == nil then return end
 	if menu.draw.drawq and IsReady(_Q) then
 		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, self.SpellQ.range, ARGB(table.unpack(menu.draw.colorq)))
 	end
@@ -3369,25 +3404,25 @@ function _Morgana:OnDraw()
 		_PentagonRot:DrawTriangle(Target, ARGB(255, 255, 0, 0), 2, 50, 5, 0, 0)
 	end
 	local slot = _Tech:CustomGetInventorySlotItem("HealthBomb", myHero)
-	if menu.draw.drawfotm and slot ~= nil and IsReady(slot) then 
-		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorfotm))) 
+	if menu.draw.drawfotm and slot ~= nil and IsReady(slot) then
+		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorfotm)))
 	end
 	local slot = _Tech:CustomGetInventorySlotItem("IronStylus", myHero)
-	if menu.draw.drawlois and slot ~= nil and IsReady(slot) then 
-		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorlois))) 
+	if menu.draw.drawlois and slot ~= nil and IsReady(slot) then
+		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorlois)))
 	end
 	local slot = _Tech:CustomGetInventorySlotItem("ItemMorellosBane", myHero)
-	if menu.draw.drawmikaels and slot ~= nil and IsReady(slot) then 
-		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colormikaels))) 
+	if menu.draw.drawmikaels and slot ~= nil and IsReady(slot) then
+		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colormikaels)))
 	end
-	if menu.draw.drawexhaust and sexhaust ~= nil and IsReady(sexhaust) then 
-	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 650, ARGB(table.unpack(menu.draw.colorexhaust))) 
+	if menu.draw.drawexhaust and sexhaust ~= nil and IsReady(sexhaust) then
+	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 650, ARGB(table.unpack(menu.draw.colorexhaust)))
 	end
-	if menu.draw.drawheal and sheal ~= nil and IsReady(sheal) then 
-	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 850, ARGB(table.unpack(menu.draw.colorheal))) 
+	if menu.draw.drawheal and sheal ~= nil and IsReady(sheal) then
+	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 850, ARGB(table.unpack(menu.draw.colorheal)))
 	end
-	if menu.draw.drawignite and signite ~= nil and IsReady(signite) then 
-	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 600, ARGB(table.unpack(menu.draw.colorignite))) 
+	if menu.draw.drawignite and signite ~= nil and IsReady(signite) then
+	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 600, ARGB(table.unpack(menu.draw.colorignite)))
 	end
 end
 
@@ -3399,20 +3434,20 @@ function _Morgana:Menu()
 		menu.snare:addParam("info", "           -- Auto-CC Enemies --", SCRIPT_PARAM_INFO, "")
 		if enemyCount > 0 then
 			for i = 1, enemyCount do
-			local unit = enemyHeroes[i]			
+			local unit = enemyHeroes[i]
 				menu.snare:addParam("" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_ONOFF, true)
 			end
 		end
 		menu.snare:addParam("settings", "                    -- Settings --", SCRIPT_PARAM_INFO, "")
 		menu.snare:addParam("qsnare", "Use Q", SCRIPT_PARAM_ONOFF, true)
-        
-    menu:addSubMenu("[" .. myHero.charName .. "] - Auto-Interrupt", "interrupt") --TODO  
+
+    menu:addSubMenu("[" .. myHero.charName .. "] - Auto-Interrupt", "interrupt") --TODO
         menu.interrupt:addParam("spells", "           -- Auto Interrupt Spells --", SCRIPT_PARAM_INFO, "")
         if enemyCount > 0 then
         	for i = 1, enemyCount do
             	local unit = enemyHeroes[i]
                 if Interrupt[unit.charName] ~= nil then
-                    menu.interrupt:addParam("" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_INFO, "") 
+                    menu.interrupt:addParam("" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_INFO, "")
                     menu.interrupt:addParam("spell".. Interrupt[unit.charName].stop.spellName,"".. Interrupt[unit.charName].stop.name, SCRIPT_PARAM_ONOFF, true)
                     menu.interrupt:addParam("empty", "", SCRIPT_PARAM_INFO,"")
                 end
@@ -3427,13 +3462,13 @@ function _Morgana:Menu()
 				menu.as:addParam("teammateshield"..i, "Shield "..unit.charName, SCRIPT_PARAM_ONOFF, true)
 				menu.as:addParam("maxhppercent"..i, "Shield If < X% HP", SCRIPT_PARAM_SLICE, 80, 0, 100, 0)
 				menu.as:addParam("empty", "", SCRIPT_PARAM_INFO,"")
-			end 
-		end	
+			end
+		end
 			menu.as:addParam("mindmgpercent", "Min dmg percent", SCRIPT_PARAM_SLICE, 10, 0, 100, 0)
 			menu.as:addParam("shieldcc", "Shield CC", SCRIPT_PARAM_ONOFF, true)
 			menu.as:addParam("shieldslow", "Shield Slows", SCRIPT_PARAM_ONOFF, true)
 			menu.as:addParam("skillshots", "Shield Skillshots", SCRIPT_PARAM_ONOFF, false)
-	
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Draw Settings", "draw")
 		menu.draw:addParam("spelldraws", "                -- Spell Draws --", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawq", "Draw Q", SCRIPT_PARAM_ONOFF, true)
@@ -3451,7 +3486,7 @@ function _Morgana:Menu()
 		menu.draw:addParam("drawlois", "Draw Locket of the Iron Solari", SCRIPT_PARAM_ONOFF, false)
 		menu.draw:addParam("colorlois", "Color Locket of the Iron Solari", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("drawmikaels", "Draw Mikaels Crucible", SCRIPT_PARAM_ONOFF, false)
-		menu.draw:addParam("colorqmikaels", "Color Mikaels Crucible", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 }) 
+		menu.draw:addParam("colorqmikaels", "Color Mikaels Crucible", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawsumm", "                -- Summoner Draws --", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawexhaust", "Draw Exhaust", SCRIPT_PARAM_ONOFF, false)
@@ -3459,23 +3494,23 @@ function _Morgana:Menu()
 		menu.draw:addParam("drawheal", "Draw Heal", SCRIPT_PARAM_ONOFF, false)
 		menu.draw:addParam("colorheal", "Color Heal", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("drawignite", "Draw Ignite", SCRIPT_PARAM_ONOFF, false)
-		menu.draw:addParam("colorignite", "Color Ignite", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })  
+		menu.draw:addParam("colorignite", "Color Ignite", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("miscellaneousdraws", "            -- Miscellaneous Draws --", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawtarget", "Draw Target", SCRIPT_PARAM_ONOFF, true)
 		menu.draw:addParam("drawpermashow", "Draw Permashow (Reload)", SCRIPT_PARAM_ONOFF, true)
-	
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Farm Settings", "farm")
 		menu.farm:addParam("laneclear", "                    -- Lane Clear --", SCRIPT_PARAM_INFO, "")
 		menu.farm:addParam("wlaneclear", "Use W", SCRIPT_PARAM_ONOFF, true)
 		menu.farm:addParam("wclearmana", "Minimum Mana", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
 		menu.farm:addParam("wminminions", "Minimum Minions", SCRIPT_PARAM_SLICE, 3, 1, 6, 0)
-	
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Humanizer", "humanizer")
 		menu.humanizer:addParam("interruptDelay", "Auto-Interrupt Delay (ms)", SCRIPT_PARAM_SLICE, 200, 0, 500, 0)
 		menu.humanizer:addParam("snareDelay", "Auto-CC Delay (ms)", SCRIPT_PARAM_SLICE, 0, 0, 500, 0)
 		menu.humanizer:addParam("shieldDelay", "Auto Shield Delay (ms)", SCRIPT_PARAM_SLICE, 50, 0, 500, 0)
-	
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Key Settings", "key")
 		menu.key:addParam("combatkeys", "               -- Combat Keys --", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("comboKey", "Combo Key", SCRIPT_PARAM_ONKEYDOWN, false, 32)
@@ -3489,7 +3524,7 @@ function _Morgana:Menu()
 		menu.spell.q:addParam("qcombomana", "[Combo] Mana > X%", SCRIPT_PARAM_SLICE, 0, 0, 100, 0)
 		menu.spell.q:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.spell.q:addParam("qharass", "Harass", SCRIPT_PARAM_ONOFF, true)
-		menu.spell.q:addParam("qharassmana", "[Harass] Mana > X%", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)   
+		menu.spell.q:addParam("qharassmana", "[Harass] Mana > X%", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
 		menu.spell:addSubMenu("[" .. myHero.charName .. "] - W", "w")
 		menu.spell.w:addParam("wcombo", "Combo", SCRIPT_PARAM_ONOFF, true)
 		menu.spell.w:addParam("wcombomana", "[Combo] Mana > X%", SCRIPT_PARAM_SLICE, 0, 0, 100, 0)
@@ -3508,23 +3543,23 @@ function _Morgana:Menu()
 		menu.spell.r:addParam("rharass", "Harass", SCRIPT_PARAM_ONOFF, true)
 		menu.spell.r:addParam("rharassmana", "[Harass] Mana > X%", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
 		menu.spell.r:addParam("rharassminenemies", "[Harass] Min #Enemies", SCRIPT_PARAM_SLICE, 3, 1, 5, 0)
-	
+
 	 menu:addSubMenu("[" .. myHero.charName .. "] - Target Selector", "target")
 		menu.target:addParam("targetinfo", "Default Target Select Is LeastCast", SCRIPT_PARAM_INFO, "")
 		menu.target:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.target:addParam("focus", "Focus Selected Target", SCRIPT_PARAM_ONOFF, true)
 		menu.target:addParam("sac", "Use SAC:R Target Instead", SCRIPT_PARAM_ONOFF, false)
-		
-   menu:addSubMenu("Orbwalk Settings", "orb")  
-   
+
+   menu:addSubMenu("Orbwalk Settings", "orb")
+
    UPL:AddToMenu(menu)
-   
+
    menu:addParam("hc", "Prediction Hit Chance", SCRIPT_PARAM_SLICE, 2, 0, 5, 0)
- 
+
    menu:addParam("empty", "", SCRIPT_PARAM_INFO, "")
    menu:addParam("infobox", "            Support Heroes: " .. myHero.charName .. "           ", SCRIPT_PARAM_INFO, "")
    menu:addParam("infobox2", "                      Version:  " .. scriptVersion .. "         ", SCRIPT_PARAM_INFO, "")
-   
+
    if menu.draw.drawpermashow then
 	 menu:permaShow("infobox")
 	 menu.key:permaShow("comboKey")
@@ -3537,12 +3572,12 @@ end
 function _Morgana:TowerCC()
 	if not Target then return end
 	for i = 1, enemyCount do
-	local unit = enemyHeroes[i]	
+	local unit = enemyHeroes[i]
 		for i = 1, towerCount do
 			local tower = towers[i]
 			if tower and tower.team == myHero.team and (GetDistance(tower, unit) < 775) then
 				if menu.snare.qsnare and menu.snare["" ..unit.charName] and (GetDistance(unit) < self.SpellQ.range) then
-					local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, unit)		
+					local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, unit)
 					if HitChance >= menu.hc then
 						CastSpell(_Q, CastPosition.x,CastPosition.z)
 					end
@@ -3556,14 +3591,14 @@ function _Morgana:Combo()
 	if not menu.key.comboKey then return end
 	if IsReady(_Q) and menu.spell.q.qcombo and Target and (100 * myHero.mana / myHero.maxMana )>= menu.spell.q.qcombomana and GetDistance(Target) < self.SpellQ.range then
 		local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
-		if HitChance >= menu.hc then 
+		if HitChance >= menu.hc then
 			CastSpell(_Q, CastPosition.x, CastPosition.z)
 		end
 	end
 
 	if IsReady(_W) and menu.spell.w.wcombo and Target and (100 * myHero.mana / myHero.maxMana) >= menu.spell.w.wcombomana and GetDistance(Target) < self.SpellW.range then
 		local CastPosition, HitChance, HeroPosition = UPL:Predict(_W, myHero, Target)
-		if HitChance >= menu.hc then 
+		if HitChance >= menu.hc then
 			CastSpell(_W, CastPosition.x, CastPosition.z)
 		end
 	end
@@ -3580,14 +3615,14 @@ function _Morgana:Harras()
 	if not menu.key.harassKey and not menu.key.harassToggle then return end
 	if IsReady(_Q) and menu.spell.q.qharass and Target and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qharassmana and GetDistance(Target) < self.SpellQ.range then
 		local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
-		if HitChance >= menu.hc then 
+		if HitChance >= menu.hc then
 			CastSpell(_Q, CastPosition.x, CastPosition.z)
 		end
 	end
 
 	if IsReady(_W) and menu.spell.w.wharass and Target and (100 * myHero.mana / myHero.maxMana)>= menu.spell.w.wharassmana and GetDistance(Target) < self.SpellW.range then
 		local CastPosition, HitChance, HeroPosition = UPL:Predict(_W, myHero, Target)
-		if HitChance >= menu.hc then 
+		if HitChance >= menu.hc then
 			CastSpell(_W, CastPosition.x, CastPosition.z)
 		end
 	end
@@ -3610,7 +3645,7 @@ function _Morgana:LaneClear()
 			if IsReady(_W) and iMinions > menu.farm.wminminions and menu.farm.wlaneclear and (100 * myHero.mana / myHero.maxMana)>= menu.farm.wclearmana and GetDistance(Minion) < self.SpellW.range then
 				CastSpell(_W, Minion.x, Minion.z)
 			end
-		end       
+		end
 	end
 end
 
@@ -3635,7 +3670,7 @@ function _Morgana:ProcessSpell(object, spell)
             if Interrupt[unit.charName] ~= nil then
                 if menu.interrupt["spell".. Interrupt[unit.charName].stop.spellName] and spell.name == Interrupt[unit.charName].stop.spellName then
                     if IsReady(_Q) and menu.interrupt.qinterrupt and GetDistance(object) <= self.SpellQ.range then
-                        DelayAction(function() CastSpell(_Q) end, menu.humanizer.interruptDelay / 1000)                  
+                        DelayAction(function() CastSpell(_Q) end, menu.humanizer.interruptDelay / 1000)
                     end
                 end
             end
@@ -3649,18 +3684,18 @@ function _Morgana:ProcessAttack(object,spell)
 		local HitFirst = false
 		local shieldtarget,SLastDistance,SLastDmgPercent = nil,nil,nil
 		local ulttarget,ULastDistance,ULastDmgPercent = nil,nil,nil
-		
+
 		YWall, BShield, SShield, Shield, CC = false, false, false, false
 		shottype, radius, maxdistance = 0, 0, 0
-		
+
 		if object.type == "AIHeroClient" then
 			spelltype, casttype = getSpellType(object, spell.name)
 			if casttype == 4 or casttype == 5 or casttype == 6 then
 				return
 			end
-		   
+
 			Shield = true
-			
+
 				if spelltype == "Q" or spelltype == "W" or spelltype == "E" or spelltype == "R" or spelltype == "P" or spelltype == "QM" or spelltype == "WM" or spelltype == "EM" then
 					if skillShield[object.charName] == nil then return end
                     HitFirst = skillShield[object.charName][spelltype].HitFirst
@@ -3675,7 +3710,7 @@ function _Morgana:ProcessAttack(object,spell)
 				else
 					Shield = true
 				end
-			
+
 				for i = 1, heroManager.iCount do
 				local allytarget = heroManager:GetHero(i)
 					if spell.target and spell.target.networkID == allytarget.networkID then
@@ -3697,7 +3732,7 @@ function _Morgana:ProcessAttack(object,spell)
 							elseif shottype == 6 then
 							hitchampion = checkhitlinepass(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox) or checkhitlinepass(object, Vector(object) * 2 - spell.endPos, radius, maxdistance, allytarget, allyHitBox)
 							elseif shottype == 7 then
-							hitchampion = checkhitcone(spell.endPos, object, radius, maxdistance, allytarget, allyHitBox)              
+							hitchampion = checkhitcone(spell.endPos, object, radius, maxdistance, allytarget, allyHitBox)
 							end
 							if shieldREADY and menu.as["teammateshield" .. i] and GetDistance(allytarget) <= self.SpellW.range then
 							local shieldflag, dmgpercent = self:shieldCheck(object,spell,allytarget,"shields")
@@ -3753,7 +3788,7 @@ function _Morgana:shieldCheck(object,spell,target,typeused)
 	  end
 			  for i = 1, heroManager.iCount do
 				local ally = heroManager:GetHero(i)
-				if ally.team == myHero.team then 
+				if ally.team == myHero.team then
 			  local dmgpercent = skilldamage * 100 / target.health
 			  local dmgneeded = dmgpercent >= menu.as.mindmgpercent
 			  local hpneeded =  menu.as["maxhppercent"..i] >= (target.health - skilldamage) * 100 / target.maxHealth
@@ -3804,7 +3839,7 @@ function _Nami:__init()
 	AddApplyBuffCallback(function(unit, target, buff) self:ApplyBuff(unit, target, buff) end)
 
 	enemyMinions = minionManager(MINION_ENEMY, 625, myHero, MINION_SORT_HEALTH_DES)
-	
+
 	_Bundle:Print(myHero.charName .. " Loaded, Good Luck!")
 end
 
@@ -3813,7 +3848,7 @@ function _Nami:LoadVariables()
 	self.SpellW = { delay = 0.25, range = 725}
 	self.SpellE = { delay = 0.25, range = 800}
 	self.SpellR = { speed = 859, delay = 0.25, range = 2750, width = 562, collision = false, aoe = true, type = "linear"}
-	
+
 	UPL:AddSpell(_Q, self.SpellQ)
 	UPL:AddSpell(_R, self.SpellR)
 end
@@ -3833,25 +3868,25 @@ function _Nami:OnDraw()
 		_PentagonRot:DrawTriangle(Target, ARGB(255, 255, 0, 0), 2, 50, 5, 0, 0)
 	end
 	local slot = _Tech:CustomGetInventorySlotItem("HealthBomb", myHero)
-	if menu.draw.drawfotm and slot ~= nil and IsReady(slot) then 
-		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorfotm))) 
+	if menu.draw.drawfotm and slot ~= nil and IsReady(slot) then
+		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorfotm)))
 	end
 	local slot = _Tech:CustomGetInventorySlotItem("IronStylus", myHero)
-	if menu.draw.drawlois and slot ~= nil and IsReady(slot) then 
-		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorlois))) 
+	if menu.draw.drawlois and slot ~= nil and IsReady(slot) then
+		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorlois)))
 	end
 	local slot = _Tech:CustomGetInventorySlotItem("ItemMorellosBane", myHero)
-	if menu.draw.drawmikaels and slot ~= nil and IsReady(slot) then 
-		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colormikaels))) 
+	if menu.draw.drawmikaels and slot ~= nil and IsReady(slot) then
+		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colormikaels)))
 	end
-	if menu.draw.drawexhaust and sexhaust ~= nil and IsReady(sexhaust) then 
-	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 650, ARGB(table.unpack(menu.draw.colorexhaust))) 
+	if menu.draw.drawexhaust and sexhaust ~= nil and IsReady(sexhaust) then
+	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 650, ARGB(table.unpack(menu.draw.colorexhaust)))
 	end
-	if menu.draw.drawheal and sheal ~= nil and IsReady(sheal) then 
-	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 850, ARGB(table.unpack(menu.draw.colorheal))) 
+	if menu.draw.drawheal and sheal ~= nil and IsReady(sheal) then
+	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 850, ARGB(table.unpack(menu.draw.colorheal)))
 	end
-	if menu.draw.drawignite and signite ~= nil and IsReady(signite) then 
-	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 600, ARGB(table.unpack(menu.draw.colorignite))) 
+	if menu.draw.drawignite and signite ~= nil and IsReady(signite) then
+	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 600, ARGB(table.unpack(menu.draw.colorignite)))
 	end
 	if menu.draw.drawq and IsReady(_Q) then
 		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, self.SpellQ.range, ARGB(table.unpack(menu.draw.colorq)))
@@ -3874,21 +3909,21 @@ function _Nami:Menu()
 	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-Heal", "ah")
 		for i = 1, heroManager.iCount do
 		local unit = heroManager:GetHero(i)
-			if unit.team == myHero.team then  
-			menu.ah:addParam("heal" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_ONOFF, true) 
-			menu.ah:addParam("maxhppercent"..i, "Heal Until HP = X%", SCRIPT_PARAM_SLICE, 75, 0, 100, 0) 
+			if unit.team == myHero.team then
+			menu.ah:addParam("heal" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_ONOFF, true)
+			menu.ah:addParam("maxhppercent"..i, "Heal Until HP = X%", SCRIPT_PARAM_SLICE, 75, 0, 100, 0)
 			menu.ah:addParam("empty", "", SCRIPT_PARAM_INFO,"")
 			end
 		end
 		menu.ah:addParam("healmana", "Heal If Mana >X%", SCRIPT_PARAM_SLICE, 45, 0, 100, 0)
-		
-	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-Interrupt", "interrupt")   
+
+	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-Interrupt", "interrupt")
         menu.interrupt:addParam("spells", "           -- Auto Interrupt Spells --", SCRIPT_PARAM_INFO, "")
         if enemyCount > 0 then
         	for i = 1, enemyCount do
             	local unit = enemyHeroes[i]
                 if Interrupt[unit.charName] ~= nil then
-                    menu.interrupt:addParam("" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_INFO, "") 
+                    menu.interrupt:addParam("" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_INFO, "")
                     menu.interrupt:addParam("spell".. Interrupt[unit.charName].stop.spellName,"".. Interrupt[unit.charName].stop.name, SCRIPT_PARAM_ONOFF, true)
                     menu.interrupt:addParam("empty", "", SCRIPT_PARAM_INFO,"")
                 end
@@ -3914,7 +3949,7 @@ function _Nami:Menu()
 		menu.draw:addParam("drawlois", "Draw Locket of the Iron Solari", SCRIPT_PARAM_ONOFF, false)
 		menu.draw:addParam("colorlois", "Color Locket of the Iron Solari", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("drawmikaels", "Draw Mikaels Crucible", SCRIPT_PARAM_ONOFF, false)
-		menu.draw:addParam("colorqmikaels", "Color Mikaels Crucible", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 }) 
+		menu.draw:addParam("colorqmikaels", "Color Mikaels Crucible", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawsumm", "                -- Summoner Draws --", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawexhaust", "Draw Exhaust", SCRIPT_PARAM_ONOFF, false)
@@ -3922,7 +3957,7 @@ function _Nami:Menu()
 		menu.draw:addParam("drawheal", "Draw Heal", SCRIPT_PARAM_ONOFF, false)
 		menu.draw:addParam("colorheal", "Color Heal", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("drawignite", "Draw Ignite", SCRIPT_PARAM_ONOFF, false)
-		menu.draw:addParam("colorignite", "Color Ignite", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })  
+		menu.draw:addParam("colorignite", "Color Ignite", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("miscellaneousdraws", "            -- Miscellaneous Draws --", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawtarget", "Draw Target", SCRIPT_PARAM_ONOFF, true)
@@ -3936,11 +3971,11 @@ function _Nami:Menu()
 		menu.farm:addParam("elaneclear", "Use E", SCRIPT_PARAM_ONOFF, true)
 		menu.farm:addParam("eclearmana", "Minimum Mana", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
 		menu.farm:addParam("eminminion", "Min Minions To Use E", SCRIPT_PARAM_SLICE, 2, 0, 10, 0)
-		
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Humanizer", "humanizer")
 		menu.humanizer:addParam("interruptDelay", "Auto-Interrupt Delay (ms)", SCRIPT_PARAM_SLICE, 200, 0, 500, 0)
 		menu.humanizer:addParam("shieldDelay", "Auto Shield Delay (ms)", SCRIPT_PARAM_SLICE, 50, 0, 500, 0)
-		
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Key Settings", "key")
 		menu.key:addParam("combatkeys", "               -- Combat Keys --", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("comboKey", "Combo Key", SCRIPT_PARAM_ONKEYDOWN, false, 32)
@@ -3957,7 +3992,7 @@ function _Nami:Menu()
 		menu.spell.q:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.spell.q:addParam("qharass", "Harass", SCRIPT_PARAM_ONOFF, true)
 		menu.spell.q:addParam("qharassmana", "[Harass] Mana > X%", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
-	
+
 		menu.spell:addSubMenu("[" .. myHero.charName .. "] - W", "w")
 		menu.spell.w:addParam("wcombo", "Combo", SCRIPT_PARAM_ONOFF, true)
 		menu.spell.w:addParam("wcombomana", "[Combo] Mana > X%", SCRIPT_PARAM_SLICE, 0, 0, 100, 0)
@@ -3975,10 +4010,10 @@ function _Nami:Menu()
 		for i = 1, heroManager.iCount do
 			local unit = heroManager:GetHero(i)
 			if unit.team == myHero.team then
-			menu.spell.e:addParam("teammateaashieldattack"..i, "Shield While AA'ing "..unit.charName, SCRIPT_PARAM_ONOFF, false) 
+			menu.spell.e:addParam("teammateaashieldattack"..i, "Shield While AA'ing "..unit.charName, SCRIPT_PARAM_ONOFF, false)
 			menu.spell.e:addParam("empty", "", SCRIPT_PARAM_INFO,"")
-			end 
-		end	
+			end
+		end
 
 		menu.spell:addSubMenu("[" .. myHero.charName .. "] - R", "r")
 		menu.spell.r:addParam("rcombo", "Combo", SCRIPT_PARAM_ONOFF, true)
@@ -3995,16 +4030,16 @@ function _Nami:Menu()
 		menu.target:addParam("focus", "Focus Selected Target", SCRIPT_PARAM_ONOFF, true)
 		menu.target:addParam("sac", "Use SAC:R Target Instead", SCRIPT_PARAM_ONOFF, false)
 
-	menu:addSubMenu("Orbwalk Settings", "orb")  
-   
+	menu:addSubMenu("Orbwalk Settings", "orb")
+
 	UPL:AddToMenu(menu)
-   
+
 	menu:addParam("hc", "Prediction Hit Chance", SCRIPT_PARAM_SLICE, 2, 0, 5, 0)
- 
+
 	menu:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 	menu:addParam("infobox", "            Support Heroes: " .. myHero.charName .. "           ", SCRIPT_PARAM_INFO, "")
 	menu:addParam("infobox2", "                      Version:  " .. scriptVersion .. "         ", SCRIPT_PARAM_INFO, "")
-   
+
 	if menu.draw.drawpermashow then
 		menu:permaShow("infobox")
 		menu.key:permaShow("comboKey")
@@ -4026,26 +4061,26 @@ end
 function _Nami:AutoHeal()
 	for i = 1, heroManager.iCount do
 		local unit = heroManager:GetHero(i)
-		if unit.team == myHero.team then 
-			if not InFountain() and not buffs["recall"] then 
+		if unit.team == myHero.team then
+			if not InFountain() and not buffs["recall"] then
 				if unit.team == myHero.team and unit.type == myHero.type and menu.ah["heal" ..unit.charName] and (100*unit.health/unit.maxHealth) < menu.ah["maxhppercent"..i] and (100 * myHero.mana / myHero.maxMana)>= menu.ah.healmana then
-					if IsReady(_W) and (GetDistance(unit) < self.SpellW.range) then 
-						CastSpell(_W, unit)         
+					if IsReady(_W) and (GetDistance(unit) < self.SpellW.range) then
+						CastSpell(_W, unit)
 					end
-				end    
+				end
 			end
 		end
 	end
-end 
+end
 
 function _Nami:Marathon()
     if menu.key.marathonKey then
-        if IsReady(_E) then 
+        if IsReady(_E) then
             CastSpell(_E, myHero)
         end
 		myHero:MoveTo(mousePos.x, mousePos.z)
-    end	
-end 
+    end
+end
 
 function _Nami:ProcessSpell(object, spell)
     if enemyCount > 0 then
@@ -4056,7 +4091,7 @@ function _Nami:ProcessSpell(object, spell)
                     local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, object)
 					if HitChance >= 2 then
                         if IsReady(_Q) and menu.interrupt.qinterrupt and GetDistance(object) <= self.SpellQ.range then
-                            DelayAction(function() CastSpell(_Q, CastPosition.x, CastPosition.z) end, menu.humanizer.interruptDelay / 1000)                   
+                            DelayAction(function() CastSpell(_Q, CastPosition.x, CastPosition.z) end, menu.humanizer.interruptDelay / 1000)
                         end
                     end
                 end
@@ -4071,7 +4106,7 @@ function _Nami:ProcessAttack(object, spell)
 		if allytarget.team == myHero.team then
             if IsReady(_E) and spell.target and GetDistance(object) < self.SpellE.range then
                 if not object.dead and object.team == myHero.team and object.type == myHero.type and spell.name:lower():find("attack") then
-                    if spell.target.team ~= myHero.team and spell.target.type == myHero.type and menu.spell.e["teammateaashieldattack".. i] then 
+                    if spell.target.team ~= myHero.team and spell.target.type == myHero.type and menu.spell.e["teammateaashieldattack".. i] then
                         DelayAction(function() CastSpell(_E, self:GetETarget()) end, menu.humanizer.shieldDelay / 1000)
                     end
                 end
@@ -4086,7 +4121,7 @@ function _Nami:Combo()
 	if Target and IsReady(_Q) and menu.spell.q.qcombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qcombomana and (GetDistance(Target) < self.SpellQ.range) then
 		if ValidTarget(Target) then
 			local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
-			if HitChance >= menu.hc then 
+			if HitChance >= menu.hc then
 				CastSpell(_Q, CastPosition.x, CastPosition.z)
 			end
 		end
@@ -4110,7 +4145,7 @@ function _Nami:Harras()
 	if Target and IsReady(_Q) and menu.spell.q.qharass and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qharassmana and (GetDistance(Target) < self.SpellQ.range) then
 		if ValidTarget(Target) then
 			local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
-			if HitChance >= menu.hc then 
+			if HitChance >= menu.hc then
 				CastSpell(_Q, CastPosition.x, CastPosition.z)
 			end
 		end
@@ -4159,18 +4194,18 @@ function _Nami:GetHeroesInUlt(target)
 			{x1 + o.x, y1, z1 + o.z},
 			{x1 - o.x, y1, z1 - o.z},
 			{x2 + o.x, y2, z2 + o.z},
-			{x2 - o.x, y2, z2 - o.z},			
+			{x2 - o.x, y2, z2 - o.z},
 			{x1 + o.x, y1, z1 + o.z},
 		}
 		local X1 = {x = points[1][1], y = points[1][3]}
 		local X2 = {x = points[2][1], y = points[2][3]}
 		local X3 = {x = points[3][1], y = points[3][3]}
 		local X4 = {x = points[4][1], y = points[4][3]}
-		
+
 		function PointInRec(a,b,c,d, pt)
 			local PointinT1 = false
 			local PointinT2 = false
-		
+
 			function PointInTriangle(pt, v1, v2, v3)
 				function sign(p1, p2, p3)
 					return (p1.x - p3.x) * (p2.y - p3.y) - (p2.x - p3.x) * (p1.y - p3.y)
@@ -4201,7 +4236,7 @@ function _Nami:GetHeroesInUlt(target)
 					end
 				end
 			end
-		end		
+		end
 	end
 	return enemysInUlt
 end
@@ -4229,7 +4264,7 @@ function _Nami:LaneClear()
 		if (Minion ~= nil) then
 			if IsReady(_Q) and menu.farm.qlaneclear and (100 * myHero.mana / myHero.maxMana)>= menu.farm.qclearmana and GetDistance(Minion) < self.SpellQ.range then
 				local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Minion)
-				if HitChance >= menu.hc then 
+				if HitChance >= menu.hc then
 					CastSpell(_Q, CastPosition.x, CastPosition.z)
 				end
 			end
@@ -4239,7 +4274,7 @@ function _Nami:LaneClear()
 					CastSpell(_E, myHero)
 				end
 			end
-		end       
+		end
 	end
 end
 
@@ -4247,7 +4282,7 @@ Class ("_PentagonRot")
 function _PentagonRot:__init(object, color, thickness, size,version)
 	self.VisionVector = nil
 	self.object = object
-	self.color = color 
+	self.color = color
 	self.thickness = thickness
 	self.size = size
 	self.version = version
@@ -4314,7 +4349,7 @@ function _PentagonRot:DrawHexagonRot(object, color, thickness, size)
 	local PZ4 = Z+RZ4
 
 	local PX5 = X+RX5
-	local PZ5 = Z+RZ5	
+	local PZ5 = Z+RZ5
 
 
 
@@ -4390,14 +4425,14 @@ local count = 0
 function _Sona:__init()
 	self:LoadVariables()
 	self:Menu()
-	
+
 	_Bundle:SetupOrbwalk()
-	
+
 	_Activator:__init()
-	
+
 	_Tech:AddTurrets()
 	towerCount = #towers
-	
+
 	AddTickCallback(function() self:OnTick() end)
 	AddDrawCallback(function() self:OnDraw() end)
 	AddRemoveBuffCallback(function(unit, buff) self:RemoveBuff(unit, buff) end)
@@ -4405,9 +4440,9 @@ function _Sona:__init()
 	AddApplyBuffCallback(function(unit, target, buff) self:ApplyBuff(unit, target, buff) end)
     AddProcessSpellCallback(function(object, spell) self:ProcessSpell(object, spell) end)
 	AddProcessAttackCallback(function(object, spell) self:ProcessAttack(object, spell) end)
-	
+
 	enemyMinions = minionManager(MINION_ENEMY, 365, myHero, MINION_SORT_HEALTH_DES)
-    
+
 	_Bundle:Print(myHero.charName .. " Loaded, Good Luck!")
 end
 
@@ -4419,23 +4454,23 @@ function _Sona:LoadVariables()
 	self.SpellE = { speed = nil, delay = 0.5, range = 360, width = nil, collision = false, aoe = true, type = "circular" }
 
 	self.SpellR = { speed = math.huge, delay = 0.25, range = 900, width = 300, collision = false, aoe = true, type = "linear" }
-    
+
     self.SpellAura = { range = 400}
-    
+
     self.AA = { range = 550}
-	
+
 	UPL:AddSpell(_R, self.SpellR)
 end
 
 function _Sona:OnTick()
    if menu == nil then return end
-   
+
 	self:AutoHeal()
     self:AutoUlt()
 	self:Combo()
 	self:FlashCombo()
     self:FountainCast()
-	self:Harass() 
+	self:Harass()
 	self:LaneClear()
     self:Marathon()
 	self:TowerCC()
@@ -4443,39 +4478,39 @@ end
 
 function _Sona:Menu()
 	menu = scriptConfig("Support Heroes", "SupportHeroesMenuSona")
-	
+
 	_Activator:Menu()
- 
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-Heal", "ah")
 		for i = 1, heroManager.iCount do
 		local unit = heroManager:GetHero(i)
-			if unit.team == myHero.team then  
-			menu.ah:addParam("heal" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_ONOFF, true) 
-			menu.ah:addParam("maxhppercent"..i, "Heal Until HP = X%", SCRIPT_PARAM_SLICE, 75, 0, 100, 0) 
+			if unit.team == myHero.team then
+			menu.ah:addParam("heal" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_ONOFF, true)
+			menu.ah:addParam("maxhppercent"..i, "Heal Until HP = X%", SCRIPT_PARAM_SLICE, 75, 0, 100, 0)
 			menu.ah:addParam("empty", "", SCRIPT_PARAM_INFO,"")
 			end
 		end
 		menu.ah:addParam("healmana", "Heal If Mana >X%", SCRIPT_PARAM_SLICE, 45, 0, 100, 0)
-				 
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-CC Under Tower", "snare")
 		menu.snare:addParam("info", "           -- Auto-CC Enemies --", SCRIPT_PARAM_INFO, "")
 		if enemyCount > 0 then
 			for i = 1, enemyCount do
-			local unit = enemyHeroes[i]			
+			local unit = enemyHeroes[i]
 				menu.snare:addParam("" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_ONOFF, true)
 			end
 		end
 		menu.snare:addParam("settings", "                    -- Settings --", SCRIPT_PARAM_INFO, "")
 		menu.snare:addParam("rsnare", "Use R", SCRIPT_PARAM_ONOFF, true)
         menu.snare:addParam("rsnareamt", "Min Enemys Hit", SCRIPT_PARAM_SLICE, 4, 0, 5, 0)
-		
-	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-Interrupt", "interrupt")   
+
+	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-Interrupt", "interrupt")
         menu.interrupt:addParam("spells", "           -- Auto Interrupt Spells --", SCRIPT_PARAM_INFO, "")
         if enemyCount > 0 then
         	for i = 1, enemyCount do
             	local unit = enemyHeroes[i]
                 if Interrupt[unit.charName] ~= nil then
-                    menu.interrupt:addParam("" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_INFO, "") 
+                    menu.interrupt:addParam("" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_INFO, "")
                     menu.interrupt:addParam("spell".. Interrupt[unit.charName].stop.spellName,"".. Interrupt[unit.charName].stop.name, SCRIPT_PARAM_ONOFF, true)
                     menu.interrupt:addParam("empty", "", SCRIPT_PARAM_INFO,"")
                 end
@@ -4483,7 +4518,7 @@ function _Sona:Menu()
         end
 		menu.interrupt:addParam("settings", "                    -- Settings --", SCRIPT_PARAM_INFO, "")
 		menu.interrupt:addParam("rinterrupt", "Use R", SCRIPT_PARAM_ONOFF, true)
-		
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Draw Settings", "draw")
 		menu.draw:addParam("spelldraws", "                -- Spell Draws --", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawq", "Draw Q", SCRIPT_PARAM_ONOFF, true)
@@ -4496,14 +4531,14 @@ function _Sona:Menu()
 		menu.draw:addParam("miscellaneousdraws", "                -- Flash Draws --", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawrflash", "Draw Flash - R", SCRIPT_PARAM_ONOFF, false)
 		menu.draw:addParam("colorrflash", "Color Flash - R", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
-		menu.draw:addParam("empty", "", SCRIPT_PARAM_INFO, "")	
+		menu.draw:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawitem", "                -- Item Draws --", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawfotm", "Draw Face of the Mountain", SCRIPT_PARAM_ONOFF, false)
 		menu.draw:addParam("colorfotm", "Color Face of the Mountain", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("drawlois", "Draw Locket of the Iron Solari", SCRIPT_PARAM_ONOFF, false)
 		menu.draw:addParam("colorlois", "Color Locket of the Iron Solari", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("drawmikaels", "Draw Mikaels Crucible", SCRIPT_PARAM_ONOFF, false)
-		menu.draw:addParam("colormikaels", "Color Mikaels Crucible", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 }) 
+		menu.draw:addParam("colormikaels", "Color Mikaels Crucible", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawsumm", "                -- Summoner Draws --", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawexhaust", "Draw Exhaust", SCRIPT_PARAM_ONOFF, false)
@@ -4511,25 +4546,25 @@ function _Sona:Menu()
 		menu.draw:addParam("drawheal", "Draw Heal", SCRIPT_PARAM_ONOFF, false)
 		menu.draw:addParam("colorheal", "Color Heal", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("drawignite", "Draw Ignite", SCRIPT_PARAM_ONOFF, false)
-		menu.draw:addParam("colorignite", "Color Ignite", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 }) 
-		menu.draw:addParam("empty", "", SCRIPT_PARAM_INFO, "")  
+		menu.draw:addParam("colorignite", "Color Ignite", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
+		menu.draw:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("miscellaneousdraws", "            -- Miscellaneous Draws --", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawtarget", "Draw Target", SCRIPT_PARAM_ONOFF, true)
 		menu.draw:addParam("drawpermashow", "Draw Permashow (Reload)", SCRIPT_PARAM_ONOFF, true)
-			
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Farm Settings", "farm")
 		menu.farm:addParam("laneclear", "                    -- Lane Clear --", SCRIPT_PARAM_INFO, "")
 		menu.farm:addParam("qlaneclear", "Use Q", SCRIPT_PARAM_ONOFF, true)
 		menu.farm:addParam("clearmana", "Minimum Mana", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
-		
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Flash Settings", "flash")
 		menu.flash:addParam("rflash", "Use Flash - R", SCRIPT_PARAM_ONOFF, false)
-	
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Humanizer", "humanizer")
 		menu.humanizer:addParam("interruptDelay", "Auto-Interrupt Delay (ms)", SCRIPT_PARAM_SLICE, 200, 0, 500, 0)
 		menu.humanizer:addParam("snareDelay", "Auto-CC Delay (ms)", SCRIPT_PARAM_SLICE, 0, 0, 500, 0)
 		menu.humanizer:addParam("shieldDelay", "Auto Shield Delay (ms)", SCRIPT_PARAM_SLICE, 50, 0, 500, 0)
-			
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Key Settings", "key")
 		menu.key:addParam("combatkeys", "               -- Combat Keys --", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("comboKey", "Combo Key", SCRIPT_PARAM_ONKEYDOWN, false, 32)
@@ -4540,7 +4575,7 @@ function _Sona:Menu()
 		menu.key:addParam("miscellaneouskeys", "           -- Miscellaneous Keys --", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("flashKey", "Flash Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("H"))
         menu.key:addParam("marathonKey", "Marathon Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("Y"))
-	
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Spell Settings", "spell")
 		menu.spell:addSubMenu("[" .. myHero.charName .. "] - Q", "q")
 		menu.spell.q:addParam("qcombo", "Combo", SCRIPT_PARAM_ONOFF, true)
@@ -4550,21 +4585,21 @@ function _Sona:Menu()
 		menu.spell.q:addParam("qharassmana", "[Harass] Mana > X%", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
         menu.spell.q:addParam("empty", "", SCRIPT_PARAM_INFO, "")
         for i = 1, allyCount do
-	       local unit = allyHeroes[i] 
+	       local unit = allyHeroes[i]
             menu.spell.q:addParam("name","                          "..unit.charName, SCRIPT_PARAM_INFO, "")
             menu.spell.q:addParam("qaura"..i, "[Aura] Q While AA'ing", SCRIPT_PARAM_ONOFF, true)
         end
-		
+
         menu.spell:addSubMenu("[" .. myHero.charName .. "] - W", "w")
 		menu.spell.w:addParam("info", "Check Auto Heal For Settings", SCRIPT_PARAM_INFO, "")
         menu.spell.w:addParam("empty", "", SCRIPT_PARAM_INFO, "")
         for i = 1, heroManager.iCount do
 		local unit = heroManager:GetHero(i)
-		    if unit.team == myHero.team then 
+		    if unit.team == myHero.team then
             menu.spell.w:addParam("waura"..i, "[Aura] Shield "..unit.charName, SCRIPT_PARAM_ONOFF, true)
             end
-        end       
-		
+        end
+
         menu.spell:addSubMenu("[" .. myHero.charName .. "] - E", "e")
 		menu.spell.e:addParam("ecombo", "Combo", SCRIPT_PARAM_ONOFF, true)
 		menu.spell.e:addParam("ecombomana", "[Combo] Mana > X%", SCRIPT_PARAM_SLICE, 0, 0, 100, 0)
@@ -4572,34 +4607,34 @@ function _Sona:Menu()
 		menu.spell.e:addParam("eharass", "Harass", SCRIPT_PARAM_ONOFF, true)
 		menu.spell.e:addParam("eharassmana", "[Harass] Mana > X%", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
         menu.spell.e:addParam("empty", "", SCRIPT_PARAM_INFO, "")
-		
+
         menu.spell:addSubMenu("[" .. myHero.charName .. "] - R", "r")
 		menu.spell.r:addParam("rcombo", "Combo", SCRIPT_PARAM_ONOFF, true)
 		menu.spell.r:addParam("rcombomana", "[Combo] Mana > X%", SCRIPT_PARAM_SLICE, 0, 0, 100, 0)
-        menu.spell.r:addParam("rminenemyscombo", "[Combo] Min Enemys Hit ", SCRIPT_PARAM_SLICE, 2, 0, 5, 0)        
+        menu.spell.r:addParam("rminenemyscombo", "[Combo] Min Enemys Hit ", SCRIPT_PARAM_SLICE, 2, 0, 5, 0)
 		menu.spell.r:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.spell.r:addParam("rharass", "Harass", SCRIPT_PARAM_ONOFF, true)
 		menu.spell.r:addParam("rharassmana", "[Harass] Mana > X%", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
         menu.spell.r:addParam("rminenemysharass", "[Harass] Min Enemys Hit ", SCRIPT_PARAM_SLICE, 3, 0, 5, 0)
         menu.spell.r:addParam("empty", "", SCRIPT_PARAM_INFO, "")
         menu.spell.r:addParam("autor","[Automatic] Min Enemies", SCRIPT_PARAM_SLICE, 4, 0, 5, 0)
-		
+
    menu:addSubMenu("[" .. myHero.charName .. "] - Target Selector", "target")
 		menu.target:addParam("targetinfo", "Default Target Select Is LeastCast", SCRIPT_PARAM_INFO, "")
 		menu.target:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.target:addParam("focus", "Focus Selected Target", SCRIPT_PARAM_ONOFF, true)
 		menu.target:addParam("sac", "Use SAC:R Target Instead", SCRIPT_PARAM_ONOFF, false)
-		
-   menu:addSubMenu("Orbwalk Settings", "orb")  
-   
+
+   menu:addSubMenu("Orbwalk Settings", "orb")
+
    UPL:AddToMenu(menu)
-   
+
    menu:addParam("hc", "Prediction Hit Chance", SCRIPT_PARAM_SLICE, 2, 0, 5, 0)
- 
+
    menu:addParam("empty", "", SCRIPT_PARAM_INFO, "")
    menu:addParam("infobox", "            Support Heroes: " .. myHero.charName .. "           ", SCRIPT_PARAM_INFO, "")
    menu:addParam("infobox2", "                      Version:  " .. scriptVersion .. "         ", SCRIPT_PARAM_INFO, "")
-   
+
    if menu.draw.drawpermashow then
 	 menu:permaShow("infobox")
 	 menu.key:permaShow("comboKey")
@@ -4610,56 +4645,56 @@ function _Sona:Menu()
    end
 end
 
-function _Sona:ApplyBuff(unit, target, buff) 
+function _Sona:ApplyBuff(unit, target, buff)
     if unit ~= nil and buff and unit.isMe and buff.name:lower() == "recall" or buff.name:lower() == "summonerteleport" or buff.name:lower() == "recallimproved" then buffs["recall"] = true end
-    
+
     --if buff.name == "summonerexhaust" and unit.team ~= myHero.team and unit.type == myHero.type then buff["Exhaust"] == true
 end
 
 function _Sona:AutoHeal()
 	for i = 1, heroManager.iCount do
 		local unit = heroManager:GetHero(i)
-		if unit.team == myHero.team then 
-			if not InFountain() and not buffs["recall"] then 
+		if unit.team == myHero.team then
+			if not InFountain() and not buffs["recall"] then
 				if unit.team == myHero.team and unit.type == myHero.type and menu.ah["heal" ..unit.charName] and (100*unit.health/unit.maxHealth) < menu.ah["maxhppercent"..i] and (100 * myHero.mana / myHero.maxMana)>= menu.ah.healmana then
-					if IsReady(_W) and (GetDistance(unit) < self.SpellW.range) then 
-						CastSpell(_W)         
+					if IsReady(_W) and (GetDistance(unit) < self.SpellW.range) then
+						CastSpell(_W)
 					end
-				end    
+				end
 			end
 		end
 	end
-end 
+end
 
 function _Sona:Marathon()
     if menu.key.marathonKey then
-        if IsReady(_E) then 
+        if IsReady(_E) then
             CastSpell(_E, myHero)
         end
 		myHero:MoveTo(mousePos.x, mousePos.z)
-    end	
-end  
+    end
+end
 
 function _Sona:AutoUlt()
     for i = 1, enemyCount do
 	local enemy = enemyHeroes[i]
-        if IsReady(_R) and GetDistance(enemy) < self.SpellR.range then    
+        if IsReady(_R) and GetDistance(enemy) < self.SpellR.range then
             local Position = UPL:Predict(_R, myHero, Target)
-            if self:CountObjectHitOnLine(_R, myHero, Position, GetEnemyHeroes()) >= menu.spell.r.autor then           
-                CastSpell(_R, Position.x, Position.z) 
-            end 
+            if self:CountObjectHitOnLine(_R, myHero, Position, GetEnemyHeroes()) >= menu.spell.r.autor then
+                CastSpell(_R, Position.x, Position.z)
+            end
         end
     end
-end  
+end
 
 function _Sona:CountObjectHitOnLine(slot, from, target, objects)
 	return _Tech:CountObjectsOnLineSegment(myHero, Normalize(Target, myHero, self.SpellR.range), self.SpellR.width, objects)
 end
 
-function _Sona:Combo() 
+function _Sona:Combo()
 	if Target == nil then return end
-	if menu.key.comboKey then 
-		if count < 2 then 
+	if menu.key.comboKey then
+		if count < 2 then
             if IsReady(_Q) and menu.spell.q.qcombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qcombomana and (GetDistance(Target) < self.SpellQ.range) then
                 if ValidTarget(Target) then
                     CastSpell(_Q)
@@ -4668,39 +4703,39 @@ function _Sona:Combo()
             if IsReady(_R) and (100 * myHero.mana / myHero.maxMana)>= menu.spell.r.rcombomana and (GetDistance(Target) < self.SpellR.range) then
                 if ValidTarget(Target) then
                     local CastPosition, HitChance, HeroPosition = UPL:Predict(_R, myHero, Target)
-                    local AOECastPosition, MainTargetHitChance, nTargets = VPred:GetCircularAOECastPosition(unit, self.SpellR.delay, 200, self.SpellR.range, self.SpellR.speed, myHero) 
-                    if nTargets >= menu.spell.r.rminenemyscombo and HitChance >= menu.hc then            
-                        CastSpell(_R, CastPosition.x, CastPosition.z) 
+                    local AOECastPosition, MainTargetHitChance, nTargets = VPred:GetCircularAOECastPosition(unit, self.SpellR.delay, 200, self.SpellR.range, self.SpellR.speed, myHero)
+                    if nTargets >= menu.spell.r.rminenemyscombo and HitChance >= menu.hc then
+                        CastSpell(_R, CastPosition.x, CastPosition.z)
                     end
                 end
-            end 
-        elseif count == 2 then 
+            end
+        elseif count == 2 then
             self:PassiveLogic()
         end
-	end       
+	end
 end
- 
+
 function _Sona:FlashCombo()
 	if Target == nil then return end
-	if menu.key.flashKey and menu.flash.rflash then 
+	if menu.key.flashKey and menu.flash.rflash then
 		if ValidTarget(Target) and (GetDistance(Target) <= 425 + self.SpellR.range) then
 		   if IsReady(sflash) and IsReady(_R) then
 			   local CastPosition, HitChance, HeroPosition = UPL:Predict(_R, myHero, Target)
-               if HitChance >= 2 then 
-                 CastSpell(sflash, Target.x, Target.z)      
+               if HitChance >= 2 then
+                 CastSpell(sflash, Target.x, Target.z)
 			     CastSpell(_R, CastPosition.x, CastPosition.y)
 		      end
-           end	       
+           end
 		end
 	end
 	if menu.key.flashKey and IsReady(sflash) then
 		myHero:MoveTo(mousePos.x, mousePos.z)
 	end
 end
- 
-function _Sona:Harass() 
+
+function _Sona:Harass()
 	if Target == nil then return end
-	if menu.key.harassKey or menu.key.harassToggle then 
+	if menu.key.harassKey or menu.key.harassToggle then
 		if IsReady(_Q) and menu.spell.q.qharass and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qharassmana and (GetDistance(Target) < self.SpellQ.range) then
 			if ValidTarget(Target) then
 				CastSpell(_Q)
@@ -4708,14 +4743,14 @@ function _Sona:Harass()
 		end
         if IsReady(_R) and (100 * myHero.mana / myHero.maxMana)>= menu.spell.r.rharassmana and (GetDistance(Target) < self.SpellR.range) then
             if ValidTarget(Target) then
-                local CastPosition, HitChance, HeroPosition = UPL:Predict(_R, myHero, Target)		
-                local AOECastPosition, MainTargetHitChance, nTargets = VPred:GetCircularAOECastPosition(unit, self.SpellR.delay, self.SpellR.radius, self.SpellR.range, self.SpellR.speed, myHero) 
-				if nTargets >= menu.spell.r.rminenemysharass and HitChance >= menu.hc then            
-                    CastSpell(_R, CastPosition.x, CastPosition.z) 
+                local CastPosition, HitChance, HeroPosition = UPL:Predict(_R, myHero, Target)
+                local AOECastPosition, MainTargetHitChance, nTargets = VPred:GetCircularAOECastPosition(unit, self.SpellR.delay, self.SpellR.radius, self.SpellR.range, self.SpellR.speed, myHero)
+				if nTargets >= menu.spell.r.rminenemysharass and HitChance >= menu.hc then
+                    CastSpell(_R, CastPosition.x, CastPosition.z)
                 end
             end
-        end 
-	end       
+        end
+	end
 end
 
 function _Sona:PassiveLogic()
@@ -4736,8 +4771,8 @@ function _Sona:PassiveLogic()
                             CastSpell(_Q)
                             Attack(enemy)
                         end
-                    end                
-                    if GetDistance(enemy, ally) <= 700 and (100 * ally.health / ally.maxHealth) < 40 then 
+                    end
+                    if GetDistance(enemy, ally) <= 700 and (100 * ally.health / ally.maxHealth) < 40 then
                         if IsReady(_E) and GetDistance(enemy) <= self.AA.range then
                             CastSpell(_E)
                             Attack(enemy)
@@ -4748,12 +4783,12 @@ function _Sona:PassiveLogic()
                             Attack(enemy)
                         end
                     end
-                    if (100 * ally.health / ally.maxHealth) < 10 then 
+                    if (100 * ally.health / ally.maxHealth) < 10 then
                         if IsReady(_W) and GetDistance(enemy) <= self.AA.range then
                             CastSpell(_W)
                             Attack(enemy)
                         end
-                    end                
+                    end
                 end
             end
         end
@@ -4761,47 +4796,47 @@ function _Sona:PassiveLogic()
 end
 
 function _Sona:LaneClear()
-	if enemyMinions == nil then return end 
+	if enemyMinions == nil then return end
 	for i, Minion in pairs(enemyMinions.objects) do
 		if (Minion ~= nil) then
-			if menu.key.clearKey then 
+			if menu.key.clearKey then
 				if IsReady(_Q) and menu.farm.qlaneclear and (100 * myHero.mana / myHero.maxMana)>= menu.farm.clearmana then
 					CastSpell(_Q, Minion)
 				end
 			end
 		end
-	end                
-end 
+	end
+end
 
 function _Sona:OnDraw()
-	if menu == nil then return end 
+	if menu == nil then return end
 	if Target == nil then return end
 	if menu.draw.drawtarget and ValidTarget(Target) and Target.type == myHero.type then
 		_PentagonRot:DrawTriangle(Target, ARGB(255, 255, 0, 0), 2, 50, 5, 0, 0)
 	end
-	if menu.draw.drawqflash and menu.flash.qflash and IsReady(sflash) and IsReady(_Q) then 
+	if menu.draw.drawqflash and menu.flash.qflash and IsReady(sflash) and IsReady(_Q) then
 		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, (self.SpellQ.range + 425), ARGB(table.unpack(menu.draw.colorqflash)))
 	end
 	local slot = _Tech:CustomGetInventorySlotItem("HealthBomb", myHero)
-	if menu.draw.drawfotm and slot ~= nil and IsReady(slot) then 
-		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorfotm))) 
+	if menu.draw.drawfotm and slot ~= nil and IsReady(slot) then
+		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorfotm)))
 	end
 	local slot = _Tech:CustomGetInventorySlotItem("IronStylus", myHero)
-	if menu.draw.drawlois and slot ~= nil and IsReady(slot) then 
-		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorlois))) 
+	if menu.draw.drawlois and slot ~= nil and IsReady(slot) then
+		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorlois)))
 	end
 	local slot = _Tech:CustomGetInventorySlotItem("ItemMorellosBane", myHero)
-	if menu.draw.drawmikaels and slot ~= nil and IsReady(slot) then 
-		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colormikaels))) 
+	if menu.draw.drawmikaels and slot ~= nil and IsReady(slot) then
+		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colormikaels)))
 	end
-	if menu.draw.drawexhaust and sexhaust ~= nil and IsReady(sexhaust) then 
-	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 650, ARGB(table.unpack(menu.draw.colorexhaust))) 
+	if menu.draw.drawexhaust and sexhaust ~= nil and IsReady(sexhaust) then
+	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 650, ARGB(table.unpack(menu.draw.colorexhaust)))
 	end
-	if menu.draw.drawheal and sheal ~= nil and IsReady(sheal) then 
-	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 850, ARGB(table.unpack(menu.draw.colorheal))) 
+	if menu.draw.drawheal and sheal ~= nil and IsReady(sheal) then
+	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 850, ARGB(table.unpack(menu.draw.colorheal)))
 	end
-	if menu.draw.drawignite and signite ~= nil and IsReady(signite) then 
-	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 600, ARGB(table.unpack(menu.draw.colorignite))) 
+	if menu.draw.drawignite and signite ~= nil and IsReady(signite) then
+	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 600, ARGB(table.unpack(menu.draw.colorignite)))
 	end
 	if menu.draw.drawq and IsReady(_Q) then
 		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, self.SpellQ.range, ARGB(table.unpack(menu.draw.colorq)))
@@ -4813,14 +4848,14 @@ function _Sona:OnDraw()
 		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, self.SpellE.range, ARGB(table.unpack(menu.draw.colore)))
 	end
 end
- 
+
 function _Sona:ProcessAttack(object,spell)
 	for i = 1, heroManager.iCount do
 		local allytarget = heroManager:GetHero(i)
 		if allytarget.team == myHero.team then
             if IsReady(_Q) and spell.target and GetDistance(object) < self.SpellAura.range then
                 if not object.dead and object.team == myHero.team and object.type == myHero.type and not object.isMe and spell.name:lower():find("attack") then
-                    if spell.target.team ~= myHero.team and spell.target.type == myHero.type and menu.spell.q["qaura".. i] then 
+                    if spell.target.team ~= myHero.team and spell.target.type == myHero.type and menu.spell.q["qaura".. i] then
                         DelayAction(function() CastSpell(_Q) end, menu.humanizer.shieldDelay / 1000)
                     end
                 end
@@ -4832,18 +4867,18 @@ function _Sona:ProcessAttack(object,spell)
 		local HitFirst = false
 		local shieldtarget,SLastDistance,SLastDmgPercent = nil,nil,nil
 		local ulttarget,ULastDistance,ULastDmgPercent = nil,nil,nil
-		
+
 		YWall, BShield, SShield, Shield, CC = false, false, false, false
 		shottype, radius, maxdistance = 0, 0, 0
-		
+
 		if object.type == "AIHeroClient" then
 			spelltype, casttype = getSpellType(object, spell.name)
 			if casttype == 4 or casttype == 5 or casttype == 6 then
 				return
 			end
-		   
+
 			Shield = true
-			
+
 				if spelltype == "Q" or spelltype == "W" or spelltype == "E" or spelltype == "R" or spelltype == "P" or spelltype == "QM" or spelltype == "WM" or spelltype == "EM" then
 					if skillShield[object.charName] == nil then return end
                     HitFirst = skillShield[object.charName][spelltype].HitFirst
@@ -4858,7 +4893,7 @@ function _Sona:ProcessAttack(object,spell)
 				else
 					Shield = true
 				end
-			
+
 				for i = 1, heroManager.iCount do
 				local allytarget = heroManager:GetHero(i)
 					if spell.target and spell.target.networkID == allytarget.networkID then
@@ -4880,7 +4915,7 @@ function _Sona:ProcessAttack(object,spell)
 							elseif shottype == 6 then
 							hitchampion = checkhitlinepass(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox) or checkhitlinepass(object, Vector(object) * 2 - spell.endPos, radius, maxdistance, allytarget, allyHitBox)
 							elseif shottype == 7 then
-							hitchampion = checkhitcone(spell.endPos, object, radius, maxdistance, allytarget, allyHitBox)              
+							hitchampion = checkhitcone(spell.endPos, object, radius, maxdistance, allytarget, allyHitBox)
 							end
 							if shieldREADY and menu.spell.w["waura" .. i] and GetDistance(allytarget) <= self.SpellW.range then
 							local shieldflag, dmgpercent = self:shieldCheck(object,spell,allytarget,"shields")
@@ -4936,7 +4971,7 @@ function _Sona:shieldCheck(object,spell,target,typeused)
 	  end
 			  for i = 1, heroManager.iCount do
 				local ally = heroManager:GetHero(i)
-				if ally.team == myHero.team then 
+				if ally.team == myHero.team then
 			  local dmgpercent = skilldamage * 100 / target.health
 			  local dmgneeded = dmgpercent >= 20
 			  local hpneeded =  15 >= (target.health - skilldamage) * 100 / target.maxHealth
@@ -4947,12 +4982,12 @@ function _Sona:shieldCheck(object,spell,target,typeused)
 				  end
 			  end
 		  end
-	  end 
+	  end
 
 function _Sona:RemoveBuff(unit, buff)
 	if unit ~= nil and buff and unit.isMe and buff.name:lower() == "recall" or buff.name:lower() == "summonerteleport" or buff.name:lower() == "recallimproved" then buffs["recall"] = false end
 
-    
+
     if buff.name == "sonapassiveattack" then
 		count = 0
 	end
@@ -4962,7 +4997,7 @@ function _Sona:OnUpdateBuff(unit, buff)
 	if buff.name == "sonapassivecount" then
 		count = count + 1
 	end
-end 
+end
 
 function _Sona:ProcessSpell(object, spell)
     if enemyCount > 0 then
@@ -4973,7 +5008,7 @@ function _Sona:ProcessSpell(object, spell)
                     local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, object)
 					if HitChance >= 2 then
                         if IsReady(_R) and menu.interrupt.rinterrupt and GetDistance(object) <= self.SpellR.range then
-                            DelayAction(function() CastSpell(_R, CastPosition.x, CastPosition.z) end, menu.humanizer.interruptDelay / 1000)                   
+                            DelayAction(function() CastSpell(_R, CastPosition.x, CastPosition.z) end, menu.humanizer.interruptDelay / 1000)
                         end
                     end
                 end
@@ -4990,17 +5025,17 @@ function _Sona:FountainCast()
     end
 end
 
-function _Sona:TowerCC() 
+function _Sona:TowerCC()
 	for i = 1, enemyCount do
-	local unit = enemyHeroes[i]	
+	local unit = enemyHeroes[i]
 		for i = 1, towerCount do
 			local tower = towers[i]
 			if tower and tower.team == myHero.team and (GetDistance(tower, unit) < 775) then
 				if menu.snare.rsnare and menu.snare["" ..unit.charName] and GetDistance(unit) < self.SpellR.range then
 					local CastPosition, HitChance, HeroPosition = UPL:Predict(_R, myHero, Target)
-		            if HitChance >= menu.hc then 
+		            if HitChance >= menu.hc then
 			            CastSpell(_R, CastPosition.x, CastPosition.z)
-		            end      
+		            end
 				end
 			end
 		end
@@ -5011,23 +5046,23 @@ Class("_Soraka")
 function _Soraka:__init()
 	self:LoadVariables()
     self:Menu()
-    
+
 	_Bundle:SetupOrbwalk()
-    
+
     _Activator:__init()
-	
+
 	_Tech:AddTurrets()
     towerCount = #towers
-	
+
 	AddTickCallback(function() self:OnTick() end)
 	AddDrawCallback(function() self:OnDraw() end)
     AddRemoveBuffCallback(function(unit, buff) self:RemoveBuff(unit, buff) end)
     AddApplyBuffCallback(function(unit, target, buff) self:ApplyBuff(unit, target, buff) end)
     AddProcessSpellCallback(function(object, spell) self:ProcessSpell(object, spell) end)
     --AddProcessSpellCallback(function(unit, spell) self:OnProcessSpell(unit, spell) end)
-    
+
     enemyMinions = minionManager(MINION_ENEMY, self.SpellQ.range, myHero, MINION_SORT_HEALTH_DES)
-	
+
 	_Bundle:Print(myHero.charName .. " Loaded, Good Luck!")
 end
 
@@ -5039,57 +5074,57 @@ function _Soraka:LoadVariables()
     self.SpellE = { speed = math.huge, delay = 0.5, range = 925, width = 250, collision = false, aoe = true, type = "circular" }
 
     self.SpellR = { speed = nil, delay = 0.25, range = 25000, width = nil, collision = false, aoe = false, type = "linear" }
-    
+
     UPL:AddSpell(_Q, self.SpellQ)
     UPL:AddSpell(_E, self.SpellE)
 end
 
 function _Soraka:OnTick()
    if menu == nil then return end
-   
+
     self:AutoHeal()
     self:AutoUlt()
 	self:Combo()
-	self:Harass() 
+	self:Harass()
 	self:LaneClear()
 	self:TowerCC()
 end
 
 function _Soraka:Menu()
     menu = scriptConfig("Support Heroes", "SupportHeroesMenuSoraka")
-    
+
     _Activator:Menu()
- 
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-Heal", "ah")
         if allyCount > 0 then
         	for i = 1, allyCount do
-            local unit = allyHeroes[i]	  
-            menu.ah:addParam("healally" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_ONOFF, true) 
-            menu.ah:addParam("maxhppercent"..i, "Heal Until HP = X%", SCRIPT_PARAM_SLICE, 75, 0, 100, 0) 
+            local unit = allyHeroes[i]
+            menu.ah:addParam("healally" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_ONOFF, true)
+            menu.ah:addParam("maxhppercent"..i, "Heal Until HP = X%", SCRIPT_PARAM_SLICE, 75, 0, 100, 0)
 			menu.ah:addParam("empty", "", SCRIPT_PARAM_INFO,"")
             end
         end
         menu.ah:addParam("healmana", "Heal If Mana >X%", SCRIPT_PARAM_SLICE, 45, 0, 100, 0)
         menu.ah:addParam("healhealth", "Heal If Health >X%", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
-                 
+
     menu:addSubMenu("[" .. myHero.charName .. "] - Auto-CC Under Tower", "snare")
 		menu.snare:addParam("info", "           -- Auto-CC Enemies --", SCRIPT_PARAM_INFO, "")
         if enemyCount > 0 then
         	for i = 1, enemyCount do
-            local unit = enemyHeroes[i]			
+            local unit = enemyHeroes[i]
             	menu.snare:addParam("" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_ONOFF, true)
     		end
 		end
 		menu.snare:addParam("settings", "                    -- Settings --", SCRIPT_PARAM_INFO, "")
         menu.snare:addParam("esnare", "Use E", SCRIPT_PARAM_ONOFF, true)
-		
-	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-Interrupt", "interrupt")   
+
+	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-Interrupt", "interrupt")
         menu.interrupt:addParam("spells", "           -- Auto Interrupt Spells --", SCRIPT_PARAM_INFO, "")
         if enemyCount > 0 then
         	for i = 1, enemyCount do
             	local unit = enemyHeroes[i]
                 if Interrupt[unit.charName] ~= nil then
-                    menu.interrupt:addParam("" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_INFO, "") 
+                    menu.interrupt:addParam("" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_INFO, "")
                     menu.interrupt:addParam("spell".. Interrupt[unit.charName].stop.spellName,"".. Interrupt[unit.charName].stop.name, SCRIPT_PARAM_ONOFF, true)
                     menu.interrupt:addParam("empty", "", SCRIPT_PARAM_INFO,"")
                 end
@@ -5097,7 +5132,7 @@ function _Soraka:Menu()
         end
         menu.interrupt:addParam("settings", "                    -- Settings --", SCRIPT_PARAM_INFO, "")
         menu.interrupt:addParam("einterrupt", "Use E", SCRIPT_PARAM_ONOFF, true)
-		
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Draw Settings", "draw")
         menu.draw:addParam("spelldraws", "                -- Spell Draws --", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawq", "Draw Q", SCRIPT_PARAM_ONOFF, true)
@@ -5106,14 +5141,14 @@ function _Soraka:Menu()
         menu.draw:addParam("colorw", "Color W", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
         menu.draw:addParam("drawe", "Draw E", SCRIPT_PARAM_ONOFF, true)
         menu.draw:addParam("colore", "Color E", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
-		menu.draw:addParam("empty", "", SCRIPT_PARAM_INFO, "")	
+		menu.draw:addParam("empty", "", SCRIPT_PARAM_INFO, "")
         menu.draw:addParam("drawitem", "                -- Item Draws --", SCRIPT_PARAM_INFO, "")
         menu.draw:addParam("drawfotm", "Draw Face of the Mountain", SCRIPT_PARAM_ONOFF, false)
 		menu.draw:addParam("colorfotm", "Color Face of the Mountain", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
         menu.draw:addParam("drawlois", "Draw Locket of the Iron Solari", SCRIPT_PARAM_ONOFF, false)
 		menu.draw:addParam("colorlois", "Color Locket of the Iron Solari", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
         menu.draw:addParam("drawmikaels", "Draw Mikaels Crucible", SCRIPT_PARAM_ONOFF, false)
-		menu.draw:addParam("colormikaels", "Color Mikaels Crucible", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 }) 
+		menu.draw:addParam("colormikaels", "Color Mikaels Crucible", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
         menu.draw:addParam("empty", "", SCRIPT_PARAM_INFO, "")
         menu.draw:addParam("drawsumm", "                -- Summoner Draws --", SCRIPT_PARAM_INFO, "")
         menu.draw:addParam("drawexhaust", "Draw Exhaust", SCRIPT_PARAM_ONOFF, false)
@@ -5121,29 +5156,29 @@ function _Soraka:Menu()
         menu.draw:addParam("drawheal", "Draw Heal", SCRIPT_PARAM_ONOFF, false)
 		menu.draw:addParam("colorheal", "Color Heal", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
         menu.draw:addParam("drawignite", "Draw Ignite", SCRIPT_PARAM_ONOFF, false)
-		menu.draw:addParam("colorignite", "Color Ignite", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 }) 
-        menu.draw:addParam("empty", "", SCRIPT_PARAM_INFO, "")  
+		menu.draw:addParam("colorignite", "Color Ignite", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
+        menu.draw:addParam("empty", "", SCRIPT_PARAM_INFO, "")
         menu.draw:addParam("miscellaneousdraws", "            -- Miscellaneous Draws --", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawtarget", "Draw Target", SCRIPT_PARAM_ONOFF, true)
         menu.draw:addParam("drawpermashow", "Draw Permashow (Reload)", SCRIPT_PARAM_ONOFF, true)
-        	
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Farm Settings", "farm")
         menu.farm:addParam("laneclear", "                    -- Lane Clear --", SCRIPT_PARAM_INFO, "")
         menu.farm:addParam("qlaneclear", "Use Q", SCRIPT_PARAM_ONOFF, true)
         menu.farm:addParam("clearmana", "Minimum Mana", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
-    
+
     menu:addSubMenu("[" .. myHero.charName .. "] - Humanizer", "humanizer")
         menu.humanizer:addParam("interruptDelay", "Auto-Interrupt Delay (ms)", SCRIPT_PARAM_SLICE, 200, 0, 500, 0)
         menu.humanizer:addParam("snareDelay", "Auto-CC Delay (ms)", SCRIPT_PARAM_SLICE, 0, 0, 500, 0)
         menu.humanizer:addParam("shieldDelay", "Auto Shield Delay (ms)", SCRIPT_PARAM_SLICE, 50, 0, 500, 0)
-    		
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Key Settings", "key")
         menu.key:addParam("combatkeys", "               -- Combat Keys --", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("comboKey", "Combo Key", SCRIPT_PARAM_ONKEYDOWN, false, 32)
         menu.key:addParam("harassKey", "Harass Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("C"))
         menu.key:addParam("harassToggle", "Harass Toggle", SCRIPT_PARAM_ONKEYTOGGLE, false, string.byte("T"))
         menu.key:addParam("clearKey", "Lane Clear Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("V"))
-    
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Spell Settings", "spell")
         menu.spell:addSubMenu("[" .. myHero.charName .. "] - Q", "q")
         menu.spell.q:addParam("qcombo", "Combo", SCRIPT_PARAM_ONOFF, true)
@@ -5162,29 +5197,29 @@ function _Soraka:Menu()
         menu.spell:addSubMenu("[" .. myHero.charName .. "] - R", "r")
         for i = 1, heroManager.iCount do
         local unit = heroManager:GetHero(i)
-            if unit.team == myHero.team then  
+            if unit.team == myHero.team then
             menu.spell.r:addParam("teammateult"..i, "Ult "..unit.charName, SCRIPT_PARAM_ONOFF, true)
             menu.spell.r:addParam("maxhppercent"..i, "Ult If < X% HP "..unit.charName, SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
             menu.spell.r:addParam("empty", "", SCRIPT_PARAM_INFO, "")
             end
         end
-        
+
    menu:addSubMenu("[" .. myHero.charName .. "] - Target Selector", "target")
         menu.target:addParam("targetinfo", "Default Target Select Is LeastCast", SCRIPT_PARAM_INFO, "")
         menu.target:addParam("empty", "", SCRIPT_PARAM_INFO, "")
         menu.target:addParam("focus", "Focus Selected Target", SCRIPT_PARAM_ONOFF, true)
         menu.target:addParam("sac", "Use SAC:R Target Instead", SCRIPT_PARAM_ONOFF, false)
-        
-   menu:addSubMenu("Orbwalk Settings", "orb")  
-   
+
+   menu:addSubMenu("Orbwalk Settings", "orb")
+
    UPL:AddToMenu(menu)
- 
+
    menu:addParam("hc", "Prediction Hit Chance", SCRIPT_PARAM_SLICE, 2, 0, 5, 0)
-   
+
    menu:addParam("empty", "", SCRIPT_PARAM_INFO, "")
    menu:addParam("infobox", "            Support Heroes: " .. myHero.charName .. "           ", SCRIPT_PARAM_INFO, "")
    menu:addParam("infobox2", "                      Version:  " .. scriptVersion .. "         ", SCRIPT_PARAM_INFO, "")
-   
+
    if menu.draw.drawpermashow then
 	 menu:permaShow("infobox")
 	 menu.key:permaShow("comboKey")
@@ -5201,19 +5236,19 @@ end
 function _Soraka:AutoHeal()
     if allyCount > 0 then
         for i = 1, allyCount do
-            local unit = allyHeroes[i] 
-            if not InFountain() and not buffs["recall"] then 
+            local unit = allyHeroes[i]
+            if not InFountain() and not buffs["recall"] then
                 if menu.ah["healally" ..unit.charName] and (100*unit.health/unit.maxHealth) < menu.ah["maxhppercent"..i] then
                     if (100 * myHero.mana / myHero.maxMana)>= menu.ah.healmana and (100*myHero.health/myHero.maxHealth) >= menu.ah.healhealth then
-                        if IsReady(_W) and (GetDistance(unit) < self.SpellW.range) then 
-                            CastSpell(_W, unit)         
+                        if IsReady(_W) and (GetDistance(unit) < self.SpellW.range) then
+                            CastSpell(_W, unit)
                         end
-                    end 
-                end   
+                    end
+                end
             end
         end
     end
-end         
+end
 
 function _Soraka:AutoUlt()
     if enemyCount > 0 then
@@ -5230,89 +5265,89 @@ function _Soraka:AutoUlt()
     end
 end
 
-function _Soraka:Combo() 
+function _Soraka:Combo()
     if Target == nil then return end
-    if menu.key.comboKey then 
+    if menu.key.comboKey then
         if IsReady(_Q) and menu.spell.q.qcombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qcombomana and (GetDistance(Target) < self.SpellQ.range) then
             if ValidTarget(Target) then
-                local CastPosition, HitChance = UPL:Predict(_Q, myHero, Target)	
+                local CastPosition, HitChance = UPL:Predict(_Q, myHero, Target)
                 if HitChance >= menu.hc then
-                    CastSpell(_Q, CastPosition.x, CastPosition.z) 
+                    CastSpell(_Q, CastPosition.x, CastPosition.z)
                 end
             end
         end
         if IsReady(_E) and menu.spell.e.ecombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.e.ecombomana and (GetDistance(Target) < self.SpellE.range) then
             if ValidTarget(Target) then
-                local CastPosition, HitChance = UPL:Predict(_E, myHero, Target)	
+                local CastPosition, HitChance = UPL:Predict(_E, myHero, Target)
                 if HitChance >= menu.hc then
                     CastSpell(_E, CastPosition.x, CastPosition.z)
-                end 
+                end
             end
-        end 
-    end       
-end 
- 
+        end
+    end
+end
+
 function _Soraka:Harass()
     if Target == nil then return end
-    if menu.key.harassKey or menu.key.harassToggle then 
+    if menu.key.harassKey or menu.key.harassToggle then
         if IsReady(_Q) and menu.spell.q.qharass and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qharassmana and (GetDistance(Target) < self.SpellQ.range) then
             if ValidTarget(Target) then
-                local CastPosition, HitChance = UPL:Predict(_Q, myHero, Target)	
+                local CastPosition, HitChance = UPL:Predict(_Q, myHero, Target)
                 if HitChance >= menu.hc then
-                    CastSpell(_Q, CastPosition.x, CastPosition.z) 
+                    CastSpell(_Q, CastPosition.x, CastPosition.z)
                 end
             end
         end
         if IsReady(_E) and menu.spell.e.eharass and (100 * myHero.mana / myHero.maxMana)>= menu.spell.e.eharassmana and (GetDistance(Target) < self.SpellE.range) then
             if ValidTarget(Target) then
-                local CastPosition, HitChance = UPL:Predict(_E, myHero, Target)	
+                local CastPosition, HitChance = UPL:Predict(_E, myHero, Target)
                 if HitChance >= menu.hc then
                     CastSpell(_E, CastPosition.x, CastPosition.z)
-                end 
+                end
             end
-        end 
+        end
     end
 end
 
 function _Soraka:LaneClear()
-    if enemyMinions == nil then return end 
+    if enemyMinions == nil then return end
     for i, Minion in pairs(enemyMinions.objects) do
         if (Minion ~= nil) then
-            if menu.key.clearKey then 
+            if menu.key.clearKey then
                 if IsReady(_Q) and menu.farm.qlaneclear and (100 * myHero.mana / myHero.maxMana)>= menu.farm.clearmana then
 				    CastSpell(_Q, Minion)
                 end
             end
         end
-    end                
-end 
+    end
+end
 
 function _Soraka:OnDraw()
-    if menu == nil then return end 
+    if menu == nil then return end
     if Target == nil then return end
     if menu.draw.drawtarget and ValidTarget(Target) and Target.type == myHero.type then
         _PentagonRot:DrawTriangle(Target, ARGB(255, 255, 0, 0), 2, 50, 5, 0, 0)
     end
     local slot = _Tech:CustomGetInventorySlotItem("HealthBomb", myHero)
-    if menu.draw.drawfotm and slot ~= nil and IsReady(slot) then 
-        _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorfotm))) 
+    if menu.draw.drawfotm and slot ~= nil and IsReady(slot) then
+        _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorfotm)))
     end
     local slot = _Tech:CustomGetInventorySlotItem("IronStylus", myHero)
-    if menu.draw.drawlois and slot ~= nil and IsReady(slot) then 
-        _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorlois))) 
+    if menu.draw.drawlois and slot ~= nil and IsReady(slot) then
+        _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorlois)))
     end
     local slot = _Tech:CustomGetInventorySlotItem("ItemMorellosBane", myHero)
-    if menu.draw.drawmikaels and slot ~= nil and IsReady(slot) then 
-        _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colormikaels))) 
+    if menu.draw.drawmikaels and slot ~= nil and IsReady(slot) then
+        _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colormikaels)))
     end
-    if menu.draw.drawexhaust and sexhaust ~= nil and IsReady(sexhaust) then 
-       _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 650, ARGB(table.unpack(menu.draw.colorexhaust))) 
+    if menu.draw.drawexhaust and sexhaust ~= nil and IsReady(sexhaust) then
+       _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 650, ARGB(table.unpack(menu.draw.colorexhaust)))
     end
-    if menu.draw.drawheal and sheal ~= nil and IsReady(sheal) then 
-       _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 850, ARGB(table.unpack(menu.draw.colorheal))) 
+    if menu.draw.drawheal and sheal ~= nil and IsReady(sheal) then
+       _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 850, ARGB(table.unpack(menu.draw.colorheal)))
     end
-    if menu.draw.drawignite and signite ~= nil and IsReady(signite) then 
-       _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 600, ARGB(table.unpack(menu.draw.colorignite))) 
+    if menu.draw.drawignite and signite ~= nil and IsReady(signite) then
+       _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 600, ARGB(table.unpack(menu.draw.colorignite)))
     end
     if menu.draw.drawq and IsReady(_Q) then
         _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, self.SpellQ.range, ARGB(table.unpack(menu.draw.colorq)))
@@ -5332,11 +5367,11 @@ function _Soraka:ProcessSpell(object, spell)
             if Interrupt[unit.charName] ~= nil then
                 if IsReady(_E) and menu.interrupt.einterrupt and menu.interrupt["spell".. Interrupt[unit.charName].stop.spellName] then
                     if spell.name == Interrupt[unit.charName].stop.spellName and GetDistance(object) <= self.SpellE.range then
-                        local CastPosition, HitChance, HeroPosition = UPL:Predict(_E, myHero, object)	
+                        local CastPosition, HitChance, HeroPosition = UPL:Predict(_E, myHero, object)
                         if HitChance >= menu.hc then
                             DelayAction(function() CastSpell(_E, CastPosition.x, CastPosition.z) end, menu.humanizer.interruptDelay / 1000)
                         end
-                    end 	   
+                    end
                 end
             end
 	    end
@@ -5345,11 +5380,11 @@ end
 
 function _Soraka:RemoveBuff(unit, buff)
 	if unit ~= nil and buff and unit.isMe and buff.name:lower() == "recall" or buff.name:lower() == "summonerteleport" or buff.name:lower() == "recallimproved" then buffs["recall"] = false end
-end 
+end
 
-function _Soraka:TowerCC() 
+function _Soraka:TowerCC()
     for i = 1, enemyCount do
-    local unit = enemyHeroes[i]	
+    local unit = enemyHeroes[i]
         for i = 1, towerCount do
             local tower = towers[i]
             if tower and tower.team == myHero.team and (GetDistance(tower, unit) < 775) then
@@ -5365,29 +5400,29 @@ Class("_Thresh")
 function _Thresh:__init()
 	self:LoadVariables()
 	self:Menu()
-	
+
 	_Bundle:SetupOrbwalk()
-	
+
 	_Activator:__init()
-    
-    _Tech:GetLowestAlly(range) 
+
+    _Tech:GetLowestAlly(range)
 	_Tech:AddTurrets()
 	towerCount = #towers
-	
+
 	AddTickCallback(function() self:OnTick() end)
 	AddDrawCallback(function() self:OnDraw() end)
 	AddProcessAttackCallback(function(object,spell) self:OnProcessAttack(object,spell) end)
     AddProcessSpellCallback(function(object, spell) self:ProcessSpell(object, spell) end)
-	
+
 	_Bundle:Print(myHero.charName .. " Loaded, Good Luck!")
 end
 
 function _Thresh:LoadVariables()
 	self.SpellQ = { speed = 1800, delay = 0.5, range = 1075, width = 80, collision = true, aoe = false, type = "linear"}
-	self.SpellW = { speed = nil, delay = 0, range = 950, width = nil, collision = false, aoe = false, type = "circular" } 
+	self.SpellW = { speed = nil, delay = 0, range = 950, width = nil, collision = false, aoe = false, type = "circular" }
 	self.SpellE = { speed = math.huge, delay = 0.1, range = 500, width = 100, collision = false, aoe = false, type = "linear" }
-	self.SpellR = { speed = nil, delay = 0.25, range = 450, width = nil, collision = false, aoe = true, type = "circular" } 
-	
+	self.SpellR = { speed = nil, delay = 0.25, range = 450, width = nil, collision = false, aoe = true, type = "circular" }
+
 	UPL:AddSpell(_Q, self.SpellQ)
 	UPL:AddSpell(_E, self.SpellE)
 end
@@ -5406,28 +5441,28 @@ end
 
 function _Thresh:Menu()
 	menu = scriptConfig("Support Heroes", "SupportHeroesMenuThresh")
-	
+
 	_Activator:Menu()
-	
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-CC Under Tower", "snare")
 		menu.snare:addParam("info", "           -- Auto-CC Enemies --", SCRIPT_PARAM_INFO, "")
 		if enemyCount > 0 then
 			for i = 1, enemyCount do
-			local unit = enemyHeroes[i]			
+			local unit = enemyHeroes[i]
 				menu.snare:addParam("" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_ONOFF, true)
 			end
 		end
 		menu.snare:addParam("settings", "                    -- Settings --", SCRIPT_PARAM_INFO, "")
 		menu.snare:addParam("qsnare", "Use Q", SCRIPT_PARAM_ONOFF, true)
 		menu.snare:addParam("esnare", "Use E", SCRIPT_PARAM_ONOFF, true)
-		
-	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-Interrupt", "interrupt")   
+
+	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-Interrupt", "interrupt")
         menu.interrupt:addParam("spells", "           -- Auto Interrupt Spells --", SCRIPT_PARAM_INFO, "")
         if enemyCount > 0 then
         	for i = 1, enemyCount do
             	local unit = enemyHeroes[i]
                 if Interrupt[unit.charName] ~= nil then
-                    menu.interrupt:addParam("" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_INFO, "") 
+                    menu.interrupt:addParam("" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_INFO, "")
                     menu.interrupt:addParam("spell".. Interrupt[unit.charName].stop.spellName,"".. Interrupt[unit.charName].stop.name, SCRIPT_PARAM_ONOFF, true)
                     menu.interrupt:addParam("empty", "", SCRIPT_PARAM_INFO,"")
                 end
@@ -5436,7 +5471,7 @@ function _Thresh:Menu()
 		menu.interrupt:addParam("settings", "                -- Settings --", SCRIPT_PARAM_INFO, "")
 		menu.interrupt:addParam("qinterrupt", "Use Q", SCRIPT_PARAM_ONOFF, true)
 		menu.interrupt:addParam("einterrupt", "Use E", SCRIPT_PARAM_ONOFF, true)
-		
+
 	 menu:addSubMenu("[" .. myHero.charName .. "] - Auto-Shield: Champs", "as")
 		 for i = 1, heroManager.iCount do
 			local unit = heroManager:GetHero(i)
@@ -5444,23 +5479,23 @@ function _Thresh:Menu()
 			menu.as:addParam("teammateshield"..i, "Shield "..unit.charName, SCRIPT_PARAM_ONOFF, true)
 			menu.as:addParam("maxhppercent"..i, "Shield If < X% HP", SCRIPT_PARAM_SLICE, 40, 0, 100, 0)
 			menu.as:addParam("empty", "", SCRIPT_PARAM_INFO,"")
-			end 
-		end	
+			end
+		end
 		menu.as:addParam("mindmgpercent", "Min dmg percent", SCRIPT_PARAM_SLICE, 10, 0, 100, 0)
 		menu.as:addParam("shieldcc", "Shield CC", SCRIPT_PARAM_ONOFF, true)
 		menu.as:addParam("shieldslow", "Shield Slows", SCRIPT_PARAM_ONOFF, true)
 		menu.as:addParam("skillshots", "Shield Skillshots", SCRIPT_PARAM_ONOFF, true)
 		menu.as:addParam("empty", "", SCRIPT_PARAM_INFO,"")
 		--menu.as:addParam("shieldLow", "Use to shield", SCRIPT_PARAM_ONOFF, true)
-		
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-Shield: Misc", "asmisc")
-			 menu.asmisc:addParam("engage", "Use to engage", SCRIPT_PARAM_ONOFF, true)
-			 menu.asmisc:addParam("empty", "", SCRIPT_PARAM_INFO,"")
-			 menu.asmisc:addParam("saveally", "Save from enemies", SCRIPT_PARAM_ONOFF, true)
-			 menu.asmisc:addParam("empty", "", SCRIPT_PARAM_INFO,"")
-			 menu.asmisc:addParam("speedUp", "Use to speed up", SCRIPT_PARAM_ONOFF, true)
-			 menu.asmisc:addParam("speedupdis", "Speed Up If > X Dis", SCRIPT_PARAM_SLICE, 500, 0, 950, 0)
-             	
+    menu.asmisc:addParam("engage", "Use to engage", SCRIPT_PARAM_ONOFF, true)
+    menu.asmisc:addParam("empty", "", SCRIPT_PARAM_INFO,"")
+    menu.asmisc:addParam("saveally", "Save from enemies", SCRIPT_PARAM_ONOFF, true)
+    menu.asmisc:addParam("empty", "", SCRIPT_PARAM_INFO,"")
+    menu.asmisc:addParam("speedUp", "Use to speed up", SCRIPT_PARAM_ONOFF, true)
+    menu.asmisc:addParam("speedupdis", "Speed Up If > X Dis", SCRIPT_PARAM_SLICE, 500, 0, 950, 0)
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Draw Settings", "draw")
 		menu.draw:addParam("spelldraws", "                -- Spell Draws --", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawq", "Draw Q", SCRIPT_PARAM_ONOFF, true)
@@ -5484,7 +5519,7 @@ function _Thresh:Menu()
 		menu.draw:addParam("drawlois", "Draw Locket of the Iron Solari", SCRIPT_PARAM_ONOFF, false)
 		menu.draw:addParam("colorlois", "Color Locket of the Iron Solari", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("drawmikaels", "Draw Mikaels Crucible", SCRIPT_PARAM_ONOFF, false)
-		menu.draw:addParam("colorqmikaels", "Color Mikaels Crucible", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 }) 
+		menu.draw:addParam("colorqmikaels", "Color Mikaels Crucible", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawsumm", "                -- Summoner Draws --", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawexhaust", "Draw Exhaust", SCRIPT_PARAM_ONOFF, false)
@@ -5492,7 +5527,7 @@ function _Thresh:Menu()
 		menu.draw:addParam("drawheal", "Draw Heal", SCRIPT_PARAM_ONOFF, false)
 		menu.draw:addParam("colorheal", "Color Heal", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("drawignite", "Draw Ignite", SCRIPT_PARAM_ONOFF, false)
-		menu.draw:addParam("colorignite", "Color Ignite", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })  
+		menu.draw:addParam("colorignite", "Color Ignite", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
 		menu.draw:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("miscellaneousdraws", "            -- Miscellaneous Draws --", SCRIPT_PARAM_INFO, "")
 		menu.draw:addParam("drawtarget", "Draw Target", SCRIPT_PARAM_ONOFF, true)
@@ -5502,12 +5537,12 @@ function _Thresh:Menu()
 	menu:addSubMenu("[" .. myHero.charName .. "] - Flash Settings", "flash")
 		menu.flash:addParam("qflash", "Use Flash - Q", SCRIPT_PARAM_ONOFF, true)
 		menu.flash:addParam("eqflash", "Use Flash - E + Q", SCRIPT_PARAM_ONOFF, true)
-	
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Humanizer", "humanizer")
 		menu.humanizer:addParam("interruptDelay", "Auto-Interrupt Delay (ms)", SCRIPT_PARAM_SLICE, 200, 0, 500, 0)
 		menu.humanizer:addParam("snareDelay", "Auto-CC Delay (ms)", SCRIPT_PARAM_SLICE, 0, 0, 500, 0)
 		menu.humanizer:addParam("shieldDelay", "Auto Shield Delay (ms)", SCRIPT_PARAM_SLICE, 50, 0, 500, 0)
-			
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Key Settings", "key")
 		menu.key:addParam("combatkeys", "               -- Combat Keys --", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("comboKey", "Combo Key", SCRIPT_PARAM_ONKEYDOWN, false, 32)
@@ -5518,7 +5553,7 @@ function _Thresh:Menu()
 		menu.key:addParam("miscellaneouskeys", "           -- Miscellaneous Keys --", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("flashKey", "Flash Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("H"))
 		menu.key:addParam("desperationKey", "Desperation Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("Z"))
-	
+
 	menu:addSubMenu("[" .. myHero.charName .. "] - Spell Settings", "spell")
 		menu.spell:addSubMenu("[" .. myHero.charName .. "] - Q", "q")
 		menu.spell.q:addParam("qcombo", "Combo", SCRIPT_PARAM_ONOFF, true)
@@ -5536,21 +5571,21 @@ function _Thresh:Menu()
         end
         menu.spell.q:addParam("empty", "", SCRIPT_PARAM_INFO, "")
         menu.spell.q:addParam("blacklisthp", "Unless <X% HP", SCRIPT_PARAM_SLICE, 10, 0, 100, 0)
-		
+
 		menu.spell:addSubMenu("[" .. myHero.charName .. "] - W", "w")
 		menu.spell.w:addParam("wcombo", "Combo", SCRIPT_PARAM_ONOFF, true)
 		menu.spell.w:addParam("wcombomana", "[Combo] Mana > X%", SCRIPT_PARAM_SLICE, 0, 0, 100, 0)
 		menu.spell.w:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.spell.w:addParam("wharass", "Harass", SCRIPT_PARAM_ONOFF, true)
 		menu.spell.w:addParam("wharassmana", "[Harass] Mana > X%", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
-		
+
 		menu.spell:addSubMenu("[" .. myHero.charName .. "] - E", "e")
 		menu.spell.e:addParam("ecombo", "Combo", SCRIPT_PARAM_ONOFF, true)
 		menu.spell.e:addParam("ecombomana", "[Combo] Mana > X%", SCRIPT_PARAM_SLICE, 0, 0, 100, 0)
 		menu.spell.e:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.spell.e:addParam("eharass", "Harass", SCRIPT_PARAM_ONOFF, true)
 		menu.spell.e:addParam("eharassmana", "[Harass] Mana > X%", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
-		
+
 		menu.spell:addSubMenu("[" .. myHero.charName .. "] - R", "r")
 		menu.spell.r:addParam("rcombo", "Combo", SCRIPT_PARAM_ONOFF, true)
 		menu.spell.r:addParam("rcombomana", "[Combo] Mana > X%", SCRIPT_PARAM_SLICE, 0, 0, 100, 0)
@@ -5563,23 +5598,23 @@ function _Thresh:Menu()
 		menu.spell.r:addParam("rharasstarget", "[Harass] Target has to be in box", SCRIPT_PARAM_ONOFF, false)
 		menu.spell.r:addParam("rmpty", "", SCRIPT_PARAM_INFO, "")
 		menu.spell.r:addParam("rautomin", "[Automatic] Min enemies", SCRIPT_PARAM_SLICE, 3, 0, 5, 0)
-		
+
    menu:addSubMenu("[" .. myHero.charName .. "] - Target Selector", "target")
 		menu.target:addParam("targetinfo", "Default Target Select Is LeastCast", SCRIPT_PARAM_INFO, "")
 		menu.target:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.target:addParam("focus", "Focus Selected Target", SCRIPT_PARAM_ONOFF, true)
 		menu.target:addParam("sac", "Use SAC:R Target Instead", SCRIPT_PARAM_ONOFF, false)
-		
-   menu:addSubMenu("Orbwalk Settings", "orb")  
-   
+
+   menu:addSubMenu("Orbwalk Settings", "orb")
+
    UPL:AddToMenu(menu)
-   
+
    menu:addParam("hc", "Prediction Hit Chance", SCRIPT_PARAM_SLICE, 2, 0, 5, 0)
- 
+
    menu:addParam("empty", "", SCRIPT_PARAM_INFO, "")
    menu:addParam("infobox", "            Support Heroes: " .. myHero.charName .. "           ", SCRIPT_PARAM_INFO, "")
    menu:addParam("infobox2", "                      Version:  " .. scriptVersion .. "         ", SCRIPT_PARAM_INFO, "")
-   
+
    if menu.draw.drawpermashow then
 	 menu:permaShow("infobox")
 	 menu.key:permaShow("comboKey")
@@ -5601,14 +5636,14 @@ function _Thresh:OnProcessAttack(object,spell)
 							if IsReady(_E) and GetDistance(enemy) < self.SpellE.range then return end
 							if ValidTarget(enemy) then
 								local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, enemy)
-								if HitChance >= menu.hc then 
+								if HitChance >= menu.hc then
 									CastSpell(_Q, CastPosition.x, CastPosition.z)
 									DelayAction(function() _Thresh:CastQ2() end , 1.4 + self.SpellQ.delay)
 								end
 							end
 						end
 					end
-					
+
 					if menu.snare.esnare then
 						local castPosition = Vector(myHero) + (Vector(myHero) - Vector(enemy)):normalized() * self.SpellW.range
 						CastSpell(_E, castPosition.x, castPosition.z)
@@ -5622,18 +5657,18 @@ function _Thresh:OnProcessAttack(object,spell)
 		local HitFirst = false
 		local shieldtarget,SLastDistance,SLastDmgPercent = nil,nil,nil
 		local ulttarget,ULastDistance,ULastDmgPercent = nil,nil,nil
-		
+
 		YWall, BShield, SShield, Shield, CC = false, false, false, false
 		shottype, radius, maxdistance = 0, 0, 0
-		
+
 		if object.type == "AIHeroClient" then
 			spelltype, casttype = getSpellType(object, spell.name)
 			if casttype == 4 or casttype == 5 or casttype == 6 then
 				return
 			end
-		   
+
 			Shield = true
-			
+
 				if spelltype == "Q" or spelltype == "W" or spelltype == "E" or spelltype == "R" or spelltype == "P" or spelltype == "QM" or spelltype == "WM" or spelltype == "EM" then
 					if skillShield[object.charName] == nil then return end
                     HitFirst = skillShield[object.charName][spelltype].HitFirst
@@ -5648,7 +5683,7 @@ function _Thresh:OnProcessAttack(object,spell)
 				else
 					Shield = true
 				end
-			
+
 				for i = 1, heroManager.iCount do
 				local allytarget = heroManager:GetHero(i)
 					if spell.target and spell.target.networkID == allytarget.networkID then
@@ -5670,7 +5705,7 @@ function _Thresh:OnProcessAttack(object,spell)
 							elseif shottype == 6 then
 							hitchampion = checkhitlinepass(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox) or checkhitlinepass(object, Vector(object) * 2 - spell.endPos, radius, maxdistance, allytarget, allyHitBox)
 							elseif shottype == 7 then
-							hitchampion = checkhitcone(spell.endPos, object, radius, maxdistance, allytarget, allyHitBox)              
+							hitchampion = checkhitcone(spell.endPos, object, radius, maxdistance, allytarget, allyHitBox)
 							end
 							if shieldREADY and menu.as["teammateshield" .. i] and GetDistance(allytarget) <= self.SpellW.range then
 							local shieldflag, dmgpercent = self:shieldCheck(object,spell,allytarget,"shields")
@@ -5724,68 +5759,68 @@ function _Thresh:shieldCheck(object,spell,target,typeused)
 	  elseif spell.name:find("SummonerDot") then
 		skilldamage = getDmg("IGNITE", target, object)
 	  end
-			  for i = 1, heroManager.iCount do
-				local ally = heroManager:GetHero(i)
-				if ally.team == myHero.team then 
-			  local dmgpercent = skilldamage * 100 / target.health
-			  local dmgneeded = dmgpercent >= menu.as.mindmgpercent
-			  local hpneeded =  menu.as["maxhppercent"..i] >= (target.health - skilldamage) * 100 / target.maxHealth
-				  if dmgneeded and hpneeded then
-					  shieldflag = true
-				  elseif (typeused == "shields" or typeused == "wall") and (CC == 2 and menu.as.shieldCC or CC == 1 and menu.as.shieldslow) then
-					  shieldflag = true
-				  end
-				  return shieldflag, dmgpercent
-				  end
-			  end
+	  for i = 1, heroManager.iCount do
+		local ally = heroManager:GetHero(i)
+		if ally.team == myHero.team then
+	  local dmgpercent = skilldamage * 100 / target.health
+	  local dmgneeded = dmgpercent >= menu.as.mindmgpercent
+	  local hpneeded =  menu.as["maxhppercent"..i] >= (target.health - skilldamage) * 100 / target.maxHealth
+		  if dmgneeded and hpneeded then
+			  shieldflag = true
+		  elseif (typeused == "shields" or typeused == "wall") and (CC == 2 and menu.as.shieldCC or CC == 1 and menu.as.shieldslow) then
+			  shieldflag = true
+		  end
+		  return shieldflag, dmgpercent
 		  end
 	  end
+  end
+end
 
 function _Thresh:Combo()
-   if Target == nil then return end
-	if menu.key.comboKey then 
+    if Target == nil then return end
+	if menu.key.comboKey then
 		if IsReady(_E) and menu.spell.e.ecombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.e.ecombomana and GetDistance(Target) < self.SpellE.range then
 			self:CastE()
 		end
-	
+
 		if IsReady(_Q) and menu.spell.q.qcombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qcombomana and GetDistance(Target) < self.SpellQ.range and GetDistance(Target) <= menu.spell.q.maxdistanceq then
 			if IsReady(_E) and GetDistance(Target) < self.SpellE.range then return end
-			if not menu.spell.q[unit.charName] and ValidTarget(Target) then  
+			if not menu.spell.q[Target.charName] and ValidTarget(Target) then
 				local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
-				if HitChance >= menu.hc then 
+				if HitChance >= menu.hc then
 					CastSpell(_Q, CastPosition.x, CastPosition.z)
 					DelayAction(function() _Thresh:CastQ2() end , 1.4 + self.SpellQ.delay)
 				end
 			end
-            if menu.spell.q[unit.charName] and (100*unit.health/unit.maxHealth) <= menu.spell.q.blacklisthp then 
+            if menu.spell.q[Target.charName] and (100*Target.health/Target.maxHealth) <= menu.spell.q.blacklisthp then
             local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
-                if HitChance >= menu.hc then 
+                if HitChance >= menu.hc then
                     CastSpell(_Q, CastPosition.x, CastPosition.z)
                     DelayAction(function() _Thresh:CastQ2() end , 1.4 + self.SpellQ.delay)
                 end
             end
 		end
-		
-		if (not menu.spell.r.rcombotarget or GetDistance(Target) < self.SpellR.range) and menu.spell.r.rcombomin <= CountObjectsInCircle(myHero, self.SpellR.range, GetEnemyHeroes()) then 
-			CastSpell(_R) 
+
+		if (not menu.spell.r.rcombotarget or GetDistance(Target) < self.SpellR.range) and menu.spell.r.rcombomin <= CountObjectsInCircle(myHero, self.SpellR.range, GetEnemyHeroes()) then
+			CastSpell(_R)
 		end
-		
+
 		if IsReady(_W) and menu.spell.w.wcombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.w.wcombomana then
 			self:EngageW()
 		end
-	end  
+	end
 end
 
 function _Thresh:FlashCombo()
 	if Target == nil then return end
 	if not menu.key.flashKey then return end
-   
+
 	if GetDistance(Target) < 500 and not IsReady(_E) and not IsReady(sflash) then
 		if IsReady(_Q) and menu.spell.q.qcombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qcombomana and GetDistance(Target) < self.SpellQ.range then
-			if IsReady(_E) and GetDistance(Target) < self.SpellE.range then 
+			if IsReady(_E) and GetDistance(Target) < self.SpellE.range then
 				if ValidTarget(Target) then
 					local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
-					if HitChance >= menu.hc then 
+					if HitChance >= menu.hc then
 						CastSpell(_Q, CastPosition.x, CastPosition.z)
 						DelayAction(function() _Thresh:CastQ2() end , 1.4 + self.SpellQ.delay)
 					end
@@ -5793,7 +5828,7 @@ function _Thresh:FlashCombo()
 			end
 		end
 	end
-   
+
 	if menu.flash.eqflash then
 		if IsReady(sflash) and IsReady(_E) and IsReady(_Q) and GetDistance(Target) <= 425 + self.SpellE.range then
 			if GetDistance(Target) < 425 then
@@ -5801,22 +5836,22 @@ function _Thresh:FlashCombo()
 			else
 				flashPos = myHero + 425 * (Vector(Target) - Vector(myHero)):normalized()
 			end
-			
-			local CastPosition, HitChance = UPL:Predict(_E, flashPos, Target)		
+
+			local CastPosition, HitChance = UPL:Predict(_E, flashPos, Target)
 			if HitChance >= menu.hc and type(CastPosition.x) == "number" and type(CastPosition.z) == "number" then
 				flashPos = myHero + 425 * (Vector(CastPosition) - Vector(myHero)):normalized()
 				CastSpell(sflash, flashPos.x, flashPos.z)
-				
+
 				CastPosition = Vector(myHero) + (Vector(myHero) - Vector(CastPosition)):normalized() * self.SpellE.range
 				_Tech:FlashComboPosition(_E, CastPosition.x, CastPosition.z)
 			end
-		end	
-		
+		end
+
 		if IsReady(sflash) and IsReady(_E) and IsReady(_Q) then
 			myHero:MoveTo(mousePos.x, mousePos.z)
 		end
 	end
-   
+
 	if menu.flash.qflash then
 		if IsReady(sflash) and IsReady(_Q) and GetDistance(Target) <= 425 + self.SpellQ.range then
 			if GetDistance(Target) < 425 then
@@ -5825,14 +5860,14 @@ function _Thresh:FlashCombo()
 				flashPos = myHero + 425 * (Vector(Target) - Vector(myHero)):normalized()
 			end
 
-			local CastPosition, HitChance = UPL:Predict(_Q, flashPos, Target)		
+			local CastPosition, HitChance = UPL:Predict(_Q, flashPos, Target)
 			if HitChance >= menu.hc and type(CastPosition.x) == "number" and type(CastPosition.z) == "number" then
 				flashPos = myHero + 425 * (Vector(CastPosition) - Vector(myHero)):normalized()
 				CastSpell(sflash, flashPos.x, flashPos.z)
 				_Tech:FlashComboPosition(_Q, CastPosition.x, CastPosition.z)
 			end
-		end	
-		
+		end
+
 		if IsReady(sflash) and IsReady(_Q) then
 			myHero:MoveTo(mousePos.x, mousePos.z)
 		end
@@ -5841,37 +5876,37 @@ end
 
 function _Thresh:Harass()
 	if Target == nil then return end
-	if menu.key.harassKey or menu.key.harassToggle then 
+	if menu.key.harassKey or menu.key.harassToggle then
 		if IsReady(_E) and menu.spell.e.eharass and (100 * myHero.mana / myHero.maxMana)>= menu.spell.e.eharassmana and GetDistance(Target) < self.SpellE.range then
 			self:CastE()
 		end
-	
+
 		if IsReady(_Q) and menu.spell.q.qharass and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qharassmana and GetDistance(Target) < self.SpellQ.range and GetDistance(Target) <= menu.spell.q.maxdistanceq then
 			if IsReady(_E) and GetDistance(Target) < self.SpellE.range then return end
-			if not menu.spell.q[unit.charName] and ValidTarget(Target) then  
+			if not menu.spell.q[Target.charName] and ValidTarget(Target) then
 				local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
-				if HitChance >= menu.hc then 
+				if HitChance >= menu.hc then
 					CastSpell(_Q, CastPosition.x, CastPosition.z)
 					DelayAction(function() _Thresh:CastQ2() end , 1.4 + self.SpellQ.delay)
 				end
 			end
-            if menu.spell.q[unit.charName] and (100*unit.health/unit.maxHealth) <= menu.spell.q.blacklisthp then 
+            if menu.spell.q[Target.charName] and (100*Target.health/Target.maxHealth) <= menu.spell.q.blacklisthp then
             local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
-                if HitChance >= menu.hc then 
+                if HitChance >= menu.hc then
                     CastSpell(_Q, CastPosition.x, CastPosition.z)
                     DelayAction(function() _Thresh:CastQ2() end , 1.4 + self.SpellQ.delay)
                 end
             end
 		end
-		
-		if (not menu.spell.r.rharasstarget or GetDistance(Target) < self.SpellR.range) and menu.spell.r.rharassmin <= CountObjectsInCircle(myHero, self.SpellR.range, GetEnemyHeroes()) then 
-			CastSpell(_R) 
+
+		if (not menu.spell.r.rharasstarget or GetDistance(Target) < self.SpellR.range) and menu.spell.r.rharassmin <= CountObjectsInCircle(myHero, self.SpellR.range, GetEnemyHeroes()) then
+			CastSpell(_R)
 		end
-		
+
 		if IsReady(_W) and menu.spell.w.wharass and (100 * myHero.mana / myHero.maxMana)>= menu.spell.w.wharassmana then
 			self:EngageW()
 		end
-	end 
+	end
 end
 
 function _Thresh:ProcessSpell(object, spell)
@@ -5883,9 +5918,9 @@ function _Thresh:ProcessSpell(object, spell)
                     local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, object)
 					if HitChance >= 2 then
                         if IsReady(_Q) and menu.interrupt.qinterrupt and GetDistance(object) <= self.SpellQ.range then
-                            DelayAction(function() CastSpell(_Q, CastPosition.x, CastPosition.z) end, menu.humanizer.interruptDelay / 1000) 
-                        elseif IsReady(_E and menu.interrupt.einterrupt) and GetDistance(object <= self.SpellE.range) then  
-                            DelayAction(function() CastSpell(_E, CastPosition.x, CastPosition.z) end, menu.humanizer.interruptDelay / 1000)                 
+                            DelayAction(function() CastSpell(_Q, CastPosition.x, CastPosition.z) end, menu.humanizer.interruptDelay / 1000)
+                        elseif IsReady(_E and menu.interrupt.einterrupt) and GetDistance(object <= self.SpellE.range) then
+                            DelayAction(function() CastSpell(_E, CastPosition.x, CastPosition.z) end, menu.humanizer.interruptDelay / 1000)
                         end
                     end
                 end
@@ -5896,37 +5931,37 @@ end
 
 function _Thresh:OnDraw()
 	if menu == nil or Target == nil then return end
-	
+
 	if menu.draw.drawtarget and ValidTarget(Target) and Target.type == myHero.type then
 		_PentagonRot:DrawTriangle(Target, ARGB(255, 255, 0, 0), 2, 50, 5, 0, 0)
 	end
 	if ValidTarget(Target) and menu.draw.drawcollision and IsReady(_Q) and (GetDistance(Target) <= self.SpellQ.range) then
 	   local IsCollision = VPred:CheckMinionCollision(Target, Target.pos, 0.25, 70, self.SpellQ.range, 1800, myHero.pos, nil, true)
 	   DrawLine3D(myHero.x, myHero.y, myHero.z, Target.x, Target.y, Target.z, 5, IsCollision and ARGB(125, 255, 0,0) or ARGB(125, 0, 255,0))
-	end  
-	if menu.draw.drawqflash and menu.flash.qflash and IsReady(sflash) and IsReady(_Q) then 
+	end
+	if menu.draw.drawqflash and menu.flash.qflash and IsReady(sflash) and IsReady(_Q) then
 		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, (self.SpellQ.range + 425), ARGB(table.unpack(menu.draw.colorqflash)))
 	end
 	local slot = _Tech:CustomGetInventorySlotItem("HealthBomb", myHero)
-	if menu.draw.drawfotm and slot ~= nil and IsReady(slot) then 
-		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorfotm))) 
+	if menu.draw.drawfotm and slot ~= nil and IsReady(slot) then
+		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorfotm)))
 	end
 	local slot = _Tech:CustomGetInventorySlotItem("IronStylus", myHero)
-	if menu.draw.drawlois and slot ~= nil and IsReady(slot) then 
-		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorlois))) 
+	if menu.draw.drawlois and slot ~= nil and IsReady(slot) then
+		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorlois)))
 	end
 	local slot = _Tech:CustomGetInventorySlotItem("ItemMorellosBane", myHero)
-	if menu.draw.drawmikaels and slot ~= nil and IsReady(slot) then 
-		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colormikaels))) 
+	if menu.draw.drawmikaels and slot ~= nil and IsReady(slot) then
+		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colormikaels)))
 	end
-	if menu.draw.drawexhaust and sexhaust ~= nil and IsReady(sexhaust) then 
-	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 650, ARGB(table.unpack(menu.draw.colorexhaust))) 
+	if menu.draw.drawexhaust and sexhaust ~= nil and IsReady(sexhaust) then
+	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 650, ARGB(table.unpack(menu.draw.colorexhaust)))
 	end
-	if menu.draw.drawheal and sheal ~= nil and IsReady(sheal) then 
-	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 850, ARGB(table.unpack(menu.draw.colorheal))) 
+	if menu.draw.drawheal and sheal ~= nil and IsReady(sheal) then
+	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 850, ARGB(table.unpack(menu.draw.colorheal)))
 	end
-	if menu.draw.drawignite and signite ~= nil and IsReady(signite) then 
-	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 600, ARGB(table.unpack(menu.draw.colorignite))) 
+	if menu.draw.drawignite and signite ~= nil and IsReady(signite) then
+	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 600, ARGB(table.unpack(menu.draw.colorignite)))
 	end
 	if menu.draw.drawq and IsReady(_Q) then
 		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, self.SpellQ.range, ARGB(table.unpack(menu.draw.colorq)))
@@ -5942,8 +5977,8 @@ function _Thresh:OnDraw()
 		local mousePosVec2 = myHero + (Vector(mousePos) - myHero):normalized() * - 480
 		local Vec1 = Vector(mousePosVec) + (Vector(myHero.pos) - Vector(mousePosVec)):normalized()
 		local Vec2 = Vector(mousePosVec2) + (Vector(myHero.pos) - Vector(mousePosVec2)):normalized()
-		DrawLineBorder3D(Vec2.x, myHero.y, Vec2.z, Vec1.x, myHero.y, Vec1.z, 300, ARGB(table.unpack(menu.draw.colore)), 2)    
-	end   
+		DrawLineBorder3D(Vec2.x, myHero.y, Vec2.z, Vec1.x, myHero.y, Vec1.z, 300, ARGB(table.unpack(menu.draw.colore)), 2)
+	end
 	if menu.draw.drawr and menu.draw.drawrtype == 1 and IsReady(_R) then
 		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, self.SpellR.range, ARGB(table.unpack(menu.draw.colorr)))
 	end
@@ -5954,8 +5989,8 @@ end
 
 function _Thresh:CastQ2()
 	if menu.spell.q.q2 and GetSpellData(_Q).name == "threshqleap" then
-		if menu.key.comboKey or menu.key.harassKey or menu.key.harassToggle or menu.key.flashKey then 
-			CastSpell(_Q)  
+		if menu.key.comboKey or menu.key.harassKey or menu.key.harassToggle or menu.key.flashKey then
+			CastSpell(_Q)
 		end
 	end
 end
@@ -5964,19 +5999,19 @@ function _Thresh:CastW(ally, delay)
 	local predPos = CalculateTargetPosition(ally, delay)
 	if GetDistance(predPos) < self.SpellW.range + 250 then
 		local castPosition
-		
+
 		if GetDistance(predPos) > self.SpellW.range then
 			castPosition = Vector(myHero) + (Vector(predPos) - Vector(myHero)):normalized() * self.SpellW.range
 		else
 			castPosition = predPos
 		end
-		
+
 		CastSpell(_W, castPosition.x, castPosition.z)
 	end
 end
 
 --[[function _Thresh:ShieldLow()
-	if IsReady(_W) and menu.as.shieldLow and not InFountain() then 
+	if IsReady(_W) and menu.as.shieldLow and not InFountain() then
 		for _, ally in pairs(GetAllyHeroes()) do
 			if not ally.dead and 15 > (ally.health / ally.maxHealth) * 100 and GetDistance(ally) < self.SpellW.range + 200 then
 				self:CastW(ally, 0.25)
@@ -6022,7 +6057,7 @@ function _Thresh:SpeedUpW()
 end
 
 function _Thresh:Desperation()
-	if menu.key.desperationKey and IsReady(_W) then 
+	if menu.key.desperationKey and IsReady(_W) then
         for _, ally in pairs(GetAllyHeroes()) do
 			if not ally.dead and GetDistance(ally) < self.SpellW.range + 500 and CountObjectsInCircle(ally, 600, GetEnemyHeroes()) > CountObjectsInCircle(ally, 600, GetAllyHeroes()) and GetDistance(ally) > 800 then
                 self:CastW(ally, 1.25)
@@ -6030,11 +6065,11 @@ function _Thresh:Desperation()
             end
         end
     end
-end		
+end
 
 function _Thresh:CastE()
 	if Target == nil then return end
-	if GetSpellData(_Q).name == "threshqleap" then return end 
+	if GetSpellData(_Q).name == "threshqleap" then return end
 	for _, ally in pairs(GetAllyHeroes()) do
 		if ally.range > 300 and not ally.dead then
 			for _, enemy in pairs(GetEnemyHeroes()) do
@@ -6050,11 +6085,11 @@ function _Thresh:CastE()
 			end
 		end
 	end
-	
+
 	if Target.hasMovePath and Target.pathCount > 1 then
 		local endPoint = Target:GetPath(Target.pathCount)
 		local predPos, HitChance, HeroPosition = UPL:Predict(_E, myHero, Target)
-		
+
 		if AngleDifference(myHero, endPoint, Target) < 90 then
 			local castPosition = Vector(myHero) + (Vector(myHero) - Vector(predPos)):normalized() * self.SpellW.range
 			CastSpell(_E, castPosition.x, castPosition.z)
@@ -6068,14 +6103,14 @@ function _Thresh:CastE()
 end
 
 function _Thresh:AutomaticR()
-	if menu.spell.r.rautomin <= CountObjectsInCircle(myHero, self.SpellR.range, GetEnemyHeroes()) then 
-		CastSpell(_R) 
+	if menu.spell.r.rautomin <= CountObjectsInCircle(myHero, self.SpellR.range, GetEnemyHeroes()) then
+		CastSpell(_R)
 	end
 end
 
 -- Technical Things --
 Class("_Tech")
--- Adds Turrets -- 
+-- Adds Turrets --
 function _Tech:AddTurrets()
 	for i = 1, objManager.iCount do
 		local turret = objManager:getObject(i)
@@ -6089,16 +6124,16 @@ end
 function _Tech:ClosestEnemy(pos)
 	if pos == nil then return math.huge, nil end
 	local closestEnemy, distanceEnemy = nil, math.huge
-	
+
 	for i, enemy in pairs(GetEnemyHeroes()) do
-		if not enemy.dead then 
+		if not enemy.dead then
 			if GetDistance(pos, enemy) < distanceEnemy then
 				distanceEnemy = GetDistance(pos, enemy)
 				closestEnemy = enemy
 			end
 		end
 	end
-	
+
 	return closestEnemy, distanceEnemy
 end
 
@@ -6132,9 +6167,9 @@ function _Tech:DrawCircle(x, y, z, radius, color)
 	local vPos2 = Vector(cameraPos.x, cameraPos.y, cameraPos.z)
 	local tPos = vPos1 - (vPos1 - vPos2):normalized() * radius
 	local sPos = WorldToScreen(D3DXVECTOR3(tPos.x, tPos.y, tPos.z))
-		
+
 	if OnScreen({ x = sPos.x, y = sPos.y }, { x = sPos.x, y = sPos.y }) then
-		self:DrawCircleNextLvl(x, y, z, radius, 1, color, 300) 
+		self:DrawCircleNextLvl(x, y, z, radius, 1, color, 300)
 	end
 end
 
@@ -6144,39 +6179,39 @@ function _Tech:DrawCircleNextLvl(x, y, z, radius, width, color, chordlength)
 	quality = 2 * math.pi / quality
 	radius = radius * .92
 	local points = {}
-		
+
 	for theta = 0, 2 * math.pi + quality, quality do
 		local c = WorldToScreen(D3DXVECTOR3(x + radius * math.cos(theta), y, z - radius * math.sin(theta)))
 		points[#points + 1] = D3DXVECTOR2(c.x, c.y)
 	end
-	DrawLines2(points, width or 1, color or 4294967295)	
+	DrawLines2(points, width or 1, color or 4294967295)
 end
 
--- Flash Combo -- 
+-- Flash Combo --
 function _Tech:FlashCombo(slot, target, block)
 	if IsReady(slot) then
 		_MovementBlock:enable()
 		CastSpell(slot, target)
-	else	
+	else
 		_MovementBlock:disable()
 		return
 	end
-	
+
 	DelayAction(function() _Tech:FlashCombo(slot, target, block) end, 0.01)
 end
 
--- Flash Position -- 
+-- Flash Position --
 function _Tech:FlashComboPosition(slot, x, z)
 	if IsReady(slot) and type(x) == "number" and type(z) == "number" and type(slot) == "number" then
 		CastSpell(slot, x, z)
-	else	
+	else
 		return
 	end
-	
+
 	DelayAction(function() _Tech:FlashComboPosition(slot, x, z) end, 0.01)
 end
 
--- Lowest Ally -- 
+-- Lowest Ally --
 function _Tech:GetLowestAlly(range)
 	LowestAlly = nil
 	for a = 1, heroManager.iCount do
@@ -6192,7 +6227,7 @@ function _Tech:GetLowestAlly(range)
 	return LowestAlly
 end
 
--- Passive Timers -- 
+-- Passive Timers --
 function _Tech:getPassiveTime(tar, buffName)
 	local unit = tar
 	local endT = 0
@@ -6214,15 +6249,15 @@ end
 function _Tech:GetTarget()
 	ts:update()
 	if _G.AutoCarry and _G.AutoCarry.Crosshair and ValidTarget(_G.AutoCarry.Crosshair:GetTarget()) and menu.target.sac then _G.AutoCarry.Crosshair:SetSkillCrosshairRange(1250)
-		return _G.AutoCarry.Crosshair:GetTarget() 
-	end  
+		return _G.AutoCarry.Crosshair:GetTarget()
+	end
 	if SelectedTarget ~= nil and not SelectedTarget.dead and SelectedTarget.type == myHero.type and SelectedTarget.team ~= myHero.team and menu.target.focus then
 		if GetDistance(SelectedTarget) > 1250 and ts.target ~= nil then
 			return ts.target
 		else
 			return SelectedTarget
 		end
-	end 
+	end
 	return ts.target
 end
 
@@ -6434,7 +6469,7 @@ function Attack()
 	if GetDistance(Target) > 1000 then return end
 	if orbwalker == "sac" and _G.AutoCarry then
 		_G.AutoCarry.Crosshair:ForceTarget(_G.AutoCarry.Orbwalker:CanOrbwalkTarget(Target) and Target or nil)
-	elseif orbwalker == "nebel" and _G.NebelwolfisOrbWalkerInit then 
+	elseif orbwalker == "nebel" and _G.NebelwolfisOrbWalkerInit then
 		_G.NebelwolfisOrbWalker:SetTarget(Target)
 	elseif orbwalker == "vp" then
 		SxOrb:ForceTarget(Target)
@@ -6445,8 +6480,8 @@ end
 -- Target Selected --
 function OnWndMsg(msg,key)
 	if msg == WM_LBUTTONDOWN then
-		local enemy, distance = _Tech:ClosestEnemy(mousePos) 
-		
+		local enemy, distance = _Tech:ClosestEnemy(mousePos)
+
 		if distance < 150 then SelectedTarget = enemy end
 		end
 	local targetSelected = nil
@@ -6454,41 +6489,41 @@ function OnWndMsg(msg,key)
 	if msg == WM_LBUTTONDOWN then
 		local enemyDistance, enemySelected = 0, nil
 		for _,enemy in pairs(GetEnemyHeroes()) do
-			if ValidTarget(enemy) and GetDistance(enemy, mousePos) < 200 then 
+			if ValidTarget(enemy) and GetDistance(enemy, mousePos) < 200 then
 				if GetDistance(enemy, mousePos) <= enemyDistance or not enemySelected then
-					enemyDistance = GetDistance(enemy, mousePos)			
+					enemyDistance = GetDistance(enemy, mousePos)
 					enemySelected = enemy
 				end
 			end
 		end
-		
+
 		if enemySelected then
 			if not targetSelected or targetSelected.hash ~= enemySelected.hash then
 				targetSelected = enemySelected
-				
+
 				_Bundle:Print('Target Selected: '..targetSelected.charName)
 			else
 				targetSelected = nil
-				
+
 				_Bundle:Print('Target unselected!')
 			end
-		end	
+		end
 	end
 end
 
 -- Checks If Spells Are Ready --
 function IsReady(spell)
-	return  (myHero:CanUseSpell(spell) == 0)  
+	return  (myHero:CanUseSpell(spell) == 0)
 end
 
 -- Math For Round --
 function Round(number)
-	if number >= 0 then 
-		return math.floor(number+.5) 
-	else 
-		return math.ceil(number-.5) 
+	if number >= 0 then
+		return math.floor(number+.5)
+	else
+		return math.ceil(number-.5)
 	end
-end 
+end
 
 function CountObjectsInCircle(pos, radius, array)
 	if not pos then return -1 end
@@ -6496,40 +6531,40 @@ function CountObjectsInCircle(pos, radius, array)
 
 	local n = 0
 	for _, object in pairs(array) do
-		if GetDistance(pos, object) <= radius and not object.dead then n = n + 1 end 
+		if GetDistance(pos, object) <= radius and not object.dead then n = n + 1 end
 	end
 	return n
 end
 
 function FindBestCircle(target, range, radius, slot)
 	local points = {}
-	
+
 	local rgDsqr = (range + radius) * (range + radius)
 	local diaDsqr = (radius * 2) * (radius * 2)
 
 	local Position = VPred:GetPredictedPos(target, 0.25)
 
 	table.insert(points,Position)
-	
+
 	for i, enemy in ipairs(GetEnemyHeroes()) do
 		if enemy.networkID ~= target.networkID and not enemy.dead and GetDistanceSqr(enemy) <= rgDsqr and GetDistanceSqr(target,enemy) < diaDsqr then
 			local Position = VPred:GetPredictedPos(enemy, 0.25)
 			table.insert(points, Position)
 		end
 	end
-	
+
 	while true do
 		local MECObject = MEC(points)
 		local OurCircle = MECObject:Compute()
-		
+
 		if OurCircle.radius <= radius then
 			return OurCircle.center, #points
 		end
-		
+
 		local Dist = -1
 		local MyPoint = points[1]
 		local index = 0
-		
+
 		for i=2, #points, 1 do
 			local DistToTest = GetDistanceSqr(points[i], MyPoint)
 			if DistToTest >= Dist then
@@ -6550,11 +6585,11 @@ function AngleDifference(from, p1, p2)
 	local p1Z = p1.z - from.z
 	local p1X = p1.x - from.x
 	local p1Angle = math.atan2(p1Z , p1X) * 180 / math.pi
-	
+
 	local p2Z = p2.z - from.z
 	local p2X = p2.x - from.x
 	local p2Angle = math.atan2(p2Z , p2X) * 180 / math.pi
-	
+
 	return math.sqrt((p1Angle - p2Angle) ^ 2)
 end
 
@@ -6568,8 +6603,8 @@ function pointOnLine(End, Start, unit, extra, range)
 
 	local distance = dotP / magitudeToEnd
 	local x, z = Start.x + toEnd.x * (distance + extra), Start.z + toEnd.z * (distance + extra)
-	
-	if math.sqrt((x - myHero.x) ^ 2 + (z - myHero.z) ^ 2) < range then 
+
+	if math.sqrt((x - myHero.x) ^ 2 + (z - myHero.z) ^ 2) < range then
 		return {x = x, z = z}
 	else
 		return Normalize({x = Start.x + toEnd.x * (distance + extra), z = Start.z + toEnd.z * (distance + extra)}, myHero, range)
@@ -6577,10 +6612,12 @@ function pointOnLine(End, Start, unit, extra, range)
 end
 
 function Normalize(pos, start, range)
-	local castX = start.x + range * ((pos.x - start.x) / GetDistance(pos))
-	local castZ = start.z + range * ((pos.z - start.z) / GetDistance(pos))
-	
-	return {x = castX, z = castZ}
+    if pos then
+	   local castX = start.x + range * ((pos.x - start.x) / GetDistance(pos))
+	   local castZ = start.z + range * ((pos.z - start.z) / GetDistance(pos))
+
+	   return {x = castX, z = castZ}
+    end
 end
 
 function CalculateTargetPosition(unit, delay)
@@ -6591,10 +6628,10 @@ function CalculateTargetPosition(unit, delay)
 				local pEnd = unit:GetPath(i)
 				local iPathDist = GetDistance(pStart, pEnd)
 				local travelTime = iPathDist / unit.ms
-				
+
 				if travelTime > delay then
 					return Vector(unit) + (Vector(pEnd) - Vector(pStart)):normalized() * delay * unit.ms
-				else 
+				else
 					delay = delay - travelTime
 				end
 			end
@@ -6622,5 +6659,3 @@ function a2v ( a, m )
   local y = math.sin ( a ) * m
   return x, y
 end
-
-
