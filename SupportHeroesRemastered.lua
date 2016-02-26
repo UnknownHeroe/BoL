@@ -9,15 +9,15 @@
 
 I UNDERSTAND MY INDENTATION IS WEIRD. C&P TO GITHUB MESSED IT ALL UP!
 
-1.2 Change Log:
+1.3 Change Log:
 
-1) Janna left click cancel ult
-2) Fixed Thresh and Blitz errors
-3) Fixed Sona error
-4)Improve Alistar logic
+1) 6.4 Update
+2) Fixed Exhaust
+3) Fixed Soraka Ult
+4) Minor Improvements
 ]]
 
-local scriptVersion = 1.2
+local scriptVersion = 1.3
 
 -- Script Status --
 assert(load(Base64Decode("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"), nil, "bt", _ENV))() ScriptStatus("TGJIIJIFJHN")
@@ -269,7 +269,7 @@ end
 function _Bundle:__init()
 	self:Print("Keep a cool head and maintain a low profile. Never take the lead - but aim to do something big. -Deng Xiaoping")
 
-    self:Update()
+   --4 self:Update()
 	self:LoadUPL()
 	self:CheckChampion()
     self:LoadSprite()
@@ -285,14 +285,14 @@ function _Bundle:__init()
     AddDrawCallback(function() self:OnDraw() end)
     AddMsgCallback(function(msg, key) self:OnWndMsg(msg,key) end)
 
-	if myHero:GetSpellData(SUMMONER_1).name:find("summonerdot") then signite = SUMMONER_1
-	elseif myHero:GetSpellData(SUMMONER_2).name:find("summonerdot") then signite = SUMMONER_2 end
-	if myHero:GetSpellData(SUMMONER_1).name:find("summonerheal") then sheal = SUMMONER_1
-	elseif myHero:GetSpellData(SUMMONER_2).name:find("summonerheal") then sheal = SUMMONER_2 end
-	if myHero:GetSpellData(SUMMONER_1).name:find("summonerflash") then sflash = SUMMONER_1
-	elseif myHero:GetSpellData(SUMMONER_2).name:find("summonerflash") then sflash = SUMMONER_2 end
-	if myHero:GetSpellData(SUMMONER_1).name:find("summonerexhaust") then sexhaust = SUMMONER_1
-	elseif myHero:GetSpellData(SUMMONER_2).name:find("summonerexhaust") then sexhaust = SUMMONER_2 end
+	if myHero:GetSpellData(SUMMONER_1).name:find("SummonerDot") then signite = SUMMONER_1
+	elseif myHero:GetSpellData(SUMMONER_2).name:find("SummonerDot") then signite = SUMMONER_2 end
+	if myHero:GetSpellData(SUMMONER_1).name:find("SummonerHeal") then sheal = SUMMONER_1
+	elseif myHero:GetSpellData(SUMMONER_2).name:find("SummonerHeal") then sheal = SUMMONER_2 end
+	if myHero:GetSpellData(SUMMONER_1).name:find("SummonerFlash") then sflash = SUMMONER_1
+	elseif myHero:GetSpellData(SUMMONER_2).name:find("SummonerFlash") then sflash = SUMMONER_2 end
+	if myHero:GetSpellData(SUMMONER_1).name:find("SummonerExhaust") then sexhaust = SUMMONER_1
+	elseif myHero:GetSpellData(SUMMONER_2).name:find("SummonerExhaust") then sexhaust = SUMMONER_2 end
 end
 
 function _Bundle:LoadSprite()
@@ -492,10 +492,10 @@ end
 -- Summoners --
 function _Activator:Exhaust()
 	if Target == nil then return end
-	if sexhaust == nil then return end
-	if allyCount > 0 then
-		for i = 1, allyCount do
-		local unit = allyHeroes[i]
+	if sexhaust == nil then print("LOL") return end
+	if enemyCount > 0 then
+		for i = 1, enemyCount do
+		local unit = enemyHeroes[i]
 			if menu.key.comboKey then
 				if ValidTarget(Target) and Target.team ~= myHero.team and menu.activator.exhaust["exhausttarget".. unit.charName] and (100*Target.health/Target.maxHealth) < menu.activator.exhaust["exhausthp".. unit.charName] then
 					if IsReady(sexhaust) and (GetDistance(Target) < 625) then
@@ -1949,6 +1949,8 @@ function _Janna:__init()
 
 	enemyMinions = minionManager(MINION_ENEMY, self.SpellW.range, myHero, MINION_SORT_HEALTH_DES)
 
+	jannaUlt = false
+
 	_Bundle:Print(myHero.charName .. " Loaded, have fun!")
 end
 
@@ -2246,6 +2248,9 @@ end
 
 function _Janna:OnDraw()
 	if Target == nil then return end
+	if jannaUlt == true then
+		DrawText("Left Click To Cancel Ult!", 25, WINDOW_W/2-GetTextArea("Left Click To Cancel Ult!", 35).x/4, WINDOW_H/8, ARGB(255,255,0,0))
+	end
 	if menu.draw.drawtarget and ValidTarget(Target) and Target.type == myHero.type then
 		_PentagonRot:DrawTriangle(Target, ARGB(255, 255, 0, 0), 2, 50, 5, 0, 0)
 	end
@@ -2302,11 +2307,11 @@ function _Janna:OnDraw()
 end
 
 function _Janna:ProcessSpell(object, spell)
-    if object.isMe then
+	if object.isMe then
         if spell.name == "ReapTheWhirlwind" then
             _MovementBlock:enable()
             DelayAction(function() _MovementBlock:disable() end,3)
-        end
+		end
     end
 end
 
@@ -2369,17 +2374,6 @@ function _Janna:ProcessAttack(object,spell)
             end
 	    end
 	end
-    --[[if object.isMe then
-		if spell.name == "ReapTheWhirlwind" then
-            rcast = os.clock()
-			if os.clock() < rcast + 3 then
-                 _MovementBlock:enable()
-            end
-
-            --_MovementBlock:enable()
-            --DelayAction(function() _MovementBlock:disable() end, 3)
-		end
-	end]]
 	if object.team ~= myHero.team and not myHero.dead and object.name ~= nil and not (object.name:find("Minion_") or object.name:find("Odin")) then
 		local shieldREADY = IsReady(_E)
 		local ultREADY = IsReady(_R)
@@ -3820,7 +3814,7 @@ function _MovementBlock:disable()
 end
 
 function _MovementBlock:SendPacket(p)
-	if p.header == 0xC5 and self.blockMovement then
+	if p.header == 0xAA and self.blockMovement then
 		p:Block()
 	end
 end
@@ -5253,18 +5247,20 @@ function _Soraka:AutoHeal()
 end
 
 function _Soraka:AutoUlt()
-    if enemyCount > 0 then
-        for i = 1, enemyCount do
-        local enemy = enemyHeroes[i]
-            for i, ally in ipairs(GetAllyHeroes()) do
-                if IsReady(_R) and menu.spell.r["teammateult"..ally.charName] and (100 * ally.health / ally.maxHealth) <= menu.spell.r["maxhppercent"..ally.charName] and GetDistance(ally, enemy) >= 800 then
-                    if ally.type == myHero.type then
-                    CastSpell(_R)
-                    end
-                end
+	for i = 1, heroManager.iCount do
+		local unit = heroManager:GetHero(i)
+		if unit.team == myHero.team then
+            if IsReady(_R) then
+				if menu.spell.r["teammateult".. i] then
+					if (100 * unit.health / unit.maxHealth) <= menu.spell.r["maxhppercent"..i] --[[and GetDistance(unit, enemy) <= 800]] then
+						if unit.type == myHero.type and not unit.isDead then
+                			CastSpell(_R)
+						end
+					end
+				end
             end
-        end
-    end
+		end
+	end
 end
 
 function _Soraka:Combo()
@@ -6283,7 +6279,7 @@ function ScriptUpdate:__init(LocalVersion, UseHttps, Host, VersionPath, ScriptPa
 	self.CallbackError = CallbackError
 	AddDrawCallback( function() self:OnDraw() end)
 	self:CreateSocket(self.VersionPath)
-	self.DownloadStatus = 'Connect to Server for VersionInfo'
+	--self.DownloadStatus = 'Connect to Server for VersionInfo'
 	AddTickCallback( function() self:GetOnlineVersion() end)
 end
 
