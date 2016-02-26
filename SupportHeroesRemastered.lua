@@ -269,7 +269,7 @@ end
 function _Bundle:__init()
 	self:Print("Keep a cool head and maintain a low profile. Never take the lead - but aim to do something big. -Deng Xiaoping")
 
-   --4 self:Update()
+    self:Update()
 	self:LoadUPL()
 	self:CheckChampion()
     self:LoadSprite()
