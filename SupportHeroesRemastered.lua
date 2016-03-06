@@ -493,7 +493,7 @@ end
 -- Summoners --
 function _Activator:Exhaust()
 	if Target == nil then return end
-	if sexhaust == nil then print("LOL") return end
+	if sexhaust == nil then return end
 	if enemyCount > 0 then
 		for i = 1, enemyCount do
 		local unit = enemyHeroes[i]
