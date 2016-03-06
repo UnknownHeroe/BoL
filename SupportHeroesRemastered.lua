@@ -9,22 +9,19 @@
 
 I UNDERSTAND MY INDENTATION IS WEIRD. C&P TO GITHUB MESSED IT ALL UP!
 
-1.31 Change Log:
+1.4 Change Log:
 
-1) Fixed Spam
-
-1.3 Change Log:
-
-1) 6.4 Update
-2) Fixed Exhaust
-3) Fixed Soraka Ult
-4) Minor Improvements
+1) Fixed Blitz Spam
+2) Added Ward System
+3) VPred Check
+4) Added BoL-Tools Tracker
 ]]
 
-local scriptVersion = 1.31
+local scriptVersion = 1.4
 
--- Script Status --
-assert(load(Base64Decode("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"), nil, "bt", _ENV))() ScriptStatus("TGJIIJIFJHN")
+ -- BoL Tools --
+assert(load(Base64Decode("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"), nil, "bt", _ENV))()
+TrackerLoad("x1JZahyw3vH0Sdai")
 
 local Champions =
 {
@@ -273,7 +270,7 @@ end
 function _Bundle:__init()
 	self:Print("Keep a cool head and maintain a low profile. Never take the lead - but aim to do something big. -Deng Xiaoping")
 
-   self:Update()
+    self:Update()
 	self:LoadUPL()
 	self:CheckChampion()
     self:LoadSprite()
@@ -496,7 +493,7 @@ end
 -- Summoners --
 function _Activator:Exhaust()
 	if Target == nil then return end
-	if sexhaust == nil then return end
+	if sexhaust == nil then print("LOL") return end
 	if enemyCount > 0 then
 		for i = 1, enemyCount do
 		local unit = enemyHeroes[i]
@@ -634,6 +631,7 @@ function _Alistar:__init()
 	_Bundle:SetupOrbwalk()
 
 	_Activator:__init()
+	_WA:__init()
 
 	_Tech:AddTurrets()
 	towerCount = #towers
@@ -776,6 +774,7 @@ function _Alistar:Menu()
 		menu.key:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("miscellaneouskeys", "           -- Miscellaneous Keys --", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("flashKey", "Flash Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("H"))
+        menu.key:addParam("castWard", "Ward Casting", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("O"))
 
 	menu:addSubMenu("[" .. myHero.charName .. "] - Spell Settings", "spell")
 		menu.spell:addSubMenu("[" .. myHero.charName .. "] - Q", "q")
@@ -1136,6 +1135,7 @@ function _Annie:__init()
 	_Bundle:SetupOrbwalk()
 
 	_Activator:__init()
+    _WA:__init()
 
 	_Tech:AddTurrets()
 	towerCount = #towers
@@ -1272,6 +1272,7 @@ function _Annie:Menu()
 		menu.key:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("miscellaneouskeys", "           -- Miscellaneous Keys --", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("flashKey", "Flash Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("H"))
+        menu.key:addParam("castWard", "Ward Casting", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("O"))
 
 	menu:addSubMenu("[" .. myHero.charName .. "] - Spell Settings", "spell")
 		menu.spell:addSubMenu("[" .. myHero.charName .. "] - Q", "q")
@@ -1545,6 +1546,7 @@ function _Blitzcrank:__init()
 	_Bundle:SetupOrbwalk()
 
 	_Activator:__init()
+    _WA:__init()
 
 	_Tech:AddTurrets()
 	towerCount = #towers
@@ -1671,6 +1673,7 @@ function _Blitzcrank:Menu()
 		menu.key:addParam("miscellaneouskeys", "           -- Miscellaneous Keys --", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("flashKey", "Flash Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("H"))
 		menu.key:addParam("marathonKey", "Marathon Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("Y"))
+        menu.key:addParam("castWard", "Ward Casting", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("O"))
 
 	menu:addSubMenu("[" .. myHero.charName .. "] - Spell Settings", "spell")
 		menu.spell:addSubMenu("[" .. myHero.charName .. "] - Q", "q")
@@ -1925,7 +1928,7 @@ function _Blitzcrank:TowerCC()
 		for i = 1, towerCount do
 			local tower = towers[i]
 			if tower and tower.team == myHero.team and (GetDistance(tower, unit) < 775) then
-				if menu.snare.esnare and menu.snare["" ..unit.charName] and GetDistance(unit) <= self.SpellE.range then
+				if IsReady(_E) and menu.snare.esnare and menu.snare["" ..unit.charName] and GetDistance(unit) <= self.SpellE.range then
 					CastSpell(_E, unit)
 				end
 			end
@@ -1941,6 +1944,7 @@ function _Janna:__init()
 	_Bundle:SetupOrbwalk()
 
 	_Activator:__init()
+    _WA:__init()
 
 	_Tech:AddTurrets()
 	towerCount = #towers
@@ -2082,6 +2086,7 @@ function _Janna:Menu()
 		menu.key:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("miscellaneouskeys", "           -- Miscellaneous Keys --", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("flashKey", "Flash Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("H"))
+        menu.key:addParam("castWard", "Ward Casting", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("O"))
 
 	menu:addSubMenu("[" .. myHero.charName .. "] - Spell Settings", "spell")
 		menu.spell:addSubMenu("[" .. myHero.charName .. "] - Q", "q")
@@ -2133,17 +2138,6 @@ function _Janna:Menu()
 	 menu.key:permaShow("clearKey")
    end
 end
-
---[[local lastCheck = 0
-local me = false
-function _Janna:ugh()
-	if os.clock() - lastCheck > 3 then
-		me = true
-		print("Hello")
-
-		lastCheck = os.clock()
-	end
-end]]
 
 function _Janna:Combo()
 	if Target == nil then return end
@@ -2262,9 +2256,6 @@ function _Janna:LaneClear()
 end
 
 function _Janna:OnDraw()
-	--[[if jannaUlt == true then
-		DrawText("Left Click To Cancel Ult!", 25, WINDOW_W/2-GetTextArea("Left Click To Cancel Ult!", 35).x/4, WINDOW_H/8, ARGB(255,255,0,0))
-	end]]
 	if Target == nil then return end
 	if menu.draw.drawtarget and ValidTarget(Target) and Target.type == myHero.type then
 		_PentagonRot:DrawTriangle(Target, ARGB(255, 255, 0, 0), 2, 50, 5, 0, 0)
@@ -2324,7 +2315,7 @@ end
 function _Janna:ProcessSpell(object, spell)
 	if object.isMe then
         if spell.name == "ReapTheWhirlwind" then
-			_MovementBlock:enable()
+            _MovementBlock:enable()
             DelayAction(function() _MovementBlock:disable() end,3)
 		end
     end
@@ -2559,6 +2550,7 @@ function _Leona:__init()
 	_Bundle:SetupOrbwalk()
 
 	_Activator:__init()
+    _WA:__init()
 
 	_Tech:AddTurrets()
 	towerCount = #towers
@@ -2687,6 +2679,7 @@ function _Leona:Menu()
 		menu.key:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("miscellaneouskeys", "           -- Miscellaneous Keys --", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("flashKey", "Flash Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("H"))
+        menu.key:addParam("castWard", "Ward Casting", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("O"))
 
 	menu:addSubMenu("[" .. myHero.charName .. "] - Spell Settings", "spell")
 		menu.spell:addSubMenu("[" .. myHero.charName .. "] - Q", "q")
@@ -2997,6 +2990,7 @@ function _Malphite:__init()
 	_Bundle:SetupOrbwalk()
 
 	_Activator:__init()
+    _WA:__init()
 
 	_Tech:AddTurrets()
 	towerCount = #towers
@@ -3119,6 +3113,7 @@ function _Malphite:Menu()
 		menu.key:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("miscellaneouskeys", "           -- Miscellaneous Keys --", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("flashKey", "Flash Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("H"))
+        menu.key:addParam("castWard", "Ward Casting", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("O"))
 
 	menu:addSubMenu("[" .. myHero.charName .. "] - Spell Settings", "spell")
 		menu.spell:addSubMenu("[" .. myHero.charName .. "] - Q", "q")
@@ -3367,6 +3362,7 @@ function _Morgana:__init()
 	towerCount = #towers
 	_Bundle:SetupOrbwalk()
 	_Activator:__init()
+    _WA:__init()
 
 	AddTickCallback(function() self:OnTick() end)
 	AddDrawCallback(function() self:OnDraw() end)
@@ -3528,6 +3524,8 @@ function _Morgana:Menu()
 		menu.key:addParam("harassKey", "Harass Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("C"))
 		menu.key:addParam("harassToggle", "Harass Toggle", SCRIPT_PARAM_ONKEYTOGGLE, false, string.byte("T"))
 		menu.key:addParam("clearKey", "Lane Clear Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("V"))
+        menu.key:addParam("miscellaneouskeys", "           -- Miscellaneous Keys --", SCRIPT_PARAM_INFO, "")
+        menu.key:addParam("castWard", "Ward Casting", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("O"))
 
 	menu:addSubMenu("[" .. myHero.charName .. "] - Spell Settings", "spell")
 		menu.spell:addSubMenu("[" .. myHero.charName .. "] - Q", "q")
@@ -3841,6 +3839,7 @@ function _Nami:__init()
 
 	_Bundle:SetupOrbwalk()
 	_Activator:__init()
+    _WA:__init()
 
 	AddTickCallback(function() self:OnTick() end)
 	AddDrawCallback(function() self:OnDraw() end)
@@ -3995,6 +3994,7 @@ function _Nami:Menu()
 		menu.key:addParam("clearKey", "Lane Clear Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("V"))
         menu.key:addParam("miscellaneouskeys", "           -- Miscellaneous Keys --", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("marathonKey", "Marathon Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("Y"))
+        menu.key:addParam("castWard", "Ward Casting", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("O"))
 
 	menu:addSubMenu("[" .. myHero.charName .. "] - Spell Settings", "spell")
 		menu.spell:addSubMenu("[" .. myHero.charName .. "] - Q", "q")
@@ -4440,6 +4440,7 @@ function _Sona:__init()
 	_Bundle:SetupOrbwalk()
 
 	_Activator:__init()
+    _WA:__init()
 
 	_Tech:AddTurrets()
 	towerCount = #towers
@@ -4586,6 +4587,7 @@ function _Sona:Menu()
 		menu.key:addParam("miscellaneouskeys", "           -- Miscellaneous Keys --", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("flashKey", "Flash Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("H"))
         menu.key:addParam("marathonKey", "Marathon Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("Y"))
+        menu.key:addParam("castWard", "Ward Casting", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("O"))
 
 	menu:addSubMenu("[" .. myHero.charName .. "] - Spell Settings", "spell")
 		menu.spell:addSubMenu("[" .. myHero.charName .. "] - Q", "q")
@@ -5061,6 +5063,7 @@ function _Soraka:__init()
 	_Bundle:SetupOrbwalk()
 
     _Activator:__init()
+    _WA:__init()
 
 	_Tech:AddTurrets()
     towerCount = #towers
@@ -5189,6 +5192,8 @@ function _Soraka:Menu()
         menu.key:addParam("harassKey", "Harass Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("C"))
         menu.key:addParam("harassToggle", "Harass Toggle", SCRIPT_PARAM_ONKEYTOGGLE, false, string.byte("T"))
         menu.key:addParam("clearKey", "Lane Clear Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("V"))
+        menu.key:addParam("miscellaneouskeys", "           -- Miscellaneous Keys --", SCRIPT_PARAM_INFO, "")
+        menu.key:addParam("castWard", "Ward Casting", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("O"))
 
 	menu:addSubMenu("[" .. myHero.charName .. "] - Spell Settings", "spell")
         menu.spell:addSubMenu("[" .. myHero.charName .. "] - Q", "q")
@@ -5417,6 +5422,7 @@ function _Thresh:__init()
 	_Bundle:SetupOrbwalk()
 
 	_Activator:__init()
+    _WA:__init()
 
     _Tech:GetLowestAlly(range)
 	_Tech:AddTurrets()
@@ -5502,12 +5508,12 @@ function _Thresh:Menu()
 		--menu.as:addParam("shieldLow", "Use to shield", SCRIPT_PARAM_ONOFF, true)
 
 	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-Shield: Misc", "asmisc")
-    menu.asmisc:addParam("engage", "Use to engage", SCRIPT_PARAM_ONOFF, true)
-    menu.asmisc:addParam("empty", "", SCRIPT_PARAM_INFO,"")
-    menu.asmisc:addParam("saveally", "Save from enemies", SCRIPT_PARAM_ONOFF, true)
-    menu.asmisc:addParam("empty", "", SCRIPT_PARAM_INFO,"")
-    menu.asmisc:addParam("speedUp", "Use to speed up", SCRIPT_PARAM_ONOFF, true)
-    menu.asmisc:addParam("speedupdis", "Speed Up If > X Dis", SCRIPT_PARAM_SLICE, 500, 0, 950, 0)
+	    menu.asmisc:addParam("engage", "Use to engage", SCRIPT_PARAM_ONOFF, true)
+	    menu.asmisc:addParam("empty", "", SCRIPT_PARAM_INFO,"")
+	    menu.asmisc:addParam("saveally", "Save from enemies", SCRIPT_PARAM_ONOFF, true)
+	    menu.asmisc:addParam("empty", "", SCRIPT_PARAM_INFO,"")
+	    menu.asmisc:addParam("speedUp", "Use to speed up", SCRIPT_PARAM_ONOFF, true)
+	    menu.asmisc:addParam("speedupdis", "Speed Up If > X Dis", SCRIPT_PARAM_SLICE, 500, 0, 950, 0)
 
 	menu:addSubMenu("[" .. myHero.charName .. "] - Draw Settings", "draw")
 		menu.draw:addParam("spelldraws", "                -- Spell Draws --", SCRIPT_PARAM_INFO, "")
@@ -5566,6 +5572,7 @@ function _Thresh:Menu()
 		menu.key:addParam("miscellaneouskeys", "           -- Miscellaneous Keys --", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("flashKey", "Flash Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("H"))
 		menu.key:addParam("desperationKey", "Desperation Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("Z"))
+        menu.key:addParam("castWard", "Ward Casting", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("O"))
 
 	menu:addSubMenu("[" .. myHero.charName .. "] - Spell Settings", "spell")
 		menu.spell:addSubMenu("[" .. myHero.charName .. "] - Q", "q")
@@ -6146,7 +6153,6 @@ function _Tech:ClosestEnemy(pos)
 			end
 		end
 	end
-
 	return closestEnemy, distanceEnemy
 end
 
@@ -6279,6 +6285,335 @@ function _Tech:Latency()
 	return GetLatency() / 2000
 end
 
+-- Ward --
+Class ("_WA")
+function _WA:__init()
+
+	self.drawWardSpots = false
+	self.wardSlot = nil
+	self.putSafeWard = nil
+
+	self.wardSpot = {
+        {x=5731.78, y=50.45, z=1718.36}, --TOP LANE
+		{x=9215.73, y=59.50, z=2136.51}, -- BOT GOLEMS
+		{x=3261.93, y=60, z=7773.65}, -- BLUE GOLEM
+        {x=7831.46, y=60, z=3501.13}, -- BLUE LIZARD
+        {x=10586.62, y=60, z=3067.93}, -- BLUE TRI BUSH
+        {x=6483.73, y=60, z=4606.57}, -- BLUE PASS BUSH
+        {x=7610.46, y=60, z=5000}, -- BLUE RIVER ENTRANCE
+        {x=4717.09, y=50.83, z=7142.35}, -- BLUE ROUND BUSH
+        {x=4882.86, y=27.83, z=8393.77}, -- BLUE RIVER ROUND BUSH
+        {x=6951.01, y=52.26, z=3040.55}, -- BLUE SPLIT PUSH BUSH
+        {x=5583.74, y=51.43, z=3573.83}, --BlUE RIVER CENTER CLOSE
+		{x=2088.98, y=54.55, z=5519.65},
+		{x=8415.29, y=-71.24, z=6435.82}, -- MID BOT BUSH
+		{x=6545.05, y=-70.93, z=8296.19}, -- MID TOP BUSH
+        {x=11600.35, y=51.73, z=7090.37}, -- RED GOLEM
+        {x=12098.17, y=52.33, z=7517.74}, -- RED BLUE PATH
+        {x=12629.72, y=48.62, z=4908.16}, -- RED TRIBRUSH 2
+        {x=7018.75, y=54.76, z=11362.12}, -- RED LIZARD
+        {x=4232.69, y=47.56, z=11869.25}, -- RED TRI BUSH
+        {x=8198.22, y=49.38, z=10267.89}, -- RED PASS BUSH
+        {x=7202.43, y=53.18, z=9881.83}, -- RED RIVER ENTRANCE
+        {x=10074.63, y=51.74, z=7761.62}, -- RED ROUND BUSH
+        {x=9795.85, y=-12.21, z=6355.15}, -- RED RIVER ROUND BUSH
+        {x=7836.85, y=56.48, z=11906.34}, -- RED SPLIT PUSH BUSH
+
+        {x=10546.35, y=-60, z=5019.06}, -- DRAGON
+        {x=9344.95, y=-64.07, z=5703.43}, -- DRAGON BUSH
+        {x=4334.98, y=-60.42, z=9714.54}, -- BARON
+        {x=5363.31, y=-62.70, z=9157.05}, -- BARON BUSH
+
+        {x=12733.82, y=52.31, z=9333.83}, -- BOT LANE
+        {x=9073.70, y=52.84, z=13156.43}, -- RED TOP T2
+        {x=9757.9, y=50.73, z=8768.25}, -- RED MID T1
+        {x=4749.79, y=53.59, z=5890.76}, -- BLUE MID T1
+
+        {x=6523.58, y=60, z=6743.31}, -- BLUE MIDLANE
+        {x=8223.67, y=60, z=8110.15}, -- RED MIDLANE
+        {x=2222.31, y=53.2, z=9964.1}, -- BLUE TRI TOP
+        {x=8523.9, y=51.24, z=4707.76}, -- DRAGON PASS BUSH
+        {x=6323.9, y=53.62, z=10157.76}, -- NASHOR PASS BUSH
+
+        {x=12791.11, y=51.73, z=1731.91}, --BOT BUSH
+        {x=13534.47, y=51.37, z=2694.41}, -- BOT BUSH
+        {x=2630.19, y=52.84, z=13508.90}, --TOP BUSH
+        {x=1849.06, y=52.37, z=13009.30}, --TOP BUSH
+        {x=1311.68, y=52.84, z=12411.59} -- TOPBUSH
+
+	}
+
+	self.safeWardSpots = {
+        {    -- RED MID -> SOLO BUSH
+                magneticSpot = {x=9223, y=52.95, z=7525.34},
+                clickPosition = {x=9603.52, y=54.71, z=7872.23},
+                wardPosition = {x=9873.90, y=51.52, z=7957.76},
+                movePosition = {x=9223, y=52.95, z=7525.34}
+        },
+        {    -- RED MID FROM TOWER -> SOLO BUSH
+                magneticSpot =  {x=9127.66, y=53.76, z=8337.72},
+                clickPosition = {x=9556.04, y=57.28, z=7996.44},
+                wardPosition =  {x=9873.90, y=51.52, z=7957.76},
+                movePosition  = {x=9127.66, y=53.76, z=8337.72}
+        },
+        {    -- BLUE MID -> SOLO BUSH
+                magneticSpot =  {x=5667.73, y=51.65, z=7360.45},
+                clickPosition = {x=5148.87, y=50.41, z=7205.80},
+                wardPosition =  {x=4923.90, y=50.64, z=7107.76},
+                movePosition  = {x=5667.73, y=51.65, z=7360.45}
+        },
+        {    -- BLUE MID FROM TOWER -> SOLO BUSH
+                magneticSpot =  {x=5621.65, y=52.81, z=6452.61},
+                clickPosition = {x=5338.21, y=50.68, z=6972.73},
+                wardPosition =  {x=4923.90, y=50.64, z=7107.76},
+                movePosition  = {x=5621.65, y=52.81, z=6452.61}
+        },
+        {    -- NASHOR -> TRI BUSH
+                magneticSpot =  {x=4724, y=-71.24, z=10856},
+                clickPosition = {x=4617, y=50.26, z=11348.60},
+                wardPosition =  {x=4473.9, y=51.4, z=11457.76},
+                movePosition  = {x=4724, y=-71.24, z=10856}
+        },
+        {    -- BLUE TOP -> SOLO BUSH
+                magneticSpot  = {x=2824, y=54.33, z=10356},
+                clickPosition = {x=3078.62, y=54.33, z=10868.39},
+                wardPosition  = {x=3078.62, y=-67.95, z=10868.39},
+                movePosition  = {x=2824, y=54.33, z=10356}
+        },
+        { -- BLUE MID -> ROUND BUSH
+                magneticSpot  = {x=5474, y=51.67, z=7906},
+                clickPosition = {x=5132.65, y=51.67, z=8373.2},
+                wardPosition  = {x=5123.9, y=-21.23, z=8457.76},
+                movePosition  = {x=5474, y=51.67, z=7906}
+        },
+        { -- BLUE MID -> RIVER LANE BUSH
+                magneticSpot  = {x=5874, y=51.65, z=7656},
+                clickPosition = {x=6202.24, y=51.65, z=8132.12},
+                wardPosition  = {x=6202.24, y=-67.39, z=8132.12},
+                movePosition  = {x=5874, y=51.65, z=7656}
+        },
+        { -- BLUE LIZARD -> DRAGON PASS BUSH
+                magneticSpot  = {x=8022, y=53.72, z=4258},
+                clickPosition = {x=8400.68, y=53.72, z=4657.41},
+                wardPosition  = {x=8523.9, y=51.24, z=4707.76},
+                movePosition  = {x=8022, y=53.72, z=4258}
+        },
+        { -- RED MID -> ROUND BUSH
+                magneticSpot  = {x=9372, y=52.63, z=7008},
+                clickPosition = {x=9703.5, y=52.63, z=6589.9},
+                wardPosition  = {x=9823.9, y=23.47, z=6507.76},
+                movePosition  = {x=9372, y=52.63, z=7008}
+        },
+        { -- RED MID -> RIVER ROUND BUSH // Inconsistent Placement
+                magneticSpot  = {x=9072, y=53.04, z=7158},
+                clickPosition = {x=8705.95, y=53.04, z=6819.1},
+                wardPosition  = {x=8718.88, y=95.75, z=6764.86},
+                movePosition  = {x=9072, y=53.04, z=7158}
+        },
+        { -- RED BOTTOM -> SOLO BUSH
+                magneticSpot  = {x=12422, y=51.73, z=4508},
+                clickPosition = {x=12353.94, y=51.73, z=4031.58},
+                wardPosition  = {x=12023.9, y=-66.25, z=3757.76},
+                movePosition  = {x=12422, y=51.73, z=4508}
+        },
+        { -- RED LIZARD -> NASHOR PASS BUSH -- FIXED FOR MORE VISIBLE AREA
+                magneticSpot  = {x=6824, y=56, z=10656},
+                clickPosition = {x=6484.47, y=53.5, z=10309.94},
+                wardPosition  = {x=6323.9, y=53.62, z=10157.76},
+                movePosition  = {x=6824, y=56, z=10656}
+        },
+        { -- BLUE GOLEM -> BLUE LIZARD
+                magneticSpot  = {x=8272,    y=51.13, z=2908},
+                clickPosition = {x=8163.7056, y=51.13, z=3436.0476},
+                wardPosition  = {x=8163.71, y=51.6628, z=3436.05},
+                movePosition  = {x=8272,    y=51.13, z=2908}
+        },
+        { -- RED GOLEM -> RED LIZARD
+                magneticSpot  = {x=6574, y=56.48, z=12006},
+                clickPosition = {x=6678.08, y=56.48, z=11477.83},
+                wardPosition  = {x=6678.08, y=53.85, z=11477.83},
+                movePosition  = {x=6574, y=56.48, z=12006}
+        },
+        { -- MID LANE DEATH BRUSH
+                magneticSpot  = {x=5874, y=-70.12, z=8306},
+                clickPosition = {x=5332.9, y=-70.12, z=8275.21},
+                wardPosition  = {x=5123.9, y=-21.23, z=8457.76},
+                movePosition  = {x=5874, y=-70.12, z=8306}
+        },
+        { -- MID LANE DEATH BRUSH RIGHT SIDE
+                magneticSpot  = {x=9022, y=-71.24, z=6558},
+                clickPosition = {x=9540.43, y=-71.24, z=6657.68},
+                wardPosition  = {x=9773.9, y=9.56, z=6457.76},
+                movePosition  = {x=9022, y=-71.24, z=6558}
+        },
+        { -- BLUE INNER TURRET JUNGLE
+                magneticSpot  = {x=6874, y=50.52, z=1708},
+                clickPosition = {x=6849.11, y=50.52, z=2252.01},
+                wardPosition  = {x=6723.9, y=52.17, z=2507.76},
+                movePosition  = {x=6874, y=50.52, z=1708}
+        },
+        { -- RED INNER TURRET JUNGLE
+                magneticSpot  = {x=8122, y=52.84, z=13206},
+                clickPosition = {x=8128.53, y=52.84, z=12658.41},
+                wardPosition  = {x=8323.9, y=56.48, z=12457.76},
+                movePosition  = {x=8122, y=52.84, z=13206}
+        }
+	}
+
+	self.wardItems = {
+		{ id = 2043, spellName = "VisionWard", screenName = "Vision Ward"},
+		{ id = 2044, spellName = "sightward", screenName = "Sight Ward"},
+		{ id = 3340, spellName = "TrinketTotemLvl1", screenName = "?"},
+		{ id = 3350, spellName = "TrinketTotemLvl2", screenName = "?"},
+		{ id = 3361, spellName = "TrinketTotemLvl3", screenName = "?"},
+		{ id = 3362, spellName = "TrinketTotemLvl3B", screenName = "?"},
+		{ id = 2045, spellName = "ItemGhostWard", screenName = "?"},
+		{ id = 2049, spellName = "ItemGhostWard", screenName = "?"},
+		{ id = 2050, spellName = "ItemMiniWard", screenName = "?"}
+	}
+
+	AddTickCallback(function() self:OnTick() end)
+	AddDrawCallback(function() self:OnDraw() end)
+	AddMsgCallback(function(msg, wParam) self:OnWndMsg(msg,wParam) end)
+
+	self:Menu()
+end
+
+function _WA:Menu()
+	menu:addSubMenu("Ward Assist", "wa")
+	self.menu = menu.wa
+	self.menu:addParam("enable", "Enable Perfect Ward", SCRIPT_PARAM_ONOFF, true)
+	self.menu:addParam("printAvailable", "Message if Ward is available", SCRIPT_PARAM_ONOFF, true)
+    self.menu:addParam("fill", "", SCRIPT_PARAM_INFO, "")
+    self.menu:addParam("info", "If you would like a ward spot added turn on the ", SCRIPT_PARAM_INFO, "")
+    self.menu:addParam("info", "option below and paste the coordnates of the ", SCRIPT_PARAM_INFO, "")
+    self.menu:addParam("info", "position in the forum post.", SCRIPT_PARAM_INFO, "")
+    self.menu:addParam("coord", "Turn On for Custom Spots", SCRIPT_PARAM_ONOFF, false)
+
+end
+
+function _WA:OnTick()
+	if self.putSafeWard ~= nil then
+		if GetDistance(self.safeWardSpots[self.putSafeWard].clickPosition, myHero) <= 600 then
+			CastSpell(self.wardSlot, self.safeWardSpots[self.putSafeWard].clickPosition.x, self.safeWardSpots[self.putSafeWard].clickPosition.z)
+			self.putSafeWard = nil
+		end
+	end
+
+	if menu.key.castWard and self:checkWardsAvailable()~=nil then
+		self.drawWardSpots = true
+	end
+end
+
+function _WA:checkWardsAvailable()
+	for slot = ITEM_1, ITEM_7 do
+		for i,wardItem in pairs(self.wardItems) do
+			if GetSpellData(slot) and GetSpellData(slot).name == wardItem.spellName and myHero:CanUseSpell(slot) == READY then return slot end
+		end
+	end
+	return nil
+end
+
+function _WA:OnWndMsg(msg,wParam)
+    if not self.menu.enable then return end
+    if msg == KEY_DOWN and menu.key.castWard then
+            self.wardSlot = nil
+
+            if self.menu.enable then
+                    self.wardSlot = self:checkWardsAvailable()
+            else
+                    self.wardSlot = nil
+                    self.drawWardSpots = false
+            end
+
+            if self.wardSlot then
+                    local item = myHero:getItem(self.wardSlot)
+                    for i,wardItem in pairs(self.wardItems) do
+                            if item and myHero:CanUseSpell(self.wardSlot) == READY then
+                                    self.drawWardSpots = true
+                                    return
+                            end
+                    end
+            end
+    elseif msg == WM_LBUTTONUP and self.drawWardSpots then
+            self.drawWardSpots = false
+    elseif msg == WM_LBUTTONDOWN and self.drawWardSpots then
+            self.drawWardSpots = false
+            for i,wardSpot in pairs(self.wardSpot) do
+                    if GetDistance(wardSpot, mousePos) <= 250 then
+                            CastSpell(self.wardSlot, wardSpot.x, wardSpot.z)
+                            return
+                    end
+            end
+            for i,wardSpot in pairs(self.safeWardSpots) do
+                    if GetDistance(wardSpot.magneticSpot, mousePos) <= 120 then
+                            myHero:MoveTo(wardSpot.movePosition.x, wardSpot.movePosition.z)
+                            self.putSafeWard = i
+                            return
+                    end
+            end
+    elseif msg == WM_RBUTTONDOWN and self.drawWardSpots then
+            self.drawWardSpots = false
+    elseif msg == WM_RBUTTONDOWN then
+            self.putSafeWard = nil
+    end
+end
+
+function _WA:get2DFrom3D(x, y, z)
+        local pos = WorldToScreen(D3DXVECTOR3(x, y, z))
+        return pos.x, pos.y, OnScreen(pos.x, pos.y)
+end
+
+function _WA:OnDraw()
+	if not self.menu.enable then return end
+
+    if self.menu.coord then
+	   DrawText("Cursor Pos: X = ".. string.format("%.2f", mousePos.x) .." Y = ".. string.format("%.2f", mousePos.y) .." Z = ".. string.format("%.2f", mousePos.z), 21, 5, 140, 0xFFFFFFFF)
+    end
+
+    local wardAvailable = self:checkWardsAvailable()
+	if self.menu.printAvailable and wardAvailable~=nil then
+        DrawText("WARD AVAILABLE TO CAST!", 15, WINDOW_W/2-GetTextArea("WARD AVAILABLE TO CAST!", 35).x/8 + 475, WINDOW_H/18-GetTextArea("WARD AVAILABLE TO CAST!", 35).y/2, ARGB(150,255,255,255))
+	end
+
+	if self.drawWardSpots then
+		for i, wardSpot in pairs(self.wardSpot) do
+			local wardColor = (GetDistance(wardSpot, mousePos) <= 250) and ARGB(255,0,255,0) or ARGB(255,255,255,255)
+			local x, y, onScreen = self:get2DFrom3D(wardSpot.x, wardSpot.y, wardSpot.z)
+			if onScreen then
+				_Tech:DrawCircle(wardSpot.x, wardSpot.y, wardSpot.z, 30, wardColor)
+				_Tech:DrawCircle(wardSpot.x, wardSpot.y, wardSpot.z, 250, wardColor)
+			end
+		end
+
+		for i,wardSpot in pairs(self.safeWardSpots) do
+			local wardColor  = (GetDistance(wardSpot.magneticSpot, mousePos) <= 100) and ARGB(255,0,255,0) or ARGB(255,255,255,255)
+			local arrowColor = (GetDistance(wardSpot.magneticSpot, mousePos) <= 100) and ARGB(255,0,255,0) or ARGB(255,255,255,255)
+			local x, y, onScreen = get2DFrom3D(wardSpot.magneticSpot.x, wardSpot.magneticSpot.y, wardSpot.magneticSpot.z)
+
+			if onScreen then
+                _Tech:DrawCircle(wardSpot.wardPosition.x, wardSpot.wardPosition.y, wardSpot.wardPosition.z, 30, wardColor)
+                _Tech:DrawCircle(wardSpot.magneticSpot.x, wardSpot.magneticSpot.y, wardSpot.magneticSpot.z, 100, wardColor)
+			end
+
+			local magneticWardSpotVector = Vector(wardSpot.magneticSpot.x, wardSpot.magneticSpot.y, wardSpot.magneticSpot.z)
+			local wardPositionVector = Vector(wardSpot.wardPosition.x, wardSpot.wardPosition.y, wardSpot.wardPosition.z)
+			local directionVector = (wardPositionVector-magneticWardSpotVector):normalized()
+			local line1Start = magneticWardSpotVector + directionVector:perpendicular() * 100
+			local line1End = wardPositionVector + directionVector:perpendicular() * 30
+			local line2Start = magneticWardSpotVector + directionVector:perpendicular2() * 100
+			local line2End = wardPositionVector + directionVector:perpendicular2() * 30
+			local p1 = WorldToScreen(D3DXVECTOR3(line1Start.x,line1Start.y,line1Start.z))
+			local p2 = WorldToScreen(D3DXVECTOR3(line1End.x,line1End.y,line1End.z))
+			local p3 = WorldToScreen(D3DXVECTOR3(line2Start.x,line2Start.y,line2Start.z))
+			local p4 = WorldToScreen(D3DXVECTOR3(line2End.x,line2End.y,line2End.z))
+
+			DrawLine(p1.x, p1.y, p2.x, p2.y, 1, arrowColor)
+			DrawLine(p3.x, p3.y, p4.x, p4.y, 1, arrowColor)
+		end
+	end
+end
+
 -- Global Classes --
 -- Auto update stuff made by Aroc
 Class("ScriptUpdate")
@@ -6365,7 +6700,7 @@ function ScriptUpdate:GetOnlineVersion()
 			local ScriptEnd = self.File:find('</scr' .. 'ipt>')
 			if ScriptEnd then ScriptEnd = ScriptEnd - 1 end
 			local DownloadedSize = self.File:sub(ScriptFind + 1, ScriptEnd or -1):len()
-			self.DownloadStatus = 'Downloading VersionInfo (' .. round(100 / self.Size * DownloadedSize, 2) .. '%)'
+			self.DownloadStatus = 'Downloading VersionInfo (' .. Round(100 / self.Size * DownloadedSize, 2) .. '%)'
 		end
 	end
 	if self.File:find('</scr' .. 'ipt>') then
@@ -6426,7 +6761,7 @@ function ScriptUpdate:DownloadUpdate()
 			local ScriptEnd = self.File:find('</scr' .. 'ipt>')
 			if ScriptEnd then ScriptEnd = ScriptEnd - 1 end
 			local DownloadedSize = self.File:sub(ScriptFind + 1, ScriptEnd or -1):len()
-			self.DownloadStatus = 'Downloading Script (' .. round(100 / self.Size * DownloadedSize, 2) .. '%)'
+			self.DownloadStatus = 'Downloading Script (' .. Round(100 / self.Size * DownloadedSize, 2) .. '%)'
 		end
 	end
 	if self.File:find('</scr' .. 'ipt>') then
@@ -6495,9 +6830,10 @@ function OnWndMsg(msg,key)
 	if msg == WM_LBUTTONDOWN then
 		local enemy, distance = _Tech:ClosestEnemy(mousePos)
 
-		if distance < 150 then SelectedTarget = enemy end
+		if distance < 150 then
+			SelectedTarget = enemy
 		end
-	local targetSelected = nil
+	end
 
 	if msg == WM_LBUTTONDOWN then
 		local enemyDistance, enemySelected = 0, nil
