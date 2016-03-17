@@ -9,13 +9,14 @@
 
 I UNDERSTAND MY INDENTATION IS WEIRD. C&P TO GITHUB MESSED IT ALL UP!
 
-1.41 Change Log:
+1.42 Change Log:
 
-1) 6.5 Update
-2) Fixed Ward Location Message
+1) Fixed Morgana shield
+2) Fixed script to support the new version of UPL
+3) Fix random Soraka ults
 ]]
 
-local scriptVersion = 1.41
+local scriptVersion = 1.42
 
  -- BoL Tools --
 assert(load(Base64Decode("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"), nil, "bt", _ENV))()
@@ -1565,7 +1566,7 @@ function _Blitzcrank:LoadVariables()
 
 	self.SpellW = { speed = nil, delay = 0.25, range = nil, width = nil, collision = false, aoe = false, type = "linear" }
 
-	self.SpellE = { speed = nil, delay = 0.25, range = 300, width = nil, collision = false, aoe = false, type = "circular" }
+	self.SpellE = { speed = 200, delay = 0.25, range = 300, width = nil, collision = false, aoe = false, type = "circular" }
 
 	self.SpellR = { speed = nil, delay = 0.25, range = 600, width = 200, collision = false, aoe = true, type = "circular" }
 
@@ -1712,8 +1713,6 @@ function _Blitzcrank:Menu()
 
    UPL:AddToMenu(menu)
 
-   menu:addParam("hc", "Prediction Hit Chance", SCRIPT_PARAM_SLICE, 2, 0, 5, 0)
-
    menu:addParam("empty", "", SCRIPT_PARAM_INFO, "")
    menu:addParam("infobox", "            Support Heroes: " .. myHero.charName .. "           ", SCRIPT_PARAM_INFO, "")
    menu:addParam("infobox2", "                      Version:  " .. scriptVersion .. "         ", SCRIPT_PARAM_INFO, "")
@@ -1749,13 +1748,13 @@ function _Blitzcrank:Combo()
             if IsReady(_Q) and menu.spell.q.qcombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qcombomana and GetDistance(Target) < self.SpellQ.range then
                 if not menu.spell.q[Target.charName] and ValidTarget(Target) then
                     local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
-                    if HitChance >= menu.hc then
+                    if HitChance > 0 then
                         CastSpell(_Q, CastPosition.x, CastPosition.z)
                     end
                 end
                 if menu.spell.q[Target.charName] and (100*Target.health/Target.maxHealth) <= menu.spell.q.blacklisthp then
                 local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
-                    if HitChance >= menu.hc then
+                    if HitChance > 0 then
                         CastSpell(_Q, CastPosition.x, CastPosition.z)
                     end
                 end
@@ -1801,13 +1800,13 @@ function _Blitzcrank:Harass()
 		if IsReady(_Q) and menu.spell.q.qharass and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qharassmana and (GetDistance(Target) < 975) then
 			if not menu.spell.q[Target.charName] and ValidTarget(Target) then
 				local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
-				if HitChance >= menu.hc then
+				if HitChance > 0 then
 					CastSpell(_Q, CastPosition.x, CastPosition.z)
 				end
             end
             if menu.spell.q[Target.charName] and (100*Target.health/Target.maxHealth) <= menu.spell.q.blacklisthp then
             local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
-                if HitChance >= menu.hc then
+                if HitChance > 0 then
                     CastSpell(_Q, CastPosition.x, CastPosition.z)
                 end
             end
@@ -1833,13 +1832,13 @@ function _Blitzcrank:ProcessSpell(object, spell)
                 if menu.interrupt["spell".. Interrupt[unit.charName].stop.spellName] and spell.name == Interrupt[unit.charName].stop.spellName then
                     if IsReady(_Q) and menu.interrupt.qinterrupt and GetDistance(object) <= self.SpellQ.range and object and object.valid then
                         local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, object)
-                        if HitChance >= menu.hc then
+                        if HitChance > 0 then
                             DelayAction(function() CastSpell(_Q, CastPosition.x, CastPosition.z) end, menu.humanizer.interruptDelay / 1000)
                         end
                     elseif IsReady(_E) and menu.interrupt.einterrupt and (GetDistance(object) < self.SpellE.range) then
 						DelayAction(function() CastSpell(_E, object) end, menu.humanizer.interruptDelay / 1000)
 						Attack(Target)
-                    elseif IsReady(_R) and menu.interrupt.rinterrupt and (GetDistance(unit) < self.SpellR.range) then
+                    elseif IsReady(_R) and menu.interrupt.rinterrupt and (GetDistance(object) < self.SpellR.range) then
 						DelayAction(function() CastSpell(_R) end, menu.humanizer.interruptDelay / 1000)
                     end
                 end
@@ -1877,7 +1876,7 @@ function _Blitzcrank:OnDraw()
 	end
 	if ValidTarget(Target) and menu.draw.drawcollision and IsReady(_Q) and (GetDistance(Target) <= 975) then
 	   local IsCollision = VPred:CheckMinionCollision(Target, Target.pos, self.SpellQ.delay, self.SpellQ.width, self.SpellQ.range, self.SpellQ.speed, myHero.pos, nil, true)
-			DrawLine3D(myHero.x, myHero.y, myHero.z, Target.x, Target.y, Target.z, 5, IsCollision and ARGB(125, 255, 0,0) or ARGB(125, 0, 255,0))
+		DrawLine3D(myHero.x, myHero.y, myHero.z, Target.x, Target.y, Target.z, 5, IsCollision and ARGB(125, 255, 0,0) or ARGB(125, 0, 255,0))
 	end
 	if menu.draw.drawqflash and menu.flash.qflash and IsReady(sflash) and IsReady(_Q) then
 		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, (975 + 425), ARGB(table.unpack(menu.draw.colorqflash)))
@@ -2122,8 +2121,6 @@ function _Janna:Menu()
 
    UPL:AddToMenu(menu)
 
-   menu:addParam("hc", "Prediction Hit Chance", SCRIPT_PARAM_SLICE, 2, 0, 5, 0)
-
    menu:addParam("empty", "", SCRIPT_PARAM_INFO, "")
    menu:addParam("infobox", "            Support Heroes: " .. myHero.charName .. "           ", SCRIPT_PARAM_INFO, "")
    menu:addParam("infobox2", "                      Version:  " .. scriptVersion .. "         ", SCRIPT_PARAM_INFO, "")
@@ -2235,7 +2232,7 @@ function _Janna:JannaCastQ2(Target)
 	if Target == nil then return end
 	if (GetDistance(Target) <= self.SpellQ.range) and IsReady(_Q) then
 		local CastPosition,  HitChance,  Position = UPL:Predict(_Q, myHero, Target)
-		if CastPosition and HitChance >= menu.hc then
+		if CastPosition and HitChance > 0 then
 		   CastSpell(_Q, CastPosition.x, CastPosition.z)
 	   end
 	end
@@ -2725,8 +2722,6 @@ function _Leona:Menu()
 
    UPL:AddToMenu(menu)
 
-   menu:addParam("hc", "Prediction Hit Chance", SCRIPT_PARAM_SLICE, 2, 0, 5, 0)
-
    menu:addParam("empty", "", SCRIPT_PARAM_INFO, "")
    menu:addParam("infobox", "            Support Heroes: " .. myHero.charName .. "           ", SCRIPT_PARAM_INFO, "")
    menu:addParam("infobox2", "                      Version:  " .. scriptVersion .. "         ", SCRIPT_PARAM_INFO, "")
@@ -2772,7 +2767,7 @@ function _Leona:Combo()
 		if IsReady(_E) and menu.spell.e.ecombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.e.ecombomana and (GetDistance(Target) < 875) then
 			if ValidTarget(Target) and GetDistance(Target) >= menu.spell.e.mindistancee then
 				local CastPosition, HitChance = UPL:Predict(_E, myHero, Target)
-				if HitChance >= menu.hc then
+				if HitChance > 0 then
 					CastSpell(_E, CastPosition.x, CastPosition.z)
 				end
 			end
@@ -2836,7 +2831,7 @@ function _Leona:Harass()
 		if IsReady(_E) and menu.spell.e.eharass and (100 * myHero.mana / myHero.maxMana)>= menu.spell.e.eharassmana and (GetDistance(Target) < 875) then
 			if ValidTarget(Target) and GetDistance(Target) >= menu.spell.e.mindistancee then
 				local CastPosition, HitChance = UPL:Predict(_E, myHero, unit)
-				if HitChance >= menu.hc then
+				if HitChance > 0 then
 					CastSpell(_E, CastPosition.x, CastPosition.z)
 				end
 			end
@@ -2896,7 +2891,7 @@ function _Leona:ProcessSpell(object, spell)
                         DelayAction(function() Attack(object) end, 0)
                     elseif IsReady(_E) and menu.interrupt.einterrupt and GetDistance(object) <= self.SpellE.range then
                         local CastPosition, HitChance = UPL:Predict(_E, myHero, object)
-				        if HitChance >= menu.hc then
+				        if HitChance > 0 then
                         DelayAction(function() CastSpell(_E, CastPosition.x, CastPosition.z) end, menu.humanizer.interruptDelay / 1000)
                         end
                     elseif IsReady(_R) and menu.interrupt.rinterrupt and GetDistance(object) <= self.SpellR.range then
@@ -2967,7 +2962,7 @@ function _Leona:TowerCC()
 			if tower and tower.team == myHero.team and (GetDistance(tower, unit) <= 775) then
 				if menu.snare.esnare and menu.snare["" ..unit.charName] then
 					local CastPosition, HitChance = UPL:Predict(_E, myHero, unit)
-					if HitChance >= menu.hc then
+					if HitChance > 0 then
 						CastSpell(_E, CastPosition.x, CastPosition.z)
 					end
 				elseif menu.snare.qsnare and menu.snare["" ..unit.charName] and (GetDistance(unit) < self.SpellQ.range) then
@@ -3149,8 +3144,6 @@ function _Malphite:Menu()
 
    UPL:AddToMenu(menu)
 
-   menu:addParam("hc", "Prediction Hit Chance", SCRIPT_PARAM_SLICE, 2, 0, 5, 0)
-
    menu:addParam("empty", "", SCRIPT_PARAM_INFO, "")
    menu:addParam("infobox", "            Support Heroes: " .. myHero.charName .. "           ", SCRIPT_PARAM_INFO, "")
    menu:addParam("infobox2", "                      Version:  " .. scriptVersion .. "         ", SCRIPT_PARAM_INFO, "")
@@ -3183,7 +3176,7 @@ function _Malphite:Combo()
 				if IsReady(_R) and menu.spell.r.rcombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.r.rcombomana and (GetDistance(Target) < 1000) then
 					if ValidTarget(Target) then
 						local CastPosition, HitChance = UPL:Predict(_R, myHero, unit)
-						if HitChance >= menu.hc then
+						if HitChance > 0 then
 							local AOECastPosition, MainTargetHitChance, nTargets = VPred:GetCircularAOECastPosition(unit, 0.25, 300, 1000, 1500, myHero)
 							if nTargets >= menu.spell.r.amountenemies and GetDistance(unit) >= menu.spell.r.mindistance then
 							CastSpell(_R, CastPosition.x, CastPosition.z)
@@ -3237,7 +3230,7 @@ function _Malphite:Harass()
 				if IsReady(_R) and menu.spell.r.rharass and (100 * myHero.mana / myHero.maxMana)>= menu.spell.r.rharassmana and (GetDistance(Target) < 1000) then
 					if ValidTarget(Target) then
 						local CastPosition, HitChance = UPL:Predict(_R, myHero, unit)
-						if HitChance >= menu.hc then
+						if HitChance > 0 then
 							local AOECastPosition, MainTargetHitChance, nTargets = VPred:GetCircularAOECastPosition(unit, 0.25, 300, 1000, 1500, myHero)
 							if nTargets >= menu.spell.r.amountenemies and GetDistance(unit) >= menu.spell.r.mindistance then
 							CastSpell(_R, CastPosition.x, CastPosition.z)
@@ -3326,7 +3319,7 @@ function _Malphite:ProcessSpell(object, spell)
                 if menu.interrupt["spell".. Interrupt[unit.charName].stop.spellName] and spell.name == Interrupt[unit.charName].stop.spellName then
                     if IsReady(_R) and menu.interrupt.rinterrupt and GetDistance(object) <= self.SpellR.range then
                         local CastPosition, HitChance = UPL:Predict(_R, myHero, object)
-				        if HitChance >= menu.hc then
+				        if HitChance > 0 then
                         DelayAction(function() CastSpell(_R, CastPosition.x, CastPosition.z) end, menu.humanizer.interruptDelay / 1000)
                         end
                     end
@@ -3561,8 +3554,6 @@ function _Morgana:Menu()
 
    UPL:AddToMenu(menu)
 
-   menu:addParam("hc", "Prediction Hit Chance", SCRIPT_PARAM_SLICE, 2, 0, 5, 0)
-
    menu:addParam("empty", "", SCRIPT_PARAM_INFO, "")
    menu:addParam("infobox", "            Support Heroes: " .. myHero.charName .. "           ", SCRIPT_PARAM_INFO, "")
    menu:addParam("infobox2", "                      Version:  " .. scriptVersion .. "         ", SCRIPT_PARAM_INFO, "")
@@ -3585,7 +3576,7 @@ function _Morgana:TowerCC()
 			if tower and tower.team == myHero.team and (GetDistance(tower, unit) < 775) then
 				if menu.snare.qsnare and menu.snare["" ..unit.charName] and (GetDistance(unit) < self.SpellQ.range) then
 					local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, unit)
-					if HitChance >= menu.hc then
+					if HitChance > 0 then
 						CastSpell(_Q, CastPosition.x,CastPosition.z)
 					end
 				end
@@ -3598,14 +3589,14 @@ function _Morgana:Combo()
 	if not menu.key.comboKey then return end
 	if IsReady(_Q) and menu.spell.q.qcombo and Target and (100 * myHero.mana / myHero.maxMana )>= menu.spell.q.qcombomana and GetDistance(Target) < self.SpellQ.range then
 		local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
-		if HitChance >= menu.hc then
+		if HitChance > 0 then
 			CastSpell(_Q, CastPosition.x, CastPosition.z)
 		end
 	end
 
 	if IsReady(_W) and menu.spell.w.wcombo and Target and (100 * myHero.mana / myHero.maxMana) >= menu.spell.w.wcombomana and GetDistance(Target) < self.SpellW.range then
 		local CastPosition, HitChance, HeroPosition = UPL:Predict(_W, myHero, Target)
-		if HitChance >= menu.hc then
+		if HitChance > 0 then
 			CastSpell(_W, CastPosition.x, CastPosition.z)
 		end
 	end
@@ -3622,14 +3613,14 @@ function _Morgana:Harras()
 	if not menu.key.harassKey and not menu.key.harassToggle then return end
 	if IsReady(_Q) and menu.spell.q.qharass and Target and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qharassmana and GetDistance(Target) < self.SpellQ.range then
 		local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
-		if HitChance >= menu.hc then
+		if HitChance > 0 then
 			CastSpell(_Q, CastPosition.x, CastPosition.z)
 		end
 	end
 
 	if IsReady(_W) and menu.spell.w.wharass and Target and (100 * myHero.mana / myHero.maxMana)>= menu.spell.w.wharassmana and GetDistance(Target) < self.SpellW.range then
 		local CastPosition, HitChance, HeroPosition = UPL:Predict(_W, myHero, Target)
-		if HitChance >= menu.hc then
+		if HitChance > 0 then
 			CastSpell(_W, CastPosition.x, CastPosition.z)
 		end
 	end
@@ -3687,7 +3678,7 @@ end
 
 function _Morgana:ProcessAttack(object,spell)
 	if object.team ~= myHero.team and not myHero.dead and object.name ~= nil and not (object.name:find("Minion_") or object.name:find("Odin")) then
-		local shieldREADY = IsReady(_W)
+		local shieldREADY = IsReady(_E)
 		local HitFirst = false
 		local shieldtarget,SLastDistance,SLastDmgPercent = nil,nil,nil
 		local ulttarget,ULastDistance,ULastDmgPercent = nil,nil,nil
@@ -3700,7 +3691,6 @@ function _Morgana:ProcessAttack(object,spell)
 			if casttype == 4 or casttype == 5 or casttype == 6 then
 				return
 			end
-
 			Shield = true
 
 				if spelltype == "Q" or spelltype == "W" or spelltype == "E" or spelltype == "R" or spelltype == "P" or spelltype == "QM" or spelltype == "WM" or spelltype == "EM" then
@@ -3741,7 +3731,7 @@ function _Morgana:ProcessAttack(object,spell)
 							elseif shottype == 7 then
 							hitchampion = checkhitcone(spell.endPos, object, radius, maxdistance, allytarget, allyHitBox)
 							end
-							if shieldREADY and menu.as["teammateshield" .. i] and GetDistance(allytarget) <= self.SpellW.range then
+							if shieldREADY and menu.as["teammateshield" .. i] and GetDistance(allytarget) <= self.SpellE.range then
 							local shieldflag, dmgpercent = self:shieldCheck(object,spell,allytarget,"shields")
 								if shieldflag then
 									if HitFirst and (SLastDistance == nil or SLastDistance >= GetDistance(allytarget, object)) then
@@ -3793,22 +3783,22 @@ function _Morgana:shieldCheck(object,spell,target,typeused)
 	  elseif spell.name:find("SummonerDot") then
 		skilldamage = getDmg("IGNITE", target, object)
 	  end
-			  for i = 1, heroManager.iCount do
-				local ally = heroManager:GetHero(i)
-				if ally.team == myHero.team then
-			  local dmgpercent = skilldamage * 100 / target.health
-			  local dmgneeded = dmgpercent >= menu.as.mindmgpercent
-			  local hpneeded =  menu.as["maxhppercent"..i] >= (target.health - skilldamage) * 100 / target.maxHealth
-				  if dmgneeded and hpneeded then
-					  shieldflag = true
-				  elseif (typeused == "shields" or typeused == "wall") and (CC == 2 and menu.as.shieldCC or CC == 1 and menu.as.shieldslow) then
-					  shieldflag = true
-				  end
-				  return shieldflag, dmgpercent
-				  end
-			  end
+	  for i = 1, heroManager.iCount do
+		local ally = heroManager:GetHero(i)
+		if ally.team == myHero.team then
+		  local dmgpercent = skilldamage * 100 / target.health
+		  local dmgneeded = dmgpercent >= menu.as.mindmgpercent
+		  local hpneeded =  menu.as["maxhppercent"..i] >= (target.health - skilldamage) * 100 / target.maxHealth
+		  if dmgneeded and hpneeded then
+			  shieldflag = true
+		  elseif (typeused == "shields" or typeused == "wall") and (CC == 2 and menu.as.shieldCC or CC == 1 and menu.as.shieldslow) then
+			  shieldflag = true
+		  end
+		  return shieldflag, dmgpercent
 		  end
 	  end
+  end
+end
 
 Class ("_MovementBlock")
 function _MovementBlock:__init()
@@ -4043,8 +4033,6 @@ function _Nami:Menu()
 
 	UPL:AddToMenu(menu)
 
-	menu:addParam("hc", "Prediction Hit Chance", SCRIPT_PARAM_SLICE, 2, 0, 5, 0)
-
 	menu:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 	menu:addParam("infobox", "            Support Heroes: " .. myHero.charName .. "           ", SCRIPT_PARAM_INFO, "")
 	menu:addParam("infobox2", "                      Version:  " .. scriptVersion .. "         ", SCRIPT_PARAM_INFO, "")
@@ -4130,7 +4118,7 @@ function _Nami:Combo()
 	if Target and IsReady(_Q) and menu.spell.q.qcombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qcombomana and (GetDistance(Target) < self.SpellQ.range) then
 		if ValidTarget(Target) then
 			local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
-			if HitChance >= menu.hc then
+			if HitChance > 0 then
 				CastSpell(_Q, CastPosition.x, CastPosition.z)
 			end
 		end
@@ -4154,7 +4142,7 @@ function _Nami:Harras()
 	if Target and IsReady(_Q) and menu.spell.q.qharass and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qharassmana and (GetDistance(Target) < self.SpellQ.range) then
 		if ValidTarget(Target) then
 			local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
-			if HitChance >= menu.hc then
+			if HitChance > 0 then
 				CastSpell(_Q, CastPosition.x, CastPosition.z)
 			end
 		end
@@ -4178,7 +4166,7 @@ function _Nami:GetRTarget()
 		if GetDistance(v) < self.SpellR.range then
 			if v and not v.dead and ValidTarget(v) then
 				CastPosition, HitChance, HeroPosition = UPL:Predict(_R, v)
-				if HitChance >= menu.hc then
+				if HitChance > 0 then
 					target = v
 				end
 			end
@@ -4273,7 +4261,7 @@ function _Nami:LaneClear()
 		if (Minion ~= nil) then
 			if IsReady(_Q) and menu.farm.qlaneclear and (100 * myHero.mana / myHero.maxMana)>= menu.farm.qclearmana and GetDistance(Minion) < self.SpellQ.range then
 				local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Minion)
-				if HitChance >= menu.hc then
+				if HitChance > 0 then
 					CastSpell(_Q, CastPosition.x, CastPosition.z)
 				end
 			end
@@ -4640,8 +4628,6 @@ function _Sona:Menu()
 
    UPL:AddToMenu(menu)
 
-   menu:addParam("hc", "Prediction Hit Chance", SCRIPT_PARAM_SLICE, 2, 0, 5, 0)
-
    menu:addParam("empty", "", SCRIPT_PARAM_INFO, "")
    menu:addParam("infobox", "            Support Heroes: " .. myHero.charName .. "           ", SCRIPT_PARAM_INFO, "")
    menu:addParam("infobox2", "                      Version:  " .. scriptVersion .. "         ", SCRIPT_PARAM_INFO, "")
@@ -4715,7 +4701,7 @@ function _Sona:Combo()
                 if ValidTarget(Target) then
                     local CastPosition, HitChance, HeroPosition = UPL:Predict(_R, myHero, Target)
                     local AOECastPosition, MainTargetHitChance, nTargets = VPred:GetCircularAOECastPosition(unit, self.SpellR.delay, 200, self.SpellR.range, self.SpellR.speed, myHero)
-                    if nTargets >= menu.spell.r.rminenemyscombo and HitChance >= menu.hc then
+                    if nTargets >= menu.spell.r.rminenemyscombo and HitChance > 0 then
                         CastSpell(_R, CastPosition.x, CastPosition.z)
                     end
                 end
@@ -4756,7 +4742,7 @@ function _Sona:Harass()
             if ValidTarget(Target) then
                 local CastPosition, HitChance, HeroPosition = UPL:Predict(_R, myHero, Target)
                 local AOECastPosition, MainTargetHitChance, nTargets = VPred:GetCircularAOECastPosition(unit, self.SpellR.delay, self.SpellR.radius, self.SpellR.range, self.SpellR.speed, myHero)
-				if nTargets >= menu.spell.r.rminenemysharass and HitChance >= menu.hc then
+				if nTargets >= menu.spell.r.rminenemysharass and HitChance > 0 then
                     CastSpell(_R, CastPosition.x, CastPosition.z)
                 end
             end
@@ -5044,7 +5030,7 @@ function _Sona:TowerCC()
 			if tower and tower.team == myHero.team and (GetDistance(tower, unit) < 775) then
 				if menu.snare.rsnare and menu.snare["" ..unit.charName] and GetDistance(unit) < self.SpellR.range then
 					local CastPosition, HitChance, HeroPosition = UPL:Predict(_R, myHero, Target)
-		            if HitChance >= menu.hc then
+		            if HitChance > 0 then
 			            CastSpell(_R, CastPosition.x, CastPosition.z)
 		            end
 				end
@@ -5100,6 +5086,7 @@ function _Soraka:OnTick()
 	self:Harass()
 	self:LaneClear()
 	self:TowerCC()
+
 end
 
 function _Soraka:Menu()
@@ -5228,8 +5215,6 @@ function _Soraka:Menu()
 
    UPL:AddToMenu(menu)
 
-   menu:addParam("hc", "Prediction Hit Chance", SCRIPT_PARAM_SLICE, 2, 0, 5, 0)
-
    menu:addParam("empty", "", SCRIPT_PARAM_INFO, "")
    menu:addParam("infobox", "            Support Heroes: " .. myHero.charName .. "           ", SCRIPT_PARAM_INFO, "")
    menu:addParam("infobox2", "                      Version:  " .. scriptVersion .. "         ", SCRIPT_PARAM_INFO, "")
@@ -5268,7 +5253,7 @@ function _Soraka:AutoUlt()
 	for i = 1, heroManager.iCount do
 		local unit = heroManager:GetHero(i)
 		if unit.team == myHero.team then
-            if IsReady(_R) then
+            if IsReady(_R) and not _Tech:InFountain() then
 				if menu.spell.r["teammateult".. i] then
 					if (100 * unit.health / unit.maxHealth) <= menu.spell.r["maxhppercent"..i] --[[and GetDistance(unit, enemy) <= 800]] then
 						if unit.type == myHero.type and not unit.isDead then
@@ -5287,7 +5272,7 @@ function _Soraka:Combo()
         if IsReady(_Q) and menu.spell.q.qcombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qcombomana and (GetDistance(Target) < self.SpellQ.range) then
             if ValidTarget(Target) then
                 local CastPosition, HitChance = UPL:Predict(_Q, myHero, Target)
-                if HitChance >= menu.hc then
+                if HitChance > 0 then
                     CastSpell(_Q, CastPosition.x, CastPosition.z)
                 end
             end
@@ -5295,7 +5280,7 @@ function _Soraka:Combo()
         if IsReady(_E) and menu.spell.e.ecombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.e.ecombomana and (GetDistance(Target) < self.SpellE.range) then
             if ValidTarget(Target) then
                 local CastPosition, HitChance = UPL:Predict(_E, myHero, Target)
-                if HitChance >= menu.hc then
+                if HitChance > 0 then
                     CastSpell(_E, CastPosition.x, CastPosition.z)
                 end
             end
@@ -5309,7 +5294,7 @@ function _Soraka:Harass()
         if IsReady(_Q) and menu.spell.q.qharass and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qharassmana and (GetDistance(Target) < self.SpellQ.range) then
             if ValidTarget(Target) then
                 local CastPosition, HitChance = UPL:Predict(_Q, myHero, Target)
-                if HitChance >= menu.hc then
+                if HitChance > 0 then
                     CastSpell(_Q, CastPosition.x, CastPosition.z)
                 end
             end
@@ -5317,7 +5302,7 @@ function _Soraka:Harass()
         if IsReady(_E) and menu.spell.e.eharass and (100 * myHero.mana / myHero.maxMana)>= menu.spell.e.eharassmana and (GetDistance(Target) < self.SpellE.range) then
             if ValidTarget(Target) then
                 local CastPosition, HitChance = UPL:Predict(_E, myHero, Target)
-                if HitChance >= menu.hc then
+                if HitChance > 0 then
                     CastSpell(_E, CastPosition.x, CastPosition.z)
                 end
             end
@@ -5384,7 +5369,7 @@ function _Soraka:ProcessSpell(object, spell)
                 if IsReady(_E) and menu.interrupt.einterrupt and menu.interrupt["spell".. Interrupt[unit.charName].stop.spellName] then
                     if spell.name == Interrupt[unit.charName].stop.spellName and GetDistance(object) <= self.SpellE.range then
                         local CastPosition, HitChance, HeroPosition = UPL:Predict(_E, myHero, object)
-                        if HitChance >= menu.hc then
+                        if HitChance > 0 then
                             DelayAction(function() CastSpell(_E, CastPosition.x, CastPosition.z) end, menu.humanizer.interruptDelay / 1000)
                         end
                     end
@@ -5627,8 +5612,6 @@ function _Thresh:Menu()
 
    UPL:AddToMenu(menu)
 
-   menu:addParam("hc", "Prediction Hit Chance", SCRIPT_PARAM_SLICE, 2, 0, 5, 0)
-
    menu:addParam("empty", "", SCRIPT_PARAM_INFO, "")
    menu:addParam("infobox", "            Support Heroes: " .. myHero.charName .. "           ", SCRIPT_PARAM_INFO, "")
    menu:addParam("infobox2", "                      Version:  " .. scriptVersion .. "         ", SCRIPT_PARAM_INFO, "")
@@ -5654,7 +5637,7 @@ function _Thresh:OnProcessAttack(object,spell)
 							if IsReady(_E) and GetDistance(enemy) < self.SpellE.range then return end
 							if ValidTarget(enemy) then
 								local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, enemy)
-								if HitChance >= menu.hc then
+								if HitChance > 0 then
 									CastSpell(_Q, CastPosition.x, CastPosition.z)
 									DelayAction(function() _Thresh:CastQ2() end , 1.4 + self.SpellQ.delay)
 								end
@@ -5805,14 +5788,14 @@ function _Thresh:Combo()
 			if IsReady(_E) and GetDistance(Target) < self.SpellE.range then return end
 			if not menu.spell.q[Target.charName] and ValidTarget(Target) then
 				local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
-				if HitChance >= menu.hc then
+				if HitChance > 0 then
 					CastSpell(_Q, CastPosition.x, CastPosition.z)
 					DelayAction(function() _Thresh:CastQ2() end , 1.4 + self.SpellQ.delay)
 				end
 			end
             if menu.spell.q[Target.charName] and (100*Target.health/Target.maxHealth) <= menu.spell.q.blacklisthp then
             local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
-                if HitChance >= menu.hc then
+                if HitChance > 0 then
                     CastSpell(_Q, CastPosition.x, CastPosition.z)
                     DelayAction(function() _Thresh:CastQ2() end , 1.4 + self.SpellQ.delay)
                 end
@@ -5838,7 +5821,7 @@ function _Thresh:FlashCombo()
 			if IsReady(_E) and GetDistance(Target) < self.SpellE.range then
 				if ValidTarget(Target) then
 					local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
-					if HitChance >= menu.hc then
+					if HitChance > 0 then
 						CastSpell(_Q, CastPosition.x, CastPosition.z)
 						DelayAction(function() _Thresh:CastQ2() end , 1.4 + self.SpellQ.delay)
 					end
@@ -5856,7 +5839,7 @@ function _Thresh:FlashCombo()
 			end
 
 			local CastPosition, HitChance = UPL:Predict(_E, flashPos, Target)
-			if HitChance >= menu.hc and type(CastPosition.x) == "number" and type(CastPosition.z) == "number" then
+			if HitChance > 0 and type(CastPosition.x) == "number" and type(CastPosition.z) == "number" then
 				flashPos = myHero + 425 * (Vector(CastPosition) - Vector(myHero)):normalized()
 				CastSpell(sflash, flashPos.x, flashPos.z)
 
@@ -5879,7 +5862,7 @@ function _Thresh:FlashCombo()
 			end
 
 			local CastPosition, HitChance = UPL:Predict(_Q, flashPos, Target)
-			if HitChance >= menu.hc and type(CastPosition.x) == "number" and type(CastPosition.z) == "number" then
+			if HitChance > 0 and type(CastPosition.x) == "number" and type(CastPosition.z) == "number" then
 				flashPos = myHero + 425 * (Vector(CastPosition) - Vector(myHero)):normalized()
 				CastSpell(sflash, flashPos.x, flashPos.z)
 				_Tech:FlashComboPosition(_Q, CastPosition.x, CastPosition.z)
@@ -5903,14 +5886,14 @@ function _Thresh:Harass()
 			if IsReady(_E) and GetDistance(Target) < self.SpellE.range then return end
 			if not menu.spell.q[Target.charName] and ValidTarget(Target) then
 				local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
-				if HitChance >= menu.hc then
+				if HitChance > 0 then
 					CastSpell(_Q, CastPosition.x, CastPosition.z)
 					DelayAction(function() _Thresh:CastQ2() end , 1.4 + self.SpellQ.delay)
 				end
 			end
             if menu.spell.q[Target.charName] and (100*Target.health/Target.maxHealth) <= menu.spell.q.blacklisthp then
             local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
-                if HitChance >= menu.hc then
+                if HitChance > 0 then
                     CastSpell(_Q, CastPosition.x, CastPosition.z)
                     DelayAction(function() _Thresh:CastQ2() end , 1.4 + self.SpellQ.delay)
                 end
@@ -6243,6 +6226,40 @@ function _Tech:GetLowestAlly(range)
 	end
 	return LowestAlly
 end
+
+local _fountain
+local _fountainRadius = 750
+function _Tech:GetFountain()
+    if _fountain ~= nil then return _fountain end
+    if GetGame().map.index == 1 then
+        _fountainRadius = 1050
+    end
+
+    for i = 1, objManager.maxObjects, 1 do
+        local object = objManager:getObject(i)
+        if object ~= nil and object.type == "obj_SpawnPoint" then
+            _fountain = Vector(object)
+            return _fountain
+        end
+    end
+end
+
+function _Tech:NearFountain()
+    distance = distance or _fountainRadius or 0
+	for i = 1, allyCount do
+		local ally = allyHeroes[i]
+		if self:GetFountain() then
+		    return (GetDistanceSqr(_fountain, ally) <= distance * distance), _fountain.x, _fountain.y, _fountain.z, distance
+		else
+			return false, 0, 0, 0, 0
+		end
+	end
+end
+
+function _Tech:InFountain()
+    return self:NearFountain()
+end
+
 
 -- Passive Timers --
 function _Tech:getPassiveTime(tar, buffName)
