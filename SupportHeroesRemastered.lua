@@ -11,7 +11,7 @@ I UNDERSTAND MY INDENTATION IS WEIRD. C&P TO GITHUB MESSED IT ALL UP!
 
 1.43 Change Log:
 
-1) 6.5 Update
+1) 6.6 Update
 ]]
 
 local scriptVersion = 1.43
