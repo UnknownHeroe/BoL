@@ -1564,7 +1564,7 @@ function _Blitzcrank:__init()
 end
 
 function _Blitzcrank:LoadVariables()
-	self.SpellQ = { speed = 1800, delay = 0.25, range = 975, width = 70, collision = true, aoe = false, type = "linear"}
+	self.SpellQ = { speed = 1800, delay = 0.25, range = 925, width = 70, collision = true, aoe = false, type = "linear"}
 
 	self.SpellW = { speed = nil, delay = 0.25, range = nil, width = nil, collision = false, aoe = false, type = "linear" }
 
