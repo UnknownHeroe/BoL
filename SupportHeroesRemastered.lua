@@ -500,7 +500,7 @@ function _Activator:Exhaust()
 		local unit = enemyHeroes[i]
 			if menu.key.comboKey then
 				if ValidTarget(Target) and Target.team ~= myHero.team and menu.activator.exhaust["exhausttarget".. unit.charName] and (100*Target.health/Target.maxHealth) < menu.activator.exhaust["exhausthp".. unit.charName] then
-					if IsReady(sexhaust) and (GetDistance(Target) < 625) then
+					if IsReady(sexhaust) and (GetDistance(Target) < 650) then
 						CastSpell(sexhaust, Target)
 					end
 				end
@@ -530,7 +530,7 @@ function _Activator:Ignite()
    if Target == nil then return end
    if ValidTarget(Target) and menu.activator.ignite.ign then
 		local igniteDmg = 50+(myHero.level*20)
-		if IsReady(signite) and (Target.health <= igniteDmg) and (GetDistance(Target) < 500) then
+		if IsReady(signite) and (Target.health <= igniteDmg) and (GetDistance(Target) < 600) then
 		  CastSpell(signite, Target)
 		end
 	end
@@ -573,7 +573,7 @@ function _Activator:LocketOfIronSolari()
 		if unit.team == myHero.team then
 			if slot ~= nil and IsReady(slot) then
 				if menu.activator.lois["shield".. unit.charName] and (100*unit.health/unit.maxHealth) <= menu.activator.lois["shieldhppercent"..i] then
-					if (GetDistance(unit) < 750) and (GetDistance(Target) <= 700) then
+					if (GetDistance(unit) < 600) and (GetDistance(Target) <= 700) then
 						DelayAction(function() CastSpell(slot, unit) end, menu.humanizer.shieldDelay / 1000)
 					end
 				end
@@ -1157,7 +1157,7 @@ end
 function _Annie:LoadVariables()
 	self.SpellQ = { speed = 1400, delay = 0.5, range = 625, width = nil, collision = false, aoe = false, type = "linear" }
 
-	self.SpellW = { speed = math.huge, delay = 0.25, range = 625, width = 200, collision = false, aoe = true, type = "linear" }
+	self.SpellW = { speed = math.huge, delay = 0.25, range = 600, width = 200, collision = false, aoe = true, type = "linear" }
 
 	self.SpellE = { speed = 20, delay = 0.25, range = nil, width = nil, collision = false, aoe = true, type = "circular" }
 
@@ -2565,7 +2565,7 @@ function _Leona:__init()
 end
 
 function _Leona:LoadVariables()
-	self.SpellQ = { speed = 1800, delay = 0.25, range = 175, width = 70, collision = false, aoe = false, type = "nil"}
+	self.SpellQ = { speed = 1800, delay = 0.25, range = 100, width = 70, collision = false, aoe = false, type = "nil"}
 
 	self.SpellW = { speed = nil, delay = 0.25, range = 450, width = 150, collision = false, aoe = false, type = "Circular" }
 
@@ -3003,9 +3003,9 @@ end
 function _Malphite:LoadVariables()
 	self.SpellQ = { speed = 1800, delay = 0.25, range = 625, width = 70, collision = false, aoe = false, type = "linear"}
 
-	self.SpellW = { speed = nil, delay = 0.25, range = 225, width = 150, collision = false, aoe = false, type = "linear" }
+	self.SpellW = { speed = nil, delay = 0.25, range = 400, width = 150, collision = false, aoe = false, type = "linear" }
 
-	self.SpellE = { speed = nil, delay = 0.25, range = 200, width = 200, collision = false, aoe = true, type = "circular" }
+	self.SpellE = { speed = nil, delay = 0.25, range = 400, width = 200, collision = false, aoe = true, type = "circular" }
 
 	self.SpellR = { speed = 2000, delay = 0.25, range = 1000, width = 200, collision = false, aoe = true, type = "linear" }
 
@@ -3847,7 +3847,7 @@ function _Nami:LoadVariables()
 	self.SpellQ = { speed = math.huge, delay = 0.925, range = 875, width = 162, collision = false, aoe = true, type = "circular"}
 	self.SpellW = { delay = 0.25, range = 725}
 	self.SpellE = { delay = 0.25, range = 800}
-	self.SpellR = { speed = 859, delay = 0.25, range = 2750, width = 562, collision = false, aoe = true, type = "linear"}
+	self.SpellR = { speed = 859, delay = 0.25, range = 2550, width = 562, collision = false, aoe = true, type = "linear"}
 
 	UPL:AddSpell(_Q, self.SpellQ)
 	UPL:AddSpell(_R, self.SpellR)
