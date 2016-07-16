@@ -7,17 +7,17 @@
  |____/   \__,_| | .__/  | .__/   \___/  |_|     \__| |_| |_|  \___| |_|     \___/   \___| |___/
                  |_|     |_|
 
-I UNDERSTAND MY INDENTATION IS WEIRD! C&P TO GITHUB MESSED IT ALL UP!
+I UNDERSTAND MY INDENTATION IS WEIRD. C&P TO GITHUB MESSED IT ALL UP!
 
-1.47 Change Log:
+1.48 Change Log:
 
-1) 6.13 Update
-2) Fixed Thresh Q2
-3) Updated All Champion Spell Values
+1) 6.14 Update
+2) Fixed Sona R Spam
+3) Updated Some Champion Values I Forgot..
 
 ]]
 
-local scriptVersion = 1.47
+local scriptVersion = 1.48
 
  -- BoL Tools --
 assert(load(Base64Decode("G0x1YVIAAQQEBAgAGZMNChoKAAAAAAAAAAAAAQpQAAAABAAAAEYAQAClAAAAXUAAAUZAQAClQAAAXUAAAWWAAAAIQACBZcAAAAhAgIFLAAAAgQABAMZAQQDHgMEBAQEBAKGACoCGQUEAjMFBAwACgAKdgYABmwEAABcACYDHAUID2wEAABdACIDHQUIDGIDCAxeAB4DHwUIDzAHDA0FCAwDdgYAB2wEAABdAAoDGgUMAx8HDAxgAxAMXgACAwUEEANtBAAAXAACAwYEEAEqAgQMXgAOAx8FCA8wBwwNBwgQA3YGAAdsBAAAXAAKAxoFDAMfBwwMYAMUDF4AAgMFBBADbQQAAFwAAgMGBBABKgIEDoMD0f4ZARQDlAAEAnUAAAYaARQDBwAUAnUAAAYbARQDlQAEAisAAjIbARQDlgAEAisCAjIbARQDlwAEAisAAjYbARQDlAAIAisCAjR8AgAAcAAAABBIAAABBZGRVbmxvYWRDYWxsYmFjawAEFAAAAEFkZEJ1Z3NwbGF0Q2FsbGJhY2sABAwAAABUcmFja2VyTG9hZAAEDQAAAEJvbFRvb2xzVGltZQADAAAAAAAA8D8ECwAAAG9iak1hbmFnZXIABAsAAABtYXhPYmplY3RzAAQKAAAAZ2V0T2JqZWN0AAQGAAAAdmFsaWQABAUAAAB0eXBlAAQHAAAAb2JqX0hRAAQFAAAAbmFtZQAEBQAAAGZpbmQABAIAAAAxAAQHAAAAbXlIZXJvAAQFAAAAdGVhbQADAAAAAAAAWUAECAAAAE15TmV4dXMABAsAAABUaGVpck5leHVzAAQCAAAAMgADAAAAAAAAaUAEFQAAAEFkZERlbGV0ZU9iakNhbGxiYWNrAAQGAAAAY2xhc3MABA4AAABTY3JpcHRUcmFja2VyAAQHAAAAX19pbml0AAQSAAAAU2VuZFZhbHVlVG9TZXJ2ZXIABAoAAABzZW5kRGF0YXMABAsAAABHZXRXZWJQYWdlAAkAAAACAAAAAwAAAAAAAwkAAAAFAAAAGABAABcAAIAfAIAABQAAAAxAQACBgAAAHUCAAR8AgAADAAAAAAQSAAAAU2VuZFZhbHVlVG9TZXJ2ZXIABAcAAAB1bmxvYWQAAAAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAEAAAABQAAAAAAAwkAAAAFAAAAGABAABcAAIAfAIAABQAAAAxAQACBgAAAHUCAAR8AgAADAAAAAAQSAAAAU2VuZFZhbHVlVG9TZXJ2ZXIABAkAAABidWdzcGxhdAAAAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAUAAAAHAAAAAQAEDQAAAEYAwACAAAAAXYAAAUkAAABFAAAATEDAAMGAAABdQIABRsDAAKUAAADBAAEAXUCAAR8AgAAFAAAABA4AAABTY3JpcHRUcmFja2VyAAQSAAAAU2VuZFZhbHVlVG9TZXJ2ZXIABAUAAABsb2FkAAQMAAAARGVsYXlBY3Rpb24AAwAAAAAAQHpAAQAAAAYAAAAHAAAAAAADBQAAAAUAAAAMAEAAgUAAAB1AgAEfAIAAAgAAAAQSAAAAU2VuZFZhbHVlVG9TZXJ2ZXIABAgAAAB3b3JraW5nAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAEAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA0AAAAAAAYyAAAABgBAAB2AgAAaQEAAF4AAgEGAAABfAAABF0AKgEYAQQBHQMEAgYABAMbAQQDHAMIBEEFCAN0AAAFdgAAACECAgUYAQQBHQMEAgYABAMbAQQDHAMIBEMFCAEbBQABPwcICDkEBAt0AAAFdgAAACEAAhUYAQQBHQMEAgYABAMbAQQDHAMIBBsFAAA9BQgIOAQEARoFCAE/BwgIOQQEC3QAAAV2AAAAIQACGRsBAAIFAAwDGgEIAAUEDAEYBQwBWQIEAXwAAAR8AgAAOAAAABA8AAABHZXRJbkdhbWVUaW1lcgADAAAAAAAAAAAECQAAADAwOjAwOjAwAAQGAAAAaG91cnMABAcAAABzdHJpbmcABAcAAABmb3JtYXQABAYAAAAlMDIuZgAEBQAAAG1hdGgABAYAAABmbG9vcgADAAAAAAAgrEAEBQAAAG1pbnMAAwAAAAAAAE5ABAUAAABzZWNzAAQCAAAAOgAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAABUAAAAcAAAAAQAFIwAAABsAAAAXwAeARwBAAFsAAAAXAAeARkBAAFtAAAAXQAaACIDAgEfAQABYAMEAF4AAgEfAQAAYQMEAF4AEgEaAwQCAAAAAxsBBAF2AgAGGgMEAwAAAAAYBQgCdgIABGUAAARcAAYBFAAABTEDCAMGAAgBdQIABF8AAgEUAAAFMQMIAwcACAF1AgAEfAIAADAAAAAQGAAAAdmFsaWQABAcAAABEaWRFbmQAAQEEBQAAAG5hbWUABB4AAABTUlVfT3JkZXJfbmV4dXNfc3dpcmxpZXMudHJveQAEHgAAAFNSVV9DaGFvc19uZXh1c19zd2lybGllcy50cm95AAQMAAAAR2V0RGlzdGFuY2UABAgAAABNeU5leHVzAAQLAAAAVGhlaXJOZXh1cwAEEgAAAFNlbmRWYWx1ZVRvU2VydmVyAAQEAAAAd2luAAQGAAAAbG9vc2UAAAAAAAMAAAABAQAAAQAAAAAAAAAAAAAAAAAAAAAAHQAAAB0AAAACAAICAAAACkAAgB8AgAABAAAABAoAAABzY3JpcHRLZXkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHQAAAB4AAAACAAUKAAAAhgBAAMAAgACdgAABGEBAARfAAICFAIAAjIBAAQABgACdQIABHwCAAAMAAAAEBQAAAHR5cGUABAcAAABzdHJpbmcABAoAAABzZW5kRGF0YXMAAAAAAAIAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAB8AAAAuAAAAAgATPwAAAApAAICGgEAAnYCAAAqAgICGAEEAxkBBAAaBQQAHwUECQQECAB2BAAFGgUEAR8HBAoFBAgBdgQABhoFBAIfBQQPBgQIAnYEAAcaBQQDHwcEDAcICAN2BAAEGgkEAB8JBBEECAwAdggABFgECAt0AAAGdgAAACoCAgYaAQwCdgIAACoCAhgoAxIeGQEQAmwAAABdAAIAKgMSHFwAAgArAxIeGQEUAh4BFAQqAAIqFAIAAjMBFAQEBBgBBQQYAh4FGAMHBBgAAAoAAQQIHAIcCRQDBQgcAB0NAAEGDBwCHw0AAwcMHAAdEQwBBBAgAh8RDAFaBhAKdQAACHwCAACEAAAAEBwAAAGFjdGlvbgAECQAAAHVzZXJuYW1lAAQIAAAAR2V0VXNlcgAEBQAAAGh3aWQABA0AAABCYXNlNjRFbmNvZGUABAkAAAB0b3N0cmluZwAEAwAAAG9zAAQHAAAAZ2V0ZW52AAQVAAAAUFJPQ0VTU09SX0lERU5USUZJRVIABAkAAABVU0VSTkFNRQAEDQAAAENPTVBVVEVSTkFNRQAEEAAAAFBST0NFU1NPUl9MRVZFTAAEEwAAAFBST0NFU1NPUl9SRVZJU0lPTgAECwAAAGluZ2FtZVRpbWUABA0AAABCb2xUb29sc1RpbWUABAYAAABpc1ZpcAAEAQAAAAAECQAAAFZJUF9VU0VSAAMAAAAAAADwPwMAAAAAAAAAAAQJAAAAY2hhbXBpb24ABAcAAABteUhlcm8ABAkAAABjaGFyTmFtZQAECwAAAEdldFdlYlBhZ2UABA4AAABib2wtdG9vbHMuY29tAAQXAAAAL2FwaS9ldmVudHM/c2NyaXB0S2V5PQAECgAAAHNjcmlwdEtleQAECQAAACZhY3Rpb249AAQLAAAAJmNoYW1waW9uPQAEDgAAACZib2xVc2VybmFtZT0ABAcAAAAmaHdpZD0ABA0AAAAmaW5nYW1lVGltZT0ABAgAAAAmaXNWaXA9AAAAAAACAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAvAAAAMwAAAAMACiEAAADGQEAAAYEAAN2AAAHHwMAB3YCAAArAAIDHAEAAzADBAUABgACBQQEA3UAAAscAQADMgMEBQcEBAIABAAHBAQIAAAKAAEFCAgBWQYIC3UCAAccAQADMgMIBQcECAIEBAwDdQAACxwBAAMyAwgFBQQMAgYEDAN1AAAIKAMSHCgDEiB8AgAASAAAABAcAAABTb2NrZXQABAgAAAByZXF1aXJlAAQHAAAAc29ja2V0AAQEAAAAdGNwAAQIAAAAY29ubmVjdAADAAAAAAAAVEAEBQAAAHNlbmQABAUAAABHRVQgAAQSAAAAIEhUVFAvMS4wDQpIb3N0OiAABAUAAAANCg0KAAQLAAAAc2V0dGltZW91dAADAAAAAAAAAAAEAgAAAGIAAwAAAPyD15dBBAIAAAB0AAQKAAAATGFzdFByaW50AAQBAAAAAAQFAAAARmlsZQAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAA="), nil, "bt", _ENV))()
@@ -500,7 +500,7 @@ function _Activator:Exhaust()
 		local unit = enemyHeroes[i]
 			if menu.key.comboKey then
 				if ValidTarget(Target) and Target.team ~= myHero.team and menu.activator.exhaust["exhausttarget".. unit.charName] and (100*Target.health/Target.maxHealth) < menu.activator.exhaust["exhausthp".. unit.charName] then
-					if IsReady(sexhaust) and (GetDistance(Target) < 650) then
+					if IsReady(sexhaust) and (GetDistance(Target) < 625) then
 						CastSpell(sexhaust, Target)
 					end
 				end
@@ -530,7 +530,7 @@ function _Activator:Ignite()
    if Target == nil then return end
    if ValidTarget(Target) and menu.activator.ignite.ign then
 		local igniteDmg = 50+(myHero.level*20)
-		if IsReady(signite) and (Target.health <= igniteDmg) and (GetDistance(Target) < 600) then
+		if IsReady(signite) and (Target.health <= igniteDmg) and (GetDistance(Target) < 500) then
 		  CastSpell(signite, Target)
 		end
 	end
@@ -573,7 +573,7 @@ function _Activator:LocketOfIronSolari()
 		if unit.team == myHero.team then
 			if slot ~= nil and IsReady(slot) then
 				if menu.activator.lois["shield".. unit.charName] and (100*unit.health/unit.maxHealth) <= menu.activator.lois["shieldhppercent"..i] then
-					if (GetDistance(unit) < 600) and (GetDistance(Target) <= 700) then
+					if (GetDistance(unit) < 750) and (GetDistance(Target) <= 700) then
 						DelayAction(function() CastSpell(slot, unit) end, menu.humanizer.shieldDelay / 1000)
 					end
 				end
@@ -1157,7 +1157,7 @@ end
 function _Annie:LoadVariables()
 	self.SpellQ = { speed = 1400, delay = 0.5, range = 625, width = nil, collision = false, aoe = false, type = "linear" }
 
-	self.SpellW = { speed = math.huge, delay = 0.25, range = 600, width = 200, collision = false, aoe = true, type = "linear" }
+	self.SpellW = { speed = math.huge, delay = 0.25, range = 625, width = 200, collision = false, aoe = true, type = "linear" }
 
 	self.SpellE = { speed = 20, delay = 0.25, range = nil, width = nil, collision = false, aoe = true, type = "circular" }
 
@@ -1564,7 +1564,7 @@ function _Blitzcrank:__init()
 end
 
 function _Blitzcrank:LoadVariables()
-	self.SpellQ = { speed = 1800, delay = 0.25, range = 925, width = 70, collision = true, aoe = false, type = "linear"}
+	self.SpellQ = { speed = 1800, delay = 0.25, range = 975, width = 70, collision = true, aoe = false, type = "linear"}
 
 	self.SpellW = { speed = nil, delay = 0.25, range = nil, width = nil, collision = false, aoe = false, type = "linear" }
 
@@ -2565,7 +2565,7 @@ function _Leona:__init()
 end
 
 function _Leona:LoadVariables()
-	self.SpellQ = { speed = 1800, delay = 0.25, range = 100, width = 70, collision = false, aoe = false, type = "nil"}
+	self.SpellQ = { speed = 1800, delay = 0.25, range = 175, width = 70, collision = false, aoe = false, type = "nil"}
 
 	self.SpellW = { speed = nil, delay = 0.25, range = 450, width = 150, collision = false, aoe = false, type = "Circular" }
 
@@ -3003,9 +3003,9 @@ end
 function _Malphite:LoadVariables()
 	self.SpellQ = { speed = 1800, delay = 0.25, range = 625, width = 70, collision = false, aoe = false, type = "linear"}
 
-	self.SpellW = { speed = nil, delay = 0.25, range = 400, width = 150, collision = false, aoe = false, type = "linear" }
+	self.SpellW = { speed = nil, delay = 0.25, range = 225, width = 150, collision = false, aoe = false, type = "linear" }
 
-	self.SpellE = { speed = nil, delay = 0.25, range = 400, width = 200, collision = false, aoe = true, type = "circular" }
+	self.SpellE = { speed = nil, delay = 0.25, range = 200, width = 200, collision = false, aoe = true, type = "circular" }
 
 	self.SpellR = { speed = 2000, delay = 0.25, range = 1000, width = 200, collision = false, aoe = true, type = "linear" }
 
@@ -3817,7 +3817,7 @@ function _MovementBlock:disable()
 end
 
 function _MovementBlock:SendPacket(p)
-	if p.header == 0x0117 and self.blockMovement then
+	if p.header == 0x0116 and self.blockMovement then
 		p:Block()
 	end
 end
@@ -3847,7 +3847,7 @@ function _Nami:LoadVariables()
 	self.SpellQ = { speed = math.huge, delay = 0.925, range = 875, width = 162, collision = false, aoe = true, type = "circular"}
 	self.SpellW = { delay = 0.25, range = 725}
 	self.SpellE = { delay = 0.25, range = 800}
-	self.SpellR = { speed = 859, delay = 0.25, range = 2550, width = 562, collision = false, aoe = true, type = "linear"}
+	self.SpellR = { speed = 859, delay = 0.25, range = 2750, width = 562, collision = false, aoe = true, type = "linear"}
 
 	UPL:AddSpell(_Q, self.SpellQ)
 	UPL:AddSpell(_R, self.SpellR)
@@ -4447,7 +4447,7 @@ function _Sona:__init()
 end
 
 function _Sona:LoadVariables()
-	self.SpellQ = { speed = math.huge, delay = 0.5, range = 825, width = 100, collision = false, aoe = true, type = "circular" }
+	self.SpellQ = { speed = math.huge, delay = 0.5, range = 850, width = 100, collision = false, aoe = true, type = "circular" }
 
 	self.SpellW = { speed = 1000, delay = 0.55, range = 1000, width = nil, collision = true, aoe = false, type = "linear" }
 
@@ -4701,11 +4701,12 @@ function _Sona:Combo()
             end
             if IsReady(_R) and (100 * myHero.mana / myHero.maxMana)>= menu.spell.r.rcombomana and (GetDistance(Target) < self.SpellR.range) then
                 if ValidTarget(Target) then
-                    local CastPosition, HitChance, HeroPosition = UPL:Predict(_R, myHero, Target)
-                    local AOECastPosition, MainTargetHitChance, nTargets = VPred:GetCircularAOECastPosition(unit, self.SpellR.delay, 200, self.SpellR.range, self.SpellR.speed, myHero)
-                    if nTargets >= menu.spell.r.rminenemyscombo and HitChance > 0 then
-                        CastSpell(_R, CastPosition.x, CastPosition.z)
-                    end
+                    local CastPosition, HitChance, Position = UPL:Predict(_R, myHero, Target)
+					if self:CountObjectHitOnLine(_R, myHero, Position, GetEnemyHeroes()) >= menu.spell.r.rminenemyscombo then
+                    	if HitChance > 0 then
+                        	CastSpell(_R, CastPosition.x, CastPosition.z)
+						end
+					end
                 end
             end
         elseif count == 2 then
@@ -4742,9 +4743,9 @@ function _Sona:Harass()
 		end
         if IsReady(_R) and (100 * myHero.mana / myHero.maxMana)>= menu.spell.r.rharassmana and (GetDistance(Target) < self.SpellR.range) then
             if ValidTarget(Target) then
-                local CastPosition, HitChance, HeroPosition = UPL:Predict(_R, myHero, Target)
-                local AOECastPosition, MainTargetHitChance, nTargets = VPred:GetCircularAOECastPosition(unit, self.SpellR.delay, self.SpellR.radius, self.SpellR.range, self.SpellR.speed, myHero)
-				if nTargets >= menu.spell.r.rminenemysharass and HitChance > 0 then
+                local CastPosition, HitChance, Position = UPL:Predict(_R, myHero, Target)
+				if self:CountObjectHitOnLine(_R, myHero, Position, GetEnemyHeroes()) >= menu.spell.r.rminenemysharass then
+					if HitChance > 0 then
                     CastSpell(_R, CastPosition.x, CastPosition.z)
                 end
             end
