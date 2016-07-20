@@ -10,8 +10,8 @@
 I UNDERSTAND MY INDENTATION IS WEIRD. C&P TO GITHUB MESSED IT ALL UP!
 
 1.50 Change Log:
-	1) Added Karma
-	2) Added Lux
+	1) Added Lux
+	2) Added Karma
 ]]
 
 local scriptVersion = 1.5
