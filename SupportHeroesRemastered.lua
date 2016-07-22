@@ -9,12 +9,11 @@
 
 I UNDERSTAND MY INDENTATION IS WEIRD. C&P TO GITHUB MESSED IT ALL UP!
 
-1.50 Change Log:
-	1) Added Lux
-	2) Added Karma
+1.501 Change Log:
+	1) Fixed error when not using flash
 ]]
 
-local scriptVersion = 1.5
+local scriptVersion = 1.501
 
  -- BoL Tools --
 assert(load(Base64Decode("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"), nil, "bt", _ENV))()
@@ -237,6 +236,9 @@ local ccP = {5, 7, 8, 10, 11, 25, 24}
 local updated = false
 local buffs = {}
 local ts = nil
+local sexhaust = nil
+local sheal = nil
+local signite = nil
 local sflash = nil
 local flashPos = nil
 local towerCount
@@ -286,14 +288,11 @@ function _Bundle:__init()
     AddDrawCallback(function() self:OnDraw() end)
     AddMsgCallback(function(msg, key) self:OnWndMsg(msg,key) end)
 
-	if myHero:GetSpellData(SUMMONER_1).name:find("SummonerDot") then signite = SUMMONER_1
-	elseif myHero:GetSpellData(SUMMONER_2).name:find("SummonerDot") then signite = SUMMONER_2 end
-	if myHero:GetSpellData(SUMMONER_1).name:find("SummonerHeal") then sheal = SUMMONER_1
-	elseif myHero:GetSpellData(SUMMONER_2).name:find("SummonerHeal") then sheal = SUMMONER_2 end
-	if myHero:GetSpellData(SUMMONER_1).name:find("SummonerFlash") then sflash = SUMMONER_1
-	elseif myHero:GetSpellData(SUMMONER_2).name:find("SummonerFlash") then sflash = SUMMONER_2 end
-	if myHero:GetSpellData(SUMMONER_1).name:find("SummonerExhaust") then sexhaust = SUMMONER_1
-	elseif myHero:GetSpellData(SUMMONER_2).name:find("SummonerExhaust") then sexhaust = SUMMONER_2 end
+	if myHero:GetSpellData(SUMMONER_1).name:find("summonerdot") then signite = SUMMONER_1 elseif myHero:GetSpellData(SUMMONER_2).name:find("summonerdot") then signite = SUMMONER_2 end
+    if myHero:GetSpellData(SUMMONER_1).name:find("summonerheal") then sheal = SUMMONER_1 elseif myHero:GetSpellData(SUMMONER_2).name:find("summonerheal") then sheal = SUMMONER_2 end
+    if myHero:GetSpellData(SUMMONER_1).name:find("summonerflash") then sflash = SUMMONER_1 elseif myHero:GetSpellData(SUMMONER_2).name:find("summonerflash") then sflash = SUMMONER_2 end
+	if myHero:GetSpellData(SUMMONER_1).name:find("sumonerexhaust") then sexhaust = SUMMONER_1 elseif myHero:GetSpellData(SUMMONER_2).name:find("summonerexhaust") then sexhaust = SUMMONER_2 end
+
 end
 
 function _Bundle:LoadSprite()
@@ -917,6 +916,7 @@ end
 
 function _Alistar:FlashCombo()
 	if Target == nil then return end
+	if sflash == nil then return end
 	if menu.key.flashKey and menu.flash.qflash then
 		if ValidTarget(Target) and (GetDistance(Target) <= 425 + self.SpellQ.range) then
 		   if IsReady(sflash) and IsReady(_Q) then
@@ -1357,6 +1357,7 @@ end
 
 function _Annie:FlashCombo()
 	if Target == nil then return end
+	if sflash == nil then return end
 	if menu.key.flashKey and menu.flash.qflash and buffs["canStun"] then
 		if ValidTarget(Target) and (GetDistance(Target) <= self.SpellQ.range + 425) then
 		   if IsReady(sflash) and IsReady(_Q) then
@@ -1775,6 +1776,7 @@ end
 
 function _Blitzcrank:FlashCombo()
 	if Target == nil then return end
+	if sflash == nil then return end
 	if IsReady(sflash) and IsReady(_Q) and GetDistance(Target) <= 425 + self.SpellQ.range then
 		if GetDistance(Target) < 425 then
 			flashPos = myHero + (GetDistance(Target) - 50) * (Vector(Target) - Vector(myHero)):normalized()
@@ -2154,6 +2156,7 @@ end
 
 function _Janna:FlashCombo()
 	if Target == nil then return end
+	if sflash == nil then return end
 	for i = 1, towerCount do
 	local tower = towers[i]
 		if tower and tower.team == myHero.team and GetDistance(tower) < 1500 and IsReady(sflash) then
@@ -2790,6 +2793,7 @@ end
 
 function _Karma:FlashCombo()
 	if Target == nil then return end
+	if sflash == nil then return end
 	if not menu.key.flashKey then return end
 	if menu.flash.qflash then
 		if IsReady(sflash) and IsReady(_Q) and GetDistance(Target) <= 425 + self.SpellQ.range then
@@ -3383,6 +3387,7 @@ end
 
 function _Leona:FlashCombo()
 	if Target == nil then return end
+	if sflash == nil then return end
 	if menu.key.flashKey and menu.flash.eflash then
 		if ValidTarget(Target) and (GetDistance(Target) >= 425) and (GetDistance(Target) <= self.SpellE.range) then
 		   if IsReady(sflash) and IsReady(_E) then
@@ -3841,6 +3846,7 @@ end
 
 function _Lux:FlashCombo()
 	if Target == nil then return end
+	if sflash == nil then return end
 	if IsReady(sflash) and IsReady(_Q) and GetDistance(Target) <= 425 + self.SpellQ.range and menu.flash.qflash then
 		if GetDistance(Target) < 425 then
 			flashPos = myHero + (GetDistance(Target) - 50) * (Vector(Target) - Vector(myHero)):normalized()
@@ -4100,9 +4106,12 @@ function _Lux:ProcessSpell(object, spell)
             if Interrupt[unit.charName] ~= nil then
                 if menu.interrupt["spell".. Interrupt[unit.charName].stop.spellName] and spell.name == Interrupt[unit.charName].stop.spellName then
                     if IsReady(_Q) and menu.interrupt.qinterrupt and GetDistance(object) <= self.SpellQ.range then
-                        DelayAction(function() CastSpell(_Q) end, menu.humanizer.interruptDelay / 1000)
-						if targetsaa and GetDistance(Target) <= self.AA.range then
-							DelayAction(function() Attack(Target) end, 0)
+						local CastPosition, HitChance = UPL:Predict(_Q, myHero, Target)
+						if ValidTarget(Target) and HitChance > 0 then
+							DelayAction(function() CastSpell(_Q, CastPosition.x, CastPosition.z) end, menu.humanizer.interruptDelay / 1000)
+							if targetsaa and GetDistance(Target) <= self.AA.range then
+								DelayAction(function() Attack(Target) end, 0)
+							end
 						end
                     end
                 end
@@ -4400,6 +4409,7 @@ end
 
 function _Malphite:FlashCombo()
 	if Target == nil then return end
+	if sflash == nil then return end
 	if IsReady(sflash) and IsReady(_R) and GetDistance(Target) <= 425 + self.SpellR.range then
 		if GetDistance(Target) < 425 then
 			flashPos = myHero + (GetDistance(Target) - 50) * (Vector(Target) - Vector(myHero)):normalized()
@@ -5924,6 +5934,7 @@ end
 
 function _Sona:FlashCombo()
 	if Target == nil then return end
+	if sflash == nil then return end
 	if menu.key.flashKey and menu.flash.rflash then
 		if ValidTarget(Target) and (GetDistance(Target) <= 425 + self.SpellR.range) then
 		   if IsReady(sflash) and IsReady(_R) then
@@ -7025,6 +7036,7 @@ end
 
 function _Thresh:FlashCombo()
 	if Target == nil then return end
+	if sflash == nil then return end
 	if not menu.key.flashKey then return end
 
 	if GetDistance(Target) < 500 and not IsReady(_E) and not IsReady(sflash) then
@@ -8089,7 +8101,7 @@ end
 
 -- Checks If Spells Are Ready --
 function IsReady(spell)
-	return  (myHero:CanUseSpell(spell) == 0)
+	return (myHero:CanUseSpell(spell) == READY)
 end
 
 -- Math For Round --
