@@ -9,12 +9,12 @@
 
 I UNDERSTAND MY INDENTATION IS WEIRD. C&P TO GITHUB MESSED IT ALL UP!
 
-1.502 Change Log:
-	1) Patch 6.15 Update
-	2) Fixed Soraka Ult
+1.503 Change Log:
+	1) Patch 6.13
+	2) Reworked shields for champions that use one
 ]]
 
-local scriptVersion = 1.502
+local scriptVersion = 1.503
 
  -- BoL Tools --
 assert(load(Base64Decode("G0x1YVIAAQQEBAgAGZMNChoKAAAAAAAAAAAAAQpQAAAABAAAAEYAQAClAAAAXUAAAUZAQAClQAAAXUAAAWWAAAAIQACBZcAAAAhAgIFLAAAAgQABAMZAQQDHgMEBAQEBAKGACoCGQUEAjMFBAwACgAKdgYABmwEAABcACYDHAUID2wEAABdACIDHQUIDGIDCAxeAB4DHwUIDzAHDA0FCAwDdgYAB2wEAABdAAoDGgUMAx8HDAxgAxAMXgACAwUEEANtBAAAXAACAwYEEAEqAgQMXgAOAx8FCA8wBwwNBwgQA3YGAAdsBAAAXAAKAxoFDAMfBwwMYAMUDF4AAgMFBBADbQQAAFwAAgMGBBABKgIEDoMD0f4ZARQDlAAEAnUAAAYaARQDBwAUAnUAAAYbARQDlQAEAisAAjIbARQDlgAEAisCAjIbARQDlwAEAisAAjYbARQDlAAIAisCAjR8AgAAcAAAABBIAAABBZGRVbmxvYWRDYWxsYmFjawAEFAAAAEFkZEJ1Z3NwbGF0Q2FsbGJhY2sABAwAAABUcmFja2VyTG9hZAAEDQAAAEJvbFRvb2xzVGltZQADAAAAAAAA8D8ECwAAAG9iak1hbmFnZXIABAsAAABtYXhPYmplY3RzAAQKAAAAZ2V0T2JqZWN0AAQGAAAAdmFsaWQABAUAAAB0eXBlAAQHAAAAb2JqX0hRAAQFAAAAbmFtZQAEBQAAAGZpbmQABAIAAAAxAAQHAAAAbXlIZXJvAAQFAAAAdGVhbQADAAAAAAAAWUAECAAAAE15TmV4dXMABAsAAABUaGVpck5leHVzAAQCAAAAMgADAAAAAAAAaUAEFQAAAEFkZERlbGV0ZU9iakNhbGxiYWNrAAQGAAAAY2xhc3MABA4AAABTY3JpcHRUcmFja2VyAAQHAAAAX19pbml0AAQSAAAAU2VuZFZhbHVlVG9TZXJ2ZXIABAoAAABzZW5kRGF0YXMABAsAAABHZXRXZWJQYWdlAAkAAAACAAAAAwAAAAAAAwkAAAAFAAAAGABAABcAAIAfAIAABQAAAAxAQACBgAAAHUCAAR8AgAADAAAAAAQSAAAAU2VuZFZhbHVlVG9TZXJ2ZXIABAcAAAB1bmxvYWQAAAAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAEAAAABQAAAAAAAwkAAAAFAAAAGABAABcAAIAfAIAABQAAAAxAQACBgAAAHUCAAR8AgAADAAAAAAQSAAAAU2VuZFZhbHVlVG9TZXJ2ZXIABAkAAABidWdzcGxhdAAAAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAUAAAAHAAAAAQAEDQAAAEYAwACAAAAAXYAAAUkAAABFAAAATEDAAMGAAABdQIABRsDAAKUAAADBAAEAXUCAAR8AgAAFAAAABA4AAABTY3JpcHRUcmFja2VyAAQSAAAAU2VuZFZhbHVlVG9TZXJ2ZXIABAUAAABsb2FkAAQMAAAARGVsYXlBY3Rpb24AAwAAAAAAQHpAAQAAAAYAAAAHAAAAAAADBQAAAAUAAAAMAEAAgUAAAB1AgAEfAIAAAgAAAAQSAAAAU2VuZFZhbHVlVG9TZXJ2ZXIABAgAAAB3b3JraW5nAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAEAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA0AAAAAAAYyAAAABgBAAB2AgAAaQEAAF4AAgEGAAABfAAABF0AKgEYAQQBHQMEAgYABAMbAQQDHAMIBEEFCAN0AAAFdgAAACECAgUYAQQBHQMEAgYABAMbAQQDHAMIBEMFCAEbBQABPwcICDkEBAt0AAAFdgAAACEAAhUYAQQBHQMEAgYABAMbAQQDHAMIBBsFAAA9BQgIOAQEARoFCAE/BwgIOQQEC3QAAAV2AAAAIQACGRsBAAIFAAwDGgEIAAUEDAEYBQwBWQIEAXwAAAR8AgAAOAAAABA8AAABHZXRJbkdhbWVUaW1lcgADAAAAAAAAAAAECQAAADAwOjAwOjAwAAQGAAAAaG91cnMABAcAAABzdHJpbmcABAcAAABmb3JtYXQABAYAAAAlMDIuZgAEBQAAAG1hdGgABAYAAABmbG9vcgADAAAAAAAgrEAEBQAAAG1pbnMAAwAAAAAAAE5ABAUAAABzZWNzAAQCAAAAOgAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAABUAAAAcAAAAAQAFIwAAABsAAAAXwAeARwBAAFsAAAAXAAeARkBAAFtAAAAXQAaACIDAgEfAQABYAMEAF4AAgEfAQAAYQMEAF4AEgEaAwQCAAAAAxsBBAF2AgAGGgMEAwAAAAAYBQgCdgIABGUAAARcAAYBFAAABTEDCAMGAAgBdQIABF8AAgEUAAAFMQMIAwcACAF1AgAEfAIAADAAAAAQGAAAAdmFsaWQABAcAAABEaWRFbmQAAQEEBQAAAG5hbWUABB4AAABTUlVfT3JkZXJfbmV4dXNfc3dpcmxpZXMudHJveQAEHgAAAFNSVV9DaGFvc19uZXh1c19zd2lybGllcy50cm95AAQMAAAAR2V0RGlzdGFuY2UABAgAAABNeU5leHVzAAQLAAAAVGhlaXJOZXh1cwAEEgAAAFNlbmRWYWx1ZVRvU2VydmVyAAQEAAAAd2luAAQGAAAAbG9vc2UAAAAAAAMAAAABAQAAAQAAAAAAAAAAAAAAAAAAAAAAHQAAAB0AAAACAAICAAAACkAAgB8AgAABAAAABAoAAABzY3JpcHRLZXkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHQAAAB4AAAACAAUKAAAAhgBAAMAAgACdgAABGEBAARfAAICFAIAAjIBAAQABgACdQIABHwCAAAMAAAAEBQAAAHR5cGUABAcAAABzdHJpbmcABAoAAABzZW5kRGF0YXMAAAAAAAIAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAB8AAAAuAAAAAgATPwAAAApAAICGgEAAnYCAAAqAgICGAEEAxkBBAAaBQQAHwUECQQECAB2BAAFGgUEAR8HBAoFBAgBdgQABhoFBAIfBQQPBgQIAnYEAAcaBQQDHwcEDAcICAN2BAAEGgkEAB8JBBEECAwAdggABFgECAt0AAAGdgAAACoCAgYaAQwCdgIAACoCAhgoAxIeGQEQAmwAAABdAAIAKgMSHFwAAgArAxIeGQEUAh4BFAQqAAIqFAIAAjMBFAQEBBgBBQQYAh4FGAMHBBgAAAoAAQQIHAIcCRQDBQgcAB0NAAEGDBwCHw0AAwcMHAAdEQwBBBAgAh8RDAFaBhAKdQAACHwCAACEAAAAEBwAAAGFjdGlvbgAECQAAAHVzZXJuYW1lAAQIAAAAR2V0VXNlcgAEBQAAAGh3aWQABA0AAABCYXNlNjRFbmNvZGUABAkAAAB0b3N0cmluZwAEAwAAAG9zAAQHAAAAZ2V0ZW52AAQVAAAAUFJPQ0VTU09SX0lERU5USUZJRVIABAkAAABVU0VSTkFNRQAEDQAAAENPTVBVVEVSTkFNRQAEEAAAAFBST0NFU1NPUl9MRVZFTAAEEwAAAFBST0NFU1NPUl9SRVZJU0lPTgAECwAAAGluZ2FtZVRpbWUABA0AAABCb2xUb29sc1RpbWUABAYAAABpc1ZpcAAEAQAAAAAECQAAAFZJUF9VU0VSAAMAAAAAAADwPwMAAAAAAAAAAAQJAAAAY2hhbXBpb24ABAcAAABteUhlcm8ABAkAAABjaGFyTmFtZQAECwAAAEdldFdlYlBhZ2UABA4AAABib2wtdG9vbHMuY29tAAQXAAAAL2FwaS9ldmVudHM/c2NyaXB0S2V5PQAECgAAAHNjcmlwdEtleQAECQAAACZhY3Rpb249AAQLAAAAJmNoYW1waW9uPQAEDgAAACZib2xVc2VybmFtZT0ABAcAAAAmaHdpZD0ABA0AAAAmaW5nYW1lVGltZT0ABAgAAAAmaXNWaXA9AAAAAAACAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAvAAAAMwAAAAMACiEAAADGQEAAAYEAAN2AAAHHwMAB3YCAAArAAIDHAEAAzADBAUABgACBQQEA3UAAAscAQADMgMEBQcEBAIABAAHBAQIAAAKAAEFCAgBWQYIC3UCAAccAQADMgMIBQcECAIEBAwDdQAACxwBAAMyAwgFBQQMAgYEDAN1AAAIKAMSHCgDEiB8AgAASAAAABAcAAABTb2NrZXQABAgAAAByZXF1aXJlAAQHAAAAc29ja2V0AAQEAAAAdGNwAAQIAAAAY29ubmVjdAADAAAAAAAAVEAEBQAAAHNlbmQABAUAAABHRVQgAAQSAAAAIEhUVFAvMS4wDQpIb3N0OiAABAUAAAANCg0KAAQLAAAAc2V0dGltZW91dAADAAAAAAAAAAAEAgAAAGIAAwAAAPyD15dBBAIAAAB0AAQKAAAATGFzdFByaW50AAQBAAAAAAQFAAAARmlsZQAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAA="), nil, "bt", _ENV))()
@@ -25,14 +25,14 @@ local Champions =
 {
 	["Alistar"] = true,
 	["Annie"] = true,
-	-- ["Bard"] = true,
+    --["Bard"] = true,
 	["Blitzcrank"] = true,
 	-- ["Braum"] = true,
 	["Janna"] = true,
- 	["Karma"] = true,
+	["Karma"] = true,
 	["Leona"] = true,
 	--["Lulu"] = true,
- 	["Lux"] = true,
+	["Lux"] = true,
 	["Malphite"] = true,
 	["Morgana"] = true,
 	["Nami"] = true,
@@ -289,10 +289,10 @@ function _Bundle:__init()
     AddDrawCallback(function() self:OnDraw() end)
     AddMsgCallback(function(msg, key) self:OnWndMsg(msg,key) end)
 
-	if myHero:GetSpellData(SUMMONER_1).name:find("summonerdot") then signite = SUMMONER_1 elseif myHero:GetSpellData(SUMMONER_2).name:find("summonerdot") then signite = SUMMONER_2 end
-    if myHero:GetSpellData(SUMMONER_1).name:find("summonerheal") then sheal = SUMMONER_1 elseif myHero:GetSpellData(SUMMONER_2).name:find("summonerheal") then sheal = SUMMONER_2 end
-    if myHero:GetSpellData(SUMMONER_1).name:find("summonerflash") then sflash = SUMMONER_1 elseif myHero:GetSpellData(SUMMONER_2).name:find("summonerflash") then sflash = SUMMONER_2 end
-	if myHero:GetSpellData(SUMMONER_1).name:find("sumonerexhaust") then sexhaust = SUMMONER_1 elseif myHero:GetSpellData(SUMMONER_2).name:find("summonerexhaust") then sexhaust = SUMMONER_2 end
+	if myHero:GetSpellData(SUMMONER_1).name:find("SummonerDot") then signite = SUMMONER_1 elseif myHero:GetSpellData(SUMMONER_2).name:find("SummonerDot") then signite = SUMMONER_2 end
+    if myHero:GetSpellData(SUMMONER_1).name:find("SummonerHeal") then sheal = SUMMONER_1 elseif myHero:GetSpellData(SUMMONER_2).name:find("SummonerHeal") then sheal = SUMMONER_2 end
+    if myHero:GetSpellData(SUMMONER_1).name:find("SummonerFlash") then sflash = SUMMONER_1 elseif myHero:GetSpellData(SUMMONER_2).name:find("SummonerFlash") then sflash = SUMMONER_2 end
+	if myHero:GetSpellData(SUMMONER_1).name:find("SumonerExhaust") then sexhaust = SUMMONER_1 elseif myHero:GetSpellData(SUMMONER_2).name:find("SummonerExhaust") then sexhaust = SUMMONER_2 end
 
 end
 
@@ -1958,8 +1958,6 @@ function _Janna:__init()
 
 	enemyMinions = minionManager(MINION_ENEMY, self.SpellW.range, myHero, MINION_SORT_HEALTH_DES)
 
-	jannaUlt = false
-
 	_Bundle:Print(myHero.charName .. " Loaded, have fun!")
 end
 
@@ -2268,10 +2266,10 @@ function _Janna:OnDraw()
 			  _Tech:DrawCircle(flashPos.x, flashPos.y, flashPos.z, 50, ARGB(255, 255, 0, 0))
 			  _Tech:DrawCircle(flashPos.x, flashPos.y, flashPos.z, 60, ARGB(255, 255, 255, 255))
 				for i = 1, enemyCount do
-				local enemy = enemyHeroes[i]
+					local enemy = enemyHeroes[i]
 					if not enemy.dead and GetDistance(enemy) < 725 then
-					local endPos = enemy + (875 - math.sqrt((enemy.x - flashPos.x) ^ 2 + (enemy.z - flashPos.z) ^ 2)) * (Vector(myHero) - Vector(flashPos)):normalized()
-					DrawLine3D(enemy.x, enemy.y, enemy.z, endPos.x, endPos.y, endPos.z, 5, ARGB(125, 0, 255,0))
+						local endPos = enemy + (875 - math.sqrt((enemy.x - flashPos.x) ^ 2 + (enemy.z - flashPos.z) ^ 2)) * (Vector(myHero) - Vector(flashPos)):normalized()
+						DrawLine3D(enemy.x, enemy.y, enemy.z, endPos.x, endPos.y, endPos.z, 5, ARGB(125, 0, 255,0))
 					end
 				end
 			end
@@ -2308,7 +2306,7 @@ function _Janna:OnDraw()
 		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, self.SpellE.range, ARGB(table.unpack(menu.draw.colore)))
 	end
 	if menu.draw.drawr and IsReady(_R) then
-		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, self.SpellR.range, ARGB(table.unpack(menu.draw.colorr)))
+	    _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, self.SpellR.range, ARGB(table.unpack(menu.draw.colorr)))
 	end
 end
 
@@ -2373,7 +2371,7 @@ function _Janna:ProcessAttack(object,spell)
                     if IsReady(_Q) and menu.interrupt.qinterrupt and GetDistance(object) <= self.SpellQ.range then
                         CastSpell(_Q)
                        -- DelayAction(function() self:JannaCastQ2(object) end, 0)
-                    elseif IsReady(_R) and menu.interrupt.rinterrupt and (GetDistance(unit) < self.SpellR.range) then
+                    elseif IsReady(_R) and menu.interrupt.rinterrupt and GetDistance(unit) < self.SpellR.range then
 						DelayAction(function() CastSpell(_R) end, menu.humanizer.interruptDelay / 1000)
                     end
                 end
@@ -2381,147 +2379,195 @@ function _Janna:ProcessAttack(object,spell)
 	    end
 	end
 	if object.team ~= myHero.team and not myHero.dead and object.name ~= nil and not (object.name:find("Minion_") or object.name:find("Odin")) then
-		local shieldREADY = IsReady(_E)
-		local ultREADY = IsReady(_R)
-		local HitFirst = false
-		local shieldtarget,SLastDistance,SLastDmgPercent = nil,nil,nil
+	    local HitFirst = false
+	    local shieldtarget,SLastDistance,SLastDmgPercent = nil,nil,nil
 		local ulttarget,ULastDistance,ULastDmgPercent = nil,nil,nil
 
 		YWall, BShield, SShield, Shield, CC = false, false, false, false
 		shottype, radius, maxdistance = 0, 0, 0
 
-		if object.type == "AIHeroClient" then
+	    if object.type == "AIHeroClient" then
 			spelltype, casttype = getSpellType(object, spell.name)
 			if casttype == 4 or casttype == 5 or casttype == 6 then
 				return
 			end
-
-			Shield = true
-
-			if spelltype == "Q" or spelltype == "W" or spelltype == "E" or spelltype == "R" or spelltype == "P" or spelltype == "QM" or spelltype == "WM" or spelltype == "EM" then
-				if skillShield[object.charName] == nil then return end
-                HitFirst = skillShield[object.charName][spelltype].HitFirst
-				YWall = skillShield[object.charName][spelltype].YWall
-				BShield = skillShield[object.charName][spelltype].BShield
-				SShield = skillShield[object.charName][spelltype].SShield
-				Shield = skillShield[object.charName][spelltype].Shield
-				CC = skillShield[object.charName][spelltype].CC
-				shottype = skillData[object.charName][spelltype].type
-				radius = skillData[object.charName][spelltype].radius
-				maxdistance = skillData[object.charName][spelltype].maxdistance
-			else
+	        if spelltype == "BAttack" or spelltype == "CAttack" then
 				Shield = true
+	        elseif spell.name:find("SummonerDot") then
+				Shield = true
+			elseif spelltype == "Q" or spelltype == "W" or spelltype == "E" or spelltype == "R" or spelltype == "P" or spelltype == "QM" or spelltype == "WM" or spelltype == "EM" then
+	            if skillShield[object.charName] == nil then return end
+				HitFirst = skillShield[object.charName][spelltype]["HitFirst"]
+				YWall = skillShield[object.charName][spelltype]["YWall"]
+				BShield = skillShield[object.charName][spelltype]["BShield"]
+				SShield = skillShield[object.charName][spelltype]["SShield"]
+				Shield = skillShield[object.charName][spelltype]["Shield"]
+				CC = skillShield[object.charName][spelltype]["CC"]
+				shottype = skillData[object.charName][spelltype]["type"]
+				radius = skillData[object.charName][spelltype]["radius"]
+				maxdistance = skillData[object.charName][spelltype]["maxdistance"]
 			end
-
-			for i = 1, heroManager.iCount do
-			local allytarget = heroManager:GetHero(i)
-				if spell.target and spell.target.networkID == allytarget.networkID then
-					if allytarget.team == myHero.team and not allytarget.dead and 0 < allytarget.health and allytarget.type == myHero.type then
-						hitchampion = false
-						local allyHitBox = allytarget.boundingRadius
-						if shottype == 0 then
-						hitchampion = spell.target and spell.target.networkID == allytarget.networkID
-						elseif shottype == 1 then
-						hitchampion = checkhitlinepass(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
-						elseif shottype == 2 then
-						hitchampion = checkhitlinepoint(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
-						elseif shottype == 3 then
-						hitchampion = checkhitaoe(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
-						elseif shottype == 4 then
-						hitchampion = checkhitcone(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
-						elseif shottype == 5 then
-						hitchampion = checkhitwall(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
-						elseif shottype == 6 then
-						hitchampion = checkhitlinepass(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox) or checkhitlinepass(object, Vector(object) * 2 - spell.endPos, radius, maxdistance, allytarget, allyHitBox)
-						elseif shottype == 7 then
-						hitchampion = checkhitcone(spell.endPos, object, radius, maxdistance, allytarget, allyHitBox)
-						end
-						if shieldREADY and menu.as["teammateshield" .. i] and GetDistance(allytarget) <= self.SpellE.range then
-							local shieldflag, dmgpercent = self:shieldCheck(object,spell,allytarget,"shields")
-								if shieldflag then
-									if HitFirst and (SLastDistance == nil or SLastDistance >= GetDistance(allytarget, object)) then
-										shieldtarget, SLastDistance = allytarget, GetDistance(allytarget, object)
-									elseif not HitFirst and (SLastDmgPercent == nil or SLastDmgPercent <= dmgpercent) then
-										shieldtarget, SLastDmgPercent = allytarget, dmgpercent
-									end
-								end
-							end
-						end
-						if ultREADY and menu.spell.r["teammateult"..i] and GetDistance(allytarget) <= self.SpellR.range then
-							local ultflag, dmgpercent = self:shieldCheck(object,spell,allytarget,"ult")
-							if ultflag then
-								if HitFirst and (ULastDistance == nil or GetDistance(allytarget,object) <= ULastDistance) then
-									ulttarget,ULastDistance = allytarget,GetDistance(allytarget,object)
-								elseif not HitFirst and (ULastDmgPercent == nil or dmgpercent >= ULastDmgPercent) then
-									ulttarget,ULastDmgPercent = allytarget,dmgpercent
-								end
-							end
-						end
-					end
-				end
-				if shieldtarget ~= nil then
-					DelayAction(function() CastSpell(_E, shieldtarget) end, menu.humanizer.shieldDelay / 1000)
-				end
-				if ulttarget ~= nil then
-					CastSpell(_R, ulttarget)
-			end
+	    else
+			Shield = true
 		end
-	end
+
+	    for i=1, heroManager.iCount do
+			local allytarget = heroManager:GetHero(i)
+			if allytarget.team == myHero.team and not allytarget.dead and allytarget.health > 0 and spell.target == allytarget then
+				hitchampion = false
+	            local allyHitBox = allytarget.boundingRadius
+				if shottype == 0 then
+					hitchampion = spell.target and spell.target.networkID == allytarget.networkID
+				elseif shottype == 1 then
+	                hitchampion = checkhitlinepass(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
+				elseif shottype == 2 then
+	                hitchampion = checkhitlinepoint(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
+				elseif shottype == 3 then
+	                hitchampion = checkhitaoe(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
+				elseif shottype == 4 then
+	                hitchampion = checkhitcone(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
+				elseif shottype == 5 then
+	                hitchampion = checkhitwall(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
+				elseif shottype == 6 then
+	                hitchampion = checkhitlinepass(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox) or checkhitlinepass(object, Vector(object)*2-spell.endPos, radius, maxdistance, allytarget, allyHitBox)
+				elseif shottype == 7 then
+	                hitchampion = checkhitcone(spell.endPos, object, radius, maxdistance, allytarget, allyHitBox)
+				end
+	            if IsReady (_E) and menu.as["teammateshield" .. i] and GetDistance(allytarget) <= self.SpellE.range then
+	                local shieldflag, dmgpercent = self:shieldCheck(object, spell, allytarget, "shields")
+	                if shieldflag then
+	                    if allytarget ~= nil then
+							DelayAction(function() CastSpell(_E, allytarget) end, menu.humanizer.shieldDelay / 1000)
+						end
+	                end
+	            end
+	            if IsReady(_R) and menu.spell.r["teammateult"..i] and GetDistance(allytarget) <= self.SpellR.range then
+	                local ultflag, dmgpercent = self:shieldCheck(object, spell, allytarget, "ult")
+	                if ultflag then
+	                    if allytarget ~= nil then
+	                        CastSpell(_R)
+	                    end
+	                end
+	            end
+	        end
+		end
+    end
 end
 
 function _Janna:shieldCheck(object,spell,target,typeused)
-	if Target == nil then return end
-	local configused
+	if Target == nil then
+        return
+    end
+    local configused
 
-	if typeused == "shields" then configused = menu.as
-	elseif typeused == "ult" then configused = menu.spell.r
+	if typeused == "shields" then
+        configused = menu.as
+	elseif typeused == "ult" then
+        configused = menu.spell.r
 	end
 
-	  local shieldflag = false
-	  if not menu.as.skillshots and shottype ~= 0 then
-		return false, 0
-	  end
-	  local adamage = object:CalcDamage(target, object.totalDamage)
-	  local InfinityEdge,onhitdmg,onhittdmg,onhitspelldmg,onhitspelltdmg,muramanadmg,skilldamage,skillTypeDmg = 0,0,0,0,0,0,0,0
-	  if object.type ~= "AIHeroClient" then
-	  elseif spelltype == "BAttack" then
-		skilldamage = (adamage+onhitdmg+muramanadmg)*1.07+onhittdmg
-	  elseif spelltype == "CAttack" then
-	  elseif spelltype == "Q" or spelltype == "W" or spelltype == "E" or spelltype == "R" or spelltype == "P" or spelltype == "QM" or spelltype == "WM" or spelltype == "EM" then
-		if not skillShield[object.charName][spelltype].Muramana or not muramanadmg then
-		  muramanadmg = 0
-		end
-		if casttype == 1 then
-		  skilldamage, skillTypeDmg = getDmg(spelltype, target, object, 1, spell.level)
-		elseif casttype == 2 then
-		  skilldamage, skillTypeDmg = getDmg(spelltype, target, object, 2, spell.level)
-		elseif casttype == 3 then
-		  skilldamage, skillTypeDmg = getDmg(spelltype, target, object, 3, spell.level)
-		end
-		if skillTypeDmg == 2 then
-		  skilldamage = (skilldamage + adamage + onhitspelldmg + onhitdmg + muramanadmg)* 1.07 + onhittdmg + onhitspelltdmg
-		elseif skilldamage > 0 then
-		  skilldamage = (skilldamage + onhitspelldmg + muramanadmg)* 1.07 + onhitspelltdmg
-		end
-	  elseif spell.name:find("SummonerDot") then
-		skilldamage = getDmg("IGNITE", target, object)
-		end
-			  for i = 1, heroManager.iCount do
-				local ally = heroManager:GetHero(i)
-				if ally.team == myHero.team then
+    local shieldflag = false
+    if not menu.as.skillshots and shottype ~= 0 then
+        return false, 0
+    end
 
-			  local dmgpercent = skilldamage * 100 / target.health
-			  local dmgneeded = dmgpercent >= configused.mindmgpercent
-			  local hpneeded =  configused["maxhppercent"..i] >= (target.health - skilldamage) * 100 / target.maxHealth
-				  if dmgneeded and hpneeded then
-					  shieldflag = true
-				  elseif (typeused == "shields" or typeused == "wall") and (CC == 2 and menu.as.shieldCC or CC == 1 and menu.as.shieldslow) then
-					  shieldflag = true
-				  end
-				  return shieldflag, dmgpercent
-				  end
-			  end
-		  end
+    local adamage = object:CalcDamage(target, object.totalDamage)
+	local InfinityEdge, onhitdmg, onhittdmg, onhitspelldmg, onhitspelltdmg, muramanadmg, skilldamage, skillTypeDmg = 0, 0, 0, 0, 0, 0, 0, 0
+    if object.type ~= "AIHeroClient" then
+        if spell.name:find("BasicAttack") then
+            skilldamage = adamage
+        elseif spell.name:find("CritAttack") then
+            skilldamage = adamage * 2
+        end
+    else
+        if GetInventoryHaveItem(3091,object) then
+            onhitdmg = onhitdmg+getDmg("WITSEND",target,object)
+        end
+		if GetInventoryHaveItem(3057,object) then
+            onhitdmg = onhitdmg+getDmg("SHEEN",target,object)
+        end
+		if GetInventoryHaveItem(3078,object) then
+            onhitdmg = onhitdmg+getDmg("TRINITY",target,object)
+        end
+		if GetInventoryHaveItem(3100,object) then
+            onhitdmg = onhitdmg+getDmg("LICHBANE",target,object)
+        end
+		if GetInventoryHaveItem(3025,object) then
+            onhitdmg = onhitdmg+getDmg("ICEBORN",target,object)
+        end
+		if GetInventoryHaveItem(3087,object) then
+            onhitdmg = onhitdmg+getDmg("STATIKK",target,object)
+        end
+		if GetInventoryHaveItem(3153,object) then
+            onhitdmg = onhitdmg+getDmg("RUINEDKING",target,object)
+        end
+		if GetInventoryHaveItem(3042,object) then
+            muramanadmg = getDmg("MURAMANA",target,object)
+        end
+		if GetInventoryHaveItem(3184,object) then
+            onhittdmg = onhittdmg + 80
+        end
+
+        if spelltype == "BAttack" then
+			skilldamage = (adamage+onhitdmg+muramanadmg)*1.07+onhittdmg
+		elseif spelltype == "CAttack" then
+			if GetInventoryHaveItem(3031,object) then
+                InfinityEdge = .5
+            end
+
+            skilldamage = (adamage*(2.1+InfinityEdge)+onhitdmg+muramanadmg)*1.07+onhittdmg --fix Lethality
+
+		elseif spelltype == "Q" or spelltype == "W" or spelltype == "E" or spelltype == "R" or spelltype == "P" or spelltype == "QM" or spelltype == "WM" or spelltype == "EM" then
+
+            if GetInventoryHaveItem(3151,object) then
+                onhitspelldmg = getDmg("LIANDRYS",target,object)
+            end
+
+            muramanadmg = skillShield[object.charName][spelltype]["Muramana"] and muramanadmg or 0
+
+			if spelltype == "Q" or spelltype == "QM" then
+				level = object:GetSpellData(_Q).level
+			elseif spelltype == "W" or spelltype == "WM" then
+				level = object:GetSpellData(_W).level
+			elseif spelltype == "E" or spelltype == "EM" then
+				level = object:GetSpellData(_E).level
+			elseif spelltype == "R" then
+				level = object:GetSpellData(_R).level
+			else
+				level = 1
+			end
+
+            if casttype == 1 or casttype == 2 or casttype == 3 then
+				skilldamage, skillTypeDmg = getDmg(spelltype,target,object, casttype, level)
+			end
+			if skillTypeDmg == 2 then
+				skilldamage = (skilldamage+adamage+onhitspelldmg+onhitdmg+muramanadmg)*1.07+onhittdmg+onhitspelltdmg
+			else
+				if skilldamage > 0 then skilldamage = (skilldamage+onhitspelldmg+muramanadmg)*1.07+onhitspelltdmg end
+			end
+
+		elseif spell.name:lower():find("summonerdot") then
+			skilldamage = getDmg("IGNITE",target,object)
+		end
+    end
+
+    for i = 1, heroManager.iCount do
+		local ally = heroManager:GetHero(i)
+		if ally.team == myHero.team then
+
+            local dmgpercent = skilldamage * 100 / target.health
+			local dmgneeded = dmgpercent >= configused.mindmgpercent
+			local hpneeded =  configused["maxhppercent"..i] >= (target.health - skilldamage) * 100 / target.maxHealth
+
+        	if dmgneeded and hpneeded then
+        		shieldflag = true
+        	elseif (typeused == "shields") and ((CC == 2 and menu.as.shieldcc) or (CC == 1 and menu.as.shieldslow)) then
+        		shieldflag = true
+        	end
+        end
+    end
+	return shieldflag, dmgpercent
+end
 
 function _Janna:TowerCC()
 	if Target == nil then return end
@@ -2977,135 +3023,192 @@ function _Karma:ProcessAttack(object,spell)
 	    end
 	end
 	if object.team ~= myHero.team and not myHero.dead and object.name ~= nil and not (object.name:find("Minion_") or object.name:find("Odin")) then
-		local shieldREADY = IsReady(_E)
-		local HitFirst = false
-		local shieldtarget,SLastDistance,SLastDmgPercent = nil,nil,nil
+	    local HitFirst = false
+	    local shieldtarget,SLastDistance,SLastDmgPercent = nil,nil,nil
+		local ulttarget,ULastDistance,ULastDmgPercent = nil,nil,nil
 
 		YWall, BShield, SShield, Shield, CC = false, false, false, false
 		shottype, radius, maxdistance = 0, 0, 0
 
-		if object.type == "AIHeroClient" then
+	    if object.type == "AIHeroClient" then
 			spelltype, casttype = getSpellType(object, spell.name)
 			if casttype == 4 or casttype == 5 or casttype == 6 then
 				return
 			end
-
-			Shield = true
-
-			if spelltype == "Q" or spelltype == "W" or spelltype == "E" or spelltype == "R" or spelltype == "P" or spelltype == "QM" or spelltype == "WM" or spelltype == "EM" then
-				if skillShield[object.charName] == nil then return end
-                HitFirst = skillShield[object.charName][spelltype].HitFirst
-				YWall = skillShield[object.charName][spelltype].YWall
-				BShield = skillShield[object.charName][spelltype].BShield
-				SShield = skillShield[object.charName][spelltype].SShield
-				Shield = skillShield[object.charName][spelltype].Shield
-				CC = skillShield[object.charName][spelltype].CC
-				shottype = skillData[object.charName][spelltype].type
-				radius = skillData[object.charName][spelltype].radius
-				maxdistance = skillData[object.charName][spelltype].maxdistance
-			else
+	        if spelltype == "BAttack" or spelltype == "CAttack" then
 				Shield = true
+	        elseif spell.name:find("SummonerDot") then
+				Shield = true
+			elseif spelltype == "Q" or spelltype == "W" or spelltype == "E" or spelltype == "R" or spelltype == "P" or spelltype == "QM" or spelltype == "WM" or spelltype == "EM" then
+	            if skillShield[object.charName] == nil then return end
+				HitFirst = skillShield[object.charName][spelltype]["HitFirst"]
+				YWall = skillShield[object.charName][spelltype]["YWall"]
+				BShield = skillShield[object.charName][spelltype]["BShield"]
+				SShield = skillShield[object.charName][spelltype]["SShield"]
+				Shield = skillShield[object.charName][spelltype]["Shield"]
+				CC = skillShield[object.charName][spelltype]["CC"]
+				shottype = skillData[object.charName][spelltype]["type"]
+				radius = skillData[object.charName][spelltype]["radius"]
+				maxdistance = skillData[object.charName][spelltype]["maxdistance"]
 			end
+	    else
+			Shield = true
+		end
 
-			for i = 1, heroManager.iCount do
+	    for i=1, heroManager.iCount do
 			local allytarget = heroManager:GetHero(i)
-				if spell.target and spell.target.networkID == allytarget.networkID then
-					if allytarget.team == myHero.team and not allytarget.dead and 0 < allytarget.health and allytarget.type == myHero.type then
-						hitchampion = false
-						local allyHitBox = allytarget.boundingRadius
-						if shottype == 0 then
-						hitchampion = spell.target and spell.target.networkID == allytarget.networkID
-						elseif shottype == 1 then
-						hitchampion = checkhitlinepass(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
-						elseif shottype == 2 then
-						hitchampion = checkhitlinepoint(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
-						elseif shottype == 3 then
-						hitchampion = checkhitaoe(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
-						elseif shottype == 4 then
-						hitchampion = checkhitcone(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
-						elseif shottype == 5 then
-						hitchampion = checkhitwall(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
-						elseif shottype == 6 then
-						hitchampion = checkhitlinepass(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox) or checkhitlinepass(object, Vector(object) * 2 - spell.endPos, radius, maxdistance, allytarget, allyHitBox)
-						elseif shottype == 7 then
-						hitchampion = checkhitcone(spell.endPos, object, radius, maxdistance, allytarget, allyHitBox)
-						end
-						if shieldREADY and menu.as["teammateshield" .. i] and GetDistance(allytarget) <= self.SpellE.range then
-							local shieldflag, dmgpercent = self:shieldCheck(object,spell,allytarget,"shields")
-								if shieldflag then
-									if HitFirst and (SLastDistance == nil or SLastDistance >= GetDistance(allytarget, object)) then
-										shieldtarget, SLastDistance = allytarget, GetDistance(allytarget, object)
-									elseif not HitFirst and (SLastDmgPercent == nil or SLastDmgPercent <= dmgpercent) then
-										shieldtarget, SLastDmgPercent = allytarget, dmgpercent
-									end
-								end
+			if allytarget.team == myHero.team and not allytarget.dead and allytarget.health > 0 and spell.target == allytarget then
+				hitchampion = false
+	            local allyHitBox = allytarget.boundingRadius
+				if shottype == 0 then
+					hitchampion = spell.target and spell.target.networkID == allytarget.networkID
+				elseif shottype == 1 then
+	                hitchampion = checkhitlinepass(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
+				elseif shottype == 2 then
+	                hitchampion = checkhitlinepoint(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
+				elseif shottype == 3 then
+	                hitchampion = checkhitaoe(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
+				elseif shottype == 4 then
+	                hitchampion = checkhitcone(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
+				elseif shottype == 5 then
+	                hitchampion = checkhitwall(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
+				elseif shottype == 6 then
+	                hitchampion = checkhitlinepass(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox) or checkhitlinepass(object, Vector(object)*2-spell.endPos, radius, maxdistance, allytarget, allyHitBox)
+				elseif shottype == 7 then
+	                hitchampion = checkhitcone(spell.endPos, object, radius, maxdistance, allytarget, allyHitBox)
+				end
+	            if IsReady (_E) and menu.as["teammateshield" .. i] and GetDistance(allytarget) <= self.SpellE.range then
+	                local shieldflag, dmgpercent = self:shieldCheck(object, spell, allytarget, "shields")
+	                if shieldflag then
+	                    if allytarget ~= nil then
+							if CountAllyHero(allytarget, self.EmpoweredE.range) <= 1 then
+								DelayAction(function() CastSpell(_E, allytarget) end, menu.humanizer.shieldDelay / 1000)
+							elseif menu.spell.r.eempowered and CountAllyHero(allytarget, self.EmpoweredE.range) >= 2 then
+								CastSpell(_R)
+								DelayAction(function() CastSpell(_E, allytarget) end, menu.humanizer.shieldDelay / 1000)
 							end
 						end
-					end
-				end
-				if shieldtarget ~= nil and CountAllyHero(shieldtarget, self.EmpoweredE.range) <= 1 then
-					DelayAction(function() CastSpell(_E, shieldtarget) end, menu.humanizer.shieldDelay / 1000)
-				elseif shieldtarget ~= nil and menu.spell.r.eempowered and CountAllyHero(shieldtarget, self.EmpoweredE.range) >= 2 then
-					CastSpell(_R)
-					DelayAction(function() CastSpell(_E, shieldtarget) end, menu.humanizer.shieldDelay / 1000)
-				end
-			end
+	                end
+	            end
+	        end
 		end
-	end
+    end
+end
 
 function _Karma:shieldCheck(object,spell,target,typeused)
-	if Target == nil then return end
-	local configused
+	if Target == nil then
+        return
+    end
+    local configused
 
-	if typeused == "shields" then configused = menu.as
-	elseif typeused == "ult" then configused = menu.spell.r
+	if typeused == "shields" then
+        configused = menu.as
+	elseif typeused == "ult" then
+        configused = menu.spell.r
 	end
 
-	  local shieldflag = false
-	  if not menu.as.skillshots and shottype ~= 0 then
-		return false, 0
-	  end
-	  local adamage = object:CalcDamage(target, object.totalDamage)
-	  local InfinityEdge,onhitdmg,onhittdmg,onhitspelldmg,onhitspelltdmg,muramanadmg,skilldamage,skillTypeDmg = 0,0,0,0,0,0,0,0
-	  if object.type ~= "AIHeroClient" then
-	  elseif spelltype == "BAttack" then
-		skilldamage = (adamage+onhitdmg+muramanadmg)*1.07+onhittdmg
-	  elseif spelltype == "CAttack" then
-	  elseif spelltype == "Q" or spelltype == "W" or spelltype == "E" or spelltype == "R" or spelltype == "P" or spelltype == "QM" or spelltype == "WM" or spelltype == "EM" then
-		if not skillShield[object.charName][spelltype].Muramana or not muramanadmg then
-		  muramanadmg = 0
-		end
-		if casttype == 1 then
-		  skilldamage, skillTypeDmg = getDmg(spelltype, target, object, 1, spell.level)
-		elseif casttype == 2 then
-		  skilldamage, skillTypeDmg = getDmg(spelltype, target, object, 2, spell.level)
-		elseif casttype == 3 then
-		  skilldamage, skillTypeDmg = getDmg(spelltype, target, object, 3, spell.level)
-		end
-		if skillTypeDmg == 2 then
-		  skilldamage = (skilldamage + adamage + onhitspelldmg + onhitdmg + muramanadmg)* 1.07 + onhittdmg + onhitspelltdmg
-		elseif skilldamage > 0 then
-		  skilldamage = (skilldamage + onhitspelldmg + muramanadmg)* 1.07 + onhitspelltdmg
-		end
-	  elseif spell.name:find("SummonerDot") then
-		skilldamage = getDmg("IGNITE", target, object)
-		end
-			  for i = 1, heroManager.iCount do
-				local ally = heroManager:GetHero(i)
-				if ally.team == myHero.team then
+    local shieldflag = false
+    if not menu.as.skillshots and shottype ~= 0 then
+        return false, 0
+    end
 
-			  local dmgpercent = skilldamage * 100 / target.health
-			  local dmgneeded = dmgpercent >= configused.mindmgpercent
-			  local hpneeded =  configused["maxhppercent"..i] >= (target.health - skilldamage) * 100 / target.maxHealth
-				  if dmgneeded and hpneeded then
-					  shieldflag = true
-				  elseif (typeused == "shields" or typeused == "wall") and (CC == 2 and menu.as.shieldCC or CC == 1 and menu.as.shieldslow) then
-					  shieldflag = true
-				  end
-				  return shieldflag, dmgpercent
-				  end
-			  end
-		  end
+    local adamage = object:CalcDamage(target, object.totalDamage)
+	local InfinityEdge, onhitdmg, onhittdmg, onhitspelldmg, onhitspelltdmg, muramanadmg, skilldamage, skillTypeDmg = 0, 0, 0, 0, 0, 0, 0, 0
+    if object.type ~= "AIHeroClient" then
+        if spell.name:find("BasicAttack") then
+            skilldamage = adamage
+        elseif spell.name:find("CritAttack") then
+            skilldamage = adamage * 2
+        end
+    else
+        if GetInventoryHaveItem(3091,object) then
+            onhitdmg = onhitdmg+getDmg("WITSEND",target,object)
+        end
+		if GetInventoryHaveItem(3057,object) then
+            onhitdmg = onhitdmg+getDmg("SHEEN",target,object)
+        end
+		if GetInventoryHaveItem(3078,object) then
+            onhitdmg = onhitdmg+getDmg("TRINITY",target,object)
+        end
+		if GetInventoryHaveItem(3100,object) then
+            onhitdmg = onhitdmg+getDmg("LICHBANE",target,object)
+        end
+		if GetInventoryHaveItem(3025,object) then
+            onhitdmg = onhitdmg+getDmg("ICEBORN",target,object)
+        end
+		if GetInventoryHaveItem(3087,object) then
+            onhitdmg = onhitdmg+getDmg("STATIKK",target,object)
+        end
+		if GetInventoryHaveItem(3153,object) then
+            onhitdmg = onhitdmg+getDmg("RUINEDKING",target,object)
+        end
+		if GetInventoryHaveItem(3042,object) then
+            muramanadmg = getDmg("MURAMANA",target,object)
+        end
+		if GetInventoryHaveItem(3184,object) then
+            onhittdmg = onhittdmg + 80
+        end
+
+        if spelltype == "BAttack" then
+			skilldamage = (adamage+onhitdmg+muramanadmg)*1.07+onhittdmg
+		elseif spelltype == "CAttack" then
+			if GetInventoryHaveItem(3031,object) then
+                InfinityEdge = .5
+            end
+
+            skilldamage = (adamage*(2.1+InfinityEdge)+onhitdmg+muramanadmg)*1.07+onhittdmg --fix Lethality
+
+		elseif spelltype == "Q" or spelltype == "W" or spelltype == "E" or spelltype == "R" or spelltype == "P" or spelltype == "QM" or spelltype == "WM" or spelltype == "EM" then
+
+            if GetInventoryHaveItem(3151,object) then
+                onhitspelldmg = getDmg("LIANDRYS",target,object)
+            end
+
+            muramanadmg = skillShield[object.charName][spelltype]["Muramana"] and muramanadmg or 0
+
+			if spelltype == "Q" or spelltype == "QM" then
+				level = object:GetSpellData(_Q).level
+			elseif spelltype == "W" or spelltype == "WM" then
+				level = object:GetSpellData(_W).level
+			elseif spelltype == "E" or spelltype == "EM" then
+				level = object:GetSpellData(_E).level
+			elseif spelltype == "R" then
+				level = object:GetSpellData(_R).level
+			else
+				level = 1
+			end
+
+            if casttype == 1 or casttype == 2 or casttype == 3 then
+				skilldamage, skillTypeDmg = getDmg(spelltype,target,object, casttype, level)
+			end
+			if skillTypeDmg == 2 then
+				skilldamage = (skilldamage+adamage+onhitspelldmg+onhitdmg+muramanadmg)*1.07+onhittdmg+onhitspelltdmg
+			else
+				if skilldamage > 0 then skilldamage = (skilldamage+onhitspelldmg+muramanadmg)*1.07+onhitspelltdmg end
+			end
+
+		elseif spell.name:lower():find("summonerdot") then
+			skilldamage = getDmg("IGNITE",target,object)
+		end
+    end
+
+    for i = 1, heroManager.iCount do
+		local ally = heroManager:GetHero(i)
+		if ally.team == myHero.team then
+
+            local dmgpercent = skilldamage * 100 / target.health
+			local dmgneeded = dmgpercent >= configused.mindmgpercent
+			local hpneeded =  configused["maxhppercent"..i] >= (target.health - skilldamage) * 100 / target.maxHealth
+
+        	if dmgneeded and hpneeded then
+        		shieldflag = true
+        	elseif (typeused == "shields") and ((CC == 2 and menu.as.shieldcc) or (CC == 1 and menu.as.shieldslow)) then
+        		shieldflag = true
+        	end
+        end
+    end
+	return shieldflag, dmgpercent
+end
 
 function _Karma:TowerCC()
 	if Target == nil then return end
@@ -3996,7 +4099,7 @@ function _Lux:OnRemoveBuff(unit, buff)
 end
 
 function _Lux:ProcessAttack(object, spell)
-	local wPos = myHero + (Vector(shieldtarget) - myHero):normalized() * self.SpellW.range
+	local wPos = myHero + (Vector(allytarget) - myHero):normalized() * self.SpellW.range
 	for i = 1, heroManager.iCount do
 		local allytarget = heroManager:GetHero(i)
 		if allytarget.team == myHero.team then
@@ -4026,79 +4129,75 @@ function _Lux:ProcessAttack(object, spell)
 		end
 	end
 	if object.team ~= myHero.team and not myHero.dead and object.name ~= nil and not (object.name:find("Minion_") or object.name:find("Odin")) then
-		local shieldREADY = IsReady(_W)
-		local HitFirst = false
-		local shieldtarget,SLastDistance,SLastDmgPercent = nil,nil,nil
+	    local HitFirst = false
+	    local shieldtarget,SLastDistance,SLastDmgPercent = nil,nil,nil
+		local ulttarget,ULastDistance,ULastDmgPercent = nil,nil,nil
 
 		YWall, BShield, SShield, Shield, CC = false, false, false, false
 		shottype, radius, maxdistance = 0, 0, 0
 
-		if object.type == "AIHeroClient" then
+	    if object.type == "AIHeroClient" then
 			spelltype, casttype = getSpellType(object, spell.name)
 			if casttype == 4 or casttype == 5 or casttype == 6 then
 				return
 			end
-
-			Shield = true
-
-			if spelltype == "Q" or spelltype == "W" or spelltype == "E" or spelltype == "R" or spelltype == "P" or spelltype == "QM" or spelltype == "WM" or spelltype == "EM" then
-				if skillShield[object.charName] == nil then return end
-                HitFirst = skillShield[object.charName][spelltype].HitFirst
-				YWall = skillShield[object.charName][spelltype].YWall
-				BShield = skillShield[object.charName][spelltype].BShield
-				SShield = skillShield[object.charName][spelltype].SShield
-				Shield = skillShield[object.charName][spelltype].Shield
-				CC = skillShield[object.charName][spelltype].CC
-				shottype = skillData[object.charName][spelltype].type
-				radius = skillData[object.charName][spelltype].radius
-				maxdistance = skillData[object.charName][spelltype].maxdistance
-			else
+            if spelltype == "BAttack" or spelltype == "CAttack" then
 				Shield = true
-			end
-
-			for i = 1, heroManager.iCount do
-			local allytarget = heroManager:GetHero(i)
-				if spell.target and spell.target.networkID == allytarget.networkID then
-					if allytarget.team == myHero.team and not allytarget.dead and 0 < allytarget.health and allytarget.type == myHero.type then
-						hitchampion = false
-						local allyHitBox = allytarget.boundingRadius
-						if shottype == 0 then
-						hitchampion = spell.target and spell.target.networkID == allytarget.networkID
-						elseif shottype == 1 then
-						hitchampion = checkhitlinepass(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
-						elseif shottype == 2 then
-						hitchampion = checkhitlinepoint(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
-						elseif shottype == 3 then
-						hitchampion = checkhitaoe(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
-						elseif shottype == 4 then
-						hitchampion = checkhitcone(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
-						elseif shottype == 5 then
-						hitchampion = checkhitwall(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
-						elseif shottype == 6 then
-						hitchampion = checkhitlinepass(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox) or checkhitlinepass(object, Vector(object) * 2 - spell.endPos, radius, maxdistance, allytarget, allyHitBox)
-						elseif shottype == 7 then
-						hitchampion = checkhitcone(spell.endPos, object, radius, maxdistance, allytarget, allyHitBox)
-						end
-						local makeUpPos = allytarget + (Vector(spell.endPos) - allytarget):normalized() * GetDistance(allytarget)
-						if shieldREADY and menu.as["teammateshield" .. i] and GetDistance(makeUpPos) < myHero.boundingRadius * 3 or GetDistance(spell.endPos) < myHero.boundingRadius * 3 then
-							local shieldflag, dmgpercent = self:shieldCheck(object, spell, allytarget, "shields")
-								if shieldflag then
-									if HitFirst and (SLastDistance == nil or SLastDistance >= GetDistance(allytarget, object)) then
-										shieldtarget, SLastDistance = allytarget, GetDistance(allytarget, object)
-									elseif not HitFirst and (SLastDmgPercent == nil or SLastDmgPercent <= dmgpercent) then
-										shieldtarget, SLastDmgPercent = allytarget, dmgpercent
-									end
-								end
-							end
-						end
-					end
+            elseif spell.name:find("SummonerDot") then
+				Shield = true
+			elseif spelltype == "Q" or spelltype == "W" or spelltype == "E" or spelltype == "R" or spelltype == "P" or spelltype == "QM" or spelltype == "WM" or spelltype == "EM" then
+                if skillShield[object.charName] == nil then
+					return
 				end
-				if shieldtarget ~= nil then
-					CastSpell(_W, wPos.x, wPos.z)
-				end
+				HitFirst = skillShield[object.charName][spelltype]["HitFirst"]
+				YWall = skillShield[object.charName][spelltype]["YWall"]
+				BShield = skillShield[object.charName][spelltype]["BShield"]
+				SShield = skillShield[object.charName][spelltype]["SShield"]
+				Shield = skillShield[object.charName][spelltype]["Shield"]
+				CC = skillShield[object.charName][spelltype]["CC"]
+				shottype = skillData[object.charName][spelltype]["type"]
+				radius = skillData[object.charName][spelltype]["radius"]
+				maxdistance = skillData[object.charName][spelltype]["maxdistance"]
 			end
+        else
+			Shield = true
 		end
+
+        for i=1, heroManager.iCount do
+			local allytarget = heroManager:GetHero(i)
+			if allytarget.team == myHero.team and not allytarget.dead and allytarget.health > 0 and spell.target == allytarget then
+				hitchampion = false
+                local allyHitBox = allytarget.boundingRadius
+				if shottype == 0 then
+					hitchampion = spell.target and spell.target.networkID == allytarget.networkID
+				elseif shottype == 1 then
+                    hitchampion = checkhitlinepass(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
+				elseif shottype == 2 then
+                    hitchampion = checkhitlinepoint(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
+				elseif shottype == 3 then
+                    hitchampion = checkhitaoe(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
+				elseif shottype == 4 then
+                    hitchampion = checkhitcone(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
+				elseif shottype == 5 then
+                    hitchampion = checkhitwall(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
+				elseif shottype == 6 then
+                    hitchampion = checkhitlinepass(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox) or checkhitlinepass(object, Vector(object)*2-spell.endPos, radius, maxdistance, allytarget, allyHitBox)
+				elseif shottype == 7 then
+                    hitchampion = checkhitcone(spell.endPos, object, radius, maxdistance, allytarget, allyHitBox)
+				end
+				local makeUpPos = allytarget + (Vector(spell.endPos) - allytarget):normalized() * GetDistance(allytarget)
+				if IsReady(_W) and menu.as["teammateshield" .. i] and GetDistance(makeUpPos) < myHero.boundingRadius * 3 or GetDistance(spell.endPos) < myHero.boundingRadius * 3 then
+                    local shieldflag, dmgpercent = self:shieldCheck(object, spell, allytarget, "shields")
+                    if shieldflag then
+                        if allytarget ~= nil then
+							CastSpell(_W, wPos.x, wPos.z)
+						end
+                    end
+                end
+            end
+        end
 	end
+end
 
 function _Lux:ProcessSpell(object, spell)
     if enemyCount > 0 then
@@ -4122,58 +4221,119 @@ function _Lux:ProcessSpell(object, spell)
 end
 
 function _Lux:shieldCheck(object,spell,target,typeused)
-	if Target == nil then return end
+	if Target == nil then
+		return
+	end
 	local configused
 
-	if typeused == "shields" then configused = menu.as
-	elseif typeused == "ult" then configused = menu.spell.r
+	if typeused == "shields" then
+		configused = menu.as
+	elseif typeused == "ult" then
+		configused = menu.spell.r
 	end
 
-	  local shieldflag = false
-	  if not menu.as.skillshots and shottype ~= 0 then
+	local shieldflag = false
+	if not menu.as.skillshots and shottype ~= 0 then
 		return false, 0
-	  end
-	  local adamage = object:CalcDamage(target, object.totalDamage)
-	  local InfinityEdge,onhitdmg,onhittdmg,onhitspelldmg,onhitspelltdmg,muramanadmg,skilldamage,skillTypeDmg = 0,0,0,0,0,0,0,0
-	  if object.type ~= "AIHeroClient" then
-	  elseif spelltype == "BAttack" then
-		skilldamage = (adamage+onhitdmg+muramanadmg)*1.07+onhittdmg
-	  elseif spelltype == "CAttack" then
-	  elseif spelltype == "Q" or spelltype == "W" or spelltype == "E" or spelltype == "R" or spelltype == "P" or spelltype == "QM" or spelltype == "WM" or spelltype == "EM" then
-		if not skillShield[object.charName][spelltype].Muramana or not muramanadmg then
-		  muramanadmg = 0
-		end
-		if casttype == 1 then
-		  skilldamage, skillTypeDmg = getDmg(spelltype, target, object, 1, spell.level)
-		elseif casttype == 2 then
-		  skilldamage, skillTypeDmg = getDmg(spelltype, target, object, 2, spell.level)
-		elseif casttype == 3 then
-		  skilldamage, skillTypeDmg = getDmg(spelltype, target, object, 3, spell.level)
-		end
-		if skillTypeDmg == 2 then
-		  skilldamage = (skilldamage + adamage + onhitspelldmg + onhitdmg + muramanadmg)* 1.07 + onhittdmg + onhitspelltdmg
-		elseif skilldamage > 0 then
-		  skilldamage = (skilldamage + onhitspelldmg + muramanadmg)* 1.07 + onhitspelltdmg
-		end
-	  elseif spell.name:find("SummonerDot") then
-		skilldamage = getDmg("IGNITE", target, object)
-		end
-			  for i = 1, heroManager.iCount do
-				local ally = heroManager:GetHero(i)
-				if ally.team == myHero.team then
+	end
 
-			  local dmgpercent = skilldamage * 100 / target.health
-			  local dmgneeded = dmgpercent >= configused.mindmgpercent
-			  local hpneeded =  configused["maxhppercent"..i] >= (target.health - skilldamage) * 100 / target.maxHealth
-				  if dmgneeded and hpneeded then
-					  shieldflag = true
-				  elseif (typeused == "shields" or typeused == "wall") and (CC == 2 and menu.as.shieldCC or CC == 1 and menu.as.shieldslow) then
-					  shieldflag = true
-				  end
-				  return shieldflag, dmgpercent
-				  end
-			  end
-		  end
+	local adamage = object:CalcDamage(target, object.totalDamage)
+	local InfinityEdge, onhitdmg, onhittdmg, onhitspelldmg, onhitspelltdmg, muramanadmg, skilldamage, skillTypeDmg = 0, 0, 0, 0, 0, 0, 0, 0
+	if object.type ~= "AIHeroClient" then
+		if spell.name:find("BasicAttack") then
+			skilldamage = adamage
+		elseif spell.name:find("CritAttack") then
+			skilldamage = adamage * 2
+		end
+	else
+		if GetInventoryHaveItem(3091,object) then
+			onhitdmg = onhitdmg+getDmg("WITSEND",target,object)
+		end
+		if GetInventoryHaveItem(3057,object) then
+			onhitdmg = onhitdmg+getDmg("SHEEN",target,object)
+		end
+		if GetInventoryHaveItem(3078,object) then
+			onhitdmg = onhitdmg+getDmg("TRINITY",target,object)
+		end
+		if GetInventoryHaveItem(3100,object) then
+			onhitdmg = onhitdmg+getDmg("LICHBANE",target,object)
+		end
+		if GetInventoryHaveItem(3025,object) then
+			onhitdmg = onhitdmg+getDmg("ICEBORN",target,object)
+		end
+		if GetInventoryHaveItem(3087,object) then
+			onhitdmg = onhitdmg+getDmg("STATIKK",target,object)
+		end
+		if GetInventoryHaveItem(3153,object) then
+			onhitdmg = onhitdmg+getDmg("RUINEDKING",target,object)
+		end
+		if GetInventoryHaveItem(3042,object) then
+			muramanadmg = getDmg("MURAMANA",target,object)
+		end
+		if GetInventoryHaveItem(3184,object) then
+			onhittdmg = onhittdmg + 80
+		end
+
+		if spelltype == "BAttack" then
+			skilldamage = (adamage+onhitdmg+muramanadmg)*1.07+onhittdmg
+		elseif spelltype == "CAttack" then
+			if GetInventoryHaveItem(3031,object) then
+				InfinityEdge = .5
+			end
+
+			skilldamage = (adamage*(2.1+InfinityEdge)+onhitdmg+muramanadmg)*1.07+onhittdmg --fix Lethality
+
+		elseif spelltype == "Q" or spelltype == "W" or spelltype == "E" or spelltype == "R" or spelltype == "P" or spelltype == "QM" or spelltype == "WM" or spelltype == "EM" then
+
+			if GetInventoryHaveItem(3151,object) then
+				onhitspelldmg = getDmg("LIANDRYS",target,object)
+			end
+
+			muramanadmg = skillShield[object.charName][spelltype]["Muramana"] and muramanadmg or 0
+
+			if spelltype == "Q" or spelltype == "QM" then
+				level = object:GetSpellData(_Q).level
+			elseif spelltype == "W" or spelltype == "WM" then
+				level = object:GetSpellData(_W).level
+			elseif spelltype == "E" or spelltype == "EM" then
+				level = object:GetSpellData(_E).level
+			elseif spelltype == "R" then
+				level = object:GetSpellData(_R).level
+			else
+				level = 1
+			end
+
+			if casttype == 1 or casttype == 2 or casttype == 3 then
+				skilldamage, skillTypeDmg = getDmg(spelltype,target,object, casttype, level)
+			end
+			if skillTypeDmg == 2 then
+				skilldamage = (skilldamage+adamage+onhitspelldmg+onhitdmg+muramanadmg)*1.07+onhittdmg+onhitspelltdmg
+			else
+				if skilldamage > 0 then skilldamage = (skilldamage+onhitspelldmg+muramanadmg)*1.07+onhitspelltdmg end
+			end
+
+		elseif spell.name:lower():find("summonerdot") then
+			skilldamage = getDmg("IGNITE",target,object)
+		end
+	end
+
+	for i = 1, heroManager.iCount do
+		local ally = heroManager:GetHero(i)
+		if ally.team == myHero.team then
+
+			local dmgpercent = skilldamage * 100 / target.health
+			local dmgneeded = dmgpercent >= configused.mindmgpercent
+			local hpneeded =  configused["maxhppercent"..i] >= (target.health - skilldamage) * 100 / target.maxHealth
+
+			if dmgneeded and hpneeded then
+				shieldflag = true
+			elseif (typeused == "shields") and ((CC == 2 and menu.as.shieldcc) or (CC == 1 and menu.as.shieldslow)) then
+				shieldflag = true
+			end
+		end
+	end
+	return shieldflag, dmgpercent
+end
 
 function _Lux:TowerCC()
 	if Target == nil then return end
@@ -4898,126 +5058,186 @@ end
 
 function _Morgana:ProcessAttack(object,spell)
 	if object.team ~= myHero.team and not myHero.dead and object.name ~= nil and not (object.name:find("Minion_") or object.name:find("Odin")) then
-		local shieldREADY = IsReady(_E)
-		local HitFirst = false
-		local shieldtarget,SLastDistance,SLastDmgPercent = nil,nil,nil
+	    local HitFirst = false
+	    local shieldtarget,SLastDistance,SLastDmgPercent = nil,nil,nil
 		local ulttarget,ULastDistance,ULastDmgPercent = nil,nil,nil
 
 		YWall, BShield, SShield, Shield, CC = false, false, false, false
 		shottype, radius, maxdistance = 0, 0, 0
 
-		if object.type == "AIHeroClient" then
+	    if object.type == "AIHeroClient" then
 			spelltype, casttype = getSpellType(object, spell.name)
 			if casttype == 4 or casttype == 5 or casttype == 6 then
 				return
 			end
-			Shield = true
-
-				if spelltype == "Q" or spelltype == "W" or spelltype == "E" or spelltype == "R" or spelltype == "P" or spelltype == "QM" or spelltype == "WM" or spelltype == "EM" then
-					if skillShield[object.charName] == nil then return end
-                    HitFirst = skillShield[object.charName][spelltype].HitFirst
-					YWall = skillShield[object.charName][spelltype].YWall
-					BShield = skillShield[object.charName][spelltype].BShield
-					SShield = skillShield[object.charName][spelltype].SShield
-					Shield = skillShield[object.charName][spelltype].Shield
-					CC = skillShield[object.charName][spelltype].CC
-					shottype = skillData[object.charName][spelltype].type
-					radius = skillData[object.charName][spelltype].radius
-					maxdistance = skillData[object.charName][spelltype].maxdistance
-				else
-					Shield = true
-				end
-
-				for i = 1, heroManager.iCount do
-				local allytarget = heroManager:GetHero(i)
-					if spell.target and spell.target.networkID == allytarget.networkID then
-						if allytarget.team == myHero.team and not allytarget.dead and 0 < allytarget.health and allytarget.type == myHero.type then
-							hitchampion = false
-							local allyHitBox = allytarget.boundingRadius
-							if shottype == 0 then
-							hitchampion = spell.target and spell.target.networkID == allytarget.networkID
-							elseif shottype == 1 then
-							hitchampion = checkhitlinepass(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
-							elseif shottype == 2 then
-							hitchampion = checkhitlinepoint(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
-							elseif shottype == 3 then
-							hitchampion = checkhitaoe(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
-							elseif shottype == 4 then
-							hitchampion = checkhitcone(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
-							elseif shottype == 5 then
-							hitchampion = checkhitwall(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
-							elseif shottype == 6 then
-							hitchampion = checkhitlinepass(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox) or checkhitlinepass(object, Vector(object) * 2 - spell.endPos, radius, maxdistance, allytarget, allyHitBox)
-							elseif shottype == 7 then
-							hitchampion = checkhitcone(spell.endPos, object, radius, maxdistance, allytarget, allyHitBox)
-							end
-							if shieldREADY and menu.as["teammateshield" .. i] and GetDistance(allytarget) <= self.SpellE.range then
-							local shieldflag, dmgpercent = self:shieldCheck(object,spell,allytarget,"shields")
-								if shieldflag then
-									if HitFirst and (SLastDistance == nil or SLastDistance >= GetDistance(allytarget, object)) then
-										shieldtarget, SLastDistance = allytarget, GetDistance(allytarget, object)
-									elseif not HitFirst and (SLastDmgPercent == nil or SLastDmgPercent <= dmgpercent) then
-										shieldtarget, SLastDmgPercent = allytarget, dmgpercent
-									end
-								end
-							end
-						end
-					end
-				if shieldtarget ~= nil then
-					DelayAction(function() CastSpell(_E, shieldtarget) end, menu.humanizer.shieldDelay / 1000)
-				end
+	        if spelltype == "BAttack" or spelltype == "CAttack" then
+				Shield = true
+	        elseif spell.name:find("SummonerDot") then
+				Shield = true
+			elseif spelltype == "Q" or spelltype == "W" or spelltype == "E" or spelltype == "R" or spelltype == "P" or spelltype == "QM" or spelltype == "WM" or spelltype == "EM" then
+	            if skillShield[object.charName] == nil then return end
+				HitFirst = skillShield[object.charName][spelltype]["HitFirst"]
+				YWall = skillShield[object.charName][spelltype]["YWall"]
+				BShield = skillShield[object.charName][spelltype]["BShield"]
+				SShield = skillShield[object.charName][spelltype]["SShield"]
+				Shield = skillShield[object.charName][spelltype]["Shield"]
+				CC = skillShield[object.charName][spelltype]["CC"]
+				shottype = skillData[object.charName][spelltype]["type"]
+				radius = skillData[object.charName][spelltype]["radius"]
+				maxdistance = skillData[object.charName][spelltype]["maxdistance"]
 			end
+	    else
+			Shield = true
 		end
-	end
+
+	    for i=1, heroManager.iCount do
+			local allytarget = heroManager:GetHero(i)
+			if allytarget.team == myHero.team and not allytarget.dead and allytarget.health > 0 and spell.target == allytarget then
+				hitchampion = false
+	            local allyHitBox = allytarget.boundingRadius
+				if shottype == 0 then
+					hitchampion = spell.target and spell.target.networkID == allytarget.networkID
+				elseif shottype == 1 then
+	                hitchampion = checkhitlinepass(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
+				elseif shottype == 2 then
+	                hitchampion = checkhitlinepoint(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
+				elseif shottype == 3 then
+	                hitchampion = checkhitaoe(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
+				elseif shottype == 4 then
+	                hitchampion = checkhitcone(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
+				elseif shottype == 5 then
+	                hitchampion = checkhitwall(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
+				elseif shottype == 6 then
+	                hitchampion = checkhitlinepass(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox) or checkhitlinepass(object, Vector(object)*2-spell.endPos, radius, maxdistance, allytarget, allyHitBox)
+				elseif shottype == 7 then
+	                hitchampion = checkhitcone(spell.endPos, object, radius, maxdistance, allytarget, allyHitBox)
+				end
+	            if IsReady (_E) and menu.as["teammateshield" .. i] and GetDistance(allytarget) <= self.SpellE.range then
+	                local shieldflag, dmgpercent = self:shieldCheck(object, spell, allytarget, "shields")
+	                if shieldflag then
+	                    if allytarget ~= nil then
+							DelayAction(function() CastSpell(_E, allytarget) end, menu.humanizer.shieldDelay / 1000)
+						end
+	                end
+	            end
+	        end
+		end
+    end
 end
 
 function _Morgana:shieldCheck(object,spell,target,typeused)
-	if Target == nil then return end
+	if Target == nil then
+        return
+    end
+    local configused
+
 	if typeused == "shields" then
-	  local shieldflag = false
-	  if not menu.as.skillshots and shottype ~= 0 then
-		return false, 0
-	  end
-	  local adamage = object:CalcDamage(target, object.totalDamage)
-	  local InfinityEdge,onhitdmg,onhittdmg,onhitspelldmg,onhitspelltdmg,muramanadmg,skilldamage,skillTypeDmg = 0,0,0,0,0,0,0,0
-	  if object.type ~= "AIHeroClient" then
-	  elseif spelltype == "BAttack" then
-		skilldamage = (adamage+onhitdmg+muramanadmg)*1.07+onhittdmg
-	  elseif spelltype == "CAttack" then
-	  elseif spelltype == "Q" or spelltype == "W" or spelltype == "E" or spelltype == "R" or spelltype == "P" or spelltype == "QM" or spelltype == "WM" or spelltype == "EM" then
-		if not skillShield[object.charName][spelltype].Muramana or not muramanadmg then
-		  muramanadmg = 0
+        configused = menu.as
+	elseif typeused == "ult" then
+        configused = menu.spell.r
+	end
+
+    local shieldflag = false
+    if not menu.as.skillshots and shottype ~= 0 then
+        return false, 0
+    end
+
+    local adamage = object:CalcDamage(target, object.totalDamage)
+	local InfinityEdge, onhitdmg, onhittdmg, onhitspelldmg, onhitspelltdmg, muramanadmg, skilldamage, skillTypeDmg = 0, 0, 0, 0, 0, 0, 0, 0
+    if object.type ~= "AIHeroClient" then
+        if spell.name:find("BasicAttack") then
+            skilldamage = adamage
+        elseif spell.name:find("CritAttack") then
+            skilldamage = adamage * 2
+        end
+    else
+        if GetInventoryHaveItem(3091,object) then
+            onhitdmg = onhitdmg+getDmg("WITSEND",target,object)
+        end
+		if GetInventoryHaveItem(3057,object) then
+            onhitdmg = onhitdmg+getDmg("SHEEN",target,object)
+        end
+		if GetInventoryHaveItem(3078,object) then
+            onhitdmg = onhitdmg+getDmg("TRINITY",target,object)
+        end
+		if GetInventoryHaveItem(3100,object) then
+            onhitdmg = onhitdmg+getDmg("LICHBANE",target,object)
+        end
+		if GetInventoryHaveItem(3025,object) then
+            onhitdmg = onhitdmg+getDmg("ICEBORN",target,object)
+        end
+		if GetInventoryHaveItem(3087,object) then
+            onhitdmg = onhitdmg+getDmg("STATIKK",target,object)
+        end
+		if GetInventoryHaveItem(3153,object) then
+            onhitdmg = onhitdmg+getDmg("RUINEDKING",target,object)
+        end
+		if GetInventoryHaveItem(3042,object) then
+            muramanadmg = getDmg("MURAMANA",target,object)
+        end
+		if GetInventoryHaveItem(3184,object) then
+            onhittdmg = onhittdmg + 80
+        end
+
+        if spelltype == "BAttack" then
+			skilldamage = (adamage+onhitdmg+muramanadmg)*1.07+onhittdmg
+		elseif spelltype == "CAttack" then
+			if GetInventoryHaveItem(3031,object) then
+                InfinityEdge = .5
+            end
+
+            skilldamage = (adamage*(2.1+InfinityEdge)+onhitdmg+muramanadmg)*1.07+onhittdmg --fix Lethality
+
+		elseif spelltype == "Q" or spelltype == "W" or spelltype == "E" or spelltype == "R" or spelltype == "P" or spelltype == "QM" or spelltype == "WM" or spelltype == "EM" then
+
+            if GetInventoryHaveItem(3151,object) then
+                onhitspelldmg = getDmg("LIANDRYS",target,object)
+            end
+
+            muramanadmg = skillShield[object.charName][spelltype]["Muramana"] and muramanadmg or 0
+
+			if spelltype == "Q" or spelltype == "QM" then
+				level = object:GetSpellData(_Q).level
+			elseif spelltype == "W" or spelltype == "WM" then
+				level = object:GetSpellData(_W).level
+			elseif spelltype == "E" or spelltype == "EM" then
+				level = object:GetSpellData(_E).level
+			elseif spelltype == "R" then
+				level = object:GetSpellData(_R).level
+			else
+				level = 1
+			end
+
+            if casttype == 1 or casttype == 2 or casttype == 3 then
+				skilldamage, skillTypeDmg = getDmg(spelltype,target,object, casttype, level)
+			end
+			if skillTypeDmg == 2 then
+				skilldamage = (skilldamage+adamage+onhitspelldmg+onhitdmg+muramanadmg)*1.07+onhittdmg+onhitspelltdmg
+			else
+				if skilldamage > 0 then skilldamage = (skilldamage+onhitspelldmg+muramanadmg)*1.07+onhitspelltdmg end
+			end
+
+		elseif spell.name:lower():find("summonerdot") then
+			skilldamage = getDmg("IGNITE",target,object)
 		end
-		if casttype == 1 then
-		  skilldamage, skillTypeDmg = getDmg(spelltype, target, object, 1, spell.level)
-		elseif casttype == 2 then
-		  skilldamage, skillTypeDmg = getDmg(spelltype, target, object, 2, spell.level)
-		elseif casttype == 3 then
-		  skilldamage, skillTypeDmg = getDmg(spelltype, target, object, 3, spell.level)
-		end
-		if skillTypeDmg == 2 then
-		  skilldamage = (skilldamage + adamage + onhitspelldmg + onhitdmg + muramanadmg)* 1.07 + onhittdmg + onhitspelltdmg
-		elseif skilldamage > 0 then
-		  skilldamage = (skilldamage + onhitspelldmg + muramanadmg)* 1.07 + onhitspelltdmg
-		end
-	  elseif spell.name:find("SummonerDot") then
-		skilldamage = getDmg("IGNITE", target, object)
-	  end
-	  for i = 1, heroManager.iCount do
+    end
+
+    for i = 1, heroManager.iCount do
 		local ally = heroManager:GetHero(i)
 		if ally.team == myHero.team then
-		  local dmgpercent = skilldamage * 100 / target.health
-		  local dmgneeded = dmgpercent >= menu.as.mindmgpercent
-		  local hpneeded =  menu.as["maxhppercent"..i] >= (target.health - skilldamage) * 100 / target.maxHealth
-		  if dmgneeded and hpneeded then
-			  shieldflag = true
-		  elseif (typeused == "shields" or typeused == "wall") and (CC == 2 and menu.as.shieldCC or CC == 1 and menu.as.shieldslow) then
-			  shieldflag = true
-		  end
-		  return shieldflag, dmgpercent
-		  end
-	  end
-  end
+
+            local dmgpercent = skilldamage * 100 / target.health
+			local dmgneeded = dmgpercent >= configused.mindmgpercent
+			local hpneeded =  configused["maxhppercent"..i] >= (target.health - skilldamage) * 100 / target.maxHealth
+
+        	if dmgneeded and hpneeded then
+        		shieldflag = true
+        	elseif (typeused == "shields") and ((CC == 2 and menu.as.shieldcc) or (CC == 1 and menu.as.shieldslow)) then
+        		shieldflag = true
+        	end
+        end
+    end
+	return shieldflag, dmgpercent
 end
 
 Class ("_MovementBlock")
@@ -5035,7 +5255,7 @@ function _MovementBlock:disable()
 end
 
 function _MovementBlock:SendPacket(p)
-	if p.header == 0x0010 and self.blockMovement then
+	if p.header == 0x71 and self.blockMovement then
 		p:Block()
 	end
 end
@@ -6070,139 +6290,188 @@ function _Sona:OnDraw()
 end
 
 function _Sona:ProcessAttack(object,spell)
-	for i = 1, heroManager.iCount do
-		local allytarget = heroManager:GetHero(i)
-		if allytarget.team == myHero.team then
-            if IsReady(_Q) and spell.target and GetDistance(object) < self.SpellAura.range then
-                if not object.dead and object.team == myHero.team and object.type == myHero.type and not object.isMe and spell.name:lower():find("attack") then
-                    if spell.target.team ~= myHero.team and spell.target.type == myHero.type and menu.spell.q["qaura".. i] then
-                        DelayAction(function() CastSpell(_Q) end, menu.humanizer.shieldDelay / 1000)
-                    end
-                end
-            end
-		end
-    end
-    if object.team ~= myHero.team and not myHero.dead and object.name ~= nil and not (object.name:find("Minion_") or object.name:find("Odin")) then
-		local shieldREADY = IsReady(_W)
-		local HitFirst = false
-		local shieldtarget,SLastDistance,SLastDmgPercent = nil,nil,nil
+	if object.team ~= myHero.team and not myHero.dead and object.name ~= nil and not (object.name:find("Minion_") or object.name:find("Odin")) then
+	    local HitFirst = false
+	    local shieldtarget,SLastDistance,SLastDmgPercent = nil,nil,nil
 		local ulttarget,ULastDistance,ULastDmgPercent = nil,nil,nil
 
 		YWall, BShield, SShield, Shield, CC = false, false, false, false
 		shottype, radius, maxdistance = 0, 0, 0
 
-		if object.type == "AIHeroClient" then
+	    if object.type == "AIHeroClient" then
 			spelltype, casttype = getSpellType(object, spell.name)
 			if casttype == 4 or casttype == 5 or casttype == 6 then
 				return
 			end
-
-			Shield = true
-
-				if spelltype == "Q" or spelltype == "W" or spelltype == "E" or spelltype == "R" or spelltype == "P" or spelltype == "QM" or spelltype == "WM" or spelltype == "EM" then
-					if skillShield[object.charName] == nil then return end
-                    HitFirst = skillShield[object.charName][spelltype].HitFirst
-					YWall = skillShield[object.charName][spelltype].YWall
-					BShield = skillShield[object.charName][spelltype].BShield
-					SShield = skillShield[object.charName][spelltype].SShield
-					Shield = skillShield[object.charName][spelltype].Shield
-					CC = skillShield[object.charName][spelltype].CC
-					shottype = skillData[object.charName][spelltype].type
-					radius = skillData[object.charName][spelltype].radius
-					maxdistance = skillData[object.charName][spelltype].maxdistance
-				else
-					Shield = true
-				end
-
-				for i = 1, heroManager.iCount do
-				local allytarget = heroManager:GetHero(i)
-					if spell.target and spell.target.networkID == allytarget.networkID then
-						if allytarget.team == myHero.team and not allytarget.dead and 0 < allytarget.health and allytarget.type == myHero.type then
-							hitchampion = false
-							local allyHitBox = allytarget.boundingRadius
-							if shottype == 0 then
-							hitchampion = spell.target and spell.target.networkID == allytarget.networkID
-							elseif shottype == 1 then
-							hitchampion = checkhitlinepass(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
-							elseif shottype == 2 then
-							hitchampion = checkhitlinepoint(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
-							elseif shottype == 3 then
-							hitchampion = checkhitaoe(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
-							elseif shottype == 4 then
-							hitchampion = checkhitcone(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
-							elseif shottype == 5 then
-							hitchampion = checkhitwall(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
-							elseif shottype == 6 then
-							hitchampion = checkhitlinepass(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox) or checkhitlinepass(object, Vector(object) * 2 - spell.endPos, radius, maxdistance, allytarget, allyHitBox)
-							elseif shottype == 7 then
-							hitchampion = checkhitcone(spell.endPos, object, radius, maxdistance, allytarget, allyHitBox)
-							end
-							if shieldREADY and menu.spell.w["waura" .. i] and GetDistance(allytarget) <= self.SpellW.range then
-							local shieldflag, dmgpercent = self:shieldCheck(object,spell,allytarget,"shields")
-								if shieldflag then
-									if HitFirst and (SLastDistance == nil or SLastDistance >= GetDistance(allytarget, object)) then
-										shieldtarget, SLastDistance = allytarget, GetDistance(allytarget, object)
-									elseif not HitFirst and (SLastDmgPercent == nil or SLastDmgPercent <= dmgpercent) then
-										shieldtarget, SLastDmgPercent = allytarget, dmgpercent
-									end
-								end
-							end
-						end
-					end
-				if shieldtarget ~= nil then
-					DelayAction(function() CastSpell(_W) end, menu.humanizer.shieldDelay / 1000)
-				end
+            if spelltype == "BAttack" or spelltype == "CAttack" then
+				Shield = true
+            elseif spell.name:find("SummonerDot") then
+				Shield = true
+			elseif spelltype == "Q" or spelltype == "W" or spelltype == "E" or spelltype == "R" or spelltype == "P" or spelltype == "QM" or spelltype == "WM" or spelltype == "EM" then
+                if skillShield[object.charName] == nil then return end
+				HitFirst = skillShield[object.charName][spelltype]["HitFirst"]
+				YWall = skillShield[object.charName][spelltype]["YWall"]
+				BShield = skillShield[object.charName][spelltype]["BShield"]
+				SShield = skillShield[object.charName][spelltype]["SShield"]
+				Shield = skillShield[object.charName][spelltype]["Shield"]
+				CC = skillShield[object.charName][spelltype]["CC"]
+				shottype = skillData[object.charName][spelltype]["type"]
+				radius = skillData[object.charName][spelltype]["radius"]
+				maxdistance = skillData[object.charName][spelltype]["maxdistance"]
 			end
+        else
+			Shield = true
 		end
-	end
+
+        for i=1, heroManager.iCount do
+			local allytarget = heroManager:GetHero(i)
+			if allytarget.team == myHero.team and not allytarget.dead and allytarget.health > 0 and spell.target == allytarget then
+				hitchampion = false
+                local allyHitBox = allytarget.boundingRadius
+				if shottype == 0 then
+					hitchampion = spell.target and spell.target.networkID == allytarget.networkID
+				elseif shottype == 1 then
+                    hitchampion = checkhitlinepass(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
+				elseif shottype == 2 then
+                    hitchampion = checkhitlinepoint(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
+				elseif shottype == 3 then
+                    hitchampion = checkhitaoe(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
+				elseif shottype == 4 then
+                    hitchampion = checkhitcone(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
+				elseif shottype == 5 then
+                    hitchampion = checkhitwall(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
+				elseif shottype == 6 then
+                    hitchampion = checkhitlinepass(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox) or checkhitlinepass(object, Vector(object)*2-spell.endPos, radius, maxdistance, allytarget, allyHitBox)
+				elseif shottype == 7 then
+                    hitchampion = checkhitcone(spell.endPos, object, radius, maxdistance, allytarget, allyHitBox)
+				end
+                if IsReady (_W) and menu.as["teammateshield" .. i] and GetDistance(allytarget) <= self.SpellW.range then
+                    local shieldflag, dmgpercent = self:shieldCheck(object, spell, allytarget, "shields")
+                    if shieldflag then
+                        if allytarget ~= nil then
+							DelayAction(function() CastSpell(_W) end, menu.humanizer.shieldDelay / 1000)
+						end
+                    end
+                end
+            end
+        end
+    end
 end
 
 function _Sona:shieldCheck(object,spell,target,typeused)
-	if Target == nil then return end
+	if Target == nil then
+        return
+    end
+    local configused
+
 	if typeused == "shields" then
-	  local shieldflag = false
-	  if shottype ~= 0 then
-		return false, 0
-	  end
-	  local adamage = object:CalcDamage(target, object.totalDamage)
-	  local InfinityEdge,onhitdmg,onhittdmg,onhitspelldmg,onhitspelltdmg,muramanadmg,skilldamage,skillTypeDmg = 0,0,0,0,0,0,0,0
-	  if object.type ~= "AIHeroClient" then
-	  elseif spelltype == "BAttack" then
-		skilldamage = (adamage+onhitdmg+muramanadmg)*1.07+onhittdmg
-	  elseif spelltype == "CAttack" then
-	  elseif spelltype == "Q" or spelltype == "W" or spelltype == "E" or spelltype == "R" or spelltype == "P" or spelltype == "QM" or spelltype == "WM" or spelltype == "EM" then
-		if not skillShield[object.charName][spelltype].Muramana or not muramanadmg then
-		  muramanadmg = 0
+        configused = menu.as
+	elseif typeused == "ult" then
+        configused = menu.spell.r
+	end
+
+    local shieldflag = false
+    if not menu.as.skillshots and shottype ~= 0 then
+        return false, 0
+    end
+
+    local adamage = object:CalcDamage(target, object.totalDamage)
+	local InfinityEdge, onhitdmg, onhittdmg, onhitspelldmg, onhitspelltdmg, muramanadmg, skilldamage, skillTypeDmg = 0, 0, 0, 0, 0, 0, 0, 0
+    if object.type ~= "AIHeroClient" then
+        if spell.name:find("BasicAttack") then
+            skilldamage = adamage
+        elseif spell.name:find("CritAttack") then
+            skilldamage = adamage * 2
+        end
+    else
+        if GetInventoryHaveItem(3091,object) then
+            onhitdmg = onhitdmg+getDmg("WITSEND",target,object)
+        end
+		if GetInventoryHaveItem(3057,object) then
+            onhitdmg = onhitdmg+getDmg("SHEEN",target,object)
+        end
+		if GetInventoryHaveItem(3078,object) then
+            onhitdmg = onhitdmg+getDmg("TRINITY",target,object)
+        end
+		if GetInventoryHaveItem(3100,object) then
+            onhitdmg = onhitdmg+getDmg("LICHBANE",target,object)
+        end
+		if GetInventoryHaveItem(3025,object) then
+            onhitdmg = onhitdmg+getDmg("ICEBORN",target,object)
+        end
+		if GetInventoryHaveItem(3087,object) then
+            onhitdmg = onhitdmg+getDmg("STATIKK",target,object)
+        end
+		if GetInventoryHaveItem(3153,object) then
+            onhitdmg = onhitdmg+getDmg("RUINEDKING",target,object)
+        end
+		if GetInventoryHaveItem(3042,object) then
+            muramanadmg = getDmg("MURAMANA",target,object)
+        end
+		if GetInventoryHaveItem(3184,object) then
+            onhittdmg = onhittdmg + 80
+        end
+
+        if spelltype == "BAttack" then
+			skilldamage = (adamage+onhitdmg+muramanadmg)*1.07+onhittdmg
+		elseif spelltype == "CAttack" then
+			if GetInventoryHaveItem(3031,object) then
+                InfinityEdge = .5
+            end
+
+            skilldamage = (adamage*(2.1+InfinityEdge)+onhitdmg+muramanadmg)*1.07+onhittdmg --fix Lethality
+
+		elseif spelltype == "Q" or spelltype == "W" or spelltype == "E" or spelltype == "R" or spelltype == "P" or spelltype == "QM" or spelltype == "WM" or spelltype == "EM" then
+
+            if GetInventoryHaveItem(3151,object) then
+                onhitspelldmg = getDmg("LIANDRYS",target,object)
+            end
+
+            muramanadmg = skillShield[object.charName][spelltype]["Muramana"] and muramanadmg or 0
+
+			if spelltype == "Q" or spelltype == "QM" then
+				level = object:GetSpellData(_Q).level
+			elseif spelltype == "W" or spelltype == "WM" then
+				level = object:GetSpellData(_W).level
+			elseif spelltype == "E" or spelltype == "EM" then
+				level = object:GetSpellData(_E).level
+			elseif spelltype == "R" then
+				level = object:GetSpellData(_R).level
+			else
+				level = 1
+			end
+
+            if casttype == 1 or casttype == 2 or casttype == 3 then
+				skilldamage, skillTypeDmg = getDmg(spelltype,target,object, casttype, level)
+			end
+			if skillTypeDmg == 2 then
+				skilldamage = (skilldamage+adamage+onhitspelldmg+onhitdmg+muramanadmg)*1.07+onhittdmg+onhitspelltdmg
+			else
+				if skilldamage > 0 then skilldamage = (skilldamage+onhitspelldmg+muramanadmg)*1.07+onhitspelltdmg end
+			end
+
+		elseif spell.name:lower():find("summonerdot") then
+			skilldamage = getDmg("IGNITE",target,object)
 		end
-		if casttype == 1 then
-		  skilldamage, skillTypeDmg = getDmg(spelltype, target, object, 1, spell.level)
-		elseif casttype == 2 then
-		  skilldamage, skillTypeDmg = getDmg(spelltype, target, object, 2, spell.level)
-		elseif casttype == 3 then
-		  skilldamage, skillTypeDmg = getDmg(spelltype, target, object, 3, spell.level)
-		end
-		if skillTypeDmg == 2 then
-		  skilldamage = (skilldamage + adamage + onhitspelldmg + onhitdmg + muramanadmg)* 1.07 + onhittdmg + onhitspelltdmg
-		elseif skilldamage > 0 then
-		  skilldamage = (skilldamage + onhitspelldmg + muramanadmg)* 1.07 + onhitspelltdmg
-		end
-	  elseif spell.name:find("SummonerDot") then
-		skilldamage = getDmg("IGNITE", target, object)
-	  end
-			  for i = 1, heroManager.iCount do
-				local ally = heroManager:GetHero(i)
-				if ally.team == myHero.team then
-			  local dmgpercent = skilldamage * 100 / target.health
-			  local dmgneeded = dmgpercent >= 20
-			  local hpneeded =  15 >= (target.health - skilldamage) * 100 / target.maxHealth
-				  if dmgneeded and hpneeded then
-					  shieldflag = true
-				  end
-				  return shieldflag, dmgpercent
-				  end
-			  end
-		  end
-	  end
+    end
+
+    for i = 1, heroManager.iCount do
+		local ally = heroManager:GetHero(i)
+		if ally.team == myHero.team then
+
+            local dmgpercent = skilldamage * 100 / target.health
+			local dmgneeded = dmgpercent >= configused.mindmgpercent
+			local hpneeded =  configused["maxhppercent"..i] >= (target.health - skilldamage) * 100 / target.maxHealth
+
+        	if dmgneeded and hpneeded then
+        		shieldflag = true
+        	elseif (typeused == "shields") and ((CC == 2 and menu.as.shieldcc) or (CC == 1 and menu.as.shieldslow)) then
+        		shieldflag = true
+        	end
+        end
+    end
+	return shieldflag, dmgpercent
+end
 
 function _Sona:RemoveBuff(unit, buff)
 	if unit ~= nil and buff and unit.isMe and buff.name:lower() == "recall" or buff.name:lower() == "summonerteleport" or buff.name:lower() == "recallimproved" then buffs["recall"] = false end
@@ -6875,127 +7144,186 @@ function _Thresh:OnProcessAttack(object,spell)
 		end
 	end
 	if object.team ~= myHero.team and not myHero.dead and object.name ~= nil and not (object.name:find("Minion_") or object.name:find("Odin")) then
-		local shieldREADY = IsReady(_W)
-		local HitFirst = false
-		local shieldtarget,SLastDistance,SLastDmgPercent = nil,nil,nil
+	    local HitFirst = false
+	    local shieldtarget,SLastDistance,SLastDmgPercent = nil,nil,nil
 		local ulttarget,ULastDistance,ULastDmgPercent = nil,nil,nil
 
 		YWall, BShield, SShield, Shield, CC = false, false, false, false
 		shottype, radius, maxdistance = 0, 0, 0
 
-		if object.type == "AIHeroClient" then
+	    if object.type == "AIHeroClient" then
 			spelltype, casttype = getSpellType(object, spell.name)
 			if casttype == 4 or casttype == 5 or casttype == 6 then
 				return
 			end
-
-			Shield = true
-
-				if spelltype == "Q" or spelltype == "W" or spelltype == "E" or spelltype == "R" or spelltype == "P" or spelltype == "QM" or spelltype == "WM" or spelltype == "EM" then
-					if skillShield[object.charName] == nil then return end
-                    HitFirst = skillShield[object.charName][spelltype].HitFirst
-					YWall = skillShield[object.charName][spelltype].YWall
-					BShield = skillShield[object.charName][spelltype].BShield
-					SShield = skillShield[object.charName][spelltype].SShield
-					Shield = skillShield[object.charName][spelltype].Shield
-					CC = skillShield[object.charName][spelltype].CC
-					shottype = skillData[object.charName][spelltype].type
-					radius = skillData[object.charName][spelltype].radius
-					maxdistance = skillData[object.charName][spelltype].maxdistance
-				else
-					Shield = true
-				end
-
-				for i = 1, heroManager.iCount do
-				local allytarget = heroManager:GetHero(i)
-					if spell.target and spell.target.networkID == allytarget.networkID then
-						if allytarget.team == myHero.team and not allytarget.dead and 0 < allytarget.health and allytarget.type == myHero.type then
-							hitchampion = false
-							local allyHitBox = allytarget.boundingRadius
-							if shottype == 0 then
-							hitchampion = spell.target and spell.target.networkID == allytarget.networkID
-							elseif shottype == 1 then
-							hitchampion = checkhitlinepass(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
-							elseif shottype == 2 then
-							hitchampion = checkhitlinepoint(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
-							elseif shottype == 3 then
-							hitchampion = checkhitaoe(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
-							elseif shottype == 4 then
-							hitchampion = checkhitcone(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
-							elseif shottype == 5 then
-							hitchampion = checkhitwall(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
-							elseif shottype == 6 then
-							hitchampion = checkhitlinepass(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox) or checkhitlinepass(object, Vector(object) * 2 - spell.endPos, radius, maxdistance, allytarget, allyHitBox)
-							elseif shottype == 7 then
-							hitchampion = checkhitcone(spell.endPos, object, radius, maxdistance, allytarget, allyHitBox)
-							end
-							if shieldREADY and menu.as["teammateshield" .. i] and GetDistance(allytarget) <= self.SpellW.range then
-							local shieldflag, dmgpercent = self:shieldCheck(object,spell,allytarget,"shields")
-								if shieldflag then
-									if HitFirst and (SLastDistance == nil or SLastDistance >= GetDistance(allytarget, object)) then
-										shieldtarget, SLastDistance = allytarget, GetDistance(allytarget, object)
-									elseif not HitFirst and (SLastDmgPercent == nil or SLastDmgPercent <= dmgpercent) then
-										shieldtarget, SLastDmgPercent = allytarget, dmgpercent
-									end
-								end
-							end
-						end
-					end
-				if shieldtarget ~= nil then
-					DelayAction(function() self:CastW(shieldtarget, 0.01) end, menu.humanizer.shieldDelay / 1000)
-				end
+            if spelltype == "BAttack" or spelltype == "CAttack" then
+				Shield = true
+            elseif spell.name:find("SummonerDot") then
+				Shield = true
+			elseif spelltype == "Q" or spelltype == "W" or spelltype == "E" or spelltype == "R" or spelltype == "P" or spelltype == "QM" or spelltype == "WM" or spelltype == "EM" then
+                if skillShield[object.charName] == nil then return end
+				HitFirst = skillShield[object.charName][spelltype]["HitFirst"]
+				YWall = skillShield[object.charName][spelltype]["YWall"]
+				BShield = skillShield[object.charName][spelltype]["BShield"]
+				SShield = skillShield[object.charName][spelltype]["SShield"]
+				Shield = skillShield[object.charName][spelltype]["Shield"]
+				CC = skillShield[object.charName][spelltype]["CC"]
+				shottype = skillData[object.charName][spelltype]["type"]
+				radius = skillData[object.charName][spelltype]["radius"]
+				maxdistance = skillData[object.charName][spelltype]["maxdistance"]
 			end
+        else
+			Shield = true
 		end
+
+        for i=1, heroManager.iCount do
+			local allytarget = heroManager:GetHero(i)
+			if allytarget.team == myHero.team and not allytarget.dead and allytarget.health > 0 and spell.target == allytarget then
+				hitchampion = false
+                local allyHitBox = allytarget.boundingRadius
+				if shottype == 0 then
+					hitchampion = spell.target and spell.target.networkID == allytarget.networkID
+				elseif shottype == 1 then
+                    hitchampion = checkhitlinepass(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
+				elseif shottype == 2 then
+                    hitchampion = checkhitlinepoint(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
+				elseif shottype == 3 then
+                    hitchampion = checkhitaoe(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
+				elseif shottype == 4 then
+                    hitchampion = checkhitcone(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
+				elseif shottype == 5 then
+                    hitchampion = checkhitwall(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox)
+				elseif shottype == 6 then
+                    hitchampion = checkhitlinepass(object, spell.endPos, radius, maxdistance, allytarget, allyHitBox) or checkhitlinepass(object, Vector(object)*2-spell.endPos, radius, maxdistance, allytarget, allyHitBox)
+				elseif shottype == 7 then
+                    hitchampion = checkhitcone(spell.endPos, object, radius, maxdistance, allytarget, allyHitBox)
+				end
+                if IsReady (_W) and menu.as["teammateshield" .. i] and GetDistance(allytarget) <= self.SpellW.range then
+                    local shieldflag, dmgpercent = self:shieldCheck(object, spell, allytarget, "shields")
+                    if shieldflag then
+                        if allytarget ~= nil then
+							DelayAction(function() self:CastW(allytarget, 0.01) end, menu.humanizer.shieldDelay / 1000)
+						end
+                    end
+                end
+            end
+        end
 	end
 end
 
 function _Thresh:shieldCheck(object,spell,target,typeused)
-	if Target == nil then return end
+	if Target == nil then
+        return
+    end
+    local configused
+
 	if typeused == "shields" then
-	  local shieldflag = false
-	  if not menu.as.skillshots and shottype ~= 0 then
-		return false, 0
-	  end
-	  local adamage = object:CalcDamage(target, object.totalDamage)
-	  local InfinityEdge,onhitdmg,onhittdmg,onhitspelldmg,onhitspelltdmg,muramanadmg,skilldamage,skillTypeDmg = 0,0,0,0,0,0,0,0
-	  if object.type ~= "AIHeroClient" then
-	  elseif spelltype == "BAttack" then
-		skilldamage = (adamage+onhitdmg+muramanadmg)*1.07+onhittdmg
-	  elseif spelltype == "CAttack" then
-	  elseif spelltype == "Q" or spelltype == "W" or spelltype == "E" or spelltype == "R" or spelltype == "P" or spelltype == "QM" or spelltype == "WM" or spelltype == "EM" then
-		if not skillShield[object.charName][spelltype].Muramana or not muramanadmg then
-		  muramanadmg = 0
+        configused = menu.as
+	elseif typeused == "ult" then
+        configused = menu.spell.r
+	end
+
+    local shieldflag = false
+    if not menu.as.skillshots and shottype ~= 0 then
+        return false, 0
+    end
+
+    local adamage = object:CalcDamage(target, object.totalDamage)
+	local InfinityEdge, onhitdmg, onhittdmg, onhitspelldmg, onhitspelltdmg, muramanadmg, skilldamage, skillTypeDmg = 0, 0, 0, 0, 0, 0, 0, 0
+    if object.type ~= "AIHeroClient" then
+        if spell.name:find("BasicAttack") then
+            skilldamage = adamage
+        elseif spell.name:find("CritAttack") then
+            skilldamage = adamage * 2
+        end
+    else
+        if GetInventoryHaveItem(3091,object) then
+            onhitdmg = onhitdmg+getDmg("WITSEND",target,object)
+        end
+		if GetInventoryHaveItem(3057,object) then
+            onhitdmg = onhitdmg+getDmg("SHEEN",target,object)
+        end
+		if GetInventoryHaveItem(3078,object) then
+            onhitdmg = onhitdmg+getDmg("TRINITY",target,object)
+        end
+		if GetInventoryHaveItem(3100,object) then
+            onhitdmg = onhitdmg+getDmg("LICHBANE",target,object)
+        end
+		if GetInventoryHaveItem(3025,object) then
+            onhitdmg = onhitdmg+getDmg("ICEBORN",target,object)
+        end
+		if GetInventoryHaveItem(3087,object) then
+            onhitdmg = onhitdmg+getDmg("STATIKK",target,object)
+        end
+		if GetInventoryHaveItem(3153,object) then
+            onhitdmg = onhitdmg+getDmg("RUINEDKING",target,object)
+        end
+		if GetInventoryHaveItem(3042,object) then
+            muramanadmg = getDmg("MURAMANA",target,object)
+        end
+		if GetInventoryHaveItem(3184,object) then
+            onhittdmg = onhittdmg + 80
+        end
+
+        if spelltype == "BAttack" then
+			skilldamage = (adamage+onhitdmg+muramanadmg)*1.07+onhittdmg
+		elseif spelltype == "CAttack" then
+			if GetInventoryHaveItem(3031,object) then
+                InfinityEdge = .5
+            end
+
+            skilldamage = (adamage*(2.1+InfinityEdge)+onhitdmg+muramanadmg)*1.07+onhittdmg --fix Lethality
+
+		elseif spelltype == "Q" or spelltype == "W" or spelltype == "E" or spelltype == "R" or spelltype == "P" or spelltype == "QM" or spelltype == "WM" or spelltype == "EM" then
+
+            if GetInventoryHaveItem(3151,object) then
+                onhitspelldmg = getDmg("LIANDRYS",target,object)
+            end
+
+            muramanadmg = skillShield[object.charName][spelltype]["Muramana"] and muramanadmg or 0
+
+			if spelltype == "Q" or spelltype == "QM" then
+				level = object:GetSpellData(_Q).level
+			elseif spelltype == "W" or spelltype == "WM" then
+				level = object:GetSpellData(_W).level
+			elseif spelltype == "E" or spelltype == "EM" then
+				level = object:GetSpellData(_E).level
+			elseif spelltype == "R" then
+				level = object:GetSpellData(_R).level
+			else
+				level = 1
+			end
+
+            if casttype == 1 or casttype == 2 or casttype == 3 then
+				skilldamage, skillTypeDmg = getDmg(spelltype,target,object, casttype, level)
+			end
+			if skillTypeDmg == 2 then
+				skilldamage = (skilldamage+adamage+onhitspelldmg+onhitdmg+muramanadmg)*1.07+onhittdmg+onhitspelltdmg
+			else
+				if skilldamage > 0 then skilldamage = (skilldamage+onhitspelldmg+muramanadmg)*1.07+onhitspelltdmg end
+			end
+
+		elseif spell.name:lower():find("summonerdot") then
+			skilldamage = getDmg("IGNITE",target,object)
 		end
-		if casttype == 1 then
-		  skilldamage, skillTypeDmg = getDmg(spelltype, target, object, 1, spell.level)
-		elseif casttype == 2 then
-		  skilldamage, skillTypeDmg = getDmg(spelltype, target, object, 2, spell.level)
-		elseif casttype == 3 then
-		  skilldamage, skillTypeDmg = getDmg(spelltype, target, object, 3, spell.level)
-		end
-		if skillTypeDmg == 2 then
-		  skilldamage = (skilldamage + adamage + onhitspelldmg + onhitdmg + muramanadmg)* 1.07 + onhittdmg + onhitspelltdmg
-		elseif skilldamage > 0 then
-		  skilldamage = (skilldamage + onhitspelldmg + muramanadmg)* 1.07 + onhitspelltdmg
-		end
-	  elseif spell.name:find("SummonerDot") then
-		skilldamage = getDmg("IGNITE", target, object)
-	  end
-	  for i = 1, heroManager.iCount do
+    end
+
+    for i = 1, heroManager.iCount do
 		local ally = heroManager:GetHero(i)
 		if ally.team == myHero.team then
-	  local dmgpercent = skilldamage * 100 / target.health
-	  local dmgneeded = dmgpercent >= menu.as.mindmgpercent
-	  local hpneeded =  menu.as["maxhppercent"..i] >= (target.health - skilldamage) * 100 / target.maxHealth
-		  if dmgneeded and hpneeded then
-			  shieldflag = true
-		  elseif (typeused == "shields" or typeused == "wall") and (CC == 2 and menu.as.shieldCC or CC == 1 and menu.as.shieldslow) then
-			  shieldflag = true
-		  end
-		  return shieldflag, dmgpercent
-		  end
-	  end
-  end
+
+            local dmgpercent = skilldamage * 100 / target.health
+			local dmgneeded = dmgpercent >= configused.mindmgpercent
+			local hpneeded =  configused["maxhppercent"..i] >= (target.health - skilldamage) * 100 / target.maxHealth
+
+        	if dmgneeded and hpneeded then
+        		shieldflag = true
+        	elseif (typeused == "shields") and ((CC == 2 and menu.as.shieldcc) or (CC == 1 and menu.as.shieldslow)) then
+        		shieldflag = true
+        	end
+        end
+    end
+	return shieldflag, dmgpercent
 end
 
 function _Thresh:Combo()
