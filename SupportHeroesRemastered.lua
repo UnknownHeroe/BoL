@@ -12,7 +12,7 @@ I UNDERSTAND MY INDENTATION IS WEIRD. C&P TO GITHUB MESSED IT ALL UP!
 1.503 Change Log:
 	1) Patch 6.16
 	2) Fixed Janna spam when leveling R 
-	2) Reworked shields for champions that use one
+	3) Reworked shields for champions that use one
 ]]
 
 local scriptVersion = 1.503
