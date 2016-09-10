@@ -9,11 +9,12 @@
 
 I UNDERSTAND MY INDENTATION IS WEIRD. C&P TO GITHUB MESSED IT ALL UP!
 
-1.505 Change Log:
-	1) 6.17 Update
+1.506 Change Log:
+	1) 6.18 Update
+	2) Soraka Combo Update
 ]]
 
-local scriptVersion = 1.505
+local scriptVersion = 1.506
 
  -- BoL Tools --
 assert(load(Base64Decode("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"), nil, "bt", _ENV))()
@@ -6686,6 +6687,8 @@ function _Soraka:Menu()
         menu.spell.e:addParam("empty", "", SCRIPT_PARAM_INFO, "")
         menu.spell.e:addParam("eharass", "Harass", SCRIPT_PARAM_ONOFF, true)
         menu.spell.e:addParam("eharassmana", "[Harass] Mana > X%", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
+		menu.spell.e:addParam("empty", "", SCRIPT_PARAM_INFO, "")
+		menu.spell.e:addParam("ehp", "Min HP To Cast", SCRIPT_PARAM_SLICE, 75, 0, 100, 0)
         menu.spell:addSubMenu("[" .. myHero.charName .. "] - R", "r")
         for i = 1, heroManager.iCount do
         local unit = heroManager:GetHero(i)
@@ -6744,10 +6747,20 @@ function _Soraka:AutoUlt()
 	for i = 1, heroManager.iCount do
 		local unit = heroManager:GetHero(i)
 		if unit.team == myHero.team and unit.type == myHero.type and not unit.dead then
-            if IsReady(_R) and not _Tech:InFountain() then
-				if menu.spell.r["teammateult".. i] then
-					if (100 * unit.health / unit.maxHealth) <= menu.spell.r["maxhppercent"..i] then
-            			CastSpell(_R)
+			if enemyCount > 0 then
+				for i = 1, enemyCount do
+					local enemy = enemyHeroes[i]
+						if IsReady(_R) and not _Tech:InFountain() then
+							if GetDistance(unit, enemy) < 600 then
+								if menu.spell.r["teammateult".. i] then
+									if (100 * unit.health / unit.maxHealth) <= menu.spell.r["maxhppercent"..i] then
+			            				CastSpell(_R)
+									end
+								end
+							elseif GetDistance(unit, enemy) > 600 and (100 * unit.health / unit.maxHealth) < 0.10 then
+								CastSpell(_R)
+							end
+						end
 					end
 				end
             end
@@ -6757,46 +6770,66 @@ end
 
 function _Soraka:Combo()
     if Target == nil then return end
-    if menu.key.comboKey then
-        if IsReady(_Q) and menu.spell.q.qcombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qcombomana and (GetDistance(Target) < self.SpellQ.range) then
-            if ValidTarget(Target) then
-                local CastPosition, HitChance = UPL:Predict(_Q, myHero, Target)
-                if HitChance > 0 then
-                    CastSpell(_Q, CastPosition.x, CastPosition.z)
-                end
-            end
-        end
-        if IsReady(_E) and menu.spell.e.ecombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.e.ecombomana and (GetDistance(Target) < self.SpellE.range) then
-            if ValidTarget(Target) then
-                local CastPosition, HitChance = UPL:Predict(_E, myHero, Target)
-                if HitChance > 0 then
-                    CastSpell(_E, CastPosition.x, CastPosition.z)
-                end
-            end
-        end
-    end
+	for i = 1, heroManager.iCount do
+		local unit = heroManager:GetHero(i)
+		if unit.team == myHero.team and unit.type == myHero.type and not unit.dead then
+		    if menu.key.comboKey then
+		        if IsReady(_Q) and menu.spell.q.qcombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qcombomana and (GetDistance(Target) < self.SpellQ.range) then
+		            if ValidTarget(Target) then
+		                local CastPosition, HitChance = UPL:Predict(_Q, myHero, Target)
+		                if HitChance > 0 then
+		                    CastSpell(_Q, CastPosition.x, CastPosition.z)
+		                end
+		            end
+		        end
+		        if IsReady(_E) and menu.spell.e.ecombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.e.ecombomana and (GetDistance(Target) < self.SpellE.range) then
+		            if ValidTarget(Target) and GetDistance(Target, unit) < 500 then
+		                local CastPosition, HitChance = UPL:Predict(_E, myHero, Target)
+		                if HitChance > 0 then
+		                    CastSpell(_E, CastPosition.x, CastPosition.z)
+		                end
+					elseif ValidTarget(Target) and GetDistance(Target, unit) > 500 and (100 * myHero.health/myHero.maxHealth) <= menu.spell.e.ehp then
+						local CastPosition, HitChance = UPL:Predict(_E, myHero, Target)
+		                if HitChance > 0 then
+		                    CastSpell(_E, CastPosition.x, CastPosition.z)
+		                end
+					end
+		        end
+		    end
+		end
+	end
 end
 
 function _Soraka:Harass()
     if Target == nil then return end
-    if menu.key.harassKey or menu.key.harassToggle then
-        if IsReady(_Q) and menu.spell.q.qharass and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qharassmana and (GetDistance(Target) < self.SpellQ.range) then
-            if ValidTarget(Target) then
-                local CastPosition, HitChance = UPL:Predict(_Q, myHero, Target)
-                if HitChance > 0 then
-                    CastSpell(_Q, CastPosition.x, CastPosition.z)
-                end
-            end
-        end
-        if IsReady(_E) and menu.spell.e.eharass and (100 * myHero.mana / myHero.maxMana)>= menu.spell.e.eharassmana and (GetDistance(Target) < self.SpellE.range) then
-            if ValidTarget(Target) then
-                local CastPosition, HitChance = UPL:Predict(_E, myHero, Target)
-                if HitChance > 0 then
-                    CastSpell(_E, CastPosition.x, CastPosition.z)
-                end
-            end
-        end
-    end
+	for i = 1, heroManager.iCount do
+		local unit = heroManager:GetHero(i)
+		if unit.team == myHero.team and unit.type == myHero.type and not unit.dead then
+		    if menu.key.harassKey or menu.key.harassToggle then
+		        if IsReady(_Q) and menu.spell.q.qharass and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qharassmana and (GetDistance(Target) < self.SpellQ.range) then
+		            if ValidTarget(Target) then
+		                local CastPosition, HitChance = UPL:Predict(_Q, myHero, Target)
+		                if HitChance > 0 then
+		                    CastSpell(_Q, CastPosition.x, CastPosition.z)
+		                end
+		            end
+		        end
+				if IsReady(_E) and menu.spell.e.eharass and (100 * myHero.mana / myHero.maxMana)>= menu.spell.e.eharassmana and (GetDistance(Target) < self.SpellE.range) then
+		            if ValidTarget(Target) and GetDistance(Target, unit) < 300 then
+		                local CastPosition, HitChance = UPL:Predict(_E, myHero, Target)
+		                if HitChance > 0 then
+		                    CastSpell(_E, CastPosition.x, CastPosition.z)
+		                end
+					elseif ValidTarget(Target) and GetDistance(Target, unit) > 300 and (100 * myHero.health/myHero.maxHealth) <= menu.spell.e.ehp then
+						local CastPosition, HitChance = UPL:Predict(_E, myHero, Target)
+		                if HitChance > 0 then
+		                    CastSpell(_E, CastPosition.x, CastPosition.z)
+		                end
+					end
+		        end
+		    end
+		end
+	end
 end
 
 function _Soraka:LaneClear()
