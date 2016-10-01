@@ -14,7 +14,7 @@ I UNDERSTAND MY INDENTATION IS WEIRD. C&P TO GITHUB MESSED IT ALL UP!
 	2) Fixed A Lot Of Bugs
 	3) Tweaked Thesh Combo
 	4) Fixed Thresh Desperation Lantern
-	5) Optimized Most of the Scipt
+	5) Optimized Most of the Script
 ]]
 
 local scriptVersion = 1.508
