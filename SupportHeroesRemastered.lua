@@ -9,12 +9,8 @@
 
 I UNDERSTAND MY INDENTATION IS WEIRD. C&P TO GITHUB MESSED IT ALL UP!
 
-1.508 Change Log:
-	1) Patch 6.19 Update
-	2) Fixed A Lot Of Bugs
-	3) Tweaked Thesh Combo
-	4) Fixed Thresh Desperation Lantern
-	5) Optimized A Lot of the Script
+1.509 Change Log:
+	1) Temp Fix
 ]]
 
 local scriptVersion = 1.508
@@ -25,6 +21,7 @@ assert(load(Base64Decode("G0x1YVIAAQQEBAgAGZMNChoKAAAAAAAAAAAAAQpQAAAABAAAAEYAQA
 TrackerLoad("x1JZahyw3vH0Sdai")
 
 local Champions =
+{
 	["Alistar"] = true,
 	["Annie"] = true,
     --["Bard"] = true,
@@ -251,7 +248,7 @@ local targetbinded = false
 local targetsaa = false
 local allyHeroes, enemyHeroes = GetAllyHeroes(), GetEnemyHeroes()
 local allyCount, enemyCount = #allyHeroes, #enemyHeroes
-local ceil, floor, round, max, huge, pow, random = math.ceil, math.floor, math.round, math.max, math.huge, math.pow, math.random
+local ceil, floor, round, max, huge, pow = math.ceil, math.floor, math.round, math.max, math.huge, math.pow
 
 buffs["recall"] = false
 
@@ -358,7 +355,7 @@ function _Bundle:LoadUPL()
 			UPL = UPL()
 		else
 			_Bundle:Print("Downloading UPL, please don't press F9")
-			DelayAction( function() DownloadFile("https://raw.github.com/nebelwolfi/BoL/master/Common/UPL.lua" .. "?rand=" .. random(1, 10000), LIB_PATH .. "UPL.lua", function() print("Successfully downloaded UPL. Press F9 twice.") end) end, 3)
+			DelayAction( function() DownloadFile("https://raw.github.com/nebelwolfi/BoL/master/Common/UPL.lua" .. "?rand=" .. math.random(1, 10000), LIB_PATH .. "UPL.lua", function() print("Successfully downloaded UPL. Press F9 twice.") end) end, 3)
 			return
 		end
 	end
@@ -427,6 +424,9 @@ function _Activator:Menu()
 			menu.activator.fotm:addParam("empty", "", SCRIPT_PARAM_INFO,"")
 			end
 	   end
+
+	--[[menu.activator:addSubMenu("Frost Queens", "fqs")
+		menu.activator.fqs:addParam("fqs", "Use Frost Queens In Combo", SCRIPT_PARAM_ONOFF, true)  ]]
 
     menu.activator:addSubMenu("Locket of the Iron Solari", "lois")
     	for i = 1, heroManager.iCount do
@@ -647,7 +647,7 @@ function _Alistar:__init()
 end
 
 function _Alistar:LoadVariables()
-	self.SpellQ = { speed = huge, delay = 0.5, range = 365, width = 100, collision = false, aoe = true, type = "circular" }
+	self.SpellQ = { speed = math.huge, delay = 0.5, range = 365, width = 100, collision = false, aoe = true, type = "circular" }
 
 	self.SpellW = { speed = 1000, delay = 0.55, range = 650, width = nil, collision = true, aoe = false, type = "linear" }
 
@@ -1156,11 +1156,11 @@ end
 function _Annie:LoadVariables()
 	self.SpellQ = { speed = 1400, delay = 0.5, range = 625, width = nil, collision = false, aoe = false, type = "linear" }
 
-	self.SpellW = { speed = huge, delay = 0.25, range = 625, width = 200, collision = false, aoe = true, type = "linear" }
+	self.SpellW = { speed = math.huge, delay = 0.25, range = 625, width = 200, collision = false, aoe = true, type = "linear" }
 
 	self.SpellE = { speed = 20, delay = 0.25, range = nil, width = nil, collision = false, aoe = true, type = "circular" }
 
-	self.SpellR = { speed = huge, delay = 0.25, range = 600, width = 200, collision = false, aoe = true, type = "circular" }
+	self.SpellR = { speed = math.huge, delay = 0.25, range = 600, width = 200, collision = false, aoe = true, type = "circular" }
 end
 
 function _Annie:OnTick()
@@ -2267,7 +2267,7 @@ function _Janna:OnDraw()
 				for i = 1, enemyCount do
 					local enemy = enemyHeroes[i]
 					if not enemy.dead and GetDistance(enemy) < 725 then
-						local endPos = enemy + (875 - sqrt((enemy.x - flashPos.x) ^ 2 + (enemy.z - flashPos.z) ^ 2)) * (Vector(myHero) - Vector(flashPos)):normalized()
+						local endPos = enemy + (875 - math.sqrt((enemy.x - flashPos.x) ^ 2 + (enemy.z - flashPos.z) ^ 2)) * (Vector(myHero) - Vector(flashPos)):normalized()
 						DrawLine3D(enemy.x, enemy.y, enemy.z, endPos.x, endPos.y, endPos.z, 5, ARGB(125, 0, 255,0))
 					end
 				end
@@ -3697,7 +3697,7 @@ function _Lux:LoadVariables()
 	self.SpellQ = { speed = 1200, delay = 0.25, range = 1175, width = 80, collision = true, aoe = false, type = "linear"}
 	self.SpellW = { speed = 1400, delay = 0.25, range = 1075, width = 110, collision = true, aoe = false, type = "linear" }
 	self.SpellE = { speed = 1300, delay = 0.25, range = 1100, width = 275, collision = false, aoe = true, type = "circular" }
-	self.SpellR = { speed = huge, delay = 1.35, range = 3340, width = 190, collision = false, aoe = true, type = "linear" }
+	self.SpellR = { speed = math.huge, delay = 1.35, range = 3340, width = 190, collision = false, aoe = true, type = "linear" }
 
 	self.AA = {range = 550}
 
@@ -4746,7 +4746,7 @@ end
 
 function _Morgana:LoadVariables()
 	self.SpellQ = { speed = 1200, delay = 0.25, range = 1175, width = 80, collision = true, aoe = false, type = "linear"}
-	self.SpellW = { speed = huge, delay = 0.25, range = 900, width = 175, collision = false, aoe = true, type = "circular"}
+	self.SpellW = { speed = math.huge, delay = 0.25, range = 900, width = 175, collision = false, aoe = true, type = "circular"}
 	self.SpellE = { delay = 0.25, range = 800}
 	self.SpellR = { delay = 0.5, range = 625 } --600 Cast Range, 1050 Thether range
 
@@ -5281,7 +5281,7 @@ function _Nami:__init()
 end
 
 function _Nami:LoadVariables()
-	self.SpellQ = { speed = huge, delay = 0.925, range = 875, width = 162, collision = false, aoe = true, type = "circular"}
+	self.SpellQ = { speed = math.huge, delay = 0.925, range = 875, width = 162, collision = false, aoe = true, type = "circular"}
 	self.SpellW = { delay = 0.25, range = 725}
 	self.SpellE = { delay = 0.25, range = 800}
 	self.SpellR = { speed = 859, delay = 0.25, range = 2750, width = 562, collision = false, aoe = true, type = "linear"}
@@ -5624,7 +5624,7 @@ function _Nami:GetHeroesInUlt(target)
 		local x1, y1, z1 = myHero.x, myHero.y, myHero.z
 		local x2, y2, z2 = target.x, target.y, target.z
 		local o = { x = ((z2 - z1)*-1), z = x2 - x1 }
-		local len = sqrt(o.x ^ 2 + o.z ^ 2)
+		local len = math.sqrt(o.x ^ 2 + o.z ^ 2)
 		o.x, o.z = o.x / len * 562 / 2, o.z / len * 562 / 2
 		local points = {
 			{x1 + o.x, y1, z1 + o.z},
@@ -5746,7 +5746,7 @@ function _PentagonRot:DrawHexagonRot(object, color, thickness, size)
 	end
 
 	local function CalcAngle(vector1, vector2)
-		local angle = atan2(vector1.z-vector2.z, vector1.x-vector2.x)
+		local angle = math.atan2(vector1.z-vector2.z, vector1.x-vector2.x)
 		return angle
 	end
 
@@ -5884,13 +5884,13 @@ function _Sona:__init()
 end
 
 function _Sona:LoadVariables()
-	self.SpellQ = { speed = huge, delay = 0.5, range = 850, width = 100, collision = false, aoe = true, type = "circular" }
+	self.SpellQ = { speed = math.huge, delay = 0.5, range = 850, width = 100, collision = false, aoe = true, type = "circular" }
 
 	self.SpellW = { speed = 1000, delay = 0.55, range = 1000, width = nil, collision = true, aoe = false, type = "linear" }
 
 	self.SpellE = { speed = nil, delay = 0.5, range = 360, width = nil, collision = false, aoe = true, type = "circular" }
 
-	self.SpellR = { speed = huge, delay = 0.25, range = 900, width = 300, collision = false, aoe = true, type = "linear" }
+	self.SpellR = { speed = math.huge, delay = 0.25, range = 900, width = 300, collision = false, aoe = true, type = "linear" }
 
     self.SpellAura = { range = 400}
 
@@ -6357,17 +6357,22 @@ function _Sona:ProcessAttack(object,spell)
     end
 end
 
-function _Sona:shieldCheck(object, spell, target, typeused)
+function _Sona:shieldCheck(object,spell,target,typeused)
 	if Target == nil then
         return
     end
     local configused
 
 	if typeused == "shields" then
-        configused = menu.spell.w
+        configused = menu.as
 	elseif typeused == "ult" then
         configused = menu.spell.r
 	end
+
+    local shieldflag = false
+    if not menu.as.skillshots and shottype ~= 0 then
+        return false, 0
+    end
 
     local adamage = object:CalcDamage(target, object.totalDamage)
 	local InfinityEdge, onhitdmg, onhittdmg, onhitspelldmg, onhitspelltdmg, muramanadmg, skilldamage, skillTypeDmg = 0, 0, 0, 0, 0, 0, 0, 0
@@ -6551,11 +6556,11 @@ function _Soraka:__init()
 end
 
 function _Soraka:LoadVariables()
-    self.SpellQ = { speed = huge, delay = 0.5, range = 810, width = 250, collision = false, aoe = true, type = "circular" }
+    self.SpellQ = { speed = math.huge, delay = 0.5, range = 810, width = 250, collision = false, aoe = true, type = "circular" }
 
     self.SpellW = { speed = 1000, delay = 0.55, range = 550, width = 500, collision = true, aoe = false, type = "linear" }
 
-    self.SpellE = { speed = huge, delay = 0.5, range = 925, width = 250, collision = false, aoe = true, type = "circular" }
+    self.SpellE = { speed = math.huge, delay = 0.5, range = 925, width = 250, collision = false, aoe = true, type = "circular" }
 
     self.SpellR = { speed = nil, delay = 0.25, range = 25000, width = nil, collision = false, aoe = false, type = "linear" }
 
@@ -6937,7 +6942,7 @@ end
 function _Thresh:LoadVariables()
 	self.SpellQ = { speed = 1800, delay = 0.5, range = 1075, width = 80, collision = true, aoe = false, type = "linear"}
 	self.SpellW = { speed = nil, delay = 0, range = 950, width = nil, collision = false, aoe = false, type = "circular" }
-	self.SpellE = { speed = huge, delay = 0.1, range = 500, width = 100, collision = false, aoe = false, type = "linear" }
+	self.SpellE = { speed = math.huge, delay = 0.1, range = 500, width = 100, collision = false, aoe = false, type = "linear" }
 	self.SpellR = { speed = nil, delay = 0.25, range = 450, width = nil, collision = false, aoe = true, type = "circular" }
 
 	UPL:AddSpell(_Q, self.SpellQ)
@@ -7637,7 +7642,7 @@ function _Thresh:Desperation()
         for _, ally in pairs(GetAllyHeroes()) do
 			if not ally.dead and GetDistance(ally) < self.SpellW.range + 500 and CountObjectsInCircle(ally, 600, GetEnemyHeroes()) > CountObjectsInCircle(ally, 600, GetAllyHeroes()) and GetDistance(ally) > 800 then
                 self:CastW(ally, 1.25)
-			else CastSpell(_W, _Tech:GetLowestAlly(self.SpellW.range))
+                else CastSpell(_W, _Tech:GetLowestAlly(range))
             end
         end
     end
@@ -7698,8 +7703,8 @@ end
 
 -- Finds Closest Enemy --
 function _Tech:ClosestEnemy(pos)
-	if pos == nil then return huge, nil end
-	local closestEnemy, distanceEnemy = nil, huge
+	if pos == nil then return math.huge, nil end
+	local closestEnemy, distanceEnemy = nil, math.huge
 
 	for i, enemy in pairs(GetEnemyHeroes()) do
 		if not enemy.dead then
@@ -7750,13 +7755,13 @@ end
 
 function _Tech:DrawCircleNextLvl(x, y, z, radius, width, color, chordlength)
 	radius = radius or 300
-	quality = max(40, Round(180 / deg((asin((chordlength / (2 * radius)))))))
-	quality = 2 * pi / quality
+	quality = math.max(40, Round(180 / math.deg((math.asin((chordlength / (2 * radius)))))))
+	quality = 2 * math.pi / quality
 	radius = radius * .92
 	local points = {}
 
-	for theta = 0, 2 * pi + quality, quality do
-		local c = WorldToScreen(D3DXVECTOR3(x + radius * cos(theta), y, z - radius * sin(theta)))
+	for theta = 0, 2 * math.pi + quality, quality do
+		local c = WorldToScreen(D3DXVECTOR3(x + radius * math.cos(theta), y, z - radius * math.sin(theta)))
 		points[#points + 1] = D3DXVECTOR2(c.x, c.y)
 	end
 	DrawLines2(points, width or 1, color or 4294967295)
@@ -8210,8 +8215,8 @@ Class("ScriptUpdate")
 function ScriptUpdate:__init(LocalVersion, UseHttps, Host, VersionPath, ScriptPath, SavePath, CallbackUpdate, CallbackNoUpdate, CallbackNewVersion, CallbackError)
 	self.LocalVersion = LocalVersion
 	self.Host = Host
-	self.VersionPath = '/BoL/TCPUpdater/GetScript' ..(UseHttps and '5' or '6') .. '.php?script=' .. self:Base64Encode(self.Host .. VersionPath) .. '&rand=' .. random(99999999)
-	self.ScriptPath = '/BoL/TCPUpdater/GetScript' ..(UseHttps and '5' or '6') .. '.php?script=' .. self:Base64Encode(self.Host .. ScriptPath) .. '&rand=' .. random(99999999)
+	self.VersionPath = '/BoL/TCPUpdater/GetScript' ..(UseHttps and '5' or '6') .. '.php?script=' .. self:Base64Encode(self.Host .. VersionPath) .. '&rand=' .. math.random(99999999)
+	self.ScriptPath = '/BoL/TCPUpdater/GetScript' ..(UseHttps and '5' or '6') .. '.php?script=' .. self:Base64Encode(self.Host .. ScriptPath) .. '&rand=' .. math.random(99999999)
 	self.SavePath = SavePath
 	self.CallbackUpdate = CallbackUpdate
 	self.CallbackNoUpdate = CallbackNoUpdate
@@ -8458,9 +8463,9 @@ end
 -- Math For Round --
 function Round(number)
 	if number >= 0 then
-		return floor(number+.5)
+		return math.floor(number+.5)
 	else
-		return ceil(number-.5)
+		return math.ceil(number-.5)
 	end
 end
 
@@ -8523,13 +8528,13 @@ end
 function AngleDifference(from, p1, p2)
 	local p1Z = p1.z - from.z
 	local p1X = p1.x - from.x
-	local p1Angle = atan2(p1Z , p1X) * 180 / pi
+	local p1Angle = math.atan2(p1Z , p1X) * 180 / math.pi
 
 	local p2Z = p2.z - from.z
 	local p2X = p2.x - from.x
-	local p2Angle = atan2(p2Z , p2X) * 180 / pi
+	local p2Angle = math.atan2(p2Z , p2X) * 180 / math.pi
 
-	return sqrt((p1Angle - p2Angle) ^ 2)
+	return math.sqrt((p1Angle - p2Angle) ^ 2)
 end
 
 -- Get point on a line closest to the target --
@@ -8543,7 +8548,7 @@ function pointOnLine(End, Start, unit, extra, range)
 	local distance = dotP / magitudeToEnd
 	local x, z = Start.x + toEnd.x * (distance + extra), Start.z + toEnd.z * (distance + extra)
 
-	if sqrt((x - myHero.x) ^ 2 + (z - myHero.z) ^ 2) < range then
+	if math.sqrt((x - myHero.x) ^ 2 + (z - myHero.z) ^ 2) < range then
 		return {x = x, z = z}
 	else
 		return Normalize({x = Start.x + toEnd.x * (distance + extra), z = Start.z + toEnd.z * (distance + extra)}, myHero, range)
@@ -8605,7 +8610,7 @@ end
 
 function a2v ( a, m )
   m = m or 1
-  local x = cos ( a ) * m
-  local y = sin ( a ) * m
+  local x = math.cos ( a ) * m
+  local y = math.sin ( a ) * m
   return x, y
 end
