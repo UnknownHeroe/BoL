@@ -9,11 +9,14 @@
 
 I UNDERSTAND MY INDENTATION IS WEIRD. C&P TO GITHUB MESSED IT ALL UP!
 
-1.509 Change Log:
-	1) Temp Fix
+1.6 Change Log:
+	1) Fixed Update Issue
+	2) Changed Auto Updater
+	3) Fixed Sona Shield Spam
+	4) Fixed A Few Things That Could Potentially Cause Errors
 ]]
 
-local scriptVersion = 1.508
+local scriptVersion = 1.6
 
  -- BoL Tools --
 assert(load(Base64Decode("G0x1YVIAAQQEBAgAGZMNChoKAAAAAAAAAAAAAQpQAAAABAAAAEYAQAClAAAAXUAAAUZAQAClQAAAXUAAAWWAAAAIQACBZcAAAAhAgIFLAAAAgQABAMZAQQDHgMEBAQEBAKGACoCGQUEAjMFBAwACgAKdgYABmwEAABcACYDHAUID2wEAABdACIDHQUIDGIDCAxeAB4DHwUIDzAHDA0FCAwDdgYAB2wEAABdAAoDGgUMAx8HDAxgAxAMXgACAwUEEANtBAAAXAACAwYEEAEqAgQMXgAOAx8FCA8wBwwNBwgQA3YGAAdsBAAAXAAKAxoFDAMfBwwMYAMUDF4AAgMFBBADbQQAAFwAAgMGBBABKgIEDoMD0f4ZARQDlAAEAnUAAAYaARQDBwAUAnUAAAYbARQDlQAEAisAAjIbARQDlgAEAisCAjIbARQDlwAEAisAAjYbARQDlAAIAisCAjR8AgAAcAAAABBIAAABBZGRVbmxvYWRDYWxsYmFjawAEFAAAAEFkZEJ1Z3NwbGF0Q2FsbGJhY2sABAwAAABUcmFja2VyTG9hZAAEDQAAAEJvbFRvb2xzVGltZQADAAAAAAAA8D8ECwAAAG9iak1hbmFnZXIABAsAAABtYXhPYmplY3RzAAQKAAAAZ2V0T2JqZWN0AAQGAAAAdmFsaWQABAUAAAB0eXBlAAQHAAAAb2JqX0hRAAQFAAAAbmFtZQAEBQAAAGZpbmQABAIAAAAxAAQHAAAAbXlIZXJvAAQFAAAAdGVhbQADAAAAAAAAWUAECAAAAE15TmV4dXMABAsAAABUaGVpck5leHVzAAQCAAAAMgADAAAAAAAAaUAEFQAAAEFkZERlbGV0ZU9iakNhbGxiYWNrAAQGAAAAY2xhc3MABA4AAABTY3JpcHRUcmFja2VyAAQHAAAAX19pbml0AAQSAAAAU2VuZFZhbHVlVG9TZXJ2ZXIABAoAAABzZW5kRGF0YXMABAsAAABHZXRXZWJQYWdlAAkAAAACAAAAAwAAAAAAAwkAAAAFAAAAGABAABcAAIAfAIAABQAAAAxAQACBgAAAHUCAAR8AgAADAAAAAAQSAAAAU2VuZFZhbHVlVG9TZXJ2ZXIABAcAAAB1bmxvYWQAAAAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAEAAAABQAAAAAAAwkAAAAFAAAAGABAABcAAIAfAIAABQAAAAxAQACBgAAAHUCAAR8AgAADAAAAAAQSAAAAU2VuZFZhbHVlVG9TZXJ2ZXIABAkAAABidWdzcGxhdAAAAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAUAAAAHAAAAAQAEDQAAAEYAwACAAAAAXYAAAUkAAABFAAAATEDAAMGAAABdQIABRsDAAKUAAADBAAEAXUCAAR8AgAAFAAAABA4AAABTY3JpcHRUcmFja2VyAAQSAAAAU2VuZFZhbHVlVG9TZXJ2ZXIABAUAAABsb2FkAAQMAAAARGVsYXlBY3Rpb24AAwAAAAAAQHpAAQAAAAYAAAAHAAAAAAADBQAAAAUAAAAMAEAAgUAAAB1AgAEfAIAAAgAAAAQSAAAAU2VuZFZhbHVlVG9TZXJ2ZXIABAgAAAB3b3JraW5nAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAEAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA0AAAAAAAYyAAAABgBAAB2AgAAaQEAAF4AAgEGAAABfAAABF0AKgEYAQQBHQMEAgYABAMbAQQDHAMIBEEFCAN0AAAFdgAAACECAgUYAQQBHQMEAgYABAMbAQQDHAMIBEMFCAEbBQABPwcICDkEBAt0AAAFdgAAACEAAhUYAQQBHQMEAgYABAMbAQQDHAMIBBsFAAA9BQgIOAQEARoFCAE/BwgIOQQEC3QAAAV2AAAAIQACGRsBAAIFAAwDGgEIAAUEDAEYBQwBWQIEAXwAAAR8AgAAOAAAABA8AAABHZXRJbkdhbWVUaW1lcgADAAAAAAAAAAAECQAAADAwOjAwOjAwAAQGAAAAaG91cnMABAcAAABzdHJpbmcABAcAAABmb3JtYXQABAYAAAAlMDIuZgAEBQAAAG1hdGgABAYAAABmbG9vcgADAAAAAAAgrEAEBQAAAG1pbnMAAwAAAAAAAE5ABAUAAABzZWNzAAQCAAAAOgAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAABUAAAAcAAAAAQAFIwAAABsAAAAXwAeARwBAAFsAAAAXAAeARkBAAFtAAAAXQAaACIDAgEfAQABYAMEAF4AAgEfAQAAYQMEAF4AEgEaAwQCAAAAAxsBBAF2AgAGGgMEAwAAAAAYBQgCdgIABGUAAARcAAYBFAAABTEDCAMGAAgBdQIABF8AAgEUAAAFMQMIAwcACAF1AgAEfAIAADAAAAAQGAAAAdmFsaWQABAcAAABEaWRFbmQAAQEEBQAAAG5hbWUABB4AAABTUlVfT3JkZXJfbmV4dXNfc3dpcmxpZXMudHJveQAEHgAAAFNSVV9DaGFvc19uZXh1c19zd2lybGllcy50cm95AAQMAAAAR2V0RGlzdGFuY2UABAgAAABNeU5leHVzAAQLAAAAVGhlaXJOZXh1cwAEEgAAAFNlbmRWYWx1ZVRvU2VydmVyAAQEAAAAd2luAAQGAAAAbG9vc2UAAAAAAAMAAAABAQAAAQAAAAAAAAAAAAAAAAAAAAAAHQAAAB0AAAACAAICAAAACkAAgB8AgAABAAAABAoAAABzY3JpcHRLZXkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHQAAAB4AAAACAAUKAAAAhgBAAMAAgACdgAABGEBAARfAAICFAIAAjIBAAQABgACdQIABHwCAAAMAAAAEBQAAAHR5cGUABAcAAABzdHJpbmcABAoAAABzZW5kRGF0YXMAAAAAAAIAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAB8AAAAuAAAAAgATPwAAAApAAICGgEAAnYCAAAqAgICGAEEAxkBBAAaBQQAHwUECQQECAB2BAAFGgUEAR8HBAoFBAgBdgQABhoFBAIfBQQPBgQIAnYEAAcaBQQDHwcEDAcICAN2BAAEGgkEAB8JBBEECAwAdggABFgECAt0AAAGdgAAACoCAgYaAQwCdgIAACoCAhgoAxIeGQEQAmwAAABdAAIAKgMSHFwAAgArAxIeGQEUAh4BFAQqAAIqFAIAAjMBFAQEBBgBBQQYAh4FGAMHBBgAAAoAAQQIHAIcCRQDBQgcAB0NAAEGDBwCHw0AAwcMHAAdEQwBBBAgAh8RDAFaBhAKdQAACHwCAACEAAAAEBwAAAGFjdGlvbgAECQAAAHVzZXJuYW1lAAQIAAAAR2V0VXNlcgAEBQAAAGh3aWQABA0AAABCYXNlNjRFbmNvZGUABAkAAAB0b3N0cmluZwAEAwAAAG9zAAQHAAAAZ2V0ZW52AAQVAAAAUFJPQ0VTU09SX0lERU5USUZJRVIABAkAAABVU0VSTkFNRQAEDQAAAENPTVBVVEVSTkFNRQAEEAAAAFBST0NFU1NPUl9MRVZFTAAEEwAAAFBST0NFU1NPUl9SRVZJU0lPTgAECwAAAGluZ2FtZVRpbWUABA0AAABCb2xUb29sc1RpbWUABAYAAABpc1ZpcAAEAQAAAAAECQAAAFZJUF9VU0VSAAMAAAAAAADwPwMAAAAAAAAAAAQJAAAAY2hhbXBpb24ABAcAAABteUhlcm8ABAkAAABjaGFyTmFtZQAECwAAAEdldFdlYlBhZ2UABA4AAABib2wtdG9vbHMuY29tAAQXAAAAL2FwaS9ldmVudHM/c2NyaXB0S2V5PQAECgAAAHNjcmlwdEtleQAECQAAACZhY3Rpb249AAQLAAAAJmNoYW1waW9uPQAEDgAAACZib2xVc2VybmFtZT0ABAcAAAAmaHdpZD0ABA0AAAAmaW5nYW1lVGltZT0ABAgAAAAmaXNWaXA9AAAAAAACAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAvAAAAMwAAAAMACiEAAADGQEAAAYEAAN2AAAHHwMAB3YCAAArAAIDHAEAAzADBAUABgACBQQEA3UAAAscAQADMgMEBQcEBAIABAAHBAQIAAAKAAEFCAgBWQYIC3UCAAccAQADMgMIBQcECAIEBAwDdQAACxwBAAMyAwgFBQQMAgYEDAN1AAAIKAMSHCgDEiB8AgAASAAAABAcAAABTb2NrZXQABAgAAAByZXF1aXJlAAQHAAAAc29ja2V0AAQEAAAAdGNwAAQIAAAAY29ubmVjdAADAAAAAAAAVEAEBQAAAHNlbmQABAUAAABHRVQgAAQSAAAAIEhUVFAvMS4wDQpIb3N0OiAABAUAAAANCg0KAAQLAAAAc2V0dGltZW91dAADAAAAAAAAAAAEAgAAAGIAAwAAAPyD15dBBAIAAAB0AAQKAAAATGFzdFByaW50AAQBAAAAAAQFAAAARmlsZQAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAA="), nil, "bt", _ENV))()
@@ -364,7 +367,7 @@ end
 if FileExist(LIB_PATH .. "/VPrediction.lua") then
 	require("VPrediction")
 else
-	Customprint("VPrediction is required, please download it and reload")
+	Customprint("VPrediction is required, please download it and reload.")
 	return
 end
 
@@ -6363,16 +6366,9 @@ function _Sona:shieldCheck(object,spell,target,typeused)
     end
     local configused
 
-	if typeused == "shields" then
-        configused = menu.as
-	elseif typeused == "ult" then
+	if typeused == "ult" then
         configused = menu.spell.r
 	end
-
-    local shieldflag = false
-    if not menu.as.skillshots and shottype ~= 0 then
-        return false, 0
-    end
 
     local adamage = object:CalcDamage(target, object.totalDamage)
 	local InfinityEdge, onhitdmg, onhittdmg, onhitspelldmg, onhitspelltdmg, muramanadmg, skilldamage, skillTypeDmg = 0, 0, 0, 0, 0, 0, 0, 0
@@ -6464,7 +6460,7 @@ function _Sona:shieldCheck(object,spell,target,typeused)
 
         	if dmgneeded and hpneeded then
         		shieldflag = true
-        	elseif (typeused == "shields") and ((CC == 2 and menu.as.shieldcc) or (CC == 1 and menu.as.shieldslow)) then
+        	elseif (typeused == "shields") and ((CC == 2) or (CC == 1)) then
         		shieldflag = true
         	end
         end
@@ -8211,7 +8207,7 @@ end
 
 -- Global Classes --
 -- Auto update stuff made by Aroc
-Class("ScriptUpdate")
+class("ScriptUpdate")
 function ScriptUpdate:__init(LocalVersion, UseHttps, Host, VersionPath, ScriptPath, SavePath, CallbackUpdate, CallbackNoUpdate, CallbackNewVersion, CallbackError)
 	self.LocalVersion = LocalVersion
 	self.Host = Host
@@ -8225,6 +8221,7 @@ function ScriptUpdate:__init(LocalVersion, UseHttps, Host, VersionPath, ScriptPa
 	AddDrawCallback( function() self:OnDraw() end)
 	self:CreateSocket(self.VersionPath)
 	--self.DownloadStatus = 'Connect to Server for VersionInfo'
+	DownloadStatus = 0
 	AddTickCallback( function() self:GetOnlineVersion() end)
 end
 
@@ -8234,7 +8231,10 @@ end
 
 function ScriptUpdate:OnDraw()
 	if self.DownloadStatus ~= 'Downloading Script (100%)' and self.DownloadStatus ~= 'Downloading VersionInfo (100%)' then
-		DrawText('Download Status: ' ..(self.DownloadStatus or 'Unknown'), 50, 10, 50, ARGB(0xFF, 0xFF, 0xFF, 0xFF))
+		DrawTextA("Downloading: SupportHeroesRemastered!",15,50,35)
+		DrawRectangleOutline(49,50,250,20, ARGB(255,255,255,255),1)
+		DrawLine(50,60,50+(2.5*DownloadStatus),60,18,ARGB(150,255-DownloadStatus*2.5,DownloadStatus*2.5,255-DownloadStatus*2.5))
+		DrawTextA(tostring(math.round(DownloadStatus).." %"), 15,150,52)
 	end
 end
 
@@ -8282,7 +8282,6 @@ function ScriptUpdate:GetOnlineVersion()
 	end
 	if (self.Receive or(#self.Snipped > 0)) and not self.RecvStarted then
 		self.RecvStarted = true
-		self.DownloadStatus = 'Downloading VersionInfo (0%)'
 	end
 
 	self.File = self.File ..(self.Receive or self.Snipped)
@@ -8295,7 +8294,7 @@ function ScriptUpdate:GetOnlineVersion()
 			local ScriptEnd = self.File:find('</scr' .. 'ipt>')
 			if ScriptEnd then ScriptEnd = ScriptEnd - 1 end
 			local DownloadedSize = self.File:sub(ScriptFind + 1, ScriptEnd or -1):len()
-			self.DownloadStatus = 'Downloading VersionInfo (' .. Round(100 / self.Size * DownloadedSize, 2) .. '%)'
+			DownloadStatus = (math.round(100 / self.Size * DownloadedSize, 2))
 		end
 	end
 	if self.File:find('</scr' .. 'ipt>') then
@@ -8322,7 +8321,6 @@ function ScriptUpdate:GetOnlineVersion()
 					self.CallbackNewVersion(self.OnlineVersion, self.LocalVersion)
 				end
 				self:CreateSocket(self.ScriptPath)
-				self.DownloadStatus = 'Connect to Server for ScriptDownload'
 				AddTickCallback( function() self:DownloadUpdate() end)
 			else
 				if self.CallbackNoUpdate and type(self.CallbackNoUpdate) == 'function' then
@@ -8343,7 +8341,6 @@ function ScriptUpdate:DownloadUpdate()
 	end
 	if (self.Receive or(#self.Snipped > 0)) and not self.RecvStarted then
 		self.RecvStarted = true
-		self.DownloadStatus = 'Downloading Script (0%)'
 	end
 
 	self.File = self.File ..(self.Receive or self.Snipped)
@@ -8356,7 +8353,7 @@ function ScriptUpdate:DownloadUpdate()
 			local ScriptEnd = self.File:find('</scr' .. 'ipt>')
 			if ScriptEnd then ScriptEnd = ScriptEnd - 1 end
 			local DownloadedSize = self.File:sub(ScriptFind + 1, ScriptEnd or -1):len()
-			self.DownloadStatus = 'Downloading Script (' .. Round(100 / self.Size * DownloadedSize, 2) .. '%)'
+			DownloadStatus = (math.round(100 / self.Size * DownloadedSize, 2))
 		end
 	end
 	if self.File:find('</scr' .. 'ipt>') then
