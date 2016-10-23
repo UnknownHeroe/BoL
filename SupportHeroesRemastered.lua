@@ -10,13 +10,14 @@
 I UNDERSTAND MY INDENTATION IS WEIRD. C&P TO GITHUB MESSED IT ALL UP!
 
 1.6 Change Log:
-	1) Fixed Update Issue
-	2) Changed Auto Updater
-	3) Fixed Sona Shield Spam
-	4) Fixed A Few Things That Could Potentially Cause Errors
+	1) 6.21 Update
+	2) Fixed Morgana Auto W
+	3) Fixed Thresh Spam
+	4) Added More Checks For Thresh Q2
+	5) Added My Own Custom Target Selector (HUGE Improvment Over The Old System)
 ]]
 
-local scriptVersion = 1.6
+local scriptVersion = 1.61
 
  -- BoL Tools --
 assert(load(Base64Decode("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"), nil, "bt", _ENV))()
@@ -238,6 +239,8 @@ local ccTable = { 'Stun', 'Silence', 'Taunt', 'Slow', 'Root', 'Blind', 'Supress'
 local ccP = {5, 7, 8, 10, 11, 25, 24}
 local updated = false
 local buffs = {}
+local SelectTarget = false
+local minuteTarget = false
 local ts = nil
 local sexhaust = nil
 local sheal = nil
@@ -285,7 +288,7 @@ function _Bundle:__init()
     welcome = GetSprite("SupportHeroes/WelcomeMessage.png")
 	PR = _PentagonRot(myHero, ARGB(255,255,255,255),1,200)
 	VPred = VPrediction()
-	ts = TargetSelector(TARGET_LESS_CAST_PRIORITY, 2000, DAMAGE_MAGIC, true)
+	ts = TargetSelector(TARGET_LESS_CAST, 3300, DAMAGE_PHYSICAL, true)
 
 	AddTickCallback(function() self:OnTick() end)
     AddDrawCallback(function() self:OnDraw() end)
@@ -801,10 +804,10 @@ function _Alistar:Menu()
 		menu.spell.r:addParam("ultcchp", "Ult If CC'd <X% Of HP", SCRIPT_PARAM_SLICE, 15, 0, 100, 0)
 
    menu:addSubMenu("[" .. myHero.charName .. "] - Target Selector", "target")
-		menu.target:addParam("targetinfo", "Default Target Select Is LeastCast", SCRIPT_PARAM_INFO, "")
-		menu.target:addParam("empty", "", SCRIPT_PARAM_INFO, "")
-		menu.target:addParam("focus", "Focus Selected Target", SCRIPT_PARAM_ONOFF, true)
-		menu.target:addParam("sac", "Use SAC:R Target Instead", SCRIPT_PARAM_ONOFF, false)
+	   menu.target:addParam("selecttarget", "Focus Selected Target", SCRIPT_PARAM_ONOFF, false)
+	   menu.target:addParam("selecttime", "Focus Selected Target For", SCRIPT_PARAM_LIST, 1, {"One Minute", "Forever"})
+	   menu.target:addParam("buffer", "", SCRIPT_PARAM_INFO, "")
+	   menu.target:addParam("orbtarget", "Use Orbwalker Target", SCRIPT_PARAM_ONOFF, false)
 
    menu:addSubMenu("Orbwalk Settings", "orb")
 
@@ -1041,7 +1044,16 @@ function _Alistar:OnDraw()
 	if menu == nil then return end
 	if Target == nil then return end
 	if menu.draw.drawtarget and ValidTarget(Target) and Target.type == myHero.type then
-		_PentagonRot:DrawTriangle(Target, ARGB(255, 255, 0, 0), 2, 50, 5, 0, 0)
+		if not Target.dead and Target.visible and not SelectedTarget then
+			_PentagonRot:DrawTriangle(Target, ARGB(255, 102, 153, 255), 2, 50, 5, 0, 0)
+		elseif SelectedTarget and SelectedTarget.visible then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 234, 153, 153), 2, 50, 5, 0, 0)
+		end
+		if SelectedTarget ~= nil and not SelectedTarget.dead and SelectedTarget.visible and minuteTarget == true then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 234, 153, 153), 2, 50, 5, 0, 0)
+		elseif SelectedTarget ~= nil and not SelectedTarget.dead and SelectedTarget.visible and minuteTarget == false then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 102, 153, 255), 2, 50, 5, 0, 0)
+		end
 	end
 	if menu.draw.drawqflash and menu.flash.qflash and IsReady(sflash) and IsReady(_Q) then
 		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, (self.SpellQ.range + 425), ARGB(table.unpack(menu.draw.colorqflash)))
@@ -1303,10 +1315,10 @@ function _Annie:Menu()
 		menu.spell.r:addParam("ultifstun", "Use Ultimate Only If Stun Is Ready", SCRIPT_PARAM_ONOFF, true)
 
    menu:addSubMenu("[" .. myHero.charName .. "] - Target Selector", "target")
-		menu.target:addParam("targetinfo", "Default Target Select Is LeastCast", SCRIPT_PARAM_INFO, "")
-		menu.target:addParam("empty", "", SCRIPT_PARAM_INFO, "")
-		menu.target:addParam("focus", "Focus Selected Target", SCRIPT_PARAM_ONOFF, true)
-		menu.target:addParam("sac", "Use SAC:R Target Instead", SCRIPT_PARAM_ONOFF, false)
+	   menu.target:addParam("selecttarget", "Focus Selected Target", SCRIPT_PARAM_ONOFF, false)
+	   menu.target:addParam("selecttime", "Focus Selected Target For", SCRIPT_PARAM_LIST, 1, {"One Minute", "Forever"})
+	   menu.target:addParam("buffer", "", SCRIPT_PARAM_INFO, "")
+	   menu.target:addParam("orbtarget", "Use Orbwalker Target", SCRIPT_PARAM_ONOFF, false)
 
    menu:addSubMenu("Orbwalk Settings", "orb")
 
@@ -1451,7 +1463,16 @@ function _Annie:OnDraw()
 	if menu == nil then return end
 	if Target == nil then return end
 	if menu.draw.drawtarget and ValidTarget(Target) and Target.type == myHero.type then
-		_PentagonRot:DrawTriangle(Target, ARGB(255, 255, 0, 0), 2, 50, 5, 0, 0)
+		if not Target.dead and Target.visible and not SelectedTarget then
+			_PentagonRot:DrawTriangle(Target, ARGB(255, 102, 153, 255), 2, 50, 5, 0, 0)
+		elseif SelectedTarget and SelectedTarget.visible then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 234, 153, 153), 2, 50, 5, 0, 0)
+		end
+		if SelectedTarget ~= nil and not SelectedTarget.dead and SelectedTarget.visible and minuteTarget == true then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 234, 153, 153), 2, 50, 5, 0, 0)
+		elseif SelectedTarget ~= nil and not SelectedTarget.dead and SelectedTarget.visible and minuteTarget == false then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 102, 153, 255), 2, 50, 5, 0, 0)
+		end
 	end
 	if menu.draw.drawqflash and menu.flash.qflash and IsReady(sflash) and IsReady(_Q) and buffs["canStun"] then
 		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, (self.SpellQ.range + 425), ARGB(table.unpack(menu.draw.colorqflash)))
@@ -1709,10 +1730,10 @@ function _Blitzcrank:Menu()
 		menu.spell.r:addParam("rharassmana", "[Harass] Mana > X%", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
 
    menu:addSubMenu("[" .. myHero.charName .. "] - Target Selector", "target")
-		menu.target:addParam("targetinfo", "Default Target Select Is LeastCast", SCRIPT_PARAM_INFO, "")
-		menu.target:addParam("empty", "", SCRIPT_PARAM_INFO, "")
-		menu.target:addParam("focus", "Focus Selected Target", SCRIPT_PARAM_ONOFF, true)
-		menu.target:addParam("sac", "Use SAC:R Target Instead", SCRIPT_PARAM_ONOFF, false)
+	   menu.target:addParam("selecttarget", "Focus Selected Target", SCRIPT_PARAM_ONOFF, false)
+	   menu.target:addParam("selecttime", "Focus Selected Target For", SCRIPT_PARAM_LIST, 1, {"One Minute", "Forever"})
+	   menu.target:addParam("buffer", "", SCRIPT_PARAM_INFO, "")
+	   menu.target:addParam("orbtarget", "Use Orbwalker Target", SCRIPT_PARAM_ONOFF, false)
 
    menu:addSubMenu("Orbwalk Settings", "orb")
 
@@ -1878,7 +1899,16 @@ function _Blitzcrank:OnDraw()
 	if menu == nil then return end
 	if Target == nil then return end
 	if menu.draw.drawtarget and ValidTarget(Target) and Target.type == myHero.type then
-		_PentagonRot:DrawTriangle(Target, ARGB(255, 255, 0, 0), 2, 50, 5, 0, 0)
+		if not Target.dead and Target.visible and not SelectedTarget then
+			_PentagonRot:DrawTriangle(Target, ARGB(255, 102, 153, 255), 2, 50, 5, 0, 0)
+		elseif SelectedTarget and SelectedTarget.visible then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 234, 153, 153), 2, 50, 5, 0, 0)
+		end
+		if SelectedTarget ~= nil and not SelectedTarget.dead and SelectedTarget.visible and minuteTarget == true then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 234, 153, 153), 2, 50, 5, 0, 0)
+		elseif SelectedTarget ~= nil and not SelectedTarget.dead and SelectedTarget.visible and minuteTarget == false then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 102, 153, 255), 2, 50, 5, 0, 0)
+		end
 	end
 	if ValidTarget(Target) and menu.draw.drawcollision and IsReady(_Q) and (GetDistance(Target) <= 975) then
 	   local IsCollision = VPred:CheckMinionCollision(Target, Target.pos, self.SpellQ.delay, self.SpellQ.width, self.SpellQ.range, self.SpellQ.speed, myHero.pos, nil, true)
@@ -2116,10 +2146,10 @@ function _Janna:Menu()
 		menu.spell.r:addParam("mindmgpercent", "Min Damage To Ult", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
 
    menu:addSubMenu("[" .. myHero.charName .. "] - Target Selector", "target")
-		menu.target:addParam("targetinfo", "Default Target Select Is LeastCast", SCRIPT_PARAM_INFO, "")
-		menu.target:addParam("empty", "", SCRIPT_PARAM_INFO, "")
-		menu.target:addParam("focus", "Focus Selected Target", SCRIPT_PARAM_ONOFF, true)
-		menu.target:addParam("sac", "Use SAC:R Target Instead", SCRIPT_PARAM_ONOFF, false)
+	   menu.target:addParam("selecttarget", "Focus Selected Target", SCRIPT_PARAM_ONOFF, false)
+	   menu.target:addParam("selecttime", "Focus Selected Target For", SCRIPT_PARAM_LIST, 1, {"One Minute", "Forever"})
+	   menu.target:addParam("buffer", "", SCRIPT_PARAM_INFO, "")
+	   menu.target:addParam("orbtarget", "Use Orbwalker Target", SCRIPT_PARAM_ONOFF, false)
 
    menu:addSubMenu("Orbwalk Settings", "orb")
 
@@ -2258,7 +2288,16 @@ end
 function _Janna:OnDraw()
 	if Target == nil then return end
 	if menu.draw.drawtarget and ValidTarget(Target) and Target.type == myHero.type then
-		_PentagonRot:DrawTriangle(Target, ARGB(255, 255, 0, 0), 2, 50, 5, 0, 0)
+		if not Target.dead and Target.visible and not SelectedTarget then
+			_PentagonRot:DrawTriangle(Target, ARGB(255, 102, 153, 255), 2, 50, 5, 0, 0)
+		elseif SelectedTarget and SelectedTarget.visible then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 234, 153, 153), 2, 50, 5, 0, 0)
+		end
+		if SelectedTarget ~= nil and not SelectedTarget.dead and SelectedTarget.visible and minuteTarget == true then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 234, 153, 153), 2, 50, 5, 0, 0)
+		elseif SelectedTarget ~= nil and not SelectedTarget.dead and SelectedTarget.visible and minuteTarget == false then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 102, 153, 255), 2, 50, 5, 0, 0)
+		end
 	end
 	local Position = VPred:GetPredictedPos(Target, 0.1)
 	local flashPos = Position + 100 * (Vector(myHero) - Vector(flashPos)):normalized()
@@ -2773,10 +2812,10 @@ function _Karma:Menu()
 		menu.spell.r:addParam("eempowered", "Use Empowered E", SCRIPT_PARAM_ONOFF, true)
 
    menu:addSubMenu("[" .. myHero.charName .. "] - Target Selector", "target")
-		menu.target:addParam("targetinfo", "Default Target Select Is LeastCast", SCRIPT_PARAM_INFO, "")
-		menu.target:addParam("empty", "", SCRIPT_PARAM_INFO, "")
-		menu.target:addParam("focus", "Focus Selected Target", SCRIPT_PARAM_ONOFF, true)
-		menu.target:addParam("sac", "Use SAC:R Target Instead", SCRIPT_PARAM_ONOFF, false)
+	   menu.target:addParam("selecttarget", "Focus Selected Target", SCRIPT_PARAM_ONOFF, false)
+	   menu.target:addParam("selecttime", "Focus Selected Target For", SCRIPT_PARAM_LIST, 1, {"One Minute", "Forever"})
+	   menu.target:addParam("buffer", "", SCRIPT_PARAM_INFO, "")
+	   menu.target:addParam("orbtarget", "Use Orbwalker Target", SCRIPT_PARAM_ONOFF, false)
 
    menu:addSubMenu("Orbwalk Settings", "orb")
 
@@ -2947,7 +2986,16 @@ end
 function _Karma:OnDraw()
 	if Target == nil then return end
 	if menu.draw.drawtarget and ValidTarget(Target) and Target.type == myHero.type then
-		_PentagonRot:DrawTriangle(Target, ARGB(255, 255, 0, 0), 2, 50, 5, 0, 0)
+		if not Target.dead and Target.visible and not SelectedTarget then
+			_PentagonRot:DrawTriangle(Target, ARGB(255, 102, 153, 255), 2, 50, 5, 0, 0)
+		elseif SelectedTarget and SelectedTarget.visible then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 234, 153, 153), 2, 50, 5, 0, 0)
+		end
+		if SelectedTarget ~= nil and not SelectedTarget.dead and SelectedTarget.visible and minuteTarget == true then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 234, 153, 153), 2, 50, 5, 0, 0)
+		elseif SelectedTarget ~= nil and not SelectedTarget.dead and SelectedTarget.visible and minuteTarget == false then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 102, 153, 255), 2, 50, 5, 0, 0)
+		end
 	end
 	local slot = _Tech:CustomGetInventorySlotItem("HealthBomb", myHero)
 	if menu.draw.drawfotm and slot ~= nil and IsReady(slot) then
@@ -3409,10 +3457,10 @@ function _Leona:Menu()
 		menu.spell.r:addParam("mindistancer", "Min Enemy Distance", SCRIPT_PARAM_SLICE, 500, 0, 1200, 0)
 
    menu:addSubMenu("[" .. myHero.charName .. "] - Target Selector", "target")
-		menu.target:addParam("targetinfo", "Default Target Select Is LeastCast", SCRIPT_PARAM_INFO, "")
-		menu.target:addParam("empty", "", SCRIPT_PARAM_INFO, "")
-		menu.target:addParam("focus", "Focus Selected Target", SCRIPT_PARAM_ONOFF, true)
-		menu.target:addParam("sac", "Use SAC:R Target Instead", SCRIPT_PARAM_ONOFF, false)
+	   menu.target:addParam("selecttarget", "Focus Selected Target", SCRIPT_PARAM_ONOFF, false)
+	   menu.target:addParam("selecttime", "Focus Selected Target For", SCRIPT_PARAM_LIST, 1, {"One Minute", "Forever"})
+	   menu.target:addParam("buffer", "", SCRIPT_PARAM_INFO, "")
+	   menu.target:addParam("orbtarget", "Use Orbwalker Target", SCRIPT_PARAM_ONOFF, false)
 
    menu:addSubMenu("Orbwalk Settings", "orb")
 
@@ -3604,7 +3652,16 @@ end
 function _Leona:OnDraw()
 	if Target == nil then return end
 	if menu.draw.drawtarget and ValidTarget(Target) and Target.type == myHero.type then
-		_PentagonRot:DrawTriangle(Target, ARGB(255, 255, 0, 0), 2, 50, 5, 0, 0)
+		if not Target.dead and Target.visible and not SelectedTarget then
+			_PentagonRot:DrawTriangle(Target, ARGB(255, 102, 153, 255), 2, 50, 5, 0, 0)
+		elseif SelectedTarget and SelectedTarget.visible then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 234, 153, 153), 2, 50, 5, 0, 0)
+		end
+		if SelectedTarget ~= nil and not SelectedTarget.dead and SelectedTarget.visible and minuteTarget == true then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 234, 153, 153), 2, 50, 5, 0, 0)
+		elseif SelectedTarget ~= nil and not SelectedTarget.dead and SelectedTarget.visible and minuteTarget == false then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 102, 153, 255), 2, 50, 5, 0, 0)
+		end
 	end
 	if menu.draw.draweflash and menu.flash.eflash and IsReady(sflash) and IsReady(_E) then
 		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, (875 + 425), ARGB(table.unpack(menu.draw.coloreflash)))
@@ -3857,10 +3914,10 @@ function _Lux:Menu()
 		menu.spell.r:addParam("rbind", "Only Ult If Binded", SCRIPT_PARAM_ONOFF, true)
 
    menu:addSubMenu("[" .. myHero.charName .. "] - Target Selector", "target")
-		menu.target:addParam("targetinfo", "Default Target Select Is LeastCast", SCRIPT_PARAM_INFO, "")
-		menu.target:addParam("empty", "", SCRIPT_PARAM_INFO, "")
-		menu.target:addParam("focus", "Focus Selected Target", SCRIPT_PARAM_ONOFF, true)
-		menu.target:addParam("sac", "Use SAC:R Target Instead", SCRIPT_PARAM_ONOFF, false)
+	   menu.target:addParam("selecttarget", "Focus Selected Target", SCRIPT_PARAM_ONOFF, false)
+	   menu.target:addParam("selecttime", "Focus Selected Target For", SCRIPT_PARAM_LIST, 1, {"One Minute", "Forever"})
+	   menu.target:addParam("buffer", "", SCRIPT_PARAM_INFO, "")
+	   menu.target:addParam("orbtarget", "Use Orbwalker Target", SCRIPT_PARAM_ONOFF, false)
 
    menu:addSubMenu("Orbwalk Settings", "orb")
 
@@ -3900,7 +3957,7 @@ function _Lux:Combo()
 			local CastPosition, HitChance = UPL:Predict(_Q, myHero, Target)
 			if ValidTarget(Target) and HitChance > 0 then
 				CastSpell(_Q, CastPosition.x, CastPosition.z)
-				if targetsaa and GetDistance(Target) <= self.AA.range then
+				if targetsaa == true and GetDistance(Target) <= self.AA.range then
 					DelayAction(function() Attack(Target) end, 0)
 				end
 			end
@@ -3913,7 +3970,7 @@ function _Lux:Combo()
 						local Position = FindBestCircle(unit, self.SpellE.range, self.SpellE.width, _E)
 						CastSpell(_E, Position.x, Position.z)
 						DelayAction(function() CastSpell(_E) end, 2)
-						if targetsaa and GetDistance(Target) <= self.AA.range then
+						if targetsaa == true and GetDistance(Target) <= self.AA.range then
 							DelayAction(function() Attack(Target) end, 0)
 						end
 					end
@@ -3980,7 +4037,7 @@ function _Lux:Harass()
 			local CastPosition, HitChance = UPL:Predict(_Q, myHero, Target)
 			if ValidTarget(Target) and HitChance > 0 then
 				CastSpell(_Q, CastPosition.x, CastPosition.z)
-				if targetsaa and GetDistance(Target) <= self.AA.range then
+				if targetsaa == true and GetDistance(Target) <= self.AA.range then
 					DelayAction(function() Attack(Target) end, 0)
 				end
 			end
@@ -3993,7 +4050,7 @@ function _Lux:Harass()
 						local Position = FindBestCircle(unit, self.SpellE.range, self.SpellE.width, _E)
 						CastSpell(_E, Position.x, Position.z)
 						DelayAction(function() CastSpell(_E) end, 2)
-						if targetsaa and GetDistance(Target) <= self.AA.range then
+						if targetsaa == true and GetDistance(Target) <= self.AA.range then
 							DelayAction(function() Attack(Target) end, 0)
 						end
 					end
@@ -4042,7 +4099,16 @@ end
 function _Lux:OnDraw()
 	if Target == nil then return end
 	if menu.draw.drawtarget and ValidTarget(Target) and Target.type == myHero.type then
-		_PentagonRot:DrawTriangle(Target, ARGB(255, 255, 0, 0), 2, 50, 5, 0, 0)
+		if not Target.dead and Target.visible and not SelectedTarget then
+			_PentagonRot:DrawTriangle(Target, ARGB(255, 102, 153, 255), 2, 50, 5, 0, 0)
+		elseif SelectedTarget and SelectedTarget.visible then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 234, 153, 153), 2, 50, 5, 0, 0)
+		end
+		if SelectedTarget ~= nil and not SelectedTarget.dead and SelectedTarget.visible and minuteTarget == true then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 234, 153, 153), 2, 50, 5, 0, 0)
+		elseif SelectedTarget ~= nil and not SelectedTarget.dead and SelectedTarget.visible and minuteTarget == false then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 102, 153, 255), 2, 50, 5, 0, 0)
+		end
 	end
 	if menu.draw.drawqflash and menu.flash.qflash and IsReady(sflash) and IsReady(_Q) then
 		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, (self.SpellQ.range + 425), ARGB(table.unpack(menu.draw.colorqflash)))
@@ -4211,7 +4277,7 @@ function _Lux:ProcessSpell(object, spell)
 						local CastPosition, HitChance = UPL:Predict(_Q, myHero, Target)
 						if ValidTarget(Target) and HitChance > 0 then
 							DelayAction(function() CastSpell(_Q, CastPosition.x, CastPosition.z) end, menu.humanizer.interruptDelay / 1000)
-							if targetsaa and GetDistance(Target) <= self.AA.range then
+							if targetsaa == true and GetDistance(Target) <= self.AA.range then
 								DelayAction(function() Attack(Target) end, 0)
 							end
 						end
@@ -4516,10 +4582,10 @@ function _Malphite:Menu()
 		menu.spell.r:addParam("amountenemies", "Only Ult If X Enemies", SCRIPT_PARAM_SLICE, 2, 0, 5, 0)
 
    menu:addSubMenu("[" .. myHero.charName .. "] - Target Selector", "target")
-		menu.target:addParam("targetinfo", "Default Target Select Is LeastCast", SCRIPT_PARAM_INFO, "")
-		menu.target:addParam("empty", "", SCRIPT_PARAM_INFO, "")
-		menu.target:addParam("focus", "Focus Selected Target", SCRIPT_PARAM_ONOFF, true)
-		menu.target:addParam("sac", "Use SAC:R Target Instead", SCRIPT_PARAM_ONOFF, false)
+	   menu.target:addParam("selecttarget", "Focus Selected Target", SCRIPT_PARAM_ONOFF, false)
+	   menu.target:addParam("selecttime", "Focus Selected Target For", SCRIPT_PARAM_LIST, 1, {"One Minute", "Forever"})
+	   menu.target:addParam("buffer", "", SCRIPT_PARAM_INFO, "")
+	   menu.target:addParam("orbtarget", "Use Orbwalker Target", SCRIPT_PARAM_ONOFF, false)
 
    menu:addSubMenu("Orbwalk Settings", "orb")
 
@@ -4640,7 +4706,16 @@ end
 function _Malphite:OnDraw()
 	if Target == nil then return end
 	if menu.draw.drawtarget and ValidTarget(Target) and Target.type == myHero.type then
-		_PentagonRot:DrawTriangle(Target, ARGB(255, 255, 0, 0), 2, 50, 5, 0, 0)
+		if not Target.dead and Target.visible and not SelectedTarget then
+			_PentagonRot:DrawTriangle(Target, ARGB(255, 102, 153, 255), 2, 50, 5, 0, 0)
+		elseif SelectedTarget and SelectedTarget.visible then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 234, 153, 153), 2, 50, 5, 0, 0)
+		end
+		if SelectedTarget ~= nil and not SelectedTarget.dead and SelectedTarget.visible and minuteTarget == true then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 234, 153, 153), 2, 50, 5, 0, 0)
+		elseif SelectedTarget ~= nil and not SelectedTarget.dead and SelectedTarget.visible and minuteTarget == false then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 102, 153, 255), 2, 50, 5, 0, 0)
+		end
 	end
 	if menu.draw.drawrflash and menu.flash.rflash and IsReady(sflash) and IsReady(_R) then
 		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, (self.SpellR.range + 425), ARGB(table.unpack(menu.draw.colorrflash)))
@@ -4741,6 +4816,8 @@ function _Morgana:__init()
 	AddDrawCallback(function() self:OnDraw() end)
 	AddProcessAttackCallback(function(object, spell) self:ProcessAttack(object, spell) end)
     AddProcessSpellCallback(function(object, spell) self:ProcessSpell(object, spell) end)
+	AddRemoveBuffCallback(function(unit, buff) self:RemoveBuff(unit, buff) end)
+	AddApplyBuffCallback(function(unit, target, buff) self:ApplyBuff(unit, target, buff) end)
 
 	enemyMinions = minionManager(MINION_ENEMY, 625, myHero, MINION_SORT_HEALTH_DES)
 
@@ -4781,7 +4858,16 @@ function _Morgana:OnDraw()
 	end
 	if Target == nil then return end
 	if menu.draw.drawtarget and ValidTarget(Target) and Target.type == myHero.type then
-		_PentagonRot:DrawTriangle(Target, ARGB(255, 255, 0, 0), 2, 50, 5, 0, 0)
+		if not Target.dead and Target.visible and not SelectedTarget then
+			_PentagonRot:DrawTriangle(Target, ARGB(255, 102, 153, 255), 2, 50, 5, 0, 0)
+		elseif SelectedTarget and SelectedTarget.visible then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 234, 153, 153), 2, 50, 5, 0, 0)
+		end
+		if SelectedTarget ~= nil and not SelectedTarget.dead and SelectedTarget.visible and minuteTarget == true then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 234, 153, 153), 2, 50, 5, 0, 0)
+		elseif SelectedTarget ~= nil and not SelectedTarget.dead and SelectedTarget.visible and minuteTarget == false then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 102, 153, 255), 2, 50, 5, 0, 0)
+		end
 	end
 	local slot = _Tech:CustomGetInventorySlotItem("HealthBomb", myHero)
 	if menu.draw.drawfotm and slot ~= nil and IsReady(slot) then
@@ -4927,10 +5013,10 @@ function _Morgana:Menu()
 		menu.spell.r:addParam("rharassminenemies", "[Harass] Min #Enemies", SCRIPT_PARAM_SLICE, 3, 1, 5, 0)
 
 	 menu:addSubMenu("[" .. myHero.charName .. "] - Target Selector", "target")
-		menu.target:addParam("targetinfo", "Default Target Select Is LeastCast", SCRIPT_PARAM_INFO, "")
-		menu.target:addParam("empty", "", SCRIPT_PARAM_INFO, "")
-		menu.target:addParam("focus", "Focus Selected Target", SCRIPT_PARAM_ONOFF, true)
-		menu.target:addParam("sac", "Use SAC:R Target Instead", SCRIPT_PARAM_ONOFF, false)
+		menu.target:addParam("selecttarget", "Focus Selected Target", SCRIPT_PARAM_ONOFF, false)
+	    menu.target:addParam("selecttime", "Focus Selected Target For", SCRIPT_PARAM_LIST, 1, {"One Minute", "Forever"})
+		menu.target:addParam("buffer", "", SCRIPT_PARAM_INFO, "")
+		menu.target:addParam("orbtarget", "Use Orbwalker Target", SCRIPT_PARAM_ONOFF, false)
 
    menu:addSubMenu("Orbwalk Settings", "orb")
 
@@ -4947,6 +5033,30 @@ function _Morgana:Menu()
 	 menu.key:permaShow("harassToggle")
 	 menu.key:permaShow("clearKey")
    end
+end
+
+function _Morgana:ApplyBuff(unit, target, buff)
+	for _, v in pairs(GetEnemyHeroes()) do
+		if ValidTarget(v) then
+			if buff and not v.isMe and v.team ~= myHero.team then
+				if buff.name == "DarkBindingMissile" then
+					buffs["darkBinding"] = true
+				end
+			end
+		end
+	end
+end
+
+function _Morgana:RemoveBuff(unit, buff)
+	for _, v in pairs(GetEnemyHeroes()) do
+		if ValidTarget(v) then
+			if buff and not v.isMe and v.team ~= myHero.team then
+				if buff.name ~= "DarkBindingMissile" then
+					buffs["darkBinding"] = false
+				end
+			end
+		end
+	end
 end
 
 function _Morgana:TowerCC()
@@ -4990,7 +5100,6 @@ function _Morgana:Combo()
 	end
 end
 
-
 function _Morgana:Harras()
 	if not menu.key.harassKey and not menu.key.harassToggle then return end
 	if IsReady(_Q) and menu.spell.q.qharass and ValidTarget(Target) and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qharassmana and GetDistance(Target) < self.SpellQ.range then
@@ -5031,11 +5140,10 @@ end
 
 function _Morgana:AutoW()
 	if not IsReady(_W) then return end
-	for _, v in pairs(GetEnemyHeroes()) do
-		if ValidTarget(v, self.SpellW.range) then
-			for i=1, v.buffCount do
-				local b = v:getBuff(i)
-				if BuffIsValid(b) and b.name:find("DarkBinding") then
+	if menu.spell.w.wauto then
+		for _, v in pairs(GetEnemyHeroes()) do
+			if ValidTarget(v, self.SpellW.range) then
+				if buffs["darkBinding"] == true then
 					CastSpell(_W, v)
 				end
 			end
@@ -5257,7 +5365,7 @@ function _MovementBlock:disable()
 end
 
 function _MovementBlock:SendPacket(p)
-	if p.header == 0x71 and self.blockMovement then
+	if p.header == 0x10 and self.blockMovement then
 		p:Block()
 	end
 end
@@ -5305,7 +5413,16 @@ function _Nami:OnDraw()
 	if menu == nil then return end
 	if Target == nil then return end
 	if menu.draw.drawtarget and ValidTarget(Target) and Target.type == myHero.type then
-		_PentagonRot:DrawTriangle(Target, ARGB(255, 255, 0, 0), 2, 50, 5, 0, 0)
+		if not Target.dead and Target.visible and not SelectedTarget then
+			_PentagonRot:DrawTriangle(Target, ARGB(255, 102, 153, 255), 2, 50, 5, 0, 0)
+		elseif SelectedTarget and SelectedTarget.visible then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 234, 153, 153), 2, 50, 5, 0, 0)
+		end
+		if SelectedTarget ~= nil and not SelectedTarget.dead and SelectedTarget.visible and minuteTarget == true then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 234, 153, 153), 2, 50, 5, 0, 0)
+		elseif SelectedTarget ~= nil and not SelectedTarget.dead and SelectedTarget.visible and minuteTarget == false then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 102, 153, 255), 2, 50, 5, 0, 0)
+		end
 	end
 	local slot = _Tech:CustomGetInventorySlotItem("HealthBomb", myHero)
 	if menu.draw.drawfotm and slot ~= nil and IsReady(slot) then
@@ -5466,10 +5583,10 @@ function _Nami:Menu()
 		menu.spell.r:addParam("rminenemysharass", "[Harass] Min Enemys Hit ", SCRIPT_PARAM_SLICE, 4, 0, 5, 0)
 
 	menu:addSubMenu("[" .. myHero.charName .. "] - Target Selector", "target")
-		menu.target:addParam("targetinfo", "Default Target Select Is LeastCast", SCRIPT_PARAM_INFO, "")
-		menu.target:addParam("empty", "", SCRIPT_PARAM_INFO, "")
-		menu.target:addParam("focus", "Focus Selected Target", SCRIPT_PARAM_ONOFF, true)
-		menu.target:addParam("sac", "Use SAC:R Target Instead", SCRIPT_PARAM_ONOFF, false)
+		menu.target:addParam("selecttarget", "Focus Selected Target", SCRIPT_PARAM_ONOFF, false)
+		menu.target:addParam("selecttime", "Focus Selected Target For", SCRIPT_PARAM_LIST, 1, {"One Minute", "Forever"})
+		menu.target:addParam("buffer", "", SCRIPT_PARAM_INFO, "")
+		menu.target:addParam("orbtarget", "Use Orbwalker Target", SCRIPT_PARAM_ONOFF, false)
 
 	menu:addSubMenu("Orbwalk Settings", "orb")
 
@@ -6061,10 +6178,10 @@ function _Sona:Menu()
         menu.spell.r:addParam("autor","[Automatic] Min Enemies", SCRIPT_PARAM_SLICE, 4, 0, 5, 0)
 
    menu:addSubMenu("[" .. myHero.charName .. "] - Target Selector", "target")
-		menu.target:addParam("targetinfo", "Default Target Select Is LeastCast", SCRIPT_PARAM_INFO, "")
-		menu.target:addParam("empty", "", SCRIPT_PARAM_INFO, "")
-		menu.target:addParam("focus", "Focus Selected Target", SCRIPT_PARAM_ONOFF, true)
-		menu.target:addParam("sac", "Use SAC:R Target Instead", SCRIPT_PARAM_ONOFF, false)
+		menu.target:addParam("selecttarget", "Focus Selected Target", SCRIPT_PARAM_ONOFF, false)
+		menu.target:addParam("selecttime", "Focus Selected Target For", SCRIPT_PARAM_LIST, 1, {"One Minute", "Forever"})
+		menu.target:addParam("buffer", "", SCRIPT_PARAM_INFO, "")
+		menu.target:addParam("orbtarget", "Use Orbwalker Target", SCRIPT_PARAM_ONOFF, false)
 
    menu:addSubMenu("Orbwalk Settings", "orb")
 
@@ -6254,7 +6371,16 @@ function _Sona:OnDraw()
 	if menu == nil then return end
 	if Target == nil then return end
 	if menu.draw.drawtarget and ValidTarget(Target) and Target.type == myHero.type then
-		_PentagonRot:DrawTriangle(Target, ARGB(255, 255, 0, 0), 2, 50, 5, 0, 0)
+		if not Target.dead and Target.visible and not SelectedTarget then
+			_PentagonRot:DrawTriangle(Target, ARGB(255, 102, 153, 255), 2, 50, 5, 0, 0)
+		elseif SelectedTarget and SelectedTarget.visible then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 234, 153, 153), 2, 50, 5, 0, 0)
+		end
+		if SelectedTarget ~= nil and not SelectedTarget.dead and SelectedTarget.visible and minuteTarget == true then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 234, 153, 153), 2, 50, 5, 0, 0)
+		elseif SelectedTarget ~= nil and not SelectedTarget.dead and SelectedTarget.visible and minuteTarget == false then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 102, 153, 255), 2, 50, 5, 0, 0)
+		end
 	end
 	if menu.draw.drawqflash and menu.flash.qflash and IsReady(sflash) and IsReady(_Q) then
 		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, (self.SpellQ.range + 425), ARGB(table.unpack(menu.draw.colorqflash)))
@@ -6695,10 +6821,10 @@ function _Soraka:Menu()
         end
 
    menu:addSubMenu("[" .. myHero.charName .. "] - Target Selector", "target")
-        menu.target:addParam("targetinfo", "Default Target Select Is LeastCast", SCRIPT_PARAM_INFO, "")
-        menu.target:addParam("empty", "", SCRIPT_PARAM_INFO, "")
-        menu.target:addParam("focus", "Focus Selected Target", SCRIPT_PARAM_ONOFF, true)
-        menu.target:addParam("sac", "Use SAC:R Target Instead", SCRIPT_PARAM_ONOFF, false)
+	   	menu.target:addParam("selecttarget", "Focus Selected Target", SCRIPT_PARAM_ONOFF, false)
+		menu.target:addParam("selecttime", "Focus Selected Target For", SCRIPT_PARAM_LIST, 1, {"One Minute", "Forever"})
+	    menu.target:addParam("buffer", "", SCRIPT_PARAM_INFO, "")
+	    menu.target:addParam("orbtarget", "Use Orbwalker Target", SCRIPT_PARAM_ONOFF, false)
 
    menu:addSubMenu("Orbwalk Settings", "orb")
 
@@ -6841,10 +6967,19 @@ end
 
 function _Soraka:OnDraw()
     if menu == nil then return end
-    if Target == nil then return end
-    if menu.draw.drawtarget and ValidTarget(Target) and Target.type == myHero.type then
-        _PentagonRot:DrawTriangle(Target, ARGB(255, 255, 0, 0), 2, 50, 5, 0, 0)
-    end
+	if Target == nil then return end
+	if menu.draw.drawtarget and ValidTarget(Target) and Target.type == myHero.type then
+		if not Target.dead and Target.visible and not SelectedTarget then
+			_PentagonRot:DrawTriangle(Target, ARGB(255, 102, 153, 255), 2, 50, 5, 0, 0)
+		elseif SelectedTarget and SelectedTarget.visible then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 234, 153, 153), 2, 50, 5, 0, 0)
+		end
+		if SelectedTarget ~= nil and not SelectedTarget.dead and SelectedTarget.visible and minuteTarget == true then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 234, 153, 153), 2, 50, 5, 0, 0)
+		elseif SelectedTarget ~= nil and not SelectedTarget.dead and SelectedTarget.visible and minuteTarget == false then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 102, 153, 255), 2, 50, 5, 0, 0)
+		end
+	end
     local slot = _Tech:CustomGetInventorySlotItem("HealthBomb", myHero)
     if menu.draw.drawfotm and slot ~= nil and IsReady(slot) then
         _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorfotm)))
@@ -7119,10 +7254,10 @@ function _Thresh:Menu()
 		menu.spell.r:addParam("rautomin", "[Automatic] Min enemies", SCRIPT_PARAM_SLICE, 3, 0, 5, 0)
 
    menu:addSubMenu("[" .. myHero.charName .. "] - Target Selector", "target")
-		menu.target:addParam("targetinfo", "Default Target Select Is LeastCast", SCRIPT_PARAM_INFO, "")
-		menu.target:addParam("empty", "", SCRIPT_PARAM_INFO, "")
-		menu.target:addParam("focus", "Focus Selected Target", SCRIPT_PARAM_ONOFF, true)
-		menu.target:addParam("sac", "Use SAC:R Target Instead", SCRIPT_PARAM_ONOFF, false)
+	   menu.target:addParam("selecttarget", "Focus Selected Target", SCRIPT_PARAM_ONOFF, false)
+	   menu.target:addParam("selecttime", "Focus Selected Target For", SCRIPT_PARAM_LIST, 1, {"One Minute", "Forever"})
+	   menu.target:addParam("buffer", "", SCRIPT_PARAM_INFO, "")
+	   menu.target:addParam("orbtarget", "Use Orbwalker Target", SCRIPT_PARAM_ONOFF, false)
 
    menu:addSubMenu("Orbwalk Settings", "orb")
 
@@ -7509,8 +7644,18 @@ end
 function _Thresh:OnDraw()
 	if menu == nil or Target == nil then return end
 
+	if Target == nil then return end
 	if menu.draw.drawtarget and ValidTarget(Target) and Target.type == myHero.type then
-		_PentagonRot:DrawTriangle(Target, ARGB(255, 255, 0, 0), 2, 50, 5, 0, 0)
+		if not Target.dead and Target.visible and not SelectedTarget then
+			_PentagonRot:DrawTriangle(Target, ARGB(255, 102, 153, 255), 2, 50, 5, 0, 0)
+		elseif SelectedTarget and SelectedTarget.visible then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 234, 153, 153), 2, 50, 5, 0, 0)
+		end
+		if SelectedTarget ~= nil and not SelectedTarget.dead and SelectedTarget.visible and minuteTarget == true then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 234, 153, 153), 2, 50, 5, 0, 0)
+		elseif SelectedTarget ~= nil and not SelectedTarget.dead and SelectedTarget.visible and minuteTarget == false then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 102, 153, 255), 2, 50, 5, 0, 0)
+		end
 	end
 	if ValidTarget(Target) and menu.draw.drawcollision and IsReady(_Q) and (GetDistance(Target) <= self.SpellQ.range) then
 	   local IsCollision = VPred:CheckMinionCollision(Target, Target.pos, 0.25, 70, self.SpellQ.range, 1800, myHero.pos, nil, true)
@@ -7567,6 +7712,9 @@ end
 function _Thresh:CastQ2()
 	if IsReady(_Q) and menu.spell.q.q2 and GetSpellData(_Q).name == "ThreshQLeap" then
 		if menu.key.comboKey or menu.key.harassKey or menu.key.harassToggle or menu.key.flashKey then
+			if (myHero.health / myHero.maxHealth) < 10 and not IsReady(_E) then
+				return
+			end
 			CastSpell(_Q)
 		end
 	end
@@ -7574,6 +7722,9 @@ end
 
 function _Thresh:CastW(ally, delay)
 	local predPos = CalculateTargetPosition(ally, delay)
+	if predPos == nil then
+		return
+	end
 	if GetDistance(predPos) < self.SpellW.range + 250 then
 		local castPosition
 
@@ -7836,7 +7987,6 @@ function _Tech:InFountain()
     return self:NearFountain()
 end
 
-
 -- Passive Timers --
 function _Tech:getPassiveTime(tar, buffName)
 	local unit = tar
@@ -7858,17 +8008,61 @@ end
 -- Target Selection --
 function _Tech:GetTarget()
 	ts:update()
-	if _G.AutoCarry and _G.AutoCarry.Crosshair and ValidTarget(_G.AutoCarry.Crosshair:GetTarget()) and menu.target.sac then _G.AutoCarry.Crosshair:SetSkillCrosshairRange(1250)
-		return _G.AutoCarry.Crosshair:GetTarget()
-	end
-	if SelectedTarget ~= nil and not SelectedTarget.dead and SelectedTarget.type == myHero.type and SelectedTarget.team ~= myHero.team and menu.target.focus then
-		if GetDistance(SelectedTarget) > 1250 and ts.target ~= nil then
-			return ts.target
-		else
-			return SelectedTarget
+    if not menu.target.orbtarget and not SelectedTarget then
+		for i, enemy in pairs(GetEnemyHeroes()) do
+			if enemy and enemy.valid and not enemy.dead and myHero.type == enemy.type and myHero.team ~= enemy.team then
+				if GetDistance(myHero, enemy) < 1000 then
+					local closestEnemy = self:ClosestEnemy(myHero)
+					Target = closestEnemy
+					return Target
+				else
+					local closestEnemy = self:ClosestEnemy(myHero)
+				    Target = closestEnemy
+					return Target
+				end
+				if GetDistance(myHero, enemy) < 1000 and Target.health > enemy.health then
+					Target = enemy
+					return Target
+				end
+			end
 		end
 	end
-	return ts.target
+
+    if menu.target.orbtarget then
+        if _Pewalk then
+		    return _Pewalk.GetTarget(2000)
+    	elseif _G.NebelwolfisOrbWalkerLoaded then
+    		return _G.NebelwolfisOrbWalker:GetTarget()
+    	elseif _G.Reborn_Loaded and _G.AutoCarry and _G.AutoCarry.Crosshair then
+            _G.AutoCarry.Crosshair:SetSkillCrosshairRange(2000)
+    		return _G.AutoCarry.Crosshair:GetTarget()
+	    end
+    end
+
+	if SelectTarget == true then
+        if os.clock() > oneMinute then
+            minuteTarget = false
+        else
+            minuteTarget = true
+        end
+    end
+    if menu.target.selecttarget and menu.target.selecttime == 1 then
+        if SelectedTarget ~= nil and not SelectedTarget.dead and SelectedTarget.type == myHero.type and SelectedTarget.team ~= myHero.team then
+            if minuteTarget == true and GetDistance(SelectedTarget) < 1250 then
+                return SelectedTarget
+            else
+                return Target
+            end
+        end
+    elseif menu.target.selecttarget and menu.target.selecttime == 2 then
+        if SelectedTarget ~= nil and not SelectedTarget.dead and SelectedTarget.type == myHero.type and SelectedTarget.team ~= myHero.team then
+            if GetDistance(SelectedTarget) < 1250 then
+                return SelectedTarget
+            elseif GetDistance(SelectedTarget) > 1250 and Target ~= nil then
+                return Target
+            end
+        end
+    end
 end
 
 -- Latency --
@@ -8417,39 +8611,21 @@ function Attack()
 		myHero:Attack(Target)
 	end
 end
+
 -- Target Selected --
 function OnWndMsg(msg,key)
-	if msg == WM_LBUTTONDOWN then
-		local enemy, distance = _Tech:ClosestEnemy(mousePos)
-
-		if distance < 150 then
-			SelectedTarget = enemy
-		end
-	end
-
-	if msg == WM_LBUTTONDOWN then
-		local enemyDistance, enemySelected = 0, nil
-		for _,enemy in pairs(GetEnemyHeroes()) do
-			if ValidTarget(enemy) and GetDistance(enemy, mousePos) < 200 then
-				if GetDistance(enemy, mousePos) <= enemyDistance or not enemySelected then
-					enemyDistance = GetDistance(enemy, mousePos)
-					enemySelected = enemy
-				end
-			end
-		end
-
-		if enemySelected then
-			if not targetSelected or targetSelected.hash ~= enemySelected.hash then
-				targetSelected = enemySelected
-
-				_Bundle:Print('Target Selected: '..targetSelected.charName)
-			else
-				targetSelected = nil
-
-				_Bundle:Print('Target unselected!')
-			end
-		end
-	end
+	if menu == nil then return end
+	if menu.target.selecttarget then
+        if msg == WM_LBUTTONDOWN then
+    		local enemy, distance = _Tech:ClosestEnemy(mousePos)
+    		if distance < 150 then
+                SelectedTarget = enemy
+                SelectTarget = true
+                oneMinute = os.clock() + 60
+                _Bundle:Print('Target Selected: '..SelectedTarget.charName)
+    		end
+    	end
+    end
 end
 
 -- Checks If Spells Are Ready --
