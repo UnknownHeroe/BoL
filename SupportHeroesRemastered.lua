@@ -14,7 +14,7 @@ I UNDERSTAND MY INDENTATION IS WEIRD. C&P TO GITHUB MESSED IT ALL UP!
 	2) Fixed Morgana Auto W
 	3) Fixed Thresh Spam
 	4) Added More Checks For Thresh Q2
-	5) Added My Own Custom Target Selector (HUGE Improvment Over The Old System)
+	5) Added My Own Custom Target Selector (HUGE Improvement Over The Old System)
 ]]
 
 local scriptVersion = 1.61
