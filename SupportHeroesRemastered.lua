@@ -5867,6 +5867,7 @@ function _Nunu:OnTick()
 
 	self:Combo()
 	self:Harass()
+	self:Marathon()
 	self:LaneClear()
 	self:TowerCC()
 end
@@ -5932,6 +5933,7 @@ function _Nunu:Menu()
 		menu.key:addParam("clearKey", "Lane Clear Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("V"))
 		menu.key:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.key:addParam("miscellaneouskeys", "           -- Miscellaneous Keys --", SCRIPT_PARAM_INFO, "")
+		menu.key:addParam("marathonKey", "Marathon Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("Y"))
         menu.key:addParam("castWard", "Ward Casting", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("O"))
 
 	menu:addSubMenu("[" .. myHero.charName .. "] - Spell Settings", "spell")
@@ -5986,6 +5988,7 @@ function _Nunu:Menu()
 	 menu.key:permaShow("harassKey")
 	 menu.key:permaShow("harassToggle")
 	 menu.key:permaShow("clearKey")
+	 menu.key:permaShow("marathonKey")
    end
 end
 
@@ -6010,7 +6013,7 @@ function _Nunu:Combo()
 					if ValidTarget(Target) then
 						local AOECastPosition, MainTargetHitChance, nTargets = VPred:GetCircularAOECastPosition(unit, 0.25, 300, 650, 1500, myHero)
 						if nTargets >= menu.spell.r.amountenemies then
-						CastSpell(_R)
+							CastSpell(_R)
 						end
 					end
 				end
@@ -6034,12 +6037,9 @@ function _Nunu:Harass()
 			local unit = enemyHeroes[i]
 				if IsReady(_R) and menu.spell.r.rharass and (100 * myHero.mana / myHero.maxMana) >= menu.spell.r.rharassmana and (GetDistance(Target) < 1000) then
 					if ValidTarget(Target) then
-						local CastPosition, HitChance = UPL:Predict(_R, myHero, unit)
-						if HitChance > 0 then
-							local AOECastPosition, MainTargetHitChance, nTargets = VPred:GetCircularAOECastPosition(unit, 0.25, 300, 650, 1500, myHero)
-							if nTargets >= menu.spell.r.amountenemies then
+						local AOECastPosition, MainTargetHitChance, nTargets = VPred:GetCircularAOECastPosition(unit, 0.25, 300, 650, 1500, myHero)
+						if nTargets >= menu.spell.r.amountenemies then
 							CastSpell(_R)
-							end
 						end
 					end
 				end
@@ -6059,6 +6059,15 @@ function _Nunu:LaneClear()
 			end
 		end
 	end
+end
+
+function _Nunu:Marathon()
+    if menu.key.marathonKey then
+        if IsReady(_W) then
+            CastSpell(_W, myHero)
+        end
+		myHero:MoveTo(mousePos.x, mousePos.z)
+    end
 end
 
 function _Nunu:OnDraw()
