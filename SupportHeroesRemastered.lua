@@ -9,15 +9,11 @@
 
 I UNDERSTAND MY INDENTATION IS WEIRD. C&P TO GITHUB MESSED IT ALL UP!
 
-1.6 Change Log:
-	1) 6.21 Update
-	2) Fixed Morgana Auto W
-	3) Fixed Thresh Spam
-	4) Added More Checks For Thresh Q2
-	5) Added My Own Custom Target Selector (HUGE Improvement Over The Old System)
+1.7 Change Log:
+	1) Added Nunu
 ]]
 
-local scriptVersion = 1.61
+local scriptVersion = 1.7
 
  -- BoL Tools --
 assert(load(Base64Decode("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"), nil, "bt", _ENV))()
@@ -40,7 +36,7 @@ local Champions =
 	["Morgana"] = true,
 	["Nami"] = true,
 	-- ["Nautilus"] = true,
-	-- ["Nunu"] = true,
+	["Nunu"] = true,
 	-- ["Shen"] = true,
     ["Sona"] = true,
 	["Soraka"] = true,
@@ -3288,7 +3284,6 @@ function _Leona:__init()
 	self:LoadVariables()
 	self:Menu()
 
-
 	_Bundle:SetupOrbwalk()
 
 	_Activator:__init()
@@ -5833,6 +5828,395 @@ function _Nami:LaneClear()
 		end
 	end
 end
+
+Class("_Nunu")
+function _Nunu:__init()
+	self:LoadVariables()
+	self:Menu()
+
+	_Bundle:SetupOrbwalk()
+
+	_Activator:__init()
+	_WA:__init()
+
+	_Tech:AddTurrets()
+	towerCount = #towers
+
+	AddTickCallback(function() self:OnTick() end)
+	AddDrawCallback(function() self:OnDraw() end)
+	AddRemoveBuffCallback(function(unit, buff) self:RemoveBuff(unit, buff) end)
+	AddApplyBuffCallback(function(unit, target, buff) self:ApplyBuff(unit, target, buff) end)
+	AddProcessSpellCallback(function(object, spell) self:ProcessSpell(object, spell) end)
+	AddProcessAttackCallback(function(object, spell) self:ProcessAttack(object, spell) end)
+	AddMsgCallback(function(msg, key) self:OnWndMsg(msg,key) end)
+
+	enemyMinions = minionManager(MINION_ENEMY, 365, myHero, MINION_SORT_HEALTH_DES)
+
+	_Bundle:Print(myHero.charName .. " Loaded, Good Luck!")
+end
+
+function _Nunu:LoadVariables()
+	self.SpellQ = { speed = math.huge, delay = 0.5, range = 125, width = 100, collision = false, aoe = true, type = "circular" }
+	self.SpellW = { speed = 1000, delay = 0.55, range = 700, width = nil, collision = true, aoe = false, type = "linear" }
+	self.SpellE = { speed = nil, delay = 0.5, range = 550, width = nil, collision = false, aoe = true, type = "circular" }
+	self.SpellR = { speed = nil, delay = 0.25, range = 650, width = nil, collision = false, aoe = false, type = "linear" }
+end
+
+function _Nunu:OnTick()
+   if menu == nil then return end
+
+	self:Combo()
+	self:Harass()
+	self:LaneClear()
+	self:TowerCC()
+end
+
+function _Nunu:Menu()
+	menu = scriptConfig("Support Heroes", "SupportHeroesMenuNunu")
+
+	_Activator:Menu()
+
+	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-CC Under Tower", "snare")
+		menu.snare:addParam("info", "           -- Auto-CC Enemies --", SCRIPT_PARAM_INFO, "")
+		if enemyCount > 0 then
+			for i = 1, enemyCount do
+			local unit = enemyHeroes[i]
+				menu.snare:addParam("" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_ONOFF, true)
+			end
+		end
+		menu.snare:addParam("settings", "                    -- Settings --", SCRIPT_PARAM_INFO, "")
+		menu.snare:addParam("esnare", "Use E", SCRIPT_PARAM_ONOFF, true)
+
+	menu:addSubMenu("[" .. myHero.charName .. "] - Draw Settings", "draw")
+		menu.draw:addParam("spelldraws", "                -- Spell Draws --", SCRIPT_PARAM_INFO, "")
+		menu.draw:addParam("drawq", "Draw Q", SCRIPT_PARAM_ONOFF, true)
+		menu.draw:addParam("colorq", "Color Q", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
+		menu.draw:addParam("draww", "Draw W", SCRIPT_PARAM_ONOFF, true)
+		menu.draw:addParam("colorw", "Color W", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
+		menu.draw:addParam("drawe", "Draw E", SCRIPT_PARAM_ONOFF, true)
+		menu.draw:addParam("colore", "Color E", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
+		menu.draw:addParam("empty", "", SCRIPT_PARAM_INFO, "")
+		menu.draw:addParam("drawitem", "                -- Item Draws --", SCRIPT_PARAM_INFO, "")
+		menu.draw:addParam("drawfotm", "Draw Face of the Mountain", SCRIPT_PARAM_ONOFF, false)
+		menu.draw:addParam("colorfotm", "Color Face of the Mountain", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
+		menu.draw:addParam("drawlois", "Draw Locket of the Iron Solari", SCRIPT_PARAM_ONOFF, false)
+		menu.draw:addParam("colorlois", "Color Locket of the Iron Solari", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
+		menu.draw:addParam("drawmikaels", "Draw Mikaels Crucible", SCRIPT_PARAM_ONOFF, false)
+		menu.draw:addParam("colormikaels", "Color Mikaels Crucible", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
+		menu.draw:addParam("empty", "", SCRIPT_PARAM_INFO, "")
+		menu.draw:addParam("drawsumm", "                -- Summoner Draws --", SCRIPT_PARAM_INFO, "")
+		menu.draw:addParam("drawexhaust", "Draw Exhaust", SCRIPT_PARAM_ONOFF, false)
+		menu.draw:addParam("colorexhaust", "Color Exhaust", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
+		menu.draw:addParam("drawheal", "Draw Heal", SCRIPT_PARAM_ONOFF, false)
+		menu.draw:addParam("colorheal", "Color Heal", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
+		menu.draw:addParam("drawignite", "Draw Ignite", SCRIPT_PARAM_ONOFF, false)
+		menu.draw:addParam("colorignite", "Color Ignite", SCRIPT_PARAM_COLOR, { 255, 0x66, 0x33, 0x00 })
+		menu.draw:addParam("empty", "", SCRIPT_PARAM_INFO, "")
+		menu.draw:addParam("miscellaneousdraws", "            -- Miscellaneous Draws --", SCRIPT_PARAM_INFO, "")
+		menu.draw:addParam("drawtarget", "Draw Target", SCRIPT_PARAM_ONOFF, true)
+		menu.draw:addParam("drawpermashow", "Draw Permashow (Reload)", SCRIPT_PARAM_ONOFF, true)
+
+	menu:addSubMenu("[" .. myHero.charName .. "] - Farm Settings", "farm")
+		menu.farm:addParam("laneclear", "                    -- Lane Clear --", SCRIPT_PARAM_INFO, "")
+		menu.farm:addParam("qlaneclear", "Use Q", SCRIPT_PARAM_ONOFF, true)
+		menu.farm:addParam("qclearmana", "Minimum Mana", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
+		menu.farm:addParam("empty", "", SCRIPT_PARAM_INFO, "")
+		menu.farm:addParam("elaneclear", "Use E", SCRIPT_PARAM_ONOFF, true)
+		menu.farm:addParam("eclearmana", "Minimum Mana", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
+
+	menu:addSubMenu("[" .. myHero.charName .. "] - Key Settings", "key")
+		menu.key:addParam("combatkeys", "               -- Combat Keys --", SCRIPT_PARAM_INFO, "")
+		menu.key:addParam("comboKey", "Combo Key", SCRIPT_PARAM_ONKEYDOWN, false, 32)
+		menu.key:addParam("harassKey", "Harass Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("C"))
+		menu.key:addParam("harassToggle", "Harass Toggle", SCRIPT_PARAM_ONKEYTOGGLE, false, string.byte("T"))
+		menu.key:addParam("clearKey", "Lane Clear Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("V"))
+		menu.key:addParam("empty", "", SCRIPT_PARAM_INFO, "")
+		menu.key:addParam("miscellaneouskeys", "           -- Miscellaneous Keys --", SCRIPT_PARAM_INFO, "")
+        menu.key:addParam("castWard", "Ward Casting", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("O"))
+
+	menu:addSubMenu("[" .. myHero.charName .. "] - Spell Settings", "spell")
+		menu.spell:addSubMenu("[" .. myHero.charName .. "] - Q", "q")
+		menu.spell.q:addParam("autoq", "Auto Q In Fights", SCRIPT_PARAM_ONOFF, true)
+		menu.spell.q:addParam("qmana", "[Auto] Mana > X%", SCRIPT_PARAM_SLICE, 0, 0, 100, 0)
+		menu.spell:addSubMenu("[" .. myHero.charName .. "] - W", "w")
+		for i = 1, heroManager.iCount do
+		local unit = heroManager:GetHero(i)
+			if unit.team == myHero.team then
+			menu.spell.w:addParam("w" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_ONOFF, true)
+			end
+		end
+		menu.spell.w:addParam("empty", "", SCRIPT_PARAM_INFO, "")
+		menu.spell.w:addParam("wenemyhealth", "W If Enemy < X% HP", SCRIPT_PARAM_SLICE, 75, 0, 100, 0)
+		menu.spell.w:addParam("empty", "", SCRIPT_PARAM_INFO, "")
+		menu.spell.w:addParam("wmana", "Use W If Mana >X%", SCRIPT_PARAM_SLICE, 45, 0, 100, 0)
+		menu.spell.w:addParam("empty", "", SCRIPT_PARAM_INFO, "")
+		menu.spell.w:addParam("wescape", "Use W For Escape", SCRIPT_PARAM_ONOFF, true)
+		menu.spell:addSubMenu("[" .. myHero.charName .. "] - E", "e")
+		menu.spell.e:addParam("ecombo", "Combo", SCRIPT_PARAM_ONOFF, true)
+		menu.spell.e:addParam("ecombomana", "[Combo] Mana > X%", SCRIPT_PARAM_SLICE, 0, 0, 100, 0)
+		menu.spell.e:addParam("empty", "", SCRIPT_PARAM_INFO, "")
+		menu.spell.e:addParam("eharass", "Harass", SCRIPT_PARAM_ONOFF, true)
+		menu.spell.e:addParam("eharassmana", "[Harass] Mana > X%", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
+		menu.spell:addSubMenu("[" .. myHero.charName .. "] - R", "r")
+		menu.spell.r:addParam("rcombo", "Combo", SCRIPT_PARAM_ONOFF, true)
+		menu.spell.r:addParam("rcombomana", "[Combo] Mana > X%", SCRIPT_PARAM_SLICE, 0, 0, 100, 0)
+		menu.spell.r:addParam("rmpty", "", SCRIPT_PARAM_INFO, "")
+		menu.spell.r:addParam("rharass", "Harass", SCRIPT_PARAM_ONOFF, true)
+		menu.spell.r:addParam("rharassmana", "[Harass] Mana > X%", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
+		menu.spell.r:addParam("empty", "", SCRIPT_PARAM_INFO, "")
+		menu.spell.r:addParam("amountenemies", "Only Ult If > X Enemies", SCRIPT_PARAM_SLICE, 2, 0, 5, 0)
+
+   menu:addSubMenu("[" .. myHero.charName .. "] - Target Selector", "target")
+	   menu.target:addParam("selecttarget", "Focus Selected Target", SCRIPT_PARAM_ONOFF, false)
+	   menu.target:addParam("selecttime", "Focus Selected Target For", SCRIPT_PARAM_LIST, 1, {"One Minute", "Forever"})
+	   menu.target:addParam("buffer", "", SCRIPT_PARAM_INFO, "")
+	   menu.target:addParam("orbtarget", "Use Orbwalker Target", SCRIPT_PARAM_ONOFF, false)
+
+   menu:addSubMenu("Orbwalk Settings", "orb")
+
+   UPL:AddToMenu(menu)
+
+   menu:addParam("empty", "", SCRIPT_PARAM_INFO, "")
+   menu:addParam("infobox", "            Support Heroes: " .. myHero.charName .. "           ", SCRIPT_PARAM_INFO, "")
+   menu:addParam("infobox2", "                      Version:  " .. scriptVersion .. "         ", SCRIPT_PARAM_INFO, "")
+
+   if menu.draw.drawpermashow then
+	 menu:permaShow("infobox")
+	 menu.key:permaShow("comboKey")
+	 menu.key:permaShow("harassKey")
+	 menu.key:permaShow("harassToggle")
+	 menu.key:permaShow("clearKey")
+   end
+end
+
+function _Nunu:ApplyBuff(unit, target, buff)
+	if unit ~= nil and buff and unit.isMe and buff.name:lower() == "recall" or buff.name:lower() == "summonerteleport" or buff.name:lower() == "recallimproved" then buffs["recall"] = true end
+end
+
+function _Nunu:Combo()
+	if Target == nil then return end
+	if menu.key.comboKey then
+        if menu.spell.e.ecombo then
+            if IsReady(_E) and (100 * myHero.mana / myHero.maxMana) >= menu.spell.e.ecombomana and GetDistance(Target) <= self.SpellE.range then
+                if ValidTarget(Target) then
+                    CastSpell(_E, Target)
+                end
+            end
+        end
+		if enemyCount > 0 then
+			for i = 1, enemyCount do
+			local unit = enemyHeroes[i]
+				if IsReady(_R) and menu.spell.r.rcombo and (100 * myHero.mana / myHero.maxMana) >= menu.spell.r.rcombomana and GetDistance(Target) < self.SpellR.range then
+					if ValidTarget(Target) then
+						local AOECastPosition, MainTargetHitChance, nTargets = VPred:GetCircularAOECastPosition(unit, 0.25, 300, 650, 1500, myHero)
+						if nTargets >= menu.spell.r.amountenemies then
+						CastSpell(_R)
+						end
+					end
+				end
+			end
+		end
+	end
+end
+
+function _Nunu:Harass()
+	if Target == nil then return end
+	if menu.key.harassKey or menu.key.harassToggle then
+		if menu.spell.e.eharass then
+            if IsReady(_E) and (100 * myHero.mana / myHero.maxMana) >= menu.spell.e.eharassmana and GetDistance(Target) <= self.SpellE.range then
+                if ValidTarget(Target) then
+                    CastSpell(_E, Target)
+                end
+            end
+        end
+		if enemyCount > 0 then
+			for i = 1, enemyCount do
+			local unit = enemyHeroes[i]
+				if IsReady(_R) and menu.spell.r.rharass and (100 * myHero.mana / myHero.maxMana) >= menu.spell.r.rharassmana and (GetDistance(Target) < 1000) then
+					if ValidTarget(Target) then
+						local CastPosition, HitChance = UPL:Predict(_R, myHero, unit)
+						if HitChance > 0 then
+							local AOECastPosition, MainTargetHitChance, nTargets = VPred:GetCircularAOECastPosition(unit, 0.25, 300, 650, 1500, myHero)
+							if nTargets >= menu.spell.r.amountenemies then
+							CastSpell(_R)
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+end
+
+function _Nunu:LaneClear()
+	if enemyMinions == nil then return end
+	for i, Minion in pairs(enemyMinions.objects) do
+		if (Minion ~= nil) then
+			if menu.key.clearKey then
+				if IsReady(_E) and menu.farm.elaneclear and (100 * myHero.mana / myHero.maxMana) >= menu.farm.eclearmana then
+					CastSpell(_E, Minion)
+				end
+			end
+		end
+	end
+end
+
+function _Nunu:OnDraw()
+	if menu == nil then return end
+	if Target == nil then return end
+	if menu.draw.drawtarget and ValidTarget(Target) and Target.type == myHero.type then
+		if not Target.dead and Target.visible and not SelectedTarget then
+			_PentagonRot:DrawTriangle(Target, ARGB(255, 102, 153, 255), 2, 50, 5, 0, 0)
+		elseif SelectedTarget and SelectedTarget.visible then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 234, 153, 153), 2, 50, 5, 0, 0)
+		end
+		if SelectedTarget ~= nil and not SelectedTarget.dead and SelectedTarget.visible and minuteTarget == true then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 234, 153, 153), 2, 50, 5, 0, 0)
+		elseif SelectedTarget ~= nil and not SelectedTarget.dead and SelectedTarget.visible and minuteTarget == false then
+			_PentagonRot:DrawTriangle(SelectedTarget, ARGB(255, 102, 153, 255), 2, 50, 5, 0, 0)
+		end
+	end
+	local slot = _Tech:CustomGetInventorySlotItem("HealthBomb", myHero)
+	if menu.draw.drawfotm and slot ~= nil and IsReady(slot) then
+		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorfotm)))
+	end
+	local slot = _Tech:CustomGetInventorySlotItem("IronStylus", myHero)
+	if menu.draw.drawlois and slot ~= nil and IsReady(slot) then
+		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colorlois)))
+	end
+	local slot = _Tech:CustomGetInventorySlotItem("ItemMorellosBane", myHero)
+	if menu.draw.drawmikaels and slot ~= nil and IsReady(slot) then
+		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 750, ARGB(table.unpack(menu.draw.colormikaels)))
+	end
+	if menu.draw.drawexhaust and sexhaust ~= nil and IsReady(sexhaust) then
+	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 650, ARGB(table.unpack(menu.draw.colorexhaust)))
+	end
+	if menu.draw.drawheal and sheal ~= nil and IsReady(sheal) then
+	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 850, ARGB(table.unpack(menu.draw.colorheal)))
+	end
+	if menu.draw.drawignite and signite ~= nil and IsReady(signite) then
+	   _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 600, ARGB(table.unpack(menu.draw.colorignite)))
+	end
+	if menu.draw.drawq and IsReady(_Q) then
+		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, 365, ARGB(table.unpack(menu.draw.colorq)))
+	end
+	if menu.draw.draww and IsReady(_W) then
+		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, self.SpellW.range, ARGB(table.unpack(menu.draw.colorw)))
+	end
+	if menu.draw.drawe and IsReady(_E) then
+		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, self.SpellE.range, ARGB(table.unpack(menu.draw.colore)))
+	end
+end
+
+function _Nunu:OnWndMsg(msg,key)
+    if msg == WM_LBUTTONDOWN then
+        _MovementBlock:disable()
+    end
+end
+
+function _Nunu:ProcessSpell(object, spell)
+	if object.isMe then
+        if spell.name == "AbsoluteZero" then
+            _MovementBlock:enable()
+            DelayAction(function() _MovementBlock:disable() end, 3)
+		end
+    end
+end
+
+function _Nunu:ProcessAttack(object, spell)
+	-- Auto Q --
+	if menu.spell.q.autoq and menu.spell.q.qmana <= (100 * myHero.mana / myHero.maxMana) then
+		for i, enemy in ipairs(GetEnemyHeroes()) do
+			if CountObjectsInCircle(myHero, 2000, GetEnemyHeroes()) <= 2 then
+				for i, Minion in pairs(enemyMinions.objects) do
+					if (Minion ~= nil) then
+						if GetDistance(myHero, Minion) < self.SpellQ.range and GetDistance(enemy, Minion) < 1000  then
+							for i = 1, heroManager.iCount do
+								local allytarget = heroManager:GetHero(i)
+								if allytarget.team == myHero.team and not allytarget.dead and allytarget.health > 0 then
+									if IsReady(_Q) then
+										if object.team == TEAM_ENEMY and object.type == myHero.type and spell.name:lower():find("attack") then
+											if spell.target == allytarget and spell.target.type == myHero.type then
+												CastSpell(_Q, Minion)
+											end
+										end
+									end
+								end
+							end
+						end
+					end
+				end
+			elseif CountObjectsInCircle(myHero, 2000, GetEnemyHeroes()) >= 3 then
+				for i, Minion in pairs(enemyMinions.objects) do
+					if (Minion ~= nil) then
+						if GetDistance(myHero, Minion) < self.SpellQ.range and GetDistance(enemy, Minion) < 1000 then
+							for i = 1, heroManager.iCount do
+								local allytarget = heroManager:GetHero(i)
+								if allytarget.team == myHero.team and not allytarget.dead and allytarget.health > 0 then
+									if IsReady(_Q) then
+										if object.team == TEAM_ENEMY and object.type == myHero.type and spell.name:lower():find("attack") then
+											if spell.target == allytarget and spell.target.type == myHero.type then
+												CastSpell(_Q, Minion)
+											end
+										end
+									end
+								end
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+	-- W In Fights --
+	for i = 1, heroManager.iCount do
+		local allytarget = heroManager:GetHero(i)
+		if allytarget.team == myHero.team and not allytarget.dead and allytarget.health > 0 then
+			if IsReady(_W) and spell.target and GetDistance(allytarget) < self.SpellW.range then
+				if object.team == myHero.team and object.type == myHero.type and spell.name:lower():find("attack") then
+					if spell.target.team ~= myHero.team and spell.target.type == myHero.type then
+						for i, enemy in ipairs(GetEnemyHeroes()) do
+							if menu.spell.w["w".. i] and menu.spell.w.wenemyhealth >= (100*enemy.health/enemy.maxHealth) and menu.spell.w.wmana <= (100 * myHero.mana / myHero.maxMana) then
+								CastSpell(_W, allytarget)
+							end
+						end
+					end
+				end
+			end
+			-- Escape --
+			if CountObjectsInCircle(allytarget, 2000, GetAllyHeroes()) >= CountObjectsInCircle(allytarget, 2000, GetEnemyHeroes()) then
+				if IsReady(_W) and GetDistance(myHero, allytarget) < self.SpellW.range then
+					if allytarget.team == myHero.team and not allytarget.dead and allytarget.health > 0 then
+						if object.team == TEAM_ENEMY and object.type == myHero.type and spell.name:lower():find("attack") then
+							if spell.target == allytarget and spell.target.type == myHero.type then
+								CastSpell(_W, allytarget)
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+end
+
+function _Nunu:RemoveBuff(unit, buff)
+	if unit ~= nil and buff and unit.isMe and buff.name:lower() == "recall" or buff.name:lower() == "summonerteleport" or buff.name:lower() == "recallimproved" then buffs["recall"] = false end
+end
+
+function _Nunu:TowerCC()
+	for i = 1, enemyCount do
+	local unit = enemyHeroes[i]
+		for i = 1, towerCount do
+			local tower = towers[i]
+			if tower and tower.team == myHero.team and (GetDistance(tower, unit) < 775) then
+				if menu.snare.esnare and menu.snare["" ..unit.charName] and (GetDistance(unit) < 365) then
+					CastSpell(_E, unit)
+				end
+			end
+		end
+	end
+end
+
 
 Class ("_PentagonRot")
 function _PentagonRot:__init(object, color, thickness, size,version)
