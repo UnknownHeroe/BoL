@@ -10,8 +10,7 @@
 I UNDERSTAND MY INDENTATION IS WEIRD. C&P TO GITHUB MESSED IT ALL UP!
 
 1.73 Change Log:
-	1) Patch 6.24 Update
-    2) Fixed Sona Spam
+
 ]]
 
 local scriptVersion = 1.73
