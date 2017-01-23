@@ -9,12 +9,13 @@
 
 I UNDERSTAND MY INDENTATION IS WEIRD. C&P TO GITHUB MESSED IT ALL UP!
 
-1.72 Change Log:
-	1) Patch 6.24 Update
-    2) Fixed Sona Spam
+1.73 Change Log:
+	1) Changed Alistars E
+	2) Added Test Black List Toggle With Blitzcrank
+
 ]]
 
-local scriptVersion = 1.72
+local scriptVersion = 1.73
 
  -- BoL Tools --
 assert(load(Base64Decode("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"), nil, "bt", _ENV))()
@@ -654,7 +655,7 @@ function _Alistar:LoadVariables()
 
 	self.SpellW = { speed = 1000, delay = 0.55, range = 650, width = nil, collision = true, aoe = false, type = "linear" }
 
-	self.SpellE = { speed = nil, delay = 0.5, range = 575, width = nil, collision = false, aoe = true, type = "circular" }
+	self.SpellE = { speed = nil, delay = 0.5, range = 300, width = nil, collision = false, aoe = true, type = "circular" }
 
 	self.SpellR = { speed = nil, delay = 0.25, range = nil, width = nil, collision = false, aoe = false, type = "linear" }
 
@@ -664,7 +665,6 @@ end
 function _Alistar:OnTick()
    if menu == nil then return end
 
-	self:AutoHeal()
 	self:AutoUlt()
 	self:Combo()
 	self:FlashCombo()
@@ -677,17 +677,6 @@ function _Alistar:Menu()
 	menu = scriptConfig("Support Heroes", "SupportHeroesMenuAlistar")
 
 	_Activator:Menu()
-
-	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-Heal", "ah")
-		for i = 1, heroManager.iCount do
-		local unit = heroManager:GetHero(i)
-			if unit.team == myHero.team then
-			menu.ah:addParam("heal" .. unit.charName, "" .. unit.charName, SCRIPT_PARAM_ONOFF, true)
-			menu.ah:addParam("maxhppercent"..i, "Heal Until HP = X%", SCRIPT_PARAM_SLICE, 75, 0, 100, 0)
-			menu.ah:addParam("empty", "", SCRIPT_PARAM_INFO,"")
-			end
-		end
-		menu.ah:addParam("healmana", "Heal If Mana >X%", SCRIPT_PARAM_SLICE, 45, 0, 100, 0)
 
 	menu:addSubMenu("[" .. myHero.charName .. "] - Auto-CC Under Tower", "snare")
 		menu.snare:addParam("info", "           -- Auto-CC Enemies --", SCRIPT_PARAM_INFO, "")
@@ -785,14 +774,21 @@ function _Alistar:Menu()
 		menu.spell.q:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.spell.q:addParam("qharass", "Harass", SCRIPT_PARAM_ONOFF, true)
 		menu.spell.q:addParam("qharassmana", "[Harass] Mana > X%", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
+
 		menu.spell:addSubMenu("[" .. myHero.charName .. "] - W", "w")
 		menu.spell.w:addParam("wcombo", "Combo", SCRIPT_PARAM_ONOFF, true)
 		menu.spell.w:addParam("wcombomana", "[Combo] Mana > X%", SCRIPT_PARAM_SLICE, 0, 0, 100, 0)
 		menu.spell.w:addParam("empty", "", SCRIPT_PARAM_INFO, "")
 		menu.spell.w:addParam("wharass", "Harass", SCRIPT_PARAM_ONOFF, true)
 		menu.spell.w:addParam("wharassmana", "[Harass] Mana > X%", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
+
 		menu.spell:addSubMenu("[" .. myHero.charName .. "] - E", "e")
-		menu.spell.e:addParam("info", "Check Auto Heal For Settings", SCRIPT_PARAM_INFO, "")
+		menu.spell.e:addParam("ecombo", "Combo", SCRIPT_PARAM_ONOFF, true)
+		menu.spell.e:addParam("ecombomana", "[Combo] Mana > X%", SCRIPT_PARAM_SLICE, 0, 0, 100, 0)
+		menu.spell.e:addParam("empty", "", SCRIPT_PARAM_INFO, "")
+		menu.spell.e:addParam("eharass", "Harass", SCRIPT_PARAM_ONOFF, true)
+		menu.spell.e:addParam("eharassmana", "[Harass] Mana > X%", SCRIPT_PARAM_SLICE, 25, 0, 100, 0)
+
 		menu.spell:addSubMenu("[" .. myHero.charName .. "] - R", "r")
 		menu.spell.r:addParam("ult", "Use Ultimate", SCRIPT_PARAM_ONOFF, true)
 		menu.spell.r:addParam("ulthp", "Ult If <X% Of HP", SCRIPT_PARAM_SLICE, 15, 0, 100, 0)
@@ -827,21 +823,6 @@ function _Alistar:ApplyBuff(unit, target, buff)
 	if unit ~= nil and buff and unit.isMe and buff.name:lower() == "recall" or buff.name:lower() == "summonerteleport" or buff.name:lower() == "recallimproved" then buffs["recall"] = true end
 end
 
-function _Alistar:AutoHeal()
-	for i = 1, heroManager.iCount do
-		local unit = heroManager:GetHero(i)
-		if unit.team == myHero.team then
-			if not InFountain() and not buffs["recall"] then
-				if unit.team == myHero.team and unit.type == myHero.type and not unit.dead and menu.ah["heal" ..unit.charName] and (100*unit.health/unit.maxHealth) < menu.ah["maxhppercent"..i] and (100 * myHero.mana / myHero.maxMana)>= menu.ah.healmana then
-					if IsReady(_E) and (GetDistance(unit) < self.SpellE.range) then
-						CastSpell(_E)
-					end
-				end
-			end
-		end
-	end
-end
-
 function _Alistar:AutoUlt()
 	if IsReady(_R) and menu.spell.r.ult and (100 * myHero.health / myHero.maxHealth) <= menu.spell.r.ulthp then
 		CastSpell(_R)
@@ -856,7 +837,7 @@ end
 function _Alistar:Combo()
 	if Target == nil then return end
 	if menu.key.comboKey then
-        if menu.spell.q.qcombo and not menu.spell.w.wcombo then
+        if menu.spell.q.qcombo and not menu.spell.e.ecombo and not menu.spell.w.wcombo then
             if IsReady(_Q) and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qcombomana and GetDistance(Target) <= self.SpellQ.range then
                 if ValidTarget(Target) then
                     CastSpell(_Q)
@@ -870,7 +851,14 @@ function _Alistar:Combo()
                 end
             end
         end
-        if menu.spell.q.qcombo and menu.spell.w.wcombo then
+		if menu.spell.e.ecombo then
+			if IsReady(_E) and (100 * myHero.mana / myHero.maxMana)>= menu.spell.e.ecombomana and GetDistance(Target) <= self.SpellE.range then
+                if ValidTarget(Target) then
+                    CastSpell(_E)
+                end
+            end
+		end
+		if menu.spell.q.qcombo and menu.spell.w.wcombo then
             if IsReady(_Q) and GetDistance(Target) < self.SpellQ.range then
                 CastSpell(_Q)
             end
@@ -1009,6 +997,13 @@ function _Alistar:Harass()
 			if ValidTarget(Target) then
 				CastSpell(_W, Target)
 			end
+		end
+		if menu.spell.e.eharass then
+			if IsReady(_E) and (100 * myHero.mana / myHero.maxMana)>= menu.spell.e.eharassmana and GetDistance(Target) <= self.SpellE.range then
+                if ValidTarget(Target) then
+                    CastSpell(_E)
+                end
+            end
 		end
 		if menu.spell.q.qharass and menu.spell.w.wharass then
 			if IsReady(_Q) and IsReady(_W) and myHero.mana >(60 + 5 * myHero:GetSpellData(_Q).level) +(60 + 5 * myHero:GetSpellData(_W).level) and (GetDistance(Target) > 365) and (GetDistance(Target) < self.SpellW.range) then
@@ -1711,6 +1706,7 @@ function _Blitzcrank:Menu()
         end
         menu.spell.q:addParam("empty", "", SCRIPT_PARAM_INFO, "")
         menu.spell.q:addParam("blacklisthp", "Unless <X% HP", SCRIPT_PARAM_SLICE, 10, 0, 100, 0)
+		menu.spell.q:addParam("blacklisttoggle", "Black List Toggle",  SCRIPT_PARAM_ONKEYTOGGLE, false, string.byte("N"))
 
 		menu.spell:addSubMenu("[" .. myHero.charName .. "] - E", "e")
 		menu.spell.e:addParam("ecombo", "Combo", SCRIPT_PARAM_ONOFF, true)
@@ -1747,6 +1743,7 @@ function _Blitzcrank:Menu()
 	 menu.key:permaShow("harassToggle")
 	 menu.key:permaShow("clearKey")
 	 menu.key:permaShow("marathonKey")
+	 menu.key:permaShow("blacklisttoggle")
    end
 end
 
@@ -1769,13 +1766,18 @@ function _Blitzcrank:Combo()
     if Target == nil then return end
         if menu.key.comboKey then
             if IsReady(_Q) and menu.spell.q.qcombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qcombomana and GetDistance(Target) < self.SpellQ.range then
-                if not menu.spell.q[Target.charName] and ValidTarget(Target) then
+                if menu.spell.q.blacklisttoggle and not menu.spell.q[Target.charName] and ValidTarget(Target) then
                     local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
                     if HitChance > 0 then
                         CastSpell(_Q, CastPosition.x, CastPosition.z)
                     end
-                end
-                if menu.spell.q[Target.charName] and (100*Target.health/Target.maxHealth) <= menu.spell.q.blacklisthp then
+                elseif not menu.spell.q.blacklisttoggle then
+					local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
+                    if HitChance > 0 then
+                        CastSpell(_Q, CastPosition.x, CastPosition.z)
+                    end
+				end
+                if menu.spell.q.blacklisttoggle and menu.spell.q[Target.charName] and (100*Target.health/Target.maxHealth) <= menu.spell.q.blacklisthp then
                 local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
                     if HitChance > 0 then
                         CastSpell(_Q, CastPosition.x, CastPosition.z)
@@ -1822,13 +1824,18 @@ function _Blitzcrank:Harass()
 	if Target == nil then return end
 	if menu.key.harassKey or menu.key.harassToggle then
 		if IsReady(_Q) and menu.spell.q.qharass and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qharassmana and (GetDistance(Target) < 975) then
-			if not menu.spell.q[Target.charName] and ValidTarget(Target) then
+			if menu.spell.q.blacklisttoggle and not menu.spell.q[Target.charName] and ValidTarget(Target) then
 				local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
 				if HitChance > 0 then
 					CastSpell(_Q, CastPosition.x, CastPosition.z)
 				end
-            end
-            if menu.spell.q[Target.charName] and (100*Target.health/Target.maxHealth) <= menu.spell.q.blacklisthp then
+			elseif not menu.spell.q.blacklisttoggle then
+				local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
+				if HitChance > 0 then
+					CastSpell(_Q, CastPosition.x, CastPosition.z)
+				end
+			end
+            if menu.spell.q.blacklisttoggle and menu.spell.q[Target.charName] and (100*Target.health/Target.maxHealth) <= menu.spell.q.blacklisthp then
             local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
                 if HitChance > 0 then
                     CastSpell(_Q, CastPosition.x, CastPosition.z)
