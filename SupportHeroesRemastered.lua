@@ -9,16 +9,13 @@
 
 I UNDERSTAND MY INDENTATION IS WEIRD. C&P TO GITHUB MESSED IT ALL UP!
 
-1.73 Change Log:
-	1) Changed Alistars E
-	2) Added Test Black List Toggle With Blitzcrank
-
-1.731 Change Log:
-	1) Fixed Blitzcrank Spam
+1.74 Change Log:
+	1) Patch 7.2 Update
+	2) Added Black List Toggle To the Rest Of The Champions
 
 ]]
 
-local scriptVersion = 1.731
+local scriptVersion = 1.74
 
  -- BoL Tools --
 assert(load(Base64Decode("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"), nil, "bt", _ENV))()
@@ -7610,6 +7607,7 @@ function _Thresh:Menu()
 		menu.key:addParam("flashKey", "Flash Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("H"))
 		menu.key:addParam("desperationKey", "Desperation Key", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("Z"))
         menu.key:addParam("castWard", "Ward Casting", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("O"))
+		menu.key:addParam("blacklisttoggle", "Black List Toggle",  SCRIPT_PARAM_ONKEYTOGGLE, false, string.byte("N"))
 
 	menu:addSubMenu("[" .. myHero.charName .. "] - Spell Settings", "spell")
 		menu.spell:addSubMenu("[" .. myHero.charName .. "] - Q", "q")
@@ -7677,6 +7675,7 @@ function _Thresh:Menu()
 	 menu.key:permaShow("harassToggle")
 	 menu.key:permaShow("clearKey")
      menu.key:permaShow("desperationKey")
+	 menu.key:permaShow("blacklisttoggle")
    end
 end
 
@@ -7899,14 +7898,20 @@ function _Thresh:Combo()
 
 		if IsReady(_Q) and menu.spell.q.qcombo and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qcombomana and GetDistance(Target) < self.SpellQ.range and GetDistance(Target) <= menu.spell.q.maxdistanceq then
 			if IsReady(_E) and GetDistance(Target) < self.SpellE.range then return end
-			if not menu.spell.q[Target.charName] and myHero:GetSpellData(_Q).name ~= "ThreshQLeap" and ValidTarget(Target) then
+			if menu.spell.q.blacklisttoggle and not menu.spell.q[Target.charName] and myHero:GetSpellData(_Q).name ~= "ThreshQLeap" and ValidTarget(Target) then
+				local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
+				if HitChance > 0 then
+					CastSpell(_Q, CastPosition.x, CastPosition.z)
+					DelayAction(function() _Thresh:CastQ2() end , 1.4 + self.SpellQ.delay)
+				end
+			elseif not menu.spell.q.blacklisttoggle and myHero:GetSpellData(_Q).name ~= "ThreshQLeap" and ValidTarget(Target) then
 				local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
 				if HitChance > 0 then
 					CastSpell(_Q, CastPosition.x, CastPosition.z)
 					DelayAction(function() _Thresh:CastQ2() end , 1.4 + self.SpellQ.delay)
 				end
 			end
-            if menu.spell.q[Target.charName] and (100*Target.health/Target.maxHealth) <= menu.spell.q.blacklisthp and myHero:GetSpellData(_Q).name ~= "ThreshQLeap" then
+            if menu.spell.q.blacklisttoggle and menu.spell.q[Target.charName] and (100*Target.health/Target.maxHealth) <= menu.spell.q.blacklisthp and myHero:GetSpellData(_Q).name ~= "ThreshQLeap" then
             local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
                 if HitChance > 0 then
                     CastSpell(_Q, CastPosition.x, CastPosition.z)
@@ -7998,14 +8003,20 @@ function _Thresh:Harass()
 
 		if IsReady(_Q) and menu.spell.q.qharass and (100 * myHero.mana / myHero.maxMana)>= menu.spell.q.qharassmana and GetDistance(Target) < self.SpellQ.range and GetDistance(Target) <= menu.spell.q.maxdistanceq then
 			if IsReady(_E) and GetDistance(Target) < self.SpellE.range then return end
-			if not menu.spell.q[Target.charName] and ValidTarget(Target) then
+			if menu.spell.q.blacklisttoggle and not menu.spell.q[Target.charName] and ValidTarget(Target) then
+				local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
+				if HitChance > 0 then
+					CastSpell(_Q, CastPosition.x, CastPosition.z)
+					DelayAction(function() _Thresh:CastQ2() end , 1.4 + self.SpellQ.delay)
+				end
+			elseif not menu.spell.q.blacklisttoggle and ValidTarget(Target) then
 				local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
 				if HitChance > 0 then
 					CastSpell(_Q, CastPosition.x, CastPosition.z)
 					DelayAction(function() _Thresh:CastQ2() end , 1.4 + self.SpellQ.delay)
 				end
 			end
-            if menu.spell.q[Target.charName] and (100*Target.health/Target.maxHealth) <= menu.spell.q.blacklisthp then
+            if menu.spell.q.blacklisttoggle and menu.spell.q[Target.charName] and (100*Target.health/Target.maxHealth) <= menu.spell.q.blacklisthp then
             local CastPosition, HitChance, HeroPosition = UPL:Predict(_Q, myHero, Target)
                 if HitChance > 0 then
                     CastSpell(_Q, CastPosition.x, CastPosition.z)
