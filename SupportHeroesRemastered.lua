@@ -9,12 +9,15 @@
 
 I UNDERSTAND MY INDENTATION IS WEIRD. C&P TO GITHUB MESSED IT ALL UP!
 
-1.75 Change Log:
-	1) Added Redemption
+1.76 Change Log:
+	1) Fixed Champion Ranges 
+	2) Added Ult Message to Nunu and Janna
+	3) Update for 7.5
+	4) Added Autobuy Sweeper (In Activator Menu)
 
 ]]
 
-local scriptVersion = 1.75
+local scriptVersion = 1.76
 
  -- BoL Tools --
 assert(load(Base64Decode("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"), nil, "bt", _ENV))()
@@ -239,6 +242,7 @@ local buffs = {}
 local SelectTarget = false
 local minuteTarget = false
 local ts = nil
+local moveBlock = false
 local sexhaust = nil
 local sheal = nil
 local signite = nil
@@ -403,6 +407,8 @@ end
 function _Activator:OnTick()
 	if menu == nil then return end
 
+	self:AutoBuy()
+
 	self:Exhaust()
 	self:HealTeammate()
 	self:Ignite()
@@ -416,6 +422,11 @@ end
 
 function _Activator:Menu()
 	menu:addSubMenu("[" .. myHero.charName .. "] - Activator", "activator")
+
+	menu.activator:addSubMenu("             -- Auto Buy Items --", "Item")
+
+	menu.activator:addSubMenu("Auto Buy Items", "auto")
+	menu.activator.auto:addParam("redtrinket", "Auto Buy Sweeper After Sightstone", SCRIPT_PARAM_ONOFF, true)
 
 	menu.activator:addSubMenu("             -- Item Settings --", "Item")
 
@@ -503,6 +514,19 @@ function _Activator:Menu()
 
 	menu.activator:addSubMenu("Ignite", "ignite")
 	   menu.activator.ignite:addParam("ign", "Use Ignite", SCRIPT_PARAM_ONOFF, true)
+end
+
+-- Auto Buy --
+function _Activator:AutoBuy()
+	local slot = _Tech:CustomGetInventorySlotItem("itemGhostWard", myHero)
+
+	if menu.activator.auto.redtrinket then
+		if slot ~= nil and myHero.level < 9 then
+			DelayAction(function() BuyItem(3341) end, 1)
+		elseif slot ~= nil and myHero.level >= 9 then
+			DelayAction(function() BuyItem(3364) end, 1)
+		end
+	end
 end
 
 -- Summoners --
@@ -2384,6 +2408,10 @@ function _Janna:OnDraw()
 	end
 	if menu.draw.drawr and IsReady(_R) then
 	    _Tech:DrawCircle(myHero.x, myHero.y, myHero.z, self.SpellR.range, ARGB(table.unpack(menu.draw.colorr)))
+	end
+
+	if moveBlock == true then
+		DrawText3D(tostring("Left click to enable movement!"), myHero.x, myHero.y, myHero.z, 24, 0xFFFFFFFF)
 	end
 end
 
@@ -5392,15 +5420,17 @@ function _MovementBlock:__init()
 end
 
 function _MovementBlock:enable()
+	moveBlock = true
 	self.blockMovement = true
 end
 
 function _MovementBlock:disable()
+	moveBlock = false
 	self.blockMovement = false
 end
 
 function _MovementBlock:SendPacket(p)
-	if p.header == 0x1D and self.blockMovement then
+	if p.header == 0xFF and self.blockMovement then
 		p:Block()
 	end
 end
@@ -5904,7 +5934,6 @@ end
 
 function _Nunu:OnTick()
    if menu == nil then return end
-
 	self:Combo()
 	self:Harass()
 	self:Marathon()
@@ -6155,6 +6184,10 @@ function _Nunu:OnDraw()
 	if menu.draw.drawe and IsReady(_E) then
 		_Tech:DrawCircle(myHero.x, myHero.y, myHero.z, self.SpellE.range, ARGB(table.unpack(menu.draw.colore)))
 	end
+
+	if moveBlock == true then
+		DrawText3D(tostring("Left click to enable movement!"), myHero.x, myHero.y, myHero.z, 24, 0xFFFFFFFF)
+	end
 end
 
 function _Nunu:OnWndMsg(msg,key)
@@ -6166,7 +6199,7 @@ end
 function _Nunu:ProcessSpell(object, spell)
 	if object.isMe then
         if spell.name == "AbsoluteZero" then
-            _MovementBlock:enable()
+		   	 _MovementBlock:enable()
             DelayAction(function() _MovementBlock:disable() end, 3)
 		end
     end
@@ -7110,7 +7143,7 @@ function _Soraka:__init()
 end
 
 function _Soraka:LoadVariables()
-    self.SpellQ = { speed = math.huge, delay = 0.5, range = 810, width = 250, collision = false, aoe = true, type = "circular" }
+    self.SpellQ = { speed = math.huge, delay = 0.5, range = 800, width = 250, collision = false, aoe = true, type = "circular" }
 
     self.SpellW = { speed = 1000, delay = 0.55, range = 550, width = 500, collision = true, aoe = false, type = "linear" }
 
@@ -7131,7 +7164,6 @@ function _Soraka:OnTick()
 	self:Harass()
 	self:LaneClear()
 	self:TowerCC()
-
 end
 
 function _Soraka:Menu()
@@ -8805,6 +8837,7 @@ function _WA:OnDraw()
     local wardAvailable = self:checkWardsAvailable()
 	if self.menu.printAvailable and wardAvailable~=nil then
         DrawText("WARD AVAILABLE TO CAST!", 15, WINDOW_W/2-GetTextArea("WARD AVAILABLE TO CAST!", 35).x/18 + 500, WINDOW_H/12-GetTextArea("WARD AVAILABLE TO CAST!", 35).y/2, ARGB(150,255,255,255))
+
 	end
 
 	if self.drawWardSpots then
