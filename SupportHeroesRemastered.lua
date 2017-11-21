@@ -9,12 +9,12 @@
 
 I UNDERSTAND MY INDENTATION IS WEIRD. C&P TO GITHUB MESSED IT ALL UP!
 
-1.77 Change Log:
-	1) 7.6 Update
+1.78 Change Log:
+	1) Fixed Alot Lul
 
 ]]
 
-local scriptVersion = 1.77
+local scriptVersion = 1.78
 
  -- BoL Tools --
 assert(load(Base64Decode("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"), nil, "bt", _ENV))()
@@ -535,7 +535,7 @@ function _Activator:Exhaust()
 		local unit = enemyHeroes[i]
 			if menu.key.comboKey then
 				if ValidTarget(Target) and Target.team ~= myHero.team and menu.activator.exhaust["exhausttarget".. unit.charName] and (100*Target.health/Target.maxHealth) < menu.activator.exhaust["exhausthp".. unit.charName] then
-					if IsReady(sexhaust) and (GetDistance(Target) < 625) then
+					if IsReady(sexhaust) and (GetDistance(Target) < 650) then
 						CastSpell(sexhaust, Target)
 					end
 				end
@@ -565,7 +565,7 @@ function _Activator:Ignite()
    if Target == nil then return end
    if ValidTarget(Target) and menu.activator.ignite.ign then
 		local igniteDmg = 50+(myHero.level*20)
-		if IsReady(signite) and (Target.health <= igniteDmg) and (GetDistance(Target) < 500) then
+		if IsReady(signite) and (Target.health <= igniteDmg) and (GetDistance(Target) < 600) then
 		  CastSpell(signite, Target)
 		end
 	end
@@ -608,7 +608,7 @@ function _Activator:LocketOfIronSolari()
 		if unit.team == myHero.team then
 			if slot ~= nil and IsReady(slot) then
 				if menu.activator.lois["shield".. unit.charName] and (100*unit.health/unit.maxHealth) <= menu.activator.lois["shieldhppercent"..i] then
-					if (GetDistance(unit) < 750) and (GetDistance(Target) <= 700) then
+					if (GetDistance(unit) < 600) and (GetDistance(Target) <= 600) then
 						DelayAction(function() CastSpell(slot, unit) end, menu.humanizer.shieldDelay / 1000)
 					end
 				end
@@ -708,7 +708,7 @@ function _Alistar:LoadVariables()
 
 	self.SpellW = { speed = 1000, delay = 0.55, range = 650, width = nil, collision = true, aoe = false, type = "linear" }
 
-	self.SpellE = { speed = nil, delay = 0.5, range = 300, width = nil, collision = false, aoe = true, type = "circular" }
+	self.SpellE = { speed = nil, delay = 0.5, range = 350, width = nil, collision = false, aoe = true, type = "circular" }
 
 	self.SpellR = { speed = nil, delay = 0.25, range = nil, width = nil, collision = false, aoe = false, type = "linear" }
 
@@ -1216,7 +1216,7 @@ end
 function _Annie:LoadVariables()
 	self.SpellQ = { speed = 1400, delay = 0.5, range = 625, width = nil, collision = false, aoe = false, type = "linear" }
 
-	self.SpellW = { speed = math.huge, delay = 0.25, range = 625, width = 200, collision = false, aoe = true, type = "linear" }
+	self.SpellW = { speed = math.huge, delay = 0.25, range = 600, width = 200, collision = false, aoe = true, type = "linear" }
 
 	self.SpellE = { speed = 20, delay = 0.25, range = nil, width = nil, collision = false, aoe = true, type = "circular" }
 
@@ -1633,11 +1633,11 @@ function _Blitzcrank:__init()
 end
 
 function _Blitzcrank:LoadVariables()
-	self.SpellQ = { speed = 1800, delay = 0.25, range = 975, width = 70, collision = true, aoe = false, type = "linear"}
+	self.SpellQ = { speed = 1750, delay = 0.25, range = 925, width = 70, collision = true, aoe = false, type = "linear"}
 
 	self.SpellW = { speed = nil, delay = 0.25, range = nil, width = nil, collision = false, aoe = false, type = "linear" }
 
-	self.SpellE = { speed = 200, delay = 0.25, range = 300, width = nil, collision = false, aoe = false, type = "circular" }
+	self.SpellE = { speed = 200, delay = 0.25, range = 125, width = nil, collision = false, aoe = false, type = "circular" }
 
 	self.SpellR = { speed = nil, delay = 0.25, range = 600, width = 200, collision = false, aoe = true, type = "circular" }
 
@@ -2052,7 +2052,7 @@ end
 
 function _Janna:LoadVariables()
 	self.SpellQ = { speed = 900, delay = 0.3, range = 850, width = 120, collision = false, aoe = true, type = "linear" }
-	self.SpellW = { speed = 1000, delay = 0.55, range = 600, width = 50, collision = true, aoe = false, type = "linear" }
+	self.SpellW = { speed = 1000, delay = 0.55, range = 550, width = 50, collision = true, aoe = false, type = "linear" }
 	self.SpellE = { speed = 1975, delay = 0.25, range = 800, width = 50, collision = true, aoe = false, type = "linear" }
 	self.SpellR = { speed = 1975, delay = 0.25, range = 725, width = 50, collision = true, aoe = false, type = "linear" }
 
@@ -2716,7 +2716,7 @@ function _Karma:LoadVariables()
 	self.SpellR = { speed = 2000, delay = 0.25, range = 1100, width = 200, collision = false, aoe = true, type = "linear" }
 
 	self.EmpoweredQ = {width = 250}
-	self.EmpoweredE = {range = 600}
+	self.EmpoweredE = {range = 800}
 
 	UPL:AddSpell(_Q, self.SpellQ)
 end
@@ -3370,9 +3370,9 @@ function _Leona:__init()
 end
 
 function _Leona:LoadVariables()
-	self.SpellQ = { speed = 1800, delay = 0.25, range = 175, width = 70, collision = false, aoe = false, type = "nil"}
+	self.SpellQ = { speed = 1800, delay = 0.25, range = 125, width = 70, collision = false, aoe = false, type = "nil"}
 	self.SpellW = { speed = nil, delay = 0.25, range = 450, width = 150, collision = false, aoe = false, type = "Circular" }
-	self.SpellE = { speed = 1200, delay = 0.25, range = 875, width = 200, collision = false, aoe = false, type = "linear" }
+	self.SpellE = { speed = 2000, delay = 0.25, range = 875, width = 200, collision = false, aoe = false, type = "linear" }
 	self.SpellR = { speed = 2000, delay = 0.25, range = 1200, width = 200, collision = false, aoe = true, type = "linear" }
 
 	UPL:AddSpell(_E, self.SpellE)
@@ -3816,7 +3816,7 @@ end
 function _Lux:LoadVariables()
 	self.SpellQ = { speed = 1200, delay = 0.25, range = 1175, width = 80, collision = true, aoe = false, type = "linear"}
 	self.SpellW = { speed = 1400, delay = 0.25, range = 1075, width = 110, collision = true, aoe = false, type = "linear" }
-	self.SpellE = { speed = 1300, delay = 0.25, range = 1100, width = 275, collision = false, aoe = true, type = "circular" }
+	self.SpellE = { speed = 1300, delay = 0.25, range = 1000, width = 275, collision = false, aoe = true, type = "circular" }
 	self.SpellR = { speed = math.huge, delay = 1.35, range = 3340, width = 190, collision = false, aoe = true, type = "linear" }
 
 	self.AA = {range = 550}
@@ -4512,7 +4512,7 @@ function _Malphite:LoadVariables()
 
 	self.SpellE = { speed = nil, delay = 0.25, range = 200, width = 200, collision = false, aoe = true, type = "circular" }
 
-	self.SpellR = { speed = 2000, delay = 0.25, range = 1000, width = 200, collision = false, aoe = true, type = "linear" }
+	self.SpellR = { speed = 1835, delay = 0.25, range = 1000, width = 200, collision = false, aoe = true, type = "linear" }
 
 	UPL:AddSpell(_R, self.SpellR)
 end
@@ -4888,7 +4888,7 @@ function _Morgana:LoadVariables()
 	self.SpellQ = { speed = 1200, delay = 0.25, range = 1175, width = 80, collision = true, aoe = false, type = "linear"}
 	self.SpellW = { speed = math.huge, delay = 0.25, range = 900, width = 175, collision = false, aoe = true, type = "circular"}
 	self.SpellE = { delay = 0.25, range = 800}
-	self.SpellR = { delay = 0.5, range = 625 } --600 Cast Range, 1050 Thether range
+	self.SpellR = { delay = 0.5, range = 625 } --625 Cast Range, 1050 Thether range
 
 	UPL:AddSpell(_Q, self.SpellQ)
 	UPL:AddSpell(_W, self.SpellW) --Not really needed, but should not impact FPS
@@ -5427,7 +5427,7 @@ function _MovementBlock:disable()
 end
 
 function _MovementBlock:SendPacket(p)
-	if p.header == 0x153 and self.blockMovement then
+	if p.header == 0x325 and self.blockMovement then
 		p:Block()
 	end
 end
@@ -7532,9 +7532,9 @@ function _Thresh:__init()
 end
 
 function _Thresh:LoadVariables()
-	self.SpellQ = { speed = 1800, delay = 0.5, range = 1075, width = 80, collision = true, aoe = false, type = "linear"}
+	self.SpellQ = { speed = 1800, delay = 0.5, range = 1100, width = 80, collision = true, aoe = false, type = "linear"}
 	self.SpellW = { speed = nil, delay = 0, range = 950, width = nil, collision = false, aoe = false, type = "circular" }
-	self.SpellE = { speed = math.huge, delay = 0.1, range = 500, width = 100, collision = false, aoe = false, type = "linear" }
+	self.SpellE = { speed = math.huge, delay = 0.1, range = 400, width = 100, collision = false, aoe = false, type = "linear" }
 	self.SpellR = { speed = nil, delay = 0.25, range = 450, width = nil, collision = false, aoe = true, type = "circular" }
 
 	UPL:AddSpell(_Q, self.SpellQ)
